@@ -48,15 +48,15 @@
 		<copy todir="${build.dist.game}/config">
 			<fileset dir="server/config">
 				<include name="*.properties" />
-				<exclude name="banned_ips.properties" />
-				<exclude name="loginserver.properties" />
+				<exclude name="banned_ip.properties" />
+				<exclude name="login_server.properties" />
 			</fileset>
 		</copy>
 		<copy todir="${build.dist.login}/config">
 			<fileset dir="server/config">
-				<include name="banned_ips.properties" />
+				<include name="banned_ip.properties" />
 				<include name="logging.properties" />
-				<include name="loginserver.properties" />
+				<include name="login_server.properties" />
 			</fileset>
 		</copy>
 		<mkdir dir="${build.dist.game}/data" />
@@ -66,7 +66,7 @@
 		<jar destfile="${build}/l2jserver.jar">
 			<fileset dir="${build.classes}" />
 			<manifest>
-				<attribute name="Main-Class" value="net.sf.l2j.Server" />
+				<attribute name="Main-Class" value="ru.privetdruk.l2jspace.Server" />
 				<attribute name="Class-Path" value="${manifest.libs}" />
 			</manifest>
 		</jar>

@@ -1,0 +1,93 @@
+package ru.privetdruk.l2jspace.gameserver.scripting.quest;
+
+import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
+import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
+
+public class Q650_ABrokenDream extends Quest {
+    private static final String qn = "Q650_ABrokenDream";
+
+    // NPC
+    private static final int GHOST = 32054;
+
+    // Item
+    private static final int DREAM_FRAGMENT = 8514;
+
+    // Monsters
+    private static final int CREWMAN = 22027;
+    private static final int VAGABOND = 22028;
+
+    public Q650_ABrokenDream() {
+        super(650, "A Broken Dream");
+
+        setItemsIds(DREAM_FRAGMENT);
+
+        addStartNpc(GHOST);
+        addTalkId(GHOST);
+        addKillId(CREWMAN, VAGABOND);
+    }
+
+    @Override
+    public String onAdvEvent(String event, Npc npc, Player player) {
+        String htmltext = event;
+        QuestState st = player.getQuestList().getQuestState(qn);
+        if (st == null)
+            return htmltext;
+
+        if (event.equalsIgnoreCase("32054-01a.htm")) {
+            st.setState(QuestStatus.STARTED);
+            st.setCond(1);
+            playSound(player, SOUND_ACCEPT);
+        } else if (event.equalsIgnoreCase("32054-03.htm")) {
+            if (!player.getInventory().hasItems(DREAM_FRAGMENT))
+                htmltext = "32054-04.htm";
+        } else if (event.equalsIgnoreCase("32054-05.htm")) {
+            playSound(player, SOUND_GIVEUP);
+            st.exitQuest(true);
+        }
+
+        return htmltext;
+    }
+
+    @Override
+    public String onTalk(Npc npc, Player player) {
+        QuestState st = player.getQuestList().getQuestState(qn);
+        String htmltext = getNoQuestMsg();
+        if (st == null)
+            return htmltext;
+
+        switch (st.getState()) {
+            case CREATED:
+                QuestState st2 = player.getQuestList().getQuestState("Q117_TheOceanOfDistantStars");
+                if (st2 != null && st2.isCompleted() && player.getStatus().getLevel() >= 39)
+                    htmltext = "32054-01.htm";
+                else {
+                    htmltext = "32054-00.htm";
+                    st.exitQuest(true);
+                }
+                break;
+
+            case STARTED:
+                htmltext = "32054-02.htm";
+                break;
+        }
+
+        return htmltext;
+    }
+
+    @Override
+    public String onKill(Npc npc, Creature killer) {
+        final Player player = killer.getActingPlayer();
+
+        final QuestState st = checkPlayerState(player, npc, QuestStatus.STARTED);
+        if (st == null)
+            return null;
+
+        dropItems(player, DREAM_FRAGMENT, 1, 0, 250000);
+
+        return null;
+    }
+}
