@@ -1,147 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="l2jspace" default="dist" basedir=".">
-	<property name="data" location="datapack/" />
-	<property name="src" location="server/java" />
-	<property name="lib" location="server/lib" />
-	<property name="dist" location="server/dist" />
-	<property name="build" location="build" />
+<project name="l2jspace" default="cleanup" basedir=".">
+	<description>L2jSpace builder</description>
+
+	<property name="build" location="./build" />
 	<property name="build.classes" location="${build}/classes" />
 	<property name="build.dist" location="${build}/dist" />
-	<property name="build.dist.login" location="${build.dist}/login" />
-	<property name="build.dist.game" location="${build.dist}/game" />
+	<property name="build.dist.libs" location="${build.dist}/lib" />
+	<property name="build.dist.tools" location="${build.dist}/tools" />
+	<property name="datapack" location="dist" />
+	<property name="libs" location="${datapack}/lib" />
+	<property name="src" location="java" />
 
-	<target name="build" depends="jar">
-		<copy todir="${build.dist.login}/libs">
-			<fileset dir="${lib}">
-				<include name="*.jar" />
-			</fileset>
-		</copy>
-		<copy todir="${build.dist.game}/libs">
-			<fileset dir="${lib}">
-				<include name="*.jar" />
-			</fileset>
-		</copy>
-		<copy todir="${build.dist.login}">
-			<fileset dir="${dist}">
-				<include name="startAccountManager.*" />
-				<include name="startSQLAccountManager.*" />
-				<include name="LoginServer_loop.sh" />
-				<include name="startLoginServer.*" />
-				<include name="Registergame.*" />
-			</fileset>
-		</copy>
-		<copy todir="${build.dist.game}">
-			<fileset dir="${dist}">
-				<include name="game_loop.sh" />
-				<include name="startgame.*" />
-				<include name="GeoDataConverter.*" />
-			</fileset>
-		</copy>
-		<fixcrlf srcdir="${build.dist.game}" eol="lf" eof="remove" includes="**/*.sh" />
-		<fixcrlf srcdir="${build.dist.login}" eol="lf" eof="remove" includes="**/*.sh" />
-		<fixcrlf srcdir="${build.dist.game}" eol="crlf" eof="remove" includes="**/*.bat" />
-		<fixcrlf srcdir="${build.dist.login}" eol="crlf" eof="remove" includes="**/*.bat" />
-		<mkdir dir="${build.dist.game}/log" />
-		<mkdir dir="${build.dist.login}/log" />
-		<mkdir dir="${build.dist.game}/config" />
-		<mkdir dir="${build.dist.login}/config" />
-		<copy todir="${build.dist.game}/config">
-			<fileset dir="server/config">
-				<include name="*.properties" />
-				<exclude name="banned_ip.properties" />
-				<exclude name="login_server.properties" />
-			</fileset>
-		</copy>
-		<copy todir="${build.dist.login}/config">
-			<fileset dir="server/config">
-				<include name="banned_ip.properties" />
-				<include name="logging.properties" />
-				<include name="login_server.properties" />
-			</fileset>
-		</copy>
-		<mkdir dir="${build.dist.game}/data" />
-	</target>
-
-	<target name="jar" depends="compile" description="Create the jar file.">
-		<jar destfile="${build}/l2jserver.jar">
-			<fileset dir="${build.classes}" />
-			<manifest>
-				<attribute name="Main-Class" value="ru.privetdruk.l2jspace.Server" />
-				<attribute name="Class-Path" value="${manifest.libs}" />
-			</manifest>
-		</jar>
-
-		<copy todir="${build.dist.login}/libs">
-			<fileset dir="${build}">
-				<include name="l2jserver.jar" />
-			</fileset>
-		</copy>
-
-		<copy todir="${build.dist.game}/libs">
-			<fileset dir="${build}">
-				<include name="l2jserver.jar" />
-			</fileset>
-		</copy>
-
-		<sync todir="${build.dist.game}/data">
-			<fileset dir="${data}/data">
-				<exclude name=".project" />
-				<exclude name="log/**" />
-				<exclude name="cachedir/**" />
-				<exclude name="clans/**" />
-				<exclude name="crests/**" />
-				<exclude name="**.svn**" />
-				<exclude name="**/*.class" />
-				<exclude name="**/*.jar" />
-				<include name="**/*.*" />
-			</fileset>
-		</sync>
-		<sync todir="${build.dist}/sql">
-			<fileset dir="${data}/sql">
-				<include name="*.*" />
-			</fileset>
-		</sync>
-		<sync todir="${build.dist}/tools">
-			<fileset dir="${data}/tools">
-				<include name="*.*" />
-				<exclude name="database_installer.rc" />
-				<exclude name="*.txt" />
-				<exclude name="*.log" />
-				<exclude name="*backup.sql" />
-			</fileset>
-		</sync>
-		<sync todir="${build.dist.login}">
-			<fileset dir="${build.dist.game}/data">
-				<include name="serverNames.xml" />
-			</fileset>
-		</sync>
-	</target>
-
-	<target name="compile" depends="init" description="Compile the source.">
-		<javac srcdir="${src}" classpathref="classpath" destdir="${build}/classes" debug="true" debuglevel="lines,vars,source" includeantruntime="false" />
-	</target>
-	
-	<target name="init" depends="clean,checkRequirements" description="Create the output directories.">
-		<mkdir dir="${build}" />
-		<mkdir dir="${build.classes}" />
-		<mkdir dir="${build.dist}" />
-		<mkdir dir="${build.dist.login}" />
-		<mkdir dir="${build.dist.game}" />
-	</target>
-
-	<target name="clean" description="Remove the output directories.">
-		<delete dir="${build}" />
-	</target>
-
-	<target name="checkRequirements" description="Check requirements.">
-		<echo message="Verification of your JDK version."/>
-		<available classname="java.util.stream.Stream" property="JDK14.present" />
-		<fail unless="JDK14.present" message="JDK14 is required, but your version is Java ${ant.java.version}. Install latest JDK." />
-	</target>
-	
 	<path id="classpath">
-		<fileset dir="${lib}">
+		<fileset dir="${libs}">
 			<include name="*.jar" />
+			<exclude name="**/*-sources.jar" />
 		</fileset>
 	</path>
 
@@ -150,9 +23,62 @@
 		<mapper>
 			<chainedmapper>
 				<flattenmapper />
-				<globmapper from="*.jar" to="../libs/*.jar" />
+				<globmapper from="*.jar" to="../lib/*.jar" />
 			</chainedmapper>
 		</mapper>
 	</pathconvert>
-	
+
+	<target name="checkRequirements" description="Check Requirements.">
+		<fail message="Ant 1.8.2 is required. But your version is ${ant.version} and if you are using Eclipse probably is outdated.">
+			<condition>
+				<not>
+					<antversion atleast="1.8.2" />
+				</not>
+			</condition>
+		</fail>
+		<available classname="java.util.stream.Stream" property="JDK14.present" />
+		<fail unless="JDK14.present" message="Java 14 is required. But your version is Java ${ant.java.version} and probably JDK is not installed." />
+	</target>
+
+	<target name="init" depends="checkRequirements" description="Create the output directories.">
+		<delete dir="${build.classes}" quiet="true" />
+		<mkdir dir="${build.classes}" />
+	</target>
+
+	<target name="compile" depends="init" description="Compile the source.">
+		<javac srcdir="${src}" classpathref="classpath" destdir="${build.classes}" compiler="modern" debug="true" debuglevel="lines,vars,source" includeantruntime="false" source="14" target="14" encoding="UTF-8" />
+	</target>
+
+	<target name="jar" depends="compile" description="Create the jar files.">
+		<tstamp>
+			<format property="time.stamp" pattern="yyyy-MM-dd HH:mm:ss" />
+		</tstamp>
+
+		<jar destfile="${build.dist.libs}/l2jspace.jar">
+			<fileset dir="${build.classes}" />
+			<manifest>
+				<attribute name="Build-By" value="${user.name}" />
+				<attribute name="Build-Date" value="${time.stamp}" />
+				<attribute name="Implementation-URL" value="http://www.privetdruk.ru/l2jspace/" />
+				<attribute name="Main-Class" value="ru.privetdruk.l2jspace.Server" />
+				<attribute name="Class-Path" value="${manifest.libs}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="adding-core" depends="jar" description="Adding the compiled jars to the Zip file.">
+		<zip destfile="${build}/l2jspace-c6-interlude.zip" basedir="${build.dist}" level="9" />
+	</target>
+
+	<target name="adding-datapack" depends="adding-core" description="Updating the Zip file with datapack content.">
+		<zip destfile="${build}/l2jspace-c6-interlude.zip" basedir="${datapack}" excludes="**/*-sources.jar" update="true" level="9" />
+	</target>
+
+	<target name="adding-readme" depends="adding-datapack" description="Adding readme.txt to the Zip file.">
+		<zip destfile="${build}/l2jspace-c6-interlude.zip" basedir="." includes="readme.txt" update="true" level="9" />
+	</target>
+
+	<target name="cleanup" depends="adding-readme" description="Cleaning the build folder.">
+		<delete dir="${build.dist}" />
+	</target>
 </project>
