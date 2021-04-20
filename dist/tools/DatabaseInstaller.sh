@@ -51,9 +51,9 @@ fullInstall() {
   echo "Done."
 
   echo "Installing server tables."
-  $MYL <./sql/login/account_premium.sql &>/dev/null
   $MYL <./sql/login/accounts.sql &>/dev/null
   $MYL <./sql/login/gameservers.sql &>/dev/null
+  $MYG <./sql/game/account_premium.sql &>/dev/null
   $MYG <./sql/game/auctions.sql &>/dev/null
   $MYG <./sql/game/augmentations.sql &>/dev/null
   $MYG <./sql/game/bbs_favorite.sql &>/dev/null

@@ -31,10 +31,10 @@ echo Deleting server tables.
 echo Done.
 
 echo.
-echo Installing empty character-related tables.
-%mysqlPath% -h %loginServerHost% -u %loginServerUser% --password=%loginServerPassword% -D %loginServerDatabase% < ./sql/login/account_premium.sql
+echo Installing tables.
 %mysqlPath% -h %loginServerHost% -u %loginServerUser% --password=%loginServerPassword% -D %loginServerDatabase% < ./sql/login/accounts.sql
-%mysqlPath% -h %loginServerHost% -u %loginServerUser% --password=%loginServerPassword% -D %loginServerDatabase% < ../sql/gameservers.sql
+%mysqlPath% -h %loginServerHost% -u %loginServerUser% --password=%loginServerPassword% -D %loginServerDatabase% < ./sql/login/gameservers.sql
+%mysqlPath% -h %gameServerHost% -u %gameServerUser% --password=%gameServerPassword% -D %gameDatabase% < ./sql/game/account_premium.sql
 %mysqlPath% -h %gameServerHost% -u %gameServerUser% --password=%gameServerPassword% -D %gameDatabase% < ./sql/game/auctions.sql
 %mysqlPath% -h %gameServerHost% -u %gameServerUser% --password=%gameServerPassword% -D %gameDatabase% < ./sql/game/augmentations.sql
 %mysqlPath% -h %gameServerHost% -u %gameServerUser% --password=%gameServerPassword% -D %gameDatabase% < ./sql/game/bbs_favorite.sql
@@ -97,10 +97,6 @@ echo Installing empty character-related tables.
 %mysqlPath% -h %gameServerHost% -u %gameServerUser% --password=%gameServerPassword% -D %gameDatabase% < ./sql/game/seven_signs_festival.sql
 %mysqlPath% -h %gameServerHost% -u %gameServerUser% --password=%gameServerPassword% -D %gameDatabase% < ./sql/game/seven_signs_status.sql
 %mysqlPath% -h %gameServerHost% -u %gameServerUser% --password=%gameServerPassword% -D %gameDatabase% < ./sql/game/siege_clans.sql
-echo Done.
-
-echo.
-echo Installing server tables.
 %mysqlPath% -h %gameServerHost% -u %gameServerUser% --password=%gameServerPassword% -D %gameDatabase% < ./sql/game/castle.sql
 %mysqlPath% -h %gameServerHost% -u %gameServerUser% --password=%gameServerPassword% -D %gameDatabase% < ./sql/game/castle_siege_guards.sql
 %mysqlPath% -h %gameServerHost% -u %gameServerUser% --password=%gameServerPassword% -D %gameDatabase% < ./sql/game/grandboss_data.sql
