@@ -20,6 +20,10 @@ import ru.privetdruk.l2jspace.gameserver.model.location.SpawnLocation;
  */
 public final class Spawn implements Runnable {
     private static final CLogger LOGGER = new CLogger(Spawn.class.getName());
+    private static final int CUSTOM_NPC_ID_STARTER = 50000;
+    private static final Class<?>[] parameters = new Class<?>[]{int.class, NpcTemplate.class};
+    private static final String DEFAULT_NPC_INSTANCE_PACKAGE = "ru.privetdruk.l2jspace.gameserver.model.actor.instance.";
+    private static final String CUSTOM_NPC_INSTANCE_PACKAGE = "ru.privetdruk.l2jspace.gameserver.custom.instance.";
 
     private final SpawnLocation _loc = new SpawnLocation(0, 0, 0, 0);
 
@@ -43,13 +47,8 @@ public final class Spawn implements Runnable {
         // Set the template of the Spawn.
         _template = template;
 
-        // Create the generic constructor.
-        Class<?>[] parameters =
-                {
-                        int.class,
-                        Class.forName("ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate")
-                };
-        _constructor = Class.forName("ru.privetdruk.l2jspace.gameserver.model.actor.instance." + _template.getType()).getConstructor(parameters);
+
+        _constructor = Class.forName(template.getNpcId() < CUSTOM_NPC_ID_STARTER ? DEFAULT_NPC_INSTANCE_PACKAGE : CUSTOM_NPC_INSTANCE_PACKAGE).getConstructor(parameters);
     }
 
     public Spawn(int id) throws SecurityException, ClassNotFoundException, NoSuchMethodException {

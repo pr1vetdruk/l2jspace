@@ -1,4 +1,4 @@
-package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
+package ru.privetdruk.l2jspace.gameserver.custom.instance;
 
 import java.util.StringTokenizer;
 
@@ -6,16 +6,17 @@ import ru.privetdruk.l2jspace.common.lang.StringUtil;
 
 import ru.privetdruk.l2jspace.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
-import ru.privetdruk.l2jspace.gameserver.data.manager.CoupleManager;
+import ru.privetdruk.l2jspace.gameserver.custom.service.WeddingService;
 import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Folk;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ConfirmDlg;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MagicSkillUse;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
 
-public class WeddingManagerNpc extends Folk {
-    public WeddingManagerNpc(int objectId, NpcTemplate template) {
+public class Wedding extends Folk {
+    public Wedding(int objectId, NpcTemplate template) {
         super(objectId, template);
     }
 
@@ -64,10 +65,10 @@ public class WeddingManagerNpc extends Folk {
             } else
                 sendHtmlMessage(player, "data/html/mods/wedding/notfound.htm");
         } else if (command.startsWith("Divorce"))
-            CoupleManager.getInstance().deleteCouple(player.getCoupleId());
+            WeddingService.getInstance().deleteCouple(player.getCoupleId());
         else if (command.startsWith("GoToLove")) {
             // Find the partner using the couple id.
-            final int partnerId = CoupleManager.getInstance().getPartnerId(player.getCoupleId(), player.getObjectId());
+            final int partnerId = WeddingService.getInstance().getPartnerId(player.getCoupleId(), player.getObjectId());
             if (partnerId == 0) {
                 player.sendMessage("Your partner can't be found.");
                 return;

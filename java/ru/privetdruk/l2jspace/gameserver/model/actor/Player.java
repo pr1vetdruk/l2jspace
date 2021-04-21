@@ -36,7 +36,7 @@ import ru.privetdruk.l2jspace.gameserver.communitybbs.model.Forum;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable.FrequentSkill;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
-import ru.privetdruk.l2jspace.gameserver.data.manager.CoupleManager;
+import ru.privetdruk.l2jspace.gameserver.custom.service.WeddingService;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CursedWeaponManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.DimensionalRiftManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.FestivalOfDarknessManager;
@@ -118,7 +118,7 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Pet;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Servitor;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.StaticObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.TamedBeast;
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.WeddingManagerNpc;
+import ru.privetdruk.l2jspace.gameserver.custom.instance.Wedding;
 import ru.privetdruk.l2jspace.gameserver.model.actor.move.PlayerMove;
 import ru.privetdruk.l2jspace.gameserver.model.actor.status.PlayerStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.PetTemplate;
@@ -2479,10 +2479,10 @@ public final class Player extends Playable {
         if (requester != null) {
             if (answer == 1) {
                 // Create the couple
-                CoupleManager.getInstance().addCouple(requester, this);
+                WeddingService.getInstance().addCouple(requester, this);
 
                 // Then "finish the job"
-                WeddingManagerNpc.justMarried(requester, this);
+                Wedding.justMarried(requester, this);
             } else {
                 setUnderMarryRequest(false);
                 sendMessage("You declined your partner's marriage request.");

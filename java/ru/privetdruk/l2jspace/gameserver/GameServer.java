@@ -25,7 +25,7 @@ import ru.privetdruk.l2jspace.gameserver.data.manager.BuyListManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManorManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ClanHallManager;
-import ru.privetdruk.l2jspace.gameserver.data.manager.CoupleManager;
+import ru.privetdruk.l2jspace.gameserver.custom.service.WeddingService;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CursedWeaponManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.DayNightManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.DerbyTrackManager;
@@ -262,7 +262,7 @@ public class GameServer {
         LotteryManager.getInstance();
 
         if (Config.ALLOW_WEDDING)
-            CoupleManager.getInstance();
+            WeddingService.getInstance();
 
         if (Config.ALLOW_FISH_CHAMPIONSHIP)
             FishingChampionshipManager.getInstance();

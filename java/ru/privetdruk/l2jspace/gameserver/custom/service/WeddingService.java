@@ -1,4 +1,4 @@
-package ru.privetdruk.l2jspace.gameserver.data.manager;
+package ru.privetdruk.l2jspace.gameserver.custom.service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,8 +20,8 @@ import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
  * <br>
  * Loads and stores couples using {@link IntIntHolder}, id being requesterId and value being partnerId.
  */
-public class CoupleManager {
-    private static final CLogger LOGGER = new CLogger(CoupleManager.class.getName());
+public class WeddingService {
+    private static final CLogger LOGGER = new CLogger(WeddingService.class.getName());
 
     private static final String LOAD_COUPLES = "SELECT * FROM mods_wedding";
     private static final String DELETE_COUPLES = "DELETE FROM mods_wedding";
@@ -29,7 +29,7 @@ public class CoupleManager {
 
     private final Map<Integer, IntIntHolder> _couples = new ConcurrentHashMap<>();
 
-    protected CoupleManager() {
+    protected WeddingService() {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(LOAD_COUPLES);
              ResultSet rs = ps.executeQuery()) {
@@ -133,11 +133,11 @@ public class CoupleManager {
         return (couple.getId() == objectId) ? couple.getValue() : couple.getId();
     }
 
-    public static final CoupleManager getInstance() {
+    public static WeddingService getInstance() {
         return SingletonHolder.INSTANCE;
     }
 
     private static class SingletonHolder {
-        protected static final CoupleManager INSTANCE = new CoupleManager();
+        protected static final WeddingService INSTANCE = new WeddingService();
     }
 }

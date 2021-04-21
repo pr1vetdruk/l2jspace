@@ -148,14 +148,7 @@ public abstract class EventEngine implements Runnable {
             npc.spawnMe(npc.getPosition());
 
             npc.broadcastPacket(
-                    new MagicSkillUse(
-                            npc,
-                            npc,
-                            SkillEnum.Bishop.REPOSE.getId(),
-                            1,
-                            1,
-                            1
-                    )
+                    new MagicSkillUse(npc, npc, SkillEnum.Bishop.REPOSE.getId(), 1, 1, 1)
             );
 
             /*switch (event) {

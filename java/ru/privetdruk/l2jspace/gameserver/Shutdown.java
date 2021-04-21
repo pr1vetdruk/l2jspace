@@ -9,7 +9,7 @@ import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.BufferManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManorManager;
-import ru.privetdruk.l2jspace.gameserver.data.manager.CoupleManager;
+import ru.privetdruk.l2jspace.gameserver.custom.service.WeddingService;
 import ru.privetdruk.l2jspace.gameserver.data.manager.FestivalOfDarknessManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.FishingChampionshipManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.GrandBossManager;
@@ -144,7 +144,7 @@ public class Shutdown extends Thread {
 
             // Couples save.
             if (Config.ALLOW_WEDDING) {
-                CoupleManager.getInstance().save();
+                WeddingService.getInstance().save();
                 LOGGER.info("CoupleManager data has been saved.");
             }
 

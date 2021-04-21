@@ -7,7 +7,7 @@ import ru.privetdruk.l2jspace.gameserver.communitybbs.manager.MailBBSManager;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable.FrequentSkill;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ClanHallManager;
-import ru.privetdruk.l2jspace.gameserver.data.manager.CoupleManager;
+import ru.privetdruk.l2jspace.gameserver.custom.service.WeddingService;
 import ru.privetdruk.l2jspace.gameserver.data.manager.DimensionalRiftManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.PetitionManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.SevenSignsManager;
@@ -188,7 +188,7 @@ public class EnterWorld extends L2GameClientPacket {
 
         // Engage and notify partner.
         if (Config.ALLOW_WEDDING) {
-            for (Entry<Integer, IntIntHolder> coupleEntry : CoupleManager.getInstance().getCouples().entrySet()) {
+            for (Entry<Integer, IntIntHolder> coupleEntry : WeddingService.getInstance().getCouples().entrySet()) {
                 final IntIntHolder couple = coupleEntry.getValue();
                 if (couple.getId() == objectId || couple.getValue() == objectId) {
                     player.setCoupleId(coupleEntry.getKey());
