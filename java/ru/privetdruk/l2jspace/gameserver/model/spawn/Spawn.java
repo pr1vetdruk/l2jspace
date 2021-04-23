@@ -41,14 +41,11 @@ public final class Spawn implements Runnable {
     private int _respawnMaxDelay;
 
     public Spawn(NpcTemplate template) throws SecurityException, ClassNotFoundException, NoSuchMethodException {
-        if (template == null)
+        if (template == null) {
             return;
+        }
 
-        // Set the template of the Spawn.
-        _template = template;
-
-
-        _constructor = Class.forName(template.getNpcId() < CUSTOM_NPC_ID_STARTER ? DEFAULT_NPC_INSTANCE_PACKAGE : CUSTOM_NPC_INSTANCE_PACKAGE).getConstructor(parameters);
+        parameterConfiguration(template);
     }
 
     public Spawn(int id) throws SecurityException, ClassNotFoundException, NoSuchMethodException {
@@ -58,16 +55,7 @@ public final class Spawn implements Runnable {
             return;
         }
 
-        // Set the template of the Spawn.
-        _template = template;
-
-        // Create the generic constructor.
-        Class<?>[] parameters =
-                {
-                        int.class,
-                        Class.forName("ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate")
-                };
-        _constructor = Class.forName("ru.privetdruk.l2jspace.gameserver.model.actor.instance." + _template.getType()).getConstructor(parameters);
+        parameterConfiguration(template);
     }
 
     /**
@@ -370,5 +358,13 @@ public final class Spawn implements Runnable {
     @Override
     public String toString() {
         return "Spawn [id=" + _template.getNpcId() + ", loc=" + _loc.toString() + "]";
+    }
+
+    private void parameterConfiguration(NpcTemplate template) throws NoSuchMethodException, ClassNotFoundException {
+        _template = template;
+
+        String packageName = template.getNpcId() < CUSTOM_NPC_ID_STARTER ? DEFAULT_NPC_INSTANCE_PACKAGE : CUSTOM_NPC_INSTANCE_PACKAGE;
+
+        _constructor = Class.forName(packageName + _template.getType()).getConstructor(parameters);
     }
 }
