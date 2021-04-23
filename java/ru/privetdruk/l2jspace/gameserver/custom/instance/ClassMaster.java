@@ -1,4 +1,4 @@
-package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
+package ru.privetdruk.l2jspace.gameserver.custom.instance;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.PlayerData;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassId;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Folk;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;

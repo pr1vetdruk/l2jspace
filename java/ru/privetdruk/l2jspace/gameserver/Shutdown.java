@@ -7,7 +7,7 @@ import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 
 import ru.privetdruk.l2jspace.Config;
-import ru.privetdruk.l2jspace.gameserver.data.manager.BufferManager;
+import ru.privetdruk.l2jspace.gameserver.custom.service.SchemeBufferService;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManorManager;
 import ru.privetdruk.l2jspace.gameserver.custom.service.WeddingService;
 import ru.privetdruk.l2jspace.gameserver.data.manager.FestivalOfDarknessManager;
@@ -135,7 +135,7 @@ public class Shutdown extends Thread {
             LOGGER.info("Fishing Championship data has been saved.");
 
             // Schemes save.
-            BufferManager.getInstance().saveSchemes();
+            SchemeBufferService.getInstance().saveSchemes();
             LOGGER.info("BufferTable data has been saved.");
 
             // Petitions save.

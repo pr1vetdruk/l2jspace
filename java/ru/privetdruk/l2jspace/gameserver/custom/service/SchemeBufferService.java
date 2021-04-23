@@ -1,4 +1,4 @@
-package ru.privetdruk.l2jspace.gameserver.data.manager;
+package ru.privetdruk.l2jspace.gameserver.custom.service;
 
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -31,7 +31,7 @@ import org.w3c.dom.NamedNodeMap;
  * Loads and stores available {@link BuffSkillHolder}s for the integrated scheme buffer.<br>
  * Loads and stores Players' buff schemes into _schemesTable (under a {@link String} name and a {@link List} of {@link Integer} skill ids).
  */
-public class BufferManager implements IXmlReader {
+public class SchemeBufferService implements IXmlReader {
     private static final String LOAD_SCHEMES = "SELECT * FROM buffer_schemes";
     private static final String DELETE_SCHEMES = "TRUNCATE TABLE buffer_schemes";
     private static final String INSERT_SCHEME = "INSERT INTO buffer_schemes (object_id, scheme_name, skills) VALUES (?,?,?)";
@@ -45,7 +45,7 @@ public class BufferManager implements IXmlReader {
         MAGE
     }
 
-    protected BufferManager() {
+    protected SchemeBufferService() {
         load();
     }
 
@@ -257,11 +257,11 @@ public class BufferManager implements IXmlReader {
         return _availableBuffs;
     }
 
-    public static BufferManager getInstance() {
+    public static SchemeBufferService getInstance() {
         return SingletonHolder.INSTANCE;
     }
 
     private static class SingletonHolder {
-        protected static final BufferManager INSTANCE = new BufferManager();
+        protected static final SchemeBufferService INSTANCE = new SchemeBufferService();
     }
 }

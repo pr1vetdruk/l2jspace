@@ -20,7 +20,7 @@ import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.cache.CrestCache;
 import ru.privetdruk.l2jspace.gameserver.data.cache.HtmCache;
 import ru.privetdruk.l2jspace.gameserver.data.manager.BoatManager;
-import ru.privetdruk.l2jspace.gameserver.data.manager.BufferManager;
+import ru.privetdruk.l2jspace.gameserver.custom.service.SchemeBufferService;
 import ru.privetdruk.l2jspace.gameserver.data.manager.BuyListManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManorManager;
@@ -221,7 +221,7 @@ public class GameServer {
         CastleManorManager.getInstance();
 
         StringUtil.printSection("NPCs");
-        BufferManager.getInstance();
+        SchemeBufferService.getInstance();
         HerbDropData.getInstance();
         NpcData.getInstance();
         WalkerRouteData.getInstance();
