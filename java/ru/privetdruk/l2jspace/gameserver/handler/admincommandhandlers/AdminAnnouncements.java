@@ -19,30 +19,32 @@ public class AdminAnnouncements implements IAdminCommandHandler {
 
     @Override
     public void useAdminCommand(String command, Player player) {
+        AnnouncementData announcement = AnnouncementData.getInstance();
+
         if (command.startsWith("admin_announce")) {
             try {
                 final String[] tokens = command.split(" ", 3);
                 switch (tokens[1]) {
                     case "list":
-                        AnnouncementData.getInstance().listAnnouncements(player);
+                        announcement.listAnnouncements(player);
                         break;
 
                     case "all":
                     case "all_auto":
                         final boolean isAuto = tokens[1].equalsIgnoreCase("all_auto");
-                        World.getInstance().getPlayers().forEach(p -> AnnouncementData.getInstance().showAnnouncements(p, isAuto));
+                        World.getInstance().getPlayers().forEach(p -> announcement.showAnnouncements(p, isAuto));
 
-                        AnnouncementData.getInstance().listAnnouncements(player);
+                        announcement.listAnnouncements(player);
                         break;
 
                     case "add":
                         String[] split = tokens[2].split(" ", 2); // boolean string
                         boolean crit = Boolean.parseBoolean(split[0]);
 
-                        if (!AnnouncementData.getInstance().addAnnouncement(split[1], crit, false, -1, -1, -1))
+                        if (!announcement.addAnnouncement(split[1], crit, false, -1, -1, -1))
                             player.sendMessage("Invalid //announce message content ; can't be null or empty.");
 
-                        AnnouncementData.getInstance().listAnnouncements(player);
+                        announcement.listAnnouncements(player);
                         break;
 
                     case "add_auto":
@@ -54,15 +56,15 @@ public class AdminAnnouncements implements IAdminCommandHandler {
                         final int limit = Integer.parseInt(split[4]);
                         final String msg = split[5];
 
-                        if (!AnnouncementData.getInstance().addAnnouncement(msg, crit, auto, idelay, delay, limit))
+                        if (!announcement.addAnnouncement(msg, crit, auto, idelay, delay, limit))
                             player.sendMessage("Invalid //announce message content ; can't be null or empty.");
 
-                        AnnouncementData.getInstance().listAnnouncements(player);
+                        announcement.listAnnouncements(player);
                         break;
 
                     case "del":
-                        AnnouncementData.getInstance().delAnnouncement(Integer.parseInt(tokens[2]));
-                        AnnouncementData.getInstance().listAnnouncements(player);
+                        announcement.delAnnouncement(Integer.parseInt(tokens[2]));
+                        announcement.listAnnouncements(player);
                         break;
 
                     default:
@@ -73,7 +75,7 @@ public class AdminAnnouncements implements IAdminCommandHandler {
                 sendFile(player, "announce.htm");
             }
         } else if (command.startsWith("admin_ann") || command.startsWith("admin_say"))
-            AnnouncementData.getInstance().handleAnnounce(command, 10, command.startsWith("admin_say"));
+            announcement.handleAnnounce(command, 10, command.startsWith("admin_say"));
         else if (command.startsWith("admin_gmchat")) {
             try {
                 AdminData.getInstance().broadcastToGMs(new CreatureSay(player, SayType.ALLIANCE, command.substring(13)));

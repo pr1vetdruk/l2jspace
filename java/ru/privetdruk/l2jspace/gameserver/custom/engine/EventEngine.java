@@ -5,14 +5,17 @@ import ru.privetdruk.l2jspace.gameserver.custom.model.SkillEnum;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBorder;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventType;
+import ru.privetdruk.l2jspace.gameserver.custom.service.AnnouncementService;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.data.sql.SpawnTable;
+import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.entity.Castle;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventSetting;
+import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MagicSkillUse;
 
@@ -28,6 +31,7 @@ import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.RE
 
 public abstract class EventEngine implements Runnable {
     protected static final Logger LOGGER = Logger.getLogger(EventEngine.class.getName());
+    protected static final AnnouncementService announcementService = AnnouncementService.getInstance();
 
     protected final EventSetting settings = new EventSetting();
     protected final List<Player> players = Collections.synchronizedList(new ArrayList<>());
@@ -47,12 +51,12 @@ public abstract class EventEngine implements Runnable {
         try {
             players.clear();
 
-            info("Event notification start.");
+            logInfo("Event notification start.");
 
             preLaunchChecks();
 
             switch (eventState) {
-                case ABORT -> info("Failed to start the event because failed to pass prelaunch checks.");
+                case ABORT -> logInfo("Failed to start the event because failed to pass prelaunch checks.");
                 case READY_TO_START -> {
                     registrationPlayer();
 
@@ -68,10 +72,10 @@ public abstract class EventEngine implements Runnable {
                         abortEvent();
                     }*/
                 }
-                default -> info("Failed to start the event because the state of the event is incorrect.");
+                default -> logInfo("Failed to start the event because the state of the event is incorrect.");
             }
         } catch (Exception e) {
-            severe("run", e.getMessage());
+            logError("run", e.getMessage());
         } finally {
             eventState = INACTIVE;
         }
@@ -104,7 +108,7 @@ public abstract class EventEngine implements Runnable {
 
         spawnMainEventNpc();
 
-        /*String name = generalSetting.getEventName();
+        String name = settings.getEventName();
 
         Announcements announce = Announcements.getInstance();
 
@@ -120,7 +124,7 @@ public abstract class EventEngine implements Runnable {
         announce.criticalAnnounceToAll(name + ": Registration in " + generalSetting.getRegistrationLocationName() + ".");
 
         if (Config.CTF_COMMAND) {
-            announce.criticalAnnounceToAll(name + ": Commands .ctfjoin .ctfleave .ctfinfo!");
+            announcementService.criticalToAll(name + ": Commands .ctfjoin .ctfleave .ctfinfo!");
         }
 
         waiter(generalSetting.getTimeRegistration());*/
@@ -151,7 +155,7 @@ public abstract class EventEngine implements Runnable {
                     new MagicSkillUse(npc, npc, SkillEnum.Bishop.REPOSE.getId(), 1, 1, 1)
             );
 
-            /*switch (event) {
+            /* TODO switch (event) {
                 case CTF -> spawn.getLastSpawn().isCtfMainNpc = true;
                 case TVT -> spawn.getLastSpawn()._isEventMobTvT = true;
                 case DM -> spawn.getLastSpawn()._isEventMobDM = true;
@@ -162,12 +166,16 @@ public abstract class EventEngine implements Runnable {
             LOGGER.warning(settings.getEventName() + " spawnMainEventNpc() exception: " + e.getMessage());
         }
     }
+    
+    protected void announceCritical(String text) {
+        announcementService.criticalToAll(settings.getEventName() + ": " + text);
+    }
 
-    protected void info(String text) {
+    protected void logInfo(String text) {
         LOGGER.info(settings.getEventName() + ": " + text);
     }
 
-    protected void severe(String method, String text) {
+    protected void logError(String method, String text) {
         LOGGER.severe(settings.getEventName() + "." + method + "(): " + text);
     }
 
