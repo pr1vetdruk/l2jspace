@@ -5,7 +5,7 @@ import java.util.concurrent.ScheduledFuture;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.HeroManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.RaidBossManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.RaidPointManager;

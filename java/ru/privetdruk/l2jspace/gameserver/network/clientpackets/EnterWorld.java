@@ -2,7 +2,7 @@ package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
 import java.util.Map.Entry;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.manager.MailBBSManager;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable.FrequentSkill;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;

@@ -2,7 +2,7 @@ package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
 import ru.privetdruk.l2jspace.common.random.Rnd;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.SkillTreeData;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;

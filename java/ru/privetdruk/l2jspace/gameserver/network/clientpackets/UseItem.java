@@ -1,6 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
 import ru.privetdruk.l2jspace.gameserver.enums.items.ActionType;
 import ru.privetdruk.l2jspace.gameserver.enums.items.EtcItemType;

@@ -1,6 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.handler.voicedcommandhandlers;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.handler.IVoicedCommandHandler;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;

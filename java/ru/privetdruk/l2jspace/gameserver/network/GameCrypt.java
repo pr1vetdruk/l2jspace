@@ -1,6 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.network;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 
 public class GameCrypt {
     private final byte[] _inKey = new byte[16];

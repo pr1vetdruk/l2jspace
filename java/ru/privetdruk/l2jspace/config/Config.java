@@ -1,4 +1,4 @@
-package ru.privetdruk.l2jspace;
+package ru.privetdruk.l2jspace.config;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,6 +15,7 @@ import ru.privetdruk.l2jspace.common.config.ExProperties;
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.math.MathUtil;
 
+import ru.privetdruk.l2jspace.config.custom.event.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.enums.GeoType;
 import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
 import ru.privetdruk.l2jspace.gameserver.model.olympiad.enums.OlympiadPeriod;
@@ -28,7 +29,7 @@ public final class Config {
 
     public static final String CLAN_FILE = "./config/clan.properties";
     public static final String EVENT_FILE = "./config/event.properties";
-    public static final String GEO_ENGINE_FILE = "./config/geo-engine.properties";
+    public static final String GEO_ENGINE_FILE = "./config/geo-engine.properties.properties";
     public static final String HEX_ID_FILE = "./config/hexid.txt";
     public static final String LOGIN_SERVER_FILE = "./config/login-server.properties";
     public static final String NPC_FILE = "./config/npc.properties";
@@ -38,6 +39,8 @@ public final class Config {
     public static final String ADDON_FILE = "./config/addon.properties";
     public static final String GAME_SERVER_FILE = "./config/game-server.properties";
     public static final String SIEGE_FILE = "./config/siege.properties";
+
+    public static final EventConfig.Engine EVENT_ENGINE = new EventConfig.Engine();
 
 
     /* ######################################################
@@ -668,6 +671,7 @@ public final class Config {
     public static boolean SHOW_NPC_INFO;
     public static boolean ALLOW_GRAND_BOSSES_TELEPORT;
 
+
     /**
      * Initialize {@link ExProperties} from specified configuration file.
      *
@@ -1275,6 +1279,15 @@ public final class Config {
         KARMA_RATE_DROP_EQUIP_WEAPON = rates.getProperty("KarmaRateDropEquipWeapon", 10);
     }
 
+    private static void loadCustomEvent() {
+        ExProperties engine = initProperties(EventConfig.Engine.EVENT_ENGINE_FILE);
+
+        EventConfig.Engine.ANNOUNCE_REWARD = engine.getProperty("AnnounceReward", true);
+        EventConfig.Engine.REGISTRATION_BY_COMMANDS = engine.getProperty("RegistrationByCommands", true);
+        EventConfig.Engine.LOG_STATISTICS = engine.getProperty("LogStatistics", true);
+        EventConfig.Engine.WAIT_TELEPORT_SECONDS = engine.getProperty("WaitTeleportSeconds", 5);
+    }
+
     private static void loadAddon() {
         ExProperties addon = initProperties(ADDON_FILE);
 
@@ -1378,6 +1391,7 @@ public final class Config {
         loadGame();
         loadRates();
         loadAddon();
+        loadCustomEvent();
     }
 
     public static void loadLoginServer() {

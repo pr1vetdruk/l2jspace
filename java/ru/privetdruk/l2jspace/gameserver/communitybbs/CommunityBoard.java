@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.manager.BaseBBSManager;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.manager.ClanBBSManager;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.manager.FavoriteBBSManager;

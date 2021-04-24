@@ -8,7 +8,7 @@ import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.IntentionType;
 import ru.privetdruk.l2jspace.gameserver.enums.ScriptEventType;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;

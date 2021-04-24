@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
 import ru.privetdruk.l2jspace.gameserver.enums.ScriptEventType;
 import ru.privetdruk.l2jspace.gameserver.idfactory.IdFactory;

@@ -1,6 +1,6 @@
 package ru.privetdruk.l2jspace.loginserver.network;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 
 /**
  * <p>

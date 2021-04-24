@@ -6,7 +6,7 @@ import java.util.Map;
 
 import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 import org.w3c.dom.Document;

@@ -9,7 +9,7 @@ import java.util.Set;
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Attackable;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;

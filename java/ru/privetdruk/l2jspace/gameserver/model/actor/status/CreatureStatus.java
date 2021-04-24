@@ -7,7 +7,7 @@ import java.util.concurrent.Future;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.StatusType;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectType;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.ElementType;

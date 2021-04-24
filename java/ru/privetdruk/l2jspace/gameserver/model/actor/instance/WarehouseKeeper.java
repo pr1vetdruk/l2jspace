@@ -2,7 +2,7 @@ package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
 import java.util.Map;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.itemcontainer.PcFreight;

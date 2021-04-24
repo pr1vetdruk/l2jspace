@@ -1,6 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.skill.function.base;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.items.WeaponType;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.Stats;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;

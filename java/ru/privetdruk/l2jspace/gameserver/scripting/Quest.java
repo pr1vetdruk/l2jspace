@@ -12,7 +12,7 @@ import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.DocumentSkill.Skill;
 import ru.privetdruk.l2jspace.gameserver.data.cache.HtmCache;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;

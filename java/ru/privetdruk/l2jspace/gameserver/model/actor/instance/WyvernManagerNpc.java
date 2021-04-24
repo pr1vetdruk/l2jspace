@@ -1,6 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.SevenSignsManager;
 import ru.privetdruk.l2jspace.gameserver.enums.CabalType;
 import ru.privetdruk.l2jspace.gameserver.enums.SealType;

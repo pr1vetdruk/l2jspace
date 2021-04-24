@@ -13,7 +13,7 @@ import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.sql.AutoSpawnTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.MapRegionData.TeleportType;
@@ -924,7 +924,7 @@ public class SevenSignsManager {
 
                     final CabalType winningCabal = getWinningCabal();
 
-                    // Schedule a stop of the festival engine and reward highest ranking members from cycle
+                    // Schedule a stop of the festival engine.properties and reward highest ranking members from cycle
                     FestivalOfDarknessManager.getInstance().getFestivalManagerSchedule().cancel(false);
                     FestivalOfDarknessManager.getInstance().rewardHighestRanked();
 

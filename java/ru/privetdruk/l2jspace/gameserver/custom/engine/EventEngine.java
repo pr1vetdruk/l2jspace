@@ -1,48 +1,69 @@
 package ru.privetdruk.l2jspace.gameserver.custom.engine;
 
+import ru.privetdruk.l2jspace.common.pool.ThreadPool;
+import ru.privetdruk.l2jspace.config.custom.event.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.custom.model.NpcInfoShort;
 import ru.privetdruk.l2jspace.gameserver.custom.model.SkillEnum;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBorder;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventPlayer;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventSetting;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventType;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.TeamSetting;
 import ru.privetdruk.l2jspace.gameserver.custom.service.AnnouncementService;
+import ru.privetdruk.l2jspace.gameserver.custom.util.Chronos;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.data.sql.SpawnTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
+import ru.privetdruk.l2jspace.gameserver.enums.MessageType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.entity.Castle;
-import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventSetting;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
+import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MagicSkillUse;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.ABORT;
-import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.INACTIVE;
-import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.READY_TO_START;
-import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.REGISTRATION;
+import static ru.privetdruk.l2jspace.config.custom.event.EventConfig.Engine.WAIT_TELEPORT_SECONDS;
+import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.*;
+import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.SHUFFLE;
 
 public abstract class EventEngine implements Runnable {
     protected static final Logger LOGGER = Logger.getLogger(EventEngine.class.getName());
     protected static final AnnouncementService announcementService = AnnouncementService.getInstance();
 
     protected final EventSetting settings = new EventSetting();
-    protected final List<Player> players = Collections.synchronizedList(new ArrayList<>());
+    protected final List<TeamSetting> teamSettings;
+    protected final Map<Integer, EventPlayer> players = new ConcurrentHashMap<>();
 
     protected EventType eventType;
+    protected EventTeamType teamMode;
     protected EventState eventState;
     protected EventBorder eventBorder;
     protected String eventStartTime;
+    protected boolean onStartUnsummonPet;
+    protected boolean onStartRemoveAllEffects;
 
-    public EventEngine() {
-        eventType = EventType.NONE;
+    public EventEngine(EventType eventType,
+                       EventTeamType teamMode,
+                       boolean onStartUnsummonPet,
+                       boolean onStartRemoveAllEffects,
+                       List<TeamSetting> teamSettings) {
+        this.eventType = eventType;
+        this.teamMode = teamMode;
+        this.onStartUnsummonPet = onStartUnsummonPet;
+        this.onStartRemoveAllEffects = onStartRemoveAllEffects;
+        this.teamSettings = teamSettings;
+
         eventState = INACTIVE;
     }
 
@@ -51,26 +72,28 @@ public abstract class EventEngine implements Runnable {
         try {
             players.clear();
 
-            logInfo("Event notification start.");
+            logInfo("Notification start.");
 
             preLaunchChecks();
 
             switch (eventState) {
                 case ABORT -> logInfo("Failed to start the event because failed to pass prelaunch checks.");
                 case READY_TO_START -> {
-                    registrationPlayer();
+                    spawnMainEventNpc();
+                    registration();
+                    teleport();
 
-                    /*if (teleportPlayer()) {
-                        waiter(1);
-
-                        startEvent();
-
-                        waiter(generalSetting.getDurationEvent());
-
-                        finishEvent();
-                    } else {
+                    if (eventState == ABORT) {
                         abortEvent();
-                    }*/
+                    }
+
+                    waiter(1);
+
+                    startEvent();
+
+                    waiter(settings.getDurationEvent());
+
+                    finishEvent();
                 }
                 default -> logInfo("Failed to start the event because the state of the event is incorrect.");
             }
@@ -80,6 +103,137 @@ public abstract class EventEngine implements Runnable {
             eventState = INACTIVE;
         }
 
+    }
+
+    protected void abortEvent() {
+        unspawnEventNpc();
+        restorePlayerData();
+
+        if (eventState != REGISTRATION) {
+            customAbort();
+            returnPlayer();
+        }
+
+        eventState = ABORT;
+
+        announceCritical("Match aborted!");
+    }
+
+    protected void returnPlayer() {
+        announceCritical("Teleport back to participation NPC in 20 seconds!");
+
+        sitPlayer();
+
+        ThreadPool.schedule(() -> {
+            // TODO Реализовать возврат на исходную позицию перед эвентом.
+            Location spawnLocation = settings.getMainNpc().getSpawnLocation();
+
+            players.values().stream()
+                    .map(EventPlayer::getPlayer)
+                    .filter(Objects::nonNull)
+                    .filter(Player::isOnline)
+                    .forEach(player -> player.teleToLocation(spawnLocation));
+
+            restorePlayerData();
+            sitPlayer();
+        }, 20000);
+    }
+
+    protected void unspawnEventNpc() {
+        customUnspawnNpc();
+
+        Spawn spawnMainNpc = settings.getSpawnMainNpc();
+
+        if (spawnMainNpc == null || spawnMainNpc.getNpc() == null) {
+            return;
+        }
+
+        spawnMainNpc.getNpc().deleteMe();
+        spawnMainNpc.setRespawnState(false);
+
+        SpawnTable.getInstance().deleteSpawn(spawnMainNpc, true);
+    }
+
+    protected void restorePlayerData() {
+        Iterator<PlayerInstance> playerIterator = players.iterator();
+
+        while (playerIterator.hasNext()) {
+            PlayerInstance player = playerIterator.next();
+
+            if (player != null) {
+                removeFlagFromPlayer(player);
+
+                excludePlayer(player, playerIterator);
+
+                savedPlayerNames.remove(player.getName());
+            }
+        }
+    }
+
+    public void teleport() {
+        checkBeforeTeleport();
+
+        if (eventState == ABORT) {
+            return;
+        }
+
+        eventState = TELEPORTATION;
+
+        if (eventType.isTeam()) {
+            shuffleTeams();
+        }
+
+        removeOfflinePlayers();
+
+        announceCritical(String.format("Teleport to spot in %d seconds!", WAIT_TELEPORT_SECONDS));
+
+        ThreadPool.schedule(() -> {
+            updatePlayerEventData();
+            sitPlayer();
+            spawnOtherNpc();
+
+            for (EventPlayer eventPlayer : players.values()) {
+                Player player = eventPlayer.getPlayer();
+
+                if (player != null) {
+                    preTeleportPlayerChecks(player);
+
+                    TeamSetting playerTeamSettings = eventPlayer.getTeamSettings();
+                    player.teleportTo(playerTeamSettings.getSpawnLocation(), playerTeamSettings.getOffset());
+                }
+            }
+        }, TimeUnit.SECONDS.toMillis(WAIT_TELEPORT_SECONDS));
+    }
+
+    private void preTeleportPlayerChecks(Player player) {
+        if (onStartUnsummonPet && player.hasPet()) {
+            Summon summon = player.getSummon();
+            summon.stopAllEffects();
+            summon.unSummon(player);
+        }
+
+        if (onStartRemoveAllEffects) {
+            player.stopAllEffects();
+        }
+
+        if (player.getParty() != null) {
+            player.getParty().removePartyMember(player, MessageType.LEFT);
+        }
+    }
+
+    private void sitPlayer() {
+        for (EventPlayer eventPlayer : players.values()) {
+            Player player = eventPlayer.getPlayer();
+
+            if (player != null) {
+                if (player.isSitting()) {
+                    player.standUp();
+                } else {
+                    player.abortAll(true);
+                    player.sitDown();
+                }
+            }
+        }
     }
 
     private void preLaunchChecks() {
@@ -93,6 +247,20 @@ public abstract class EventEngine implements Runnable {
         }
     }
 
+    private void checkBeforeTeleport() {
+        int minPlayers = settings.getMinPlayers();
+
+        if (players.size() < minPlayers) {
+            eventState = ABORT;
+            String text = String.format("Not enough players for event. Min requested: %d, participating: %d.", minPlayers, players.size());
+            announceCritical(text);
+
+            if (EventConfig.Engine.LOG_STATISTICS) {
+                logInfo(text);
+            }
+        }
+    }
+
     private boolean isSiegesLaunched() {
         for (Castle castle : CastleManager.getInstance().getCastles()) {
             if (castle != null && castle.getSiege() != null && castle.getSiege().isInProgress()) {
@@ -103,48 +271,41 @@ public abstract class EventEngine implements Runnable {
         return false;
     }
 
-    private void registrationPlayer() {
+    private void registration() {
         eventState = REGISTRATION;
-
-        spawnMainEventNpc();
 
         String name = settings.getEventName();
 
-        Announcements announce = Announcements.getInstance();
+        announceCritical("Registration for the event is open");
 
-        announce.criticalAnnounceToAll(name + ": Event " + name + "!");
+        Item rewardTemplate = ItemData.getInstance().getTemplate(settings.getReward().getId());
 
-        Item rewardTemplate = ItemTable.getInstance().getTemplate(generalSetting.getReward().getId());
-
-        if (Config.CTF_ANNOUNCE_REWARD && rewardTemplate != null) {
-            announce.criticalAnnounceToAll(name + ": Reward: " + generalSetting.getReward().getAmount() + " " + rewardTemplate.getName());
+        if (EventConfig.Engine.ANNOUNCE_REWARD && rewardTemplate != null) {
+            announceCritical(String.format("Reward: %d %s", settings.getReward().getAmount(), rewardTemplate.getName()));
         }
 
-        announce.criticalAnnounceToAll(name + ": Recruiting levels: " + generalSetting.getMinLevel() + " to " + generalSetting.getMaxLevel());
-        announce.criticalAnnounceToAll(name + ": Registration in " + generalSetting.getRegistrationLocationName() + ".");
+        announceCritical(String.format("Levels: %d - %d", settings.getMinLevel(), settings.getMaxLevel()));
+        announceCritical("Registration in " + settings.getRegistrationLocationName());
 
-        if (Config.CTF_COMMAND) {
-            announcementService.criticalToAll(name + ": Commands .ctfjoin .ctfleave .ctfinfo!");
+        if (EventConfig.Engine.REGISTRATION_BY_COMMANDS) {
+            announcementService.criticalToAll(name + ": Commands .join .leave .info");
         }
 
-        waiter(generalSetting.getTimeRegistration());*/
+        waiter(settings.getTimeRegistration());
     }
 
-    protected void spawnMainEventNpc() {
+    protected void spawnMainEventNpc() throws ClassNotFoundException, NoSuchMethodException {
         NpcInfoShort npcInfo = settings.getMainNpc();
-
         NpcTemplate npcTemplate = NpcData.getInstance().getTemplate(npcInfo.getId());
 
         try {
             Spawn spawn = new Spawn(npcTemplate);
-
             spawn.setLoc(npcInfo.getSpawnLocation());
             spawn.setRespawnDelay(1);
             SpawnTable.getInstance().addSpawn(spawn, false);
             spawn.doSpawn(true);
 
             Npc npc = spawn.getNpc();
-
             npc.getStatus().setHp(999999999);
             npc.setTitle(settings.getEventName());
             npc.isAggressive();
@@ -163,10 +324,32 @@ public abstract class EventEngine implements Runnable {
 
             settings.setSpawnMainNpc(spawn);
         } catch (Exception e) {
-            LOGGER.warning(settings.getEventName() + " spawnMainEventNpc() exception: " + e.getMessage());
+            logError("spawnMainEventNpc", e.getMessage());
+            throw e;
         }
     }
-    
+
+    protected void shuffleTeams() {
+        if (teamMode != SHUFFLE) {
+            return;
+        }
+
+        List<EventPlayer> playersShuffle = new ArrayList<>(players.values());
+        Collections.shuffle(playersShuffle);
+
+        int teamIndex = 0;
+
+        for (EventPlayer player : players.values()) {
+            player.setTeamSettings(teamSettings.get(teamIndex));
+
+            if (teamIndex == (teamSettings.size() - 1)) {
+                teamIndex = 0;
+            } else {
+                teamIndex++;
+            }
+        }
+    }
+
     protected void announceCritical(String text) {
         announcementService.criticalToAll(settings.getEventName() + ": " + text);
     }
@@ -179,8 +362,103 @@ public abstract class EventEngine implements Runnable {
         LOGGER.severe(settings.getEventName() + "." + method + "(): " + text);
     }
 
+    protected void waiter(int intervalMinutes) {
+        long interval = TimeUnit.MINUTES.toMillis(intervalMinutes);
+        final long startWaiterTime = Chronos.currentTimeMillis();
+        int seconds = (int) (interval / 1000);
+
+        while (((startWaiterTime + interval) > Chronos.currentTimeMillis()) && eventState != ABORT) {
+            seconds--; // Here because we don't want to see two time announce at the same time
+
+            if (eventState == REGISTRATION || eventState == START || eventState == TELEPORTATION) {
+                switch (seconds) {
+                    case 3600: // 1 hour left
+                    case 1800: // 30 minutes left
+                    case 900: // 15 minutes left
+                    case 600: // 10 minutes left
+                    case 300: // 5 minutes left
+                    case 240: // 4 minutes left
+                    case 180: // 3 minutes left
+                    case 120: // 2 minutes left
+                    case 60: { // 1 minute left
+                        if (seconds == 3600) {
+                            removeOfflinePlayers();
+                        }
+
+                        if (eventState == REGISTRATION) {
+                            announceCritical("Registration in " + settings.getRegistrationLocationName());
+                            announceCritical((seconds / 60) + " minute(s) till registration close");
+                        } else if (eventState == START) {
+                            announceCritical((seconds / 60) + " minute(s) till event finish!");
+                        }
+
+                        break;
+                    }
+                    case 30: // 30 seconds left
+                    case 15: // 15 seconds left
+                    case 10: { // 10 seconds left
+                        removeOfflinePlayers();
+                        // fallthrou?
+                    }
+                    case 1: { // 1 seconds left
+                        if (eventState == REGISTRATION) {
+                            announceCritical("Registration close!");
+                        } else if (eventState == TELEPORTATION) {
+                            announceCritical("Start fight!");
+                        } else if (eventState == START) {
+                            announceCritical("Event finish!");
+                        }
+
+                        break;
+                    }
+                }
+            }
+
+            long startOneSecondWaiterStartTime = Chronos.currentTimeMillis();
+
+            // TODO Какая-то дичь, нужно в будущем разобраться.
+            // Only the try catch with Thread.sleep(1000) give bad countdown on high wait times
+            while ((startOneSecondWaiterStartTime + 1000) > Chronos.currentTimeMillis()) {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException ignored) {
+                }
+            }
+        }
+    }
+
+    protected void removeOfflinePlayers() {
+        try {
+            if (players.isEmpty()) {
+                return;
+            }
+
+            for (EventPlayer eventPlayer : players.values()) {
+                Player player = eventPlayer.getPlayer();
+
+                if (player != null && (!player.isOnline() || player.isInJail() || player.getOfflineStartTime() > 0)) {
+                    restorePlayerData(player);
+                    players.remove(player.getObjectId());
+                }
+            }
+
+        } catch (Exception e) {
+            LOGGER.warning(e.getMessage());
+        }
+    }
+
+    // TODO
     protected abstract boolean customPreLaunchChecks();
 
+    protected abstract void restorePlayerData(Player player);
+
+    protected abstract void updatePlayerEventData();
+
+    protected abstract void spawnOtherNpc();
+
+    protected abstract void customUnspawnNpc();
+
+    protected abstract void customAbort();
 /*
 
 
@@ -255,75 +533,6 @@ public abstract class EventEngine implements Runnable {
             restorePlayerData();
             sitPlayer();
         }, 20000);
-    }
-
-    protected void waiter(int intervalMinutes) {
-        long interval = TimeUnit.MINUTES.toMillis(intervalMinutes);
-        final long startWaiterTime = Chronos.currentTimeMillis();
-        int seconds = (int) (interval / 1000);
-
-        String eventName = generalSetting.getEventName();
-        String registrationLocationName = generalSetting.getRegistrationLocationName();
-
-        while (((startWaiterTime + interval) > Chronos.currentTimeMillis()) && eventState != ABORT) {
-            seconds--; // Here because we don't want to see two time announce at the same time
-
-            if (eventState == REGISTRATION || eventState == START || eventState == TELEPORTATION) {
-                switch (seconds) {
-                    case 3600: // 1 hour left
-                    case 1800: // 30 minutes left
-                    case 900: // 15 minutes left
-                    case 600: // 10 minutes left
-                    case 300: // 5 minutes left
-                    case 240: // 4 minutes left
-                    case 180: // 3 minutes left
-                    case 120: // 2 minutes left
-                    case 60: { // 1 minute left
-                        if (seconds == 3600) {
-                            removeOfflinePlayers();
-                        }
-
-                        if (eventState == REGISTRATION) {
-                            Announcements.getInstance().criticalAnnounceToAll(eventName + ": Registration in " + registrationLocationName + "!");
-                            Announcements.getInstance().criticalAnnounceToAll(eventName + ": " + (seconds / 60) + " minute(s) till registration close!");
-                        } else if (eventState == START) {
-                            Announcements.getInstance().criticalAnnounceToAll(eventName + ": " + (seconds / 60) + " minute(s) till event finish!");
-                        }
-
-                        break;
-                    }
-                    case 30: // 30 seconds left
-                    case 15: // 15 seconds left
-                    case 10: { // 10 seconds left
-                        removeOfflinePlayers();
-                        // fallthrou?
-                    }
-                    case 3: // 3 seconds left
-                    case 2: // 2 seconds left
-                    case 1: { // 1 seconds left
-                        if (eventState == REGISTRATION) {
-                            Announcements.getInstance().criticalAnnounceToAll(eventName + ": " + seconds + " second(s) till registration close!");
-                        } else if (eventState == TELEPORTATION) {
-                            Announcements.getInstance().criticalAnnounceToAll(eventName + ": " + seconds + " seconds(s) till start fight!");
-                        } else if (eventState == START) {
-                            Announcements.getInstance().criticalAnnounceToAll(eventName + ": " + seconds + " second(s) till event finish!");
-                        }
-                        break;
-                    }
-                }
-            }
-
-            long startOneSecondWaiterStartTime = Chronos.currentTimeMillis();
-
-            // TODO Какая-то печаль, нужно в будущем разобраться.
-            // Only the try catch with Thread.sleep(1000) give bad countdown on high wait times
-            while ((startOneSecondWaiterStartTime + 1000) > Chronos.currentTimeMillis()) {
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException ignored) {
-                }
-            }
-        }
     }
 
     protected int getIntervalBetweenMatches() {

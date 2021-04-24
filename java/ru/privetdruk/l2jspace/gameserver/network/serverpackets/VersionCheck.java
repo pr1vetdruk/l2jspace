@@ -2,7 +2,7 @@ package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
 import java.util.Arrays;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 
 public final class VersionCheck extends L2GameServerPacket {
     private final byte[] _key;

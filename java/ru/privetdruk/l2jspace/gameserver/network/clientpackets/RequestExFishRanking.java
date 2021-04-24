@@ -1,6 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.FishingChampionshipManager;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 

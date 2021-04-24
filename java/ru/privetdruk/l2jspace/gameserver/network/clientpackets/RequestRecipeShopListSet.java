@@ -2,7 +2,7 @@ package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.OperateType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.craft.ManufactureItem;

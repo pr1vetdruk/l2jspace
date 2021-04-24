@@ -3,7 +3,7 @@ package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 import java.util.HashMap;
 import java.util.Map;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.items.CrystalType;
 import ru.privetdruk.l2jspace.gameserver.enums.items.ItemLocation;
 import ru.privetdruk.l2jspace.gameserver.enums.items.WeaponType;

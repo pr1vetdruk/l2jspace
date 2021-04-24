@@ -17,7 +17,7 @@ import ru.privetdruk.l2jspace.common.mmocore.ReceivablePacket;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.LoginServerThread;
 import ru.privetdruk.l2jspace.gameserver.data.sql.ClanTable;
 import ru.privetdruk.l2jspace.gameserver.data.sql.OfflineTradersTable;

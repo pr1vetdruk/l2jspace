@@ -9,7 +9,7 @@ import java.util.Map;
 import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.TeleportType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;

@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 
 import org.mariadb.jdbc.MariaDbPoolDataSource;
 

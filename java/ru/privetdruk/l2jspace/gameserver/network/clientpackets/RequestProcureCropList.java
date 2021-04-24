@@ -3,7 +3,7 @@ package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManorManager;
 import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;

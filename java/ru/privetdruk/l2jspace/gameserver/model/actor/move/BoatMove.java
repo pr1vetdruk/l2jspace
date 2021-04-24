@@ -68,7 +68,7 @@ public class BoatMove extends CreatureMove<Boat> {
         // Renew Boat entrances when definitively stopped.
         _actor.renewBoatEntrances();
 
-        // We are out of path, continue to process the engine.
+        // We are out of path, continue to process the engine.properties.
         _actor.runEngine(10);
     }
 

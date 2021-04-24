@@ -8,7 +8,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.OlympiadType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;

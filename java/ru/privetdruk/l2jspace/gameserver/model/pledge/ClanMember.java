@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassRace;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.Sex;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;

@@ -3,7 +3,7 @@ package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.cache.HtmCache;
 import ru.privetdruk.l2jspace.gameserver.data.manager.BuyListManager;
 import ru.privetdruk.l2jspace.gameserver.data.xml.MultisellData;

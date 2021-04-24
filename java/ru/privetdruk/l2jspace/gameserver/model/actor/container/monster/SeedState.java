@@ -2,7 +2,7 @@ package ru.privetdruk.l2jspace.gameserver.model.actor.container.monster;
 
 import java.util.ArrayList;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.NpcSkillType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Monster;

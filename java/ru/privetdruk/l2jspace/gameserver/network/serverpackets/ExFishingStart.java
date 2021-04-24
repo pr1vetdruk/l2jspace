@@ -1,6 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 

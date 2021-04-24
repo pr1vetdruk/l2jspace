@@ -1,6 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.ai.individual;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.scripting.script.ai.AttackableAIScript;

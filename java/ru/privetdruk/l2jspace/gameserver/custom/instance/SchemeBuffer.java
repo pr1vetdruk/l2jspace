@@ -8,7 +8,7 @@ import java.util.StringTokenizer;
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
 import ru.privetdruk.l2jspace.common.math.MathUtil;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.custom.service.SchemeBufferService;
 import ru.privetdruk.l2jspace.gameserver.custom.service.SchemeBufferService.BufferSchemeType;

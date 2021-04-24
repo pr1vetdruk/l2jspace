@@ -1,6 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.zone.type;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.xml.MapRegionData.TeleportType;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;

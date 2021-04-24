@@ -10,7 +10,7 @@ import ru.privetdruk.l2jspace.common.mmocore.IPacketHandler;
 import ru.privetdruk.l2jspace.common.mmocore.MMOConnection;
 import ru.privetdruk.l2jspace.common.mmocore.ReceivablePacket;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.network.GameClient.GameClientState;
 import ru.privetdruk.l2jspace.gameserver.network.clientpackets.*;
 

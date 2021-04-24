@@ -2,7 +2,7 @@ package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
 import java.util.logging.Logger;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.xml.AdminData;
 import ru.privetdruk.l2jspace.gameserver.handler.AdminCommandHandler;
 import ru.privetdruk.l2jspace.gameserver.handler.IAdminCommandHandler;

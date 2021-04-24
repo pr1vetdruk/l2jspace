@@ -5,7 +5,7 @@ import java.util.StringTokenizer;
 import ru.privetdruk.l2jspace.common.network.ServerType;
 import ru.privetdruk.l2jspace.common.util.SysUtil;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.LoginServerThread;
 import ru.privetdruk.l2jspace.gameserver.Shutdown;
 import ru.privetdruk.l2jspace.gameserver.handler.IAdminCommandHandler;

@@ -5,7 +5,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 
 public class GameServerListener extends FloodProtectedListener {
     private static List<GameServerThread> _gameServers = new ArrayList<>();

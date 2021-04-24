@@ -4,7 +4,7 @@ import java.util.List;
 
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.PlayerData;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassId;

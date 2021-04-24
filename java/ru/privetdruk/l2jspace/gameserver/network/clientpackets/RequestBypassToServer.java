@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
 import ru.privetdruk.l2jspace.common.math.MathUtil;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.CommunityBoard;
 import ru.privetdruk.l2jspace.gameserver.data.manager.BotsPreventionManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.HeroManager;

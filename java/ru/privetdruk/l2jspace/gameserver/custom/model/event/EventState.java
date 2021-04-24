@@ -4,12 +4,11 @@ public enum EventState {
     ABORT,
     INACTIVE,
     READY_TO_START,
-    REGISTRATION
-    /*ERROR,
-    ,
+    REGISTRATION,
+//    ERROR,
+
     TELEPORTATION,
-    START,
-    ABORT,
+    /*START,
     IN_PROGRESS,
     FINISH;*/
 }

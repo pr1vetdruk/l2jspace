@@ -1,6 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.handler.voicedcommandhandlers;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.FestivalOfDarknessManager;
 import ru.privetdruk.l2jspace.gameserver.data.sql.OfflineTradersTable;
 import ru.privetdruk.l2jspace.gameserver.handler.IVoicedCommandHandler;

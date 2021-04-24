@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 
 public abstract class FloodProtectedListener extends Thread {
     private static final CLogger LOGGER = new CLogger(FloodProtectedListener.class.getName());

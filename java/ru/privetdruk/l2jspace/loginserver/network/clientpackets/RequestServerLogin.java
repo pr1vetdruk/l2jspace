@@ -1,6 +1,6 @@
 package ru.privetdruk.l2jspace.loginserver.network.clientpackets;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.loginserver.model.Account;
 import ru.privetdruk.l2jspace.loginserver.network.SessionKey;
 import ru.privetdruk.l2jspace.loginserver.network.serverpackets.LoginFail;

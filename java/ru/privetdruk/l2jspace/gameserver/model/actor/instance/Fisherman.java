@@ -2,7 +2,7 @@ package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
 import java.util.List;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.FishingChampionshipManager;
 import ru.privetdruk.l2jspace.gameserver.data.xml.SkillTreeData;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.AcquireSkillType;

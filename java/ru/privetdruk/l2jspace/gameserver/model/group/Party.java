@@ -10,7 +10,7 @@ import ru.privetdruk.l2jspace.common.math.MathUtil;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.DimensionalRiftManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.DuelManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.FestivalOfDarknessManager;

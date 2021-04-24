@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.LoginServerThread;
 import ru.privetdruk.l2jspace.loginserver.data.manager.GameServerManager;
 import ru.privetdruk.l2jspace.loginserver.model.GameServerInfo;

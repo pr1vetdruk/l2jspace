@@ -14,7 +14,7 @@ import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.util.SysUtil;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.CommunityBoard;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.cache.CrestCache;

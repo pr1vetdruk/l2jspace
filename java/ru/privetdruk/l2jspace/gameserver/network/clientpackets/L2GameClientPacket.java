@@ -5,7 +5,7 @@ import java.nio.BufferUnderflowException;
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.mmocore.ReceivablePacket;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.GameClient;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.L2GameServerPacket;

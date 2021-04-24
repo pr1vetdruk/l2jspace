@@ -4,7 +4,7 @@ import java.nio.BufferUnderflowException;
 
 import ru.privetdruk.l2jspace.common.math.MathUtil;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.TeleportMode;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;

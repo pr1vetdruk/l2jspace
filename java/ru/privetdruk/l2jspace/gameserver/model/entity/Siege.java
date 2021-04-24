@@ -17,7 +17,7 @@ import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.HeroManager;
 import ru.privetdruk.l2jspace.gameserver.data.sql.ClanTable;

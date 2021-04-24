@@ -9,7 +9,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectFlag;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectType;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillType;

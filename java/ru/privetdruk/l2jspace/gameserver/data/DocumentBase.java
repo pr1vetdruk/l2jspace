@@ -14,7 +14,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassRace;
 import ru.privetdruk.l2jspace.gameserver.enums.items.ArmorType;
 import ru.privetdruk.l2jspace.gameserver.enums.items.WeaponType;

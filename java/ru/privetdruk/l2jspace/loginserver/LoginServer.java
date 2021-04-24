@@ -14,7 +14,7 @@ import ru.privetdruk.l2jspace.common.mmocore.SelectorConfig;
 import ru.privetdruk.l2jspace.common.mmocore.SelectorThread;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.loginserver.data.manager.GameServerManager;
 import ru.privetdruk.l2jspace.loginserver.data.manager.IpBanManager;
 import ru.privetdruk.l2jspace.loginserver.data.sql.AccountTable;

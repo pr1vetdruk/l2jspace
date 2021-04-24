@@ -5,7 +5,7 @@ import java.util.Map;
 
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.BuyListManager;
 import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;

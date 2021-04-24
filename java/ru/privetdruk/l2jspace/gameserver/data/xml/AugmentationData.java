@@ -11,7 +11,7 @@ import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.Stats;
 import ru.privetdruk.l2jspace.gameserver.model.Augmentation;
 import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;

@@ -18,7 +18,7 @@ import ru.privetdruk.l2jspace.common.lang.StringUtil;
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.math.MathUtil;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.GeoType;
 import ru.privetdruk.l2jspace.gameserver.enums.MoveDirectionType;
 import ru.privetdruk.l2jspace.gameserver.geoengine.geodata.ABlock;
@@ -60,7 +60,7 @@ public class GeoEngine {
     private long _postFilterElapsed = 0;
 
     /**
-     * GeoEngine constructor. Loads all geodata files based on geo-engine.properties config.
+     * GeoEngine constructor. Loads all geodata files based on geo-engine.properties.properties config.
      */
     public GeoEngine() {
         // initialize block container
@@ -96,7 +96,7 @@ public class GeoEngine {
         BlockMultilayer.release();
 
         if (failed > 0) {
-            LOGGER.warn("Failed to load {} {} region files. Please consider to check your \"geo-engine.properties\" settings and location of your geodata files.", failed, Config.GEODATA_TYPE);
+            LOGGER.warn("Failed to load {} {} region files. Please consider to check your \"geo-engine.properties.properties\" settings and location of your geodata files.", failed, Config.GEODATA_TYPE);
             System.exit(1);
         }
 

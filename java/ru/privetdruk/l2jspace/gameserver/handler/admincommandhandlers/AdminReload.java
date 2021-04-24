@@ -2,7 +2,7 @@ package ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers;
 
 import java.util.StringTokenizer;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.cache.CrestCache;
 import ru.privetdruk.l2jspace.gameserver.data.cache.HtmCache;

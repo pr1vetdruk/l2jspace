@@ -1,6 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.enums;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 
 public enum FloodProtector {
     ROLL_DICE(0, Config.ROLL_DICE_TIME),

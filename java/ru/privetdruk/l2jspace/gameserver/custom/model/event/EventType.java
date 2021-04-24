@@ -1,5 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.custom.model.event;
 
+import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.NO;
+
 public enum EventType {
     NONE(false),
     CTF(true),

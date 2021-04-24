@@ -2,7 +2,7 @@ package ru.privetdruk.l2jspace.gameserver.model.olympiad;
 
 import java.util.List;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.OlympiadType;
 import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
 

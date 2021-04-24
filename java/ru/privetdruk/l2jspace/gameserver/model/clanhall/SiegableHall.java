@@ -7,7 +7,7 @@ import java.util.Calendar;
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ClanHallManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ZoneManager;
 import ru.privetdruk.l2jspace.gameserver.enums.SiegeStatus;

@@ -5,7 +5,7 @@ import java.util.List;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.SiegeSide;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.NpcAiType;

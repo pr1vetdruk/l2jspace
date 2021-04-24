@@ -17,7 +17,7 @@ import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.sql.SpawnTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.DoorData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;

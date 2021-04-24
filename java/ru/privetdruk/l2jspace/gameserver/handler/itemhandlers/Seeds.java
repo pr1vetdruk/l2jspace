@@ -1,6 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.handler.itemhandlers;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManorManager;
 import ru.privetdruk.l2jspace.gameserver.data.xml.MapRegionData;
 import ru.privetdruk.l2jspace.gameserver.handler.IItemHandler;

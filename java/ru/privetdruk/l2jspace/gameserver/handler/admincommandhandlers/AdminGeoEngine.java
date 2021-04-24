@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.geoengine.GeoEngine;
 import ru.privetdruk.l2jspace.gameserver.geoengine.geodata.ABlock;
 import ru.privetdruk.l2jspace.gameserver.geoengine.geodata.GeoStructure;

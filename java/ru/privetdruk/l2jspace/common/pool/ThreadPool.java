@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 
 /**
  * This class handles thread pooling system. It relies on two ThreadPoolExecutor arrays, which poolers number is generated using config.

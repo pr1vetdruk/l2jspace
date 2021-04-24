@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.DayNightManager;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.SevenSignsSpawnData;

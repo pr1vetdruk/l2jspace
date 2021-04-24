@@ -6,7 +6,7 @@ import java.util.Set;
 
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.data.sql.ClanTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.PlayerData;

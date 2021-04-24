@@ -6,7 +6,7 @@ import ru.privetdruk.l2jspace.common.network.ServerType;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.custom.service.SchemeBufferService;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManorManager;
 import ru.privetdruk.l2jspace.gameserver.custom.service.WeddingService;

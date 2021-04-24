@@ -3,7 +3,7 @@ package ru.privetdruk.l2jspace.gameserver.model.olympiad;
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 
-import ru.privetdruk.l2jspace.Config;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.SpawnType;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.OlympiadStadiumZone;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
