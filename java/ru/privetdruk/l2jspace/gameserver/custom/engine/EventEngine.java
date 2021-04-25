@@ -110,7 +110,7 @@ public abstract class EventEngine implements Runnable {
         restorePlayerData();
 
         if (eventState != REGISTRATION) {
-            customAbort();
+            abortCustom();
             returnPlayer();
         }
 
@@ -140,7 +140,7 @@ public abstract class EventEngine implements Runnable {
     }
 
     protected void unspawnEventNpc() {
-        customUnspawnNpc();
+        unspawnNpcCustom();
 
         Spawn spawnMainNpc = settings.getSpawnMainNpc();
 
@@ -155,6 +155,10 @@ public abstract class EventEngine implements Runnable {
     }
 
     protected void restorePlayerData() {
+        players.values().stream()
+                .map(EventPlayer::getPlayer)
+                .filter(Objects::nonNull)
+                .forEach(this::restorePlayerDataCustom);
         Iterator<PlayerInstance> playerIterator = players.iterator();
 
         while (playerIterator.hasNext()) {
@@ -239,7 +243,7 @@ public abstract class EventEngine implements Runnable {
     private void preLaunchChecks() {
         if (eventState != INACTIVE
                 || settings.getTimeRegistration() <= 0
-                || !customPreLaunchChecks()
+                || !preLaunchChecksCustom()
                 || isSiegesLaunched()) {
             eventState = ABORT;
         } else {
@@ -428,37 +432,37 @@ public abstract class EventEngine implements Runnable {
     }
 
     protected void removeOfflinePlayers() {
+        if (players.isEmpty()) {
+            return;
+        }
+
         try {
-            if (players.isEmpty()) {
-                return;
-            }
-
-            for (EventPlayer eventPlayer : players.values()) {
-                Player player = eventPlayer.getPlayer();
-
-                if (player != null && (!player.isOnline() || player.isInJail() || player.getOfflineStartTime() > 0)) {
-                    restorePlayerData(player);
-                    players.remove(player.getObjectId());
-                }
-            }
-
+            players.values().stream()
+                    .filter(eventPlayer -> eventPlayer.getPlayer() != null)
+                    .filter(eventPlayer -> !eventPlayer.getPlayer().isOnline()
+                            || eventPlayer.getPlayer().isInJail()
+                            || eventPlayer.getPlayer().getOfflineStartTime() > 0)
+                    .forEach(eventPlayer -> {
+                        restorePlayerDataCustom(eventPlayer);
+                        players.remove(eventPlayer.getPlayer().getObjectId());
+                    });
         } catch (Exception e) {
             LOGGER.warning(e.getMessage());
         }
     }
 
     // TODO
-    protected abstract boolean customPreLaunchChecks();
+    protected abstract boolean preLaunchChecksCustom();
 
-    protected abstract void restorePlayerData(Player player);
+    protected abstract void restorePlayerDataCustom(EventPlayer player);
 
     protected abstract void updatePlayerEventData();
 
     protected abstract void spawnOtherNpc();
 
-    protected abstract void customUnspawnNpc();
+    protected abstract void unspawnNpcCustom();
 
-    protected abstract void customAbort();
+    protected abstract void abortCustom();
 /*
 
 
