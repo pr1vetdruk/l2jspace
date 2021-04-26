@@ -16,6 +16,7 @@ import ru.privetdruk.l2jspace.common.util.SysUtil;
 
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.CommunityBoard;
+import ru.privetdruk.l2jspace.gameserver.custom.service.EventService;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.cache.CrestCache;
 import ru.privetdruk.l2jspace.gameserver.data.cache.HtmCache;
@@ -236,6 +237,9 @@ public class GameServer {
         NewbieBuffData.getInstance();
         InstantTeleportData.getInstance();
         TeleportData.getInstance();
+
+        StringUtil.printSection("Events");
+        EventService.getInstance();
 
         StringUtil.printSection("Olympiads & Heroes");
         OlympiadGameManager.getInstance();

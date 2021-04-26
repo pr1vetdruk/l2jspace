@@ -8,6 +8,10 @@ public class CtfTeamSetting extends TeamSetting {
     protected Flag flag;
     protected Throne throne;
 
+    public CtfTeamSetting() {
+        super("name", 1, 1, null);
+    }
+
     public CtfTeamSetting(int id, String name, Integer playersCount, int offset, SpawnLocation spawnLocation, Flag flag, Throne throne) {
         super(name, playersCount, offset, spawnLocation);
 

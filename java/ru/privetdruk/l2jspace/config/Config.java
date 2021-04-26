@@ -16,6 +16,8 @@ import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.math.MathUtil;
 
 import ru.privetdruk.l2jspace.config.custom.event.EventConfig;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventLoadingMode;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType;
 import ru.privetdruk.l2jspace.gameserver.enums.GeoType;
 import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
 import ru.privetdruk.l2jspace.gameserver.model.olympiad.enums.OlympiadPeriod;
@@ -1280,12 +1282,21 @@ public final class Config {
     }
 
     private static void loadCustomEvent() {
-        ExProperties engine = initProperties(EventConfig.Engine.EVENT_ENGINE_FILE);
+        ExProperties engine = initProperties(EventConfig.Engine.PROPERTIES);
 
         EventConfig.Engine.ANNOUNCE_REWARD = engine.getProperty("AnnounceReward", true);
         EventConfig.Engine.REGISTRATION_BY_COMMANDS = engine.getProperty("RegistrationByCommands", true);
         EventConfig.Engine.LOG_STATISTICS = engine.getProperty("LogStatistics", true);
         EventConfig.Engine.WAIT_TELEPORT_SECONDS = engine.getProperty("WaitTeleportSeconds", 5);
+
+        ExProperties ctf = initProperties(EventConfig.CTF.PROPERTIES);
+
+        EventConfig.CTF.ENABLED = engine.getProperty("Enabled", false);
+        EventConfig.CTF.LAUNCH_TIMES = engine.getProperty("LaunchTimes", "").split(";");
+        EventConfig.CTF.LOADING_MODE = EventLoadingMode.valueOf(engine.getProperty("LoadingMode", EventLoadingMode.RANDOMLY.name()));
+        EventConfig.CTF.TEAM_MODE = EventTeamType.valueOf(engine.getProperty("TeamMode", EventTeamType.SHUFFLE.name()));
+        EventConfig.CTF.ON_START_UNSUMMON_PET = engine.getProperty("OnStartUnsummonPet", true);
+        EventConfig.CTF.ON_START_REMOVE_ALL_EFFECTS = engine.getProperty("OnStartRemoveAllEffects", false);
     }
 
     private static void loadAddon() {

@@ -1,14 +1,27 @@
 package ru.privetdruk.l2jspace.config.custom.event;
 
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventLoadingMode;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType;
+
 public class EventConfig {
     private EventConfig() {
     }
 
     public static class Engine {
-        public static final String EVENT_ENGINE_FILE = "./config/event/engine.properties";
+        public static final String PROPERTIES = "./config/event/engine.properties";
         public static boolean ANNOUNCE_REWARD;
         public static boolean REGISTRATION_BY_COMMANDS;
         public static boolean LOG_STATISTICS;
         public static int WAIT_TELEPORT_SECONDS;
+    }
+
+    public static class CTF {
+        public static final String PROPERTIES = "./config/event/ctf.properties";
+        public static boolean ENABLED;
+        public static String[] LAUNCH_TIMES;
+        public static EventLoadingMode LOADING_MODE;
+        public static EventTeamType TEAM_MODE;
+        public static boolean ON_START_UNSUMMON_PET;
+        public static boolean ON_START_REMOVE_ALL_EFFECTS;
     }
 }

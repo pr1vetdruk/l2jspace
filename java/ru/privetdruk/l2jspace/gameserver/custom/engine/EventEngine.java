@@ -12,6 +12,7 @@ import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventType;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.TeamSetting;
 import ru.privetdruk.l2jspace.gameserver.custom.service.AnnouncementService;
+import ru.privetdruk.l2jspace.gameserver.custom.task.EventTask;
 import ru.privetdruk.l2jspace.gameserver.custom.util.Chronos;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.data.sql.SpawnTable;
@@ -37,18 +38,17 @@ import static ru.privetdruk.l2jspace.config.custom.event.EventConfig.Engine.WAIT
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.*;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.SHUFFLE;
 
-public abstract class EventEngine implements Runnable {
+public abstract class EventEngine implements EventTask {
     protected static final Logger LOGGER = Logger.getLogger(EventEngine.class.getName());
     protected static final AnnouncementService announcementService = AnnouncementService.getInstance();
 
     protected final EventSetting settings = new EventSetting();
-    protected final List<TeamSetting> teamSettings;
+    protected List<TeamSetting> teamSettings;
     protected final Map<Integer, EventPlayer> players = new ConcurrentHashMap<>();
 
     protected EventType eventType;
     protected EventTeamType teamMode;
     protected EventState eventState;
-    protected EventBorder eventBorder;
     protected String eventStartTime;
     protected boolean onStartUnsummonPet;
     protected boolean onStartRemoveAllEffects;
@@ -56,13 +56,11 @@ public abstract class EventEngine implements Runnable {
     public EventEngine(EventType eventType,
                        EventTeamType teamMode,
                        boolean onStartUnsummonPet,
-                       boolean onStartRemoveAllEffects,
-                       List<TeamSetting> teamSettings) {
+                       boolean onStartRemoveAllEffects) {
         this.eventType = eventType;
         this.teamMode = teamMode;
         this.onStartUnsummonPet = onStartUnsummonPet;
         this.onStartRemoveAllEffects = onStartRemoveAllEffects;
-        this.teamSettings = teamSettings;
 
         eventState = INACTIVE;
     }
@@ -85,6 +83,7 @@ public abstract class EventEngine implements Runnable {
 
                     if (eventState == ABORT) {
                         abortEvent();
+                        return;
                     }
 
                     waiter(1);
@@ -102,7 +101,26 @@ public abstract class EventEngine implements Runnable {
         } finally {
             eventState = INACTIVE;
         }
+    }
 
+    protected void finishEvent() {
+        if (eventState != IN_PROGRESS) {
+            return;
+        }
+
+        eventState = FINISH;
+
+        unspawnEventNpc();
+        determineWinner();
+        returnPlayer();
+    }
+
+    protected void startEvent() {
+        announceCritical("Started!");
+
+        eventState = IN_PROGRESS;
+
+        sitPlayer();
     }
 
     protected void abortEvent() {
@@ -136,7 +154,7 @@ public abstract class EventEngine implements Runnable {
 
             restorePlayerData();
             sitPlayer();
-        }, 20000);
+        }, TimeUnit.SECONDS.toMillis(20));
     }
 
     protected void unspawnEventNpc() {
@@ -156,22 +174,8 @@ public abstract class EventEngine implements Runnable {
 
     protected void restorePlayerData() {
         players.values().stream()
-                .map(EventPlayer::getPlayer)
-                .filter(Objects::nonNull)
+                .filter(eventPlayer -> eventPlayer.getPlayer() != null)
                 .forEach(this::restorePlayerDataCustom);
-        Iterator<PlayerInstance> playerIterator = players.iterator();
-
-        while (playerIterator.hasNext()) {
-            PlayerInstance player = playerIterator.next();
-
-            if (player != null) {
-                removeFlagFromPlayer(player);
-
-                excludePlayer(player, playerIterator);
-
-                savedPlayerNames.remove(player.getName());
-            }
-        }
     }
 
     public void teleport() {
@@ -374,7 +378,7 @@ public abstract class EventEngine implements Runnable {
         while (((startWaiterTime + interval) > Chronos.currentTimeMillis()) && eventState != ABORT) {
             seconds--; // Here because we don't want to see two time announce at the same time
 
-            if (eventState == REGISTRATION || eventState == START || eventState == TELEPORTATION) {
+            if (eventState == REGISTRATION || eventState == IN_PROGRESS || eventState == TELEPORTATION) {
                 switch (seconds) {
                     case 3600: // 1 hour left
                     case 1800: // 30 minutes left
@@ -392,7 +396,7 @@ public abstract class EventEngine implements Runnable {
                         if (eventState == REGISTRATION) {
                             announceCritical("Registration in " + settings.getRegistrationLocationName());
                             announceCritical((seconds / 60) + " minute(s) till registration close");
-                        } else if (eventState == START) {
+                        } else if (eventState == IN_PROGRESS) {
                             announceCritical((seconds / 60) + " minute(s) till event finish!");
                         }
 
@@ -408,8 +412,8 @@ public abstract class EventEngine implements Runnable {
                         if (eventState == REGISTRATION) {
                             announceCritical("Registration close!");
                         } else if (eventState == TELEPORTATION) {
-                            announceCritical("Start fight!");
-                        } else if (eventState == START) {
+                            announceCritical("Teleported!");
+                        } else if (eventState == IN_PROGRESS) {
                             announceCritical("Event finish!");
                         }
 
@@ -451,7 +455,27 @@ public abstract class EventEngine implements Runnable {
         }
     }
 
+    @Override
+    public String getEventStartTime() {
+        return eventStartTime;
+    }
+
+    public void setEventStartTime(String eventStartTime) {
+        this.eventStartTime = eventStartTime;
+    }
+
+    @Override
+    public String getEventIdentifier() {
+        return settings.getEventName();
+    }
+
+    public EventState getEventState() {
+        return eventState;
+    }
+
     // TODO
+    public abstract void loadData(int eventId);
+
     protected abstract boolean preLaunchChecksCustom();
 
     protected abstract void restorePlayerDataCustom(EventPlayer player);
@@ -463,6 +487,8 @@ public abstract class EventEngine implements Runnable {
     protected abstract void unspawnNpcCustom();
 
     protected abstract void abortCustom();
+
+    protected abstract void determineWinner();
 /*
 
 
