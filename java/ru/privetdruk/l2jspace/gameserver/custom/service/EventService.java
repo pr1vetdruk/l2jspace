@@ -3,16 +3,16 @@ package ru.privetdruk.l2jspace.gameserver.custom.service;
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 import ru.privetdruk.l2jspace.config.custom.event.EventConfig;
-import ru.privetdruk.l2jspace.gameserver.GameServer;
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
-import ru.privetdruk.l2jspace.gameserver.custom.event.CTF;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventLoadingMode;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventType;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,25 +26,21 @@ public class EventService {
 
     public void load() {
         if (EventConfig.CTF.ENABLED) {
-            load(CTF.class, EventConfig.CTF.LAUNCH_TIMES);
+            load(EventType.CTF, EventConfig.CTF.LAUNCH_TIMES);
         }
     }
 
-    private void load(Class<? extends EventEngine> eventClass, String[] times) {
+    private void load(EventType eventType, String[] times) {
         try {
-
-
             EventTaskService.getInstance().clearEventTasksByEventName("ALL");
 
             List<Integer> eventIdList = new ArrayList<>();
+            ResultSet resultSet = null;
 
-            try (Connection connection = ConnectionPool.getConnection()) {
-                PreparedStatement statement;
-                ResultSet resultSet;
-
-                statement = connection.prepareStatement("SELECT id FROM event e WHERE e.type = 'CTF' order by e.loading_order");
+            try (Connection connection = ConnectionPool.getConnection();
+                 PreparedStatement statement = connection.prepareStatement("SELECT id FROM event e WHERE e.type = ? order by e.loading_order")) {
+                statement.setString(1, eventType.name());
                 resultSet = statement.executeQuery();
-
                 if (!resultSet.next()) {
                     LOGGER.warn("Settings not found!");
                     return;
@@ -56,9 +52,17 @@ public class EventService {
             } catch (Exception e) {
                 LOGGER.error("An error occurred while reading event data!");
                 return;
+            } finally {
+                if (resultSet != null) {
+                    try {
+                        resultSet.close();
+                    } catch (SQLException e) {
+                        LOGGER.warn(e.getMessage());
+                    }
+                }
             }
 
-            if (eventClass == CTF.class && EventConfig.CTF.LOADING_MODE == EventLoadingMode.RANDOMLY) {
+            if (eventType == EventType.CTF && EventConfig.CTF.LOADING_MODE == EventLoadingMode.RANDOMLY) {
                 Collections.shuffle(eventIdList);
             }
 
@@ -67,7 +71,7 @@ public class EventService {
                     eventIdIndex = 0;
                 }
 
-                EventEngine eventTask = eventClass.getDeclaredConstructor().newInstance();
+                EventEngine eventTask = eventType.getClazz().getDeclaredConstructor().newInstance();
 
                 eventTask.loadData(eventIdList.get(eventIdIndex));
 
@@ -79,7 +83,7 @@ public class EventService {
                 }
             }
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            LOGGER.error("Failed to load " + eventClass.getName());
+            LOGGER.error("Failed to load " + eventType);
         }
     }
 

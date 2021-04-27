@@ -125,6 +125,11 @@ fullInstall() {
   $MYG <./sql/game/spawnlist_4s.sql &>/dev/null
   $MYG <./sql/game/spawnlist.sql &>/dev/null
   echo "Done."
+
+  echo "Installing custom tables."
+  $MYG <./sql/game/custom/event/event.sql &>/dev/null
+  $MYG <./sql/game/custom/event/event_ctf_team_setting.sql &>/dev/null
+  echo "Done."
 }
 
 finish() {

@@ -4,7 +4,6 @@ import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.config.custom.event.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.custom.model.NpcInfoShort;
 import ru.privetdruk.l2jspace.gameserver.custom.model.SkillEnum;
-import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBorder;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventPlayer;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventSetting;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState;
@@ -29,7 +28,11 @@ import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MagicSkillUse;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
@@ -40,10 +43,12 @@ import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType
 
 public abstract class EventEngine implements EventTask {
     protected static final Logger LOGGER = Logger.getLogger(EventEngine.class.getName());
+
+    protected static final List<EventEngine> eventTaskList = new ArrayList<>();
     protected static final AnnouncementService announcementService = AnnouncementService.getInstance();
 
-    protected final EventSetting settings = new EventSetting();
-    protected List<TeamSetting> teamSettings;
+    protected EventSetting settings = null;
+    protected List<TeamSetting> teamSettings = null;
     protected final Map<Integer, EventPlayer> players = new ConcurrentHashMap<>();
 
     protected EventType eventType;

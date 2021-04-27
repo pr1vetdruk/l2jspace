@@ -14,6 +14,12 @@ public class SpawnLocation extends Location {
 
     protected volatile int _heading;
 
+    public SpawnLocation(int x, int y, int z) {
+        super(x, y, z);
+
+        _heading = 0;
+    }
+
     public SpawnLocation(int x, int y, int z, int heading) {
         super(x, y, z);
 

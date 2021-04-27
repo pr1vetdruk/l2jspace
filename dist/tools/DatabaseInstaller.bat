@@ -106,7 +106,11 @@ echo Installing tables.
 %mysqlPath% -h %gameServerHost% -u %gameServerUser% --password=%gameServerPassword% -D %gameDatabase% < ./sql/game/spawnlist_4s.sql
 %mysqlPath% -h %gameServerHost% -u %gameServerUser% --password=%gameServerPassword% -D %gameDatabase% < ./sql/game/spawnlist.sql
 echo Done.
-
+echo.
+echo Installing custom tables.
+%mysqlPath% -h %gameServerHost% -u %gameServerUser% --password=%gameServerPassword% -D %gameDatabase% < ./sql/game/custom/event/event.sql
+%mysqlPath% -h %gameServerHost% -u %gameServerUser% --password=%gameServerPassword% -D %gameDatabase% < ./sql/game/custom/event/event_ctf_team_setting.sql
+echo Done.
 echo.
 echo Script execution finished.
 pause

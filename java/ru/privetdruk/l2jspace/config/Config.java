@@ -1295,8 +1295,8 @@ public final class Config {
         EventConfig.CTF.LAUNCH_TIMES = engine.getProperty("LaunchTimes", "").split(";");
         EventConfig.CTF.LOADING_MODE = EventLoadingMode.valueOf(engine.getProperty("LoadingMode", EventLoadingMode.RANDOMLY.name()));
         EventConfig.CTF.TEAM_MODE = EventTeamType.valueOf(engine.getProperty("TeamMode", EventTeamType.SHUFFLE.name()));
-        EventConfig.CTF.ON_START_UNSUMMON_PET = engine.getProperty("OnStartUnsummonPet", true);
-        EventConfig.CTF.ON_START_REMOVE_ALL_EFFECTS = engine.getProperty("OnStartRemoveAllEffects", false);
+        EventConfig.CTF.UNSUMMON_PET = engine.getProperty("UnsummonPet", true);
+        EventConfig.CTF.REMOVE_ALL_EFFECTS = engine.getProperty("RemoveAllEffects", false);
     }
 
     private static void loadAddon() {

@@ -1,6 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.custom.model.event;
 
-import ru.privetdruk.l2jspace.gameserver.model.location.SpawnLocation;
+import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 
 public class TeamSetting {
     protected String name;
@@ -8,9 +8,9 @@ public class TeamSetting {
     protected int points;
     protected int color;
     protected int offset;
-    protected SpawnLocation spawnLocation;
+    protected Location spawnLocation;
 
-    public TeamSetting(String name, Integer color, int offset, SpawnLocation spawnLocation) {
+    public TeamSetting(String name, Integer color, int offset, Location spawnLocation) {
         this.name = name;
         this.color = color;
         this.offset = offset;
@@ -37,7 +37,7 @@ public class TeamSetting {
         return offset;
     }
 
-    public SpawnLocation getSpawnLocation() {
+    public Location getSpawnLocation() {
         return spawnLocation;
     }
 

@@ -1,42 +1,26 @@
-/*
- * This file is part of the L2jSpace project.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
 package ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf;
 
-import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
+import ru.privetdruk.l2jspace.gameserver.custom.model.NpcInfoShort;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
 
 public class Flag {
-    protected Npc npc;
-    protected int itemId;
-    protected Spawn spawn;
-    protected Boolean taken;
+    private NpcInfoShort npc;
+    private int itemId;
+    private Spawn spawn;
+    private Boolean taken;
 
-    public Flag(Npc npc, int itemId, Spawn spawn, Boolean taken) {
+    public Flag(NpcInfoShort npc, int itemId, Boolean taken) {
         this.npc = npc;
         this.itemId = itemId;
-        this.spawn = spawn;
+        this.spawn = null;
         this.taken = taken;
     }
 
-    public Npc getNpc() {
+    public NpcInfoShort getNpc() {
         return npc;
     }
 
-    public void setNpc(Npc npc) {
+    public void setNpc(NpcInfoShort npc) {
         this.npc = npc;
     }
 

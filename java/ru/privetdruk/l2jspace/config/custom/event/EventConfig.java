@@ -21,7 +21,7 @@ public class EventConfig {
         public static String[] LAUNCH_TIMES;
         public static EventLoadingMode LOADING_MODE;
         public static EventTeamType TEAM_MODE;
-        public static boolean ON_START_UNSUMMON_PET;
-        public static boolean ON_START_REMOVE_ALL_EFFECTS;
+        public static boolean UNSUMMON_PET;
+        public static boolean REMOVE_ALL_EFFECTS;
     }
 }
