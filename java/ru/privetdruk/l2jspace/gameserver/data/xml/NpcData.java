@@ -28,6 +28,10 @@ import org.w3c.dom.NamedNodeMap;
  * Loads and stores {@link NpcTemplate}s.
  */
 public class NpcData implements IXmlReader {
+    private static final String DEFAULT_NPC_INSTANCE_PACKAGE = "ru.privetdruk.l2jspace.gameserver.model.actor.instance.";
+    private static final String CUSTOM_NPC_INSTANCE_PACKAGE = "ru.privetdruk.l2jspace.gameserver.custom.instance.";
+    private static final int CUSTOM_NPC_ID_STARTER = 50000;
+
     private final Map<Integer, NpcTemplate> npcs = new HashMap<>();
 
     protected NpcData() {
@@ -197,6 +201,10 @@ public class NpcData implements IXmlReader {
 
     public Collection<NpcTemplate> getAllNpcs() {
         return npcs.values();
+    }
+
+    public static String getNpcInstancePackage(int npcId) {
+        return npcId < CUSTOM_NPC_ID_STARTER ? DEFAULT_NPC_INSTANCE_PACKAGE : CUSTOM_NPC_INSTANCE_PACKAGE;
     }
 
     public static NpcData getInstance() {

@@ -22,8 +22,6 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class AttackableAIScript extends Quest {
-    private static final String ACTOR_INSTANCE_PACKAGE = "ru.privetdruk.l2jspace.gameserver.model.actor.instance.";
-
     /**
      * Implicit constructor for generic AI script.<br>
      * It is used by default for all {@link Attackable} instances.
@@ -55,7 +53,8 @@ public class AttackableAIScript extends Quest {
         // register all mobs here...
         for (final NpcTemplate template : NpcData.getInstance().getAllNpcs()) {
             try {
-                if (Attackable.class.isAssignableFrom(Class.forName(ACTOR_INSTANCE_PACKAGE + template.getType()))) {
+                Class<?> aClass = Class.forName(NpcData.getNpcInstancePackage(template.getNpcId()) + template.getType());
+                if (Attackable.class.isAssignableFrom(aClass)) {
                     template.addQuestEvent(ScriptEventType.ON_ATTACK, this);
                     template.addQuestEvent(ScriptEventType.ON_KILL, this);
                     template.addQuestEvent(ScriptEventType.ON_SPAWN, this);

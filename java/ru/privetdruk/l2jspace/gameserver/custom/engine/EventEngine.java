@@ -1,7 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.custom.engine;
 
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-import ru.privetdruk.l2jspace.config.custom.event.EventConfig;
+import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.custom.model.NpcInfoShort;
 import ru.privetdruk.l2jspace.gameserver.custom.model.SkillEnum;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventPlayer;
@@ -37,7 +37,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import static ru.privetdruk.l2jspace.config.custom.event.EventConfig.Engine.WAIT_TELEPORT_SECONDS;
+import static ru.privetdruk.l2jspace.config.custom.EventConfig.Engine.WAIT_TELEPORT_SECONDS;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.*;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.SHUFFLE;
 

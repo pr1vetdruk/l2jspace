@@ -2,7 +2,7 @@ package ru.privetdruk.l2jspace.gameserver.custom.service;
 
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-import ru.privetdruk.l2jspace.config.custom.event.EventConfig;
+import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventLoadingMode;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState;

@@ -94,7 +94,7 @@ public class DerbyTrackManager {
                 if (template == null)
                     continue;
 
-                final Constructor<?> constructor = Class.forName("ru.privetdruk.l2jspace.gameserver.model.actor.instance." + template.getType()).getConstructors()[0];
+                final Constructor<?> constructor = Class.forName(NpcData.getNpcInstancePackage(template.getNpcId()) + template.getType()).getConstructors()[0];
 
                 _runners.add((Npc) constructor.newInstance(IdFactory.getInstance().getNextId(), template));
             }

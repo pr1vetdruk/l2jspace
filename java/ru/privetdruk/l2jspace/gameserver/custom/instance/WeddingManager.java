@@ -15,8 +15,8 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ConfirmDlg;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MagicSkillUse;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
 
-public class Wedding extends Folk {
-    public Wedding(int objectId, NpcTemplate template) {
+public class WeddingManager extends Folk {
+    public WeddingManager(int objectId, NpcTemplate template) {
         super(objectId, template);
     }
 

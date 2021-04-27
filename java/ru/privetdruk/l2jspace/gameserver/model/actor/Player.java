@@ -118,7 +118,7 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Pet;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Servitor;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.StaticObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.TamedBeast;
-import ru.privetdruk.l2jspace.gameserver.custom.instance.Wedding;
+import ru.privetdruk.l2jspace.gameserver.custom.instance.WeddingManager;
 import ru.privetdruk.l2jspace.gameserver.model.actor.move.PlayerMove;
 import ru.privetdruk.l2jspace.gameserver.model.actor.status.PlayerStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.PetTemplate;
@@ -2423,7 +2423,7 @@ public final class Player extends Playable {
                 WeddingService.getInstance().addCouple(requester, this);
 
                 // Then "finish the job"
-                Wedding.justMarried(requester, this);
+                WeddingManager.justMarried(requester, this);
             } else {
                 setUnderMarryRequest(false);
                 sendMessage("You declined your partner's marriage request.");

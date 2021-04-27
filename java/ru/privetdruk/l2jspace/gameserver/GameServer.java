@@ -238,9 +238,6 @@ public class GameServer {
         InstantTeleportData.getInstance();
         TeleportData.getInstance();
 
-        StringUtil.printSection("Events");
-        EventService.getInstance();
-
         StringUtil.printSection("Olympiads & Heroes");
         OlympiadGameManager.getInstance();
         Olympiad.getInstance();
@@ -262,6 +259,7 @@ public class GameServer {
         }
 
         StringUtil.printSection("Events");
+        EventService.getInstance();
         DerbyTrackManager.getInstance();
         LotteryManager.getInstance();
 

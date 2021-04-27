@@ -15,7 +15,7 @@ import ru.privetdruk.l2jspace.common.config.ExProperties;
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.math.MathUtil;
 
-import ru.privetdruk.l2jspace.config.custom.event.EventConfig;
+import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventLoadingMode;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType;
 import ru.privetdruk.l2jspace.gameserver.enums.GeoType;
@@ -31,7 +31,7 @@ public final class Config {
 
     public static final String CLAN_FILE = "./config/clan.properties";
     public static final String EVENT_FILE = "./config/event.properties";
-    public static final String GEO_ENGINE_FILE = "./config/geo-engine.properties.properties";
+    public static final String GEO_ENGINE_FILE = "./config/geo-engine.properties";
     public static final String HEX_ID_FILE = "./config/hexid.txt";
     public static final String LOGIN_SERVER_FILE = "./config/login-server.properties";
     public static final String NPC_FILE = "./config/npc.properties";
@@ -1291,12 +1291,12 @@ public final class Config {
 
         ExProperties ctf = initProperties(EventConfig.CTF.PROPERTIES);
 
-        EventConfig.CTF.ENABLED = engine.getProperty("Enabled", false);
-        EventConfig.CTF.LAUNCH_TIMES = engine.getProperty("LaunchTimes", "").split(";");
-        EventConfig.CTF.LOADING_MODE = EventLoadingMode.valueOf(engine.getProperty("LoadingMode", EventLoadingMode.RANDOMLY.name()));
-        EventConfig.CTF.TEAM_MODE = EventTeamType.valueOf(engine.getProperty("TeamMode", EventTeamType.SHUFFLE.name()));
-        EventConfig.CTF.UNSUMMON_PET = engine.getProperty("UnsummonPet", true);
-        EventConfig.CTF.REMOVE_ALL_EFFECTS = engine.getProperty("RemoveAllEffects", false);
+        EventConfig.CTF.ENABLED = ctf.getProperty("Enabled", false);
+        EventConfig.CTF.LAUNCH_TIMES = ctf.getProperty("LaunchTimes", "").split(";");
+        EventConfig.CTF.LOADING_MODE = EventLoadingMode.valueOf(ctf.getProperty("LoadingMode", EventLoadingMode.RANDOMLY.name()));
+        EventConfig.CTF.TEAM_MODE = EventTeamType.valueOf(ctf.getProperty("TeamMode", EventTeamType.SHUFFLE.name()));
+        EventConfig.CTF.UNSUMMON_PET = ctf.getProperty("UnsummonPet", true);
+        EventConfig.CTF.REMOVE_ALL_EFFECTS = ctf.getProperty("RemoveAllEffects", false);
     }
 
     private static void loadAddon() {

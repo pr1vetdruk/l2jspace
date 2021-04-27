@@ -1,5 +1,6 @@
 -- Created by privetdruk for L2jSpace
 DROP TABLE IF EXISTS event_ctf_team_setting;
+
 CREATE TABLE event_ctf_team_setting
 (
     event_id                 SMALLINT     NOT NULL COMMENT 'Event ID',
@@ -23,20 +24,6 @@ CREATE TABLE event_ctf_team_setting
   COLLATE = utf8_unicode_ci;
 
 ALTER TABLE event_ctf_team_setting COMMENT = 'CTF teams settings';
-ALTER TABLE event_ctf_team_setting MODIFY event_id                 SMALLINT      COMMENT 'Event ID';
-ALTER TABLE event_ctf_team_setting MODIFY id                       INT(4) COMMENT 'Team ID';
-ALTER TABLE event_ctf_team_setting MODIFY name                     VARCHAR(255) COMMENT 'Team name';
-ALTER TABLE event_ctf_team_setting MODIFY name_color               INT(11) COMMENT 'Team color';
-ALTER TABLE event_ctf_team_setting MODIFY position_x               INT(11) COMMENT 'Team spawn position X';
-ALTER TABLE event_ctf_team_setting MODIFY position_y               INT(11) COMMENT 'Team spawn position Y';
-ALTER TABLE event_ctf_team_setting MODIFY position_z               INT(11) COMMENT 'Team spawn position Z';
-ALTER TABLE event_ctf_team_setting MODIFY flag_position_x          INT(11) COMMENT 'Flag spawn position X';
-ALTER TABLE event_ctf_team_setting MODIFY flag_position_y          INT(11) COMMENT 'Flag spawn position Y';
-ALTER TABLE event_ctf_team_setting MODIFY flag_position_z          INT(11) COMMENT 'Flag spawn position Z';
-ALTER TABLE event_ctf_team_setting MODIFY flag_item_id             INT COMMENT 'Flag item ID';
-ALTER TABLE event_ctf_team_setting MODIFY flag_npc_id              INT COMMENT 'Flag npc ID';
-ALTER TABLE event_ctf_team_setting MODIFY throne_npc_id            INT COMMENT 'Throne npc ID';
-ALTER TABLE event_ctf_team_setting MODIFY offset_throne_position_z INT(11) COMMENT 'Offset throne position on Z-axis';
 
 INSERT INTO event_ctf_team_setting (event_id, id, name, name_color,
                               offset, position_x, position_y, position_z,

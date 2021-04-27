@@ -1,4 +1,4 @@
-package ru.privetdruk.l2jspace.config.custom.event;
+package ru.privetdruk.l2jspace.config.custom;
 
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventLoadingMode;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType;
@@ -8,7 +8,7 @@ public class EventConfig {
     }
 
     public static class Engine {
-        public static final String PROPERTIES = "./config/event/engine.properties";
+        public static final String PROPERTIES = "./config/custom/event/engine.properties";
         public static boolean ANNOUNCE_REWARD;
         public static boolean REGISTRATION_BY_COMMANDS;
         public static boolean LOG_STATISTICS;
@@ -16,7 +16,7 @@ public class EventConfig {
     }
 
     public static class CTF {
-        public static final String PROPERTIES = "./config/event/ctf.properties";
+        public static final String PROPERTIES = "./config/custom/event/ctf.properties";
         public static boolean ENABLED;
         public static String[] LAUNCH_TIMES;
         public static EventLoadingMode LOADING_MODE;
