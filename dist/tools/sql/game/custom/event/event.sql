@@ -34,7 +34,7 @@ ALTER TABLE event
 INSERT INTO event (id, type, loading_order, name, description, registration_location, min_level, max_level,
                    npc_id, npc_x, npc_y, npc_z, npc_heading, reward_id, reward_amount,
                    teams_count, time_registration, duration_event, min_players, max_players, delay_next_event)
-VALUES (1, 'CTF', 1, 'Capture the flag 1', 'Battle for Shutgartt', 'Giran', 1, 80, 70011, 82580, 148552, -3468, 16972,
+VALUES (1, 'CTF', 1, 'CTF 1', 'Battle for Shutgartt', 'Giran', 1, 80, 50009, 82580, 148552, -3468, 16972,
         8752, 1, 2, 5, 5, 2, 50, 300000),
-       (2, 'CTF', 2, 'Capture the flag 2', 'Battle for Giran', 'Giran', 1, 80, 70011, 82580, 148552, -3468, 16972, 8752,
+       (2, 'CTF', 2, 'CTF 2', 'Battle for Giran', 'Giran', 1, 80, 50009, 82580, 148552, -3468, 16972, 8752,
         1, 2, 5, 5, 2, 50, 300000);

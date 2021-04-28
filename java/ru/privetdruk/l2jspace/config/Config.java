@@ -1297,6 +1297,7 @@ public final class Config {
         EventConfig.CTF.TEAM_MODE = EventTeamType.valueOf(ctf.getProperty("TeamMode", EventTeamType.SHUFFLE.name()));
         EventConfig.CTF.UNSUMMON_PET = ctf.getProperty("UnsummonPet", true);
         EventConfig.CTF.REMOVE_ALL_EFFECTS = ctf.getProperty("RemoveAllEffects", false);
+        EventConfig.CTF.JOIN_CURSED_WEAPON = ctf.getProperty("JoinCursedWeapon", false);
     }
 
     private static void loadAddon() {

@@ -18,6 +18,7 @@ import ru.privetdruk.l2jspace.gameserver.data.sql.SpawnTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
 import ru.privetdruk.l2jspace.gameserver.enums.MessageType;
+import ru.privetdruk.l2jspace.gameserver.handler.AdminCommandHandler;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
@@ -84,20 +85,15 @@ public abstract class EventEngine implements EventTask {
                 case READY_TO_START -> {
                     spawnMainEventNpc();
                     registration();
-                    teleport();
-
-                    if (eventState == ABORT) {
+                    if (checkBeforeTeleport()) {
+                        teleport();
+                        waiter(1);
+                        startEvent();
+                        waiter(settings.getDurationEvent());
+                        finishEvent();
+                    } else {
                         abortEvent();
-                        return;
                     }
-
-                    waiter(1);
-
-                    startEvent();
-
-                    waiter(settings.getDurationEvent());
-
-                    finishEvent();
                 }
                 default -> logInfo("Failed to start the event because the state of the event is incorrect.");
             }
@@ -184,8 +180,6 @@ public abstract class EventEngine implements EventTask {
     }
 
     public void teleport() {
-        checkBeforeTeleport();
-
         if (eventState == ABORT) {
             return;
         }
@@ -260,18 +254,21 @@ public abstract class EventEngine implements EventTask {
         }
     }
 
-    private void checkBeforeTeleport() {
+    private boolean checkBeforeTeleport() {
         int minPlayers = settings.getMinPlayers();
 
         if (players.size() < minPlayers) {
-            eventState = ABORT;
             String text = String.format("Not enough players for event. Min requested: %d, participating: %d.", minPlayers, players.size());
             announceCritical(text);
 
             if (EventConfig.Engine.LOG_STATISTICS) {
                 logInfo(text);
             }
+
+            return false;
         }
+
+        return true;
     }
 
     private boolean isSiegesLaunched() {
@@ -460,6 +457,13 @@ public abstract class EventEngine implements EventTask {
         }
     }
 
+    public static EventEngine findActive() {
+        return eventTaskList.stream()
+                .filter(event -> event.eventState != INACTIVE)
+                .findFirst()
+                .orElse(null);
+    }
+
     @Override
     public String getEventStartTime() {
         return eventStartTime;
@@ -478,6 +482,14 @@ public abstract class EventEngine implements EventTask {
         return eventState;
     }
 
+    public EventType getEventType() {
+        return eventType;
+    }
+
+    public EventTeamType getTeamMode() {
+        return teamMode;
+    }
+
     // TODO
     public abstract void loadData(int eventId);
 
@@ -494,6 +506,14 @@ public abstract class EventEngine implements EventTask {
     protected abstract void abortCustom();
 
     protected abstract void determineWinner();
+
+    public Map<Integer, EventPlayer> getPlayers() {
+        return players;
+    }
+
+    public EventSetting getSettings() {
+        return settings;
+    }
 /*
 
 

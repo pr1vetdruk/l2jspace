@@ -134,7 +134,7 @@ public class CTF extends EventEngine {
 
     @Override
     protected boolean preLaunchChecksCustom() {
-        return false;
+        return true;
     }
 
     @Override

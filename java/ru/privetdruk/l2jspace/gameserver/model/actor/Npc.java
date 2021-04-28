@@ -1290,7 +1290,7 @@ public class Npc extends Creature {
      * @param player   : The player that talk with the Npc.
      * @param filename : The filename that contains the text to send.
      */
-    public final void showChatWindow(Player player, String filename) {
+    public void showChatWindow(Player player, String filename) {
         final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
         html.setFile(filename);
         html.replace("%objectId%", getObjectId());
