@@ -236,7 +236,7 @@ public class OlympiadManager {
             set.set(Olympiad.COMP_LOST, 0);
             set.set(Olympiad.COMP_DRAWN, 0);
 
-            Olympiad.getInstance().addNobleStats(player.getObjectId(), set);
+            Olympiad.getInstance().registerPlayer(player.getObjectId(), set);
         }
 
         final int points = Olympiad.getInstance().getNoblePoints(player.getObjectId());

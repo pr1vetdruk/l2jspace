@@ -10,6 +10,7 @@ import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventType;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.TeamSetting;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.CtfTeamSetting;
 import ru.privetdruk.l2jspace.gameserver.custom.service.AnnouncementService;
 import ru.privetdruk.l2jspace.gameserver.custom.task.EventTask;
 import ru.privetdruk.l2jspace.gameserver.custom.util.Chronos;
@@ -19,6 +20,7 @@ import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
 import ru.privetdruk.l2jspace.gameserver.enums.MessageType;
 import ru.privetdruk.l2jspace.gameserver.handler.AdminCommandHandler;
+import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
@@ -26,14 +28,11 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.entity.Castle;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
+import ru.privetdruk.l2jspace.gameserver.model.olympiad.Olympiad;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MagicSkillUse;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
@@ -360,16 +359,20 @@ public abstract class EventEngine implements EventTask {
         }
     }
 
-    protected void announceCritical(String text) {
-        announcementService.criticalToAll(settings.getEventName() + ": " + text);
+    protected void sendPlayerMessage(Player player, String message) {
+        player.sendMessage(settings.getEventName() + ": " + message);
     }
 
-    protected void logInfo(String text) {
-        LOGGER.info(settings.getEventName() + ": " + text);
+    protected void announceCritical(String message) {
+        announcementService.criticalToAll(settings.getEventName() + ": " + message);
     }
 
-    protected void logError(String method, String text) {
-        LOGGER.severe(settings.getEventName() + "." + method + "(): " + text);
+    protected void logInfo(String message) {
+        LOGGER.info(settings.getEventName() + ": " + message);
+    }
+
+    protected void logError(String method, String message) {
+        LOGGER.severe(settings.getEventName() + "." + method + "(): " + message);
     }
 
     protected void waiter(int intervalMinutes) {
@@ -457,9 +460,97 @@ public abstract class EventEngine implements EventTask {
         }
     }
 
+    protected boolean checkPlayerBeforeRegistration(Player player) {
+        if (player.isCursedWeaponEquipped()) {
+            player.sendMessage("You are not allowed to participate to the event because you are holding a Cursed Weapon.");
+            return false;
+        }
+
+        if (player.getStatus().getLevel() < settings.getMinLevel()) {
+            player.sendMessage("You are not allowed to participate to the event because your level is too low.");
+            return false;
+        }
+
+        if (player.getStatus().getLevel() > settings.getMaxLevel()) {
+            player.sendMessage("You are not allowed to participate to the event because your level is too high.");
+            return false;
+        }
+
+        if (player.getKarma() > 0) {
+            player.sendMessage("You are not allowed to participate to the event because you have Karma.");
+            return false;
+        }
+
+        if (Olympiad.getInstance().isRegistered(player) || player.isInOlympiadMode()) {
+            player.sendMessage("You already participated in Olympiad!");
+            return false;
+        }
+
+
+        if (players.get(player.getObjectId()) != null) {
+            player.sendMessage("You already participated in the event!");
+            return false;
+        }
+
+        return true;
+    }
+
+    protected boolean checkTeamBeforeRegistration(Player player, String teamName) {
+        switch (teamMode) {
+            case NO:
+            case SHUFFLE:
+                return true;
+            case BALANCE:
+                boolean allTeamsEqual = true;
+
+                int playersCount = teamSettings.get(0).getPlayers();
+
+                for (TeamSetting team : teamSettings) {
+                    if (playersCount != team.getPlayers()) {
+                        allTeamsEqual = false;
+                        break;
+                    }
+
+                    playersCount = team.getPlayers();
+                }
+
+                if (allTeamsEqual) {
+                    return true;
+                }
+
+                int minPlayersCount = teamSettings.stream()
+                        .map(TeamSetting::getPlayers)
+                        .min(Comparator.naturalOrder())
+                        .orElse(Integer.MIN_VALUE);
+
+                for (TeamSetting team : teamSettings) {
+                    if (team.getPlayers() == minPlayersCount && team.getName().equals(teamName)) {
+                        return true;
+                    }
+                }
+
+                break;
+        }
+
+        player.sendMessage("Too many players in team \"" + teamName + "\"");
+
+        return false;
+    }
+
+    public void excludePlayer(Player player) {
+        players.remove(player.getObjectId());
+    }
+
     public static EventEngine findActive() {
         return eventTaskList.stream()
                 .filter(event -> event.eventState != INACTIVE)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public TeamSetting findTeam(String name) {
+        return teamSettings.stream()
+                .filter(team -> team.getName().equals(name))
                 .findFirst()
                 .orElse(null);
     }
@@ -490,6 +581,14 @@ public abstract class EventEngine implements EventTask {
         return teamMode;
     }
 
+    public Map<Integer, EventPlayer> getPlayers() {
+        return players;
+    }
+
+    public EventSetting getSettings() {
+        return settings;
+    }
+
     // TODO
     public abstract void loadData(int eventId);
 
@@ -507,13 +606,9 @@ public abstract class EventEngine implements EventTask {
 
     protected abstract void determineWinner();
 
-    public Map<Integer, EventPlayer> getPlayers() {
-        return players;
-    }
+    public abstract String configurePageContent(Player player);
 
-    public EventSetting getSettings() {
-        return settings;
-    }
+    public abstract void registerPlayer(Player player, String teamName);
 /*
 
 

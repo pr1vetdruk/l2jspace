@@ -91,12 +91,16 @@ public class Olympiad {
         return _nobles.get(objectId);
     }
 
+    public boolean isRegistered(Player player) {
+        return getNobleStats(player.getObjectId()) != null;
+    }
+
     /**
      * @param objectId : The {@link Player} objectId to affect.
      * @param set      : The {@link StatSet} to set.
      * @return The old {@link StatSet} if the {@link Player} objectId was already present, or null otherwise.
      */
-    public StatSet addNobleStats(int objectId, StatSet set) {
+    public StatSet registerPlayer(int objectId, StatSet set) {
         return _nobles.put(objectId, set);
     }
 
@@ -177,7 +181,7 @@ public class Olympiad {
                 set.set(COMP_LOST, rset.getInt(COMP_LOST));
                 set.set(COMP_DRAWN, rset.getInt(COMP_DRAWN));
 
-                addNobleStats(rset.getInt(CHAR_ID), set);
+                registerPlayer(rset.getInt(CHAR_ID), set);
             }
         } catch (Exception e) {
             LOGGER.error("Couldn't load noblesse data.", e);

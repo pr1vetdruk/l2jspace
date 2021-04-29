@@ -94,6 +94,8 @@ public class Npc extends Creature {
 
     private boolean _isCoreAiDisabled;
 
+    private String htmlFolder = "default/";
+
     public Npc(int objectId, NpcTemplate template) {
         super(objectId, template);
 
@@ -119,6 +121,11 @@ public class Npc extends Creature {
         _castle = template.getCastle();
         _clanHall = template.getClanHall();
         _siegableHall = template.getSiegableHall();
+    }
+
+    public Npc(int objectId, NpcTemplate template, String htmlFolder) {
+        this(objectId, template);
+        this.htmlFolder = htmlFolder;
     }
 
     @Override
@@ -943,13 +950,15 @@ public class Npc extends Creature {
     public String getHtmlPath(int npcId, int val) {
         String filename;
 
-        if (val == 0)
-            filename = "data/html/default/" + npcId + ".htm";
-        else
-            filename = "data/html/default/" + npcId + "-" + val + ".htm";
+        if (val == 0) {
+            filename = "data/html/" + htmlFolder + npcId + ".htm";
+        } else {
+            filename = "data/html/" + htmlFolder + npcId + "-" + val + ".htm";
+        }
 
-        if (HtmCache.getInstance().isLoadable(filename))
+        if (HtmCache.getInstance().isLoadable(filename)) {
             return filename;
+        }
 
         return "data/html/npcdefault.htm";
     }

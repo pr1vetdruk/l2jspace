@@ -6,13 +6,12 @@ import ru.privetdruk.l2jspace.gameserver.custom.builder.EventSettingBuilder;
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.custom.model.NpcInfoShort;
 import ru.privetdruk.l2jspace.gameserver.custom.model.Reward;
-import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBorder;
-import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventPlayer;
-import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventType;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.*;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.CtfEventPlayer;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.CtfTeamSetting;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.Flag;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.Throne;
+import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
@@ -26,7 +25,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.ERROR;
+import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.*;
+import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.*;
+import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.SHUFFLE;
 
 public class CTF extends EventEngine {
     private EventBorder eventBorder;
@@ -165,6 +166,105 @@ public class CTF extends EventEngine {
     @Override
     protected void determineWinner() {
 
+    }
+
+    @Override
+    public String configurePageContent(Player player) {
+        int playerLevel = player.getStatus().getLevel();
+        int npcId = settings.getMainNpc().getId();
+
+        StringBuilder content = new StringBuilder();
+
+        if (eventState != IN_PROGRESS && eventState != REGISTRATION) {
+            content.append("<center>Wait till the admin/gm start the participation.</center>");
+        } else if (eventState != IN_PROGRESS && teamMode == SHUFFLE && players.size() >= settings.getMaxPlayers()) {
+            content.append("Currently participated: <font color=\"00FF00\">").append(players.size()).append(".</font><br>");
+            content.append("Max players: <font color=\"00FF00\">").append(settings.getMaxPlayers()).append("</font><br><br>");
+            content.append("<font color=\"FFFF00\">You can't participate to this event.</font><br>");
+        } else if (player.isCursedWeaponEquipped() && !EventConfig.CTF.JOIN_CURSED_WEAPON) {
+            content.append("<font color=\"FFFF00\">You can't participate to this event with a cursed Weapon.</font><br>");
+        } else {
+            if (eventState == REGISTRATION
+                    && playerLevel >= settings.getMinLevel() && playerLevel <= settings.getMaxLevel()) {
+                EventPlayer eventPlayer = players.get(player.getObjectId());
+
+                if (eventPlayer != null) {
+                    if (teamMode == NO || teamMode == BALANCE) {
+                        content.append("You participated already in team <font color=\"LEVEL\">").append(eventPlayer.getTeamSettings().getName()).append("</font><br><br>");
+                    } else if (teamMode == SHUFFLE) {
+                        content.append("<center><font color=\"3366CC\">You participated already!</font></center><br><br>");
+                    }
+
+                    content.append("<center>Joined Players: <font color=\"00FF00\">").append(players.size()).append("</font></center><br>");
+                    content.append("<center><font color=\"3366CC\">Wait till event start or remove your participation!</font><center>");
+                    content.append("<center><button value=\"Remove\" action=\"bypass -h npc_")
+                            .append(npcId)
+                            .append(EventBypass.LEAVE)
+                            .append("\" width=85 height=21 back=\"L2UI_ch3.Btn1_normalOn\" fore=\"L2UI_ch3.Btn1_normal\"></center>");
+                } else {
+                    content.append("<center><font color=\"3366CC\">You want to participate in the event?</font></center><br>");
+                    content.append("<center><td width=\"200\">Min lvl: <font color=\"00FF00\">").append(settings.getMinLevel()).append("</font></center></td><br>");
+                    content.append("<center><td width=\"200\">Max lvl: <font color=\"00FF00\">").append(settings.getMaxLevel()).append("</font></center></td><br><br>");
+                    content.append("<center><font color=\"3366CC\">Teams:</font></center><br>");
+
+                    if (teamMode == NO || teamMode == BALANCE) {
+                        content.append("<center><table border=\"0\">");
+                        for (TeamSetting team : teamSettings) {
+                            content.append("<tr><td width=\"100\"><font color=\"LEVEL\">")
+                                    .append(team.getName()).append("</font>&nbsp;(").append(team.getPlayers()).append(" joined)</td>");
+                            content.append("<center><td width=\"60\"><button value=\"Join\" action=\"bypass -h npc_")
+                                    .append(npcId).append(EventBypass.JOIN_TEAM).append(team.getName())
+                                    .append("\" width=85 height=21 back=\"L2UI_ch3.Btn1_normalOn\" fore=\"L2UI_ch3.Btn1_normal\"></center></td></tr>");
+                        }
+                        content.append("</table></center>");
+                    } else if (teamMode == SHUFFLE) {
+                        content.append("<center>");
+
+                        for (TeamSetting team : teamSettings) {
+                            content.append("<tr><td width=\"100\"><font color=\"LEVEL\">").append(team.getName()).append("</font> &nbsp;</td>");
+                        }
+
+                        content.append("</center><br>");
+
+                        content.append("<center><button value=\"Join Event\" action=\"bypass -h npc_")
+                                .append(npcId)
+                                .append(EventBypass.JOIN_TEAM)
+                                .append("eventShuffle\" width=85 height=21 back=\"L2UI_ch3.Btn1_normalOn\" fore=\"L2UI_ch3.Btn1_normal\"></center>");
+                        content.append("<center><font color=\"3366CC\">Teams will be randomly generated!</font></center><br>");
+                        content.append("<center>Joined Players:</font> <font color=\"LEVEL\">").append(players.size()).append("</center></font><br>");
+                        content.append("<center>Reward: <font color=\"LEVEL\">").append(settings.getReward().getAmount())
+                                .append(" ").append(ItemData.getInstance().getTemplate(settings.getReward().getId()).getName()).append("</center></font>");
+                    }
+                }
+            } else if (eventState == IN_PROGRESS) {
+                content.append("<center>").append(settings.getEventName()).append(" match is in progress.</center>");
+            } else if (playerLevel < settings.getMinLevel() || playerLevel > settings.getMaxLevel()) {
+                content.append("Your lvl: <font color=\"00FF00\">").append(playerLevel).append("</font><br>");
+                content.append("Min lvl: <font color=\"00FF00\">").append(settings.getMinLevel()).append("</font><br>");
+                content.append("Max lvl: <font color=\"00FF00\">").append(settings.getMaxLevel()).append("</font><br><br>");
+                content.append("<font color=\"FFFF00\">You can't participate to this event.</font><br>");
+            }
+        }
+
+        return content.toString();
+    }
+
+    @Override
+    public void registerPlayer(Player player, String teamName) {
+        if (!checkPlayerBeforeRegistration(player) && !checkTeamBeforeRegistration(player, teamName)) {
+            return;
+        }
+
+        TeamSetting team = null;
+
+        if (teamMode == NO || teamMode == BALANCE) {
+            team = findTeam(teamName);
+            team.addPlayer();
+        }
+
+        players.put(player.getObjectId(), new EventPlayer(player, team));
+
+        sendPlayerMessage(player, "You successfully registered for the event.");
     }
 
     private void removeFlagFromPlayer(CtfEventPlayer eventPlayer) {
