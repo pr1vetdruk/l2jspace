@@ -56,6 +56,8 @@ public class EventManager extends Npc {
         final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
         html.setFile(filename);
         html.replace("%objectId%", getObjectId());
+        html.replace("%eventName%", event.getSettings().getEventName());
+        html.replace("%eventDescription%", event.getSettings().getEventDescription());
         html.replace("%content%", event.configurePageContent(player));
         player.sendPacket(html);
 

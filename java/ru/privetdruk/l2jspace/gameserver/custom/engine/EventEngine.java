@@ -48,7 +48,7 @@ public abstract class EventEngine implements EventTask {
     protected static final AnnouncementService announcementService = AnnouncementService.getInstance();
 
     protected EventSetting settings = null;
-    protected List<TeamSetting> teamSettings = null;
+    protected List<TeamSetting> teamSettings = new ArrayList<>();
     protected final Map<Integer, EventPlayer> players = new ConcurrentHashMap<>();
 
     protected EventType eventType;
@@ -246,7 +246,8 @@ public abstract class EventEngine implements EventTask {
         if (eventState != INACTIVE
                 || settings.getTimeRegistration() <= 0
                 || !preLaunchChecksCustom()
-                || isSiegesLaunched()) {
+                || isSiegesLaunched()
+                || (eventType.isTeam() && teamSettings.isEmpty())) {
             eventState = ABORT;
         } else {
             eventState = READY_TO_START;

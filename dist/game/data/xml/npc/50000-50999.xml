@@ -111,7 +111,7 @@
 			<skill id="4416" level="18"/>
 		</skills>
 	</npc>
-	<npc id="50009" idTemplate="30519" name="L2jSpace" title="Event Manager">
+	<npc id="50009" idTemplate="30519" name="Roy" title="Event Manager">
 		<set name="usingServerSideName" val="true"/>
 		<set name="usingServerSideTitle" val="true"/>
 		<set name="level" val="70"/>
