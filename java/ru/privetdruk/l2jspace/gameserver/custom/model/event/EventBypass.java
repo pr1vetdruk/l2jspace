@@ -1,10 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.custom.model.event;
 
 public enum EventBypass {
-    INFO("_event_info"),
-    JOIN("_event_join"),
-    JOIN_TEAM("_event_join_team "),
-    LEAVE("_event_leave");
+    INFO("event_info"),
+    JOIN("event_join"),
+    JOIN_TEAM("event_join_team"),
+    LEAVE("event_leave");
     
     private final String bypass;
 

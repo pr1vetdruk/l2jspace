@@ -178,7 +178,6 @@ public class CTF extends EventEngine {
     @Override
     public String configurePageContent(Player player) {
         int playerLevel = player.getStatus().getLevel();
-        int npcId = settings.getMainNpc().getId();
 
         StringBuilder content = new StringBuilder();
 
@@ -204,8 +203,7 @@ public class CTF extends EventEngine {
 
                     content.append("<center>Joined Players: <font color=\"00FF00\">").append(players.size()).append("</font></center><br>");
                     content.append("<center><font color=\"3366CC\">Wait till event start or remove your participation!</font><center>");
-                    content.append("<center><button value=\"Remove\" action=\"bypass -h npc_")
-                            .append(npcId)
+                    content.append("<center><button value=\"Remove\" action=\"bypass -h npc_%objectId%_")
                             .append(LEAVE.getBypass())
                             .append("\" width=85 height=21 back=\"L2UI_ch3.Btn1_normalOn\" fore=\"L2UI_ch3.Btn1_normal\"></center>");
                 } else {
@@ -219,8 +217,10 @@ public class CTF extends EventEngine {
                         for (TeamSetting team : teamSettings) {
                             content.append("<tr><td width=\"100\"><font color=\"LEVEL\">")
                                     .append(team.getName()).append("</font>&nbsp;(").append(team.getPlayers()).append(" joined)</td>");
-                            content.append("<center><td width=\"60\"><button value=\"Join\" action=\"bypass -h npc_")
-                                    .append(npcId).append(JOIN_TEAM.getBypass()).append(team.getName())
+                            content.append("<center><td width=\"60\"><button value=\"Join\" action=\"bypass -h npc_%objectId%_")
+                                    .append(JOIN_TEAM.getBypass())
+                                    .append(" ")
+                                    .append(team.getName())
                                     .append("\" width=85 height=21 back=\"L2UI_ch3.Btn1_normalOn\" fore=\"L2UI_ch3.Btn1_normal\"></center></td></tr>");
                         }
                         content.append("</table></center>");
@@ -233,10 +233,9 @@ public class CTF extends EventEngine {
 
                         content.append("</center><br>");
 
-                        content.append("<center><button value=\"Join Event\" action=\"bypass -h npc_")
-                                .append(npcId)
+                        content.append("<center><button value=\"Join Event\" action=\"bypass -h npc_%objectId%_")
                                 .append(JOIN_TEAM.getBypass())
-                                .append("eventShuffle\" width=85 height=21 back=\"L2UI_ch3.Btn1_normalOn\" fore=\"L2UI_ch3.Btn1_normal\"></center>");
+                                .append(" eventShuffle\" width=85 height=21 back=\"L2UI_ch3.Btn1_normalOn\" fore=\"L2UI_ch3.Btn1_normal\"></center>");
                         content.append("<center><font color=\"3366CC\">Teams will be randomly generated!</font></center><br>");
                         content.append("<center>Joined Players:</font> <font color=\"LEVEL\">").append(players.size()).append("</center></font><br>");
                         content.append("<center>Reward: <font color=\"LEVEL\">").append(settings.getReward().getAmount())

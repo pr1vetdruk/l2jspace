@@ -14,7 +14,9 @@ import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBypass.J
 
 public class EventManager extends Npc {
     protected static final Logger LOGGER = Logger.getLogger(EventManager.class.getName());
-    private static final int FIRST_ELEMENT = 0;
+    private static final int COMMAND = 0;
+    private static final int TEAM_NAME = 1;
+
 
     public EventManager(int objectId, NpcTemplate template) {
         super(objectId, template, "custom/event/");
@@ -24,7 +26,8 @@ public class EventManager extends Npc {
     public void onBypassFeedback(Player player, String command) {
         EventEngine event = EventEngine.findActive();
 
-        EventBypass action = EventBypass.fromBypass(command.split(" ")[FIRST_ELEMENT]);
+        String[] parameters = command.split(" ");
+        EventBypass action = EventBypass.fromBypass(parameters[COMMAND]);
 
         if (action == null) {
             LOGGER.warning(String.format(
@@ -38,7 +41,7 @@ public class EventManager extends Npc {
         }
 
         switch (action) {
-            case JOIN_TEAM -> event.registerPlayer(player, command.substring(JOIN_TEAM.getBypass().length()));
+            case JOIN_TEAM -> event.registerPlayer(player, parameters[TEAM_NAME]);
             case LEAVE -> event.excludePlayer(player);
         }
 
@@ -55,10 +58,10 @@ public class EventManager extends Npc {
 
         final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
         html.setFile(filename);
-        html.replace("%objectId%", getObjectId());
         html.replace("%eventName%", event.getSettings().getEventName());
         html.replace("%eventDescription%", event.getSettings().getEventDescription());
         html.replace("%content%", event.configurePageContent(player));
+        html.replace("%objectId%", getObjectId());
         player.sendPacket(html);
 
         player.sendPacket(ActionFailed.STATIC_PACKET);
