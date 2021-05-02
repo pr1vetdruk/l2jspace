@@ -10,13 +10,11 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
 
 import java.util.logging.Logger;
 
-import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBypass.JOIN_TEAM;
-
 public class EventManager extends Npc {
     protected static final Logger LOGGER = Logger.getLogger(EventManager.class.getName());
+
     private static final int COMMAND = 0;
     private static final int TEAM_NAME = 1;
-
 
     public EventManager(int objectId, NpcTemplate template) {
         super(objectId, template, "custom/event/");
@@ -58,9 +56,9 @@ public class EventManager extends Npc {
 
         final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
         html.setFile(filename);
+        html.replace("%content%", event.configurePageContent(player));
         html.replace("%eventName%", event.getSettings().getEventName());
         html.replace("%eventDescription%", event.getSettings().getEventDescription());
-        html.replace("%content%", event.configurePageContent(player));
         html.replace("%objectId%", getObjectId());
         player.sendPacket(html);
 

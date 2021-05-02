@@ -5,12 +5,17 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 public class EventPlayer {
     private Player player;
     private TeamSetting teamSettings;
-    private int countFlags;
+
+    private final int originalColorName;
+    private final int originalKarma;
+    private final String originalTitle;
 
     public EventPlayer(Player player, TeamSetting teamSettings) {
         this.player = player;
         this.teamSettings = teamSettings;
-        this.countFlags = 0;
+        this.originalColorName = player.getAppearance().getNameColor();
+        this.originalKarma = player.getKarma();
+        this.originalTitle = player.getTitle();
     }
 
     public Player getPlayer() {
@@ -25,11 +30,15 @@ public class EventPlayer {
         this.teamSettings = teamSettings;
     }
 
-    public int getCountFlags() {
-        return countFlags;
+    public int getOriginalColorName() {
+        return originalColorName;
     }
 
-    public void setCountFlags(int countFlags) {
-        this.countFlags = countFlags;
+    public int getOriginalKarma() {
+        return originalKarma;
+    }
+
+    public String getOriginalTitle() {
+        return originalTitle;
     }
 }

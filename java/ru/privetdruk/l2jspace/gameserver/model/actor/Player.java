@@ -33,6 +33,7 @@ import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.LoginServerThread;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.CommunityBoard;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.model.Forum;
+import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable.FrequentSkill;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
@@ -1357,12 +1358,18 @@ public final class Player extends Playable {
      * </ul>
      */
     public void standUp() {
+        EventEngine event = EventEngine.findActive();
+
+        if (event != null && event.isSitForced() && event.getPlayers().containsKey(getObjectId())) {
+            sendMessage("A dark force beyond your mortal understanding makes your knees to shake when you try to stand up...");
+            return;
+        }
+
         _isStandingNow = true;
         _isSitting = false;
 
         // Schedule a stand up task to wait for the animation to finish
-        ThreadPool.schedule(() ->
-        {
+        ThreadPool.schedule(() -> {
             _isStandingNow = false;
             _isStanding = true;
 

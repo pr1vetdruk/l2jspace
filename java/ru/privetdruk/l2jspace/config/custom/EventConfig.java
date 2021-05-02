@@ -18,6 +18,7 @@ public class EventConfig {
     public static class CTF {
         public static final String PROPERTIES = "./config/custom/event/ctf.properties";
         public static boolean ENABLED;
+        public static boolean AURA;
         public static String[] LAUNCH_TIMES;
         public static EventLoadingMode LOADING_MODE;
         public static EventTeamType TEAM_MODE;

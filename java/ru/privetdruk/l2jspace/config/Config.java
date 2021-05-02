@@ -1292,6 +1292,7 @@ public final class Config {
         ExProperties ctf = initProperties(EventConfig.CTF.PROPERTIES);
 
         EventConfig.CTF.ENABLED = ctf.getProperty("Enabled", false);
+        EventConfig.CTF.AURA = ctf.getProperty("Aura", true);
         EventConfig.CTF.LAUNCH_TIMES = ctf.getProperty("LaunchTimes", "").split(";");
         EventConfig.CTF.LOADING_MODE = EventLoadingMode.valueOf(ctf.getProperty("LoadingMode", EventLoadingMode.RANDOMLY.name()));
         EventConfig.CTF.TEAM_MODE = EventTeamType.valueOf(ctf.getProperty("TeamMode", EventTeamType.SHUFFLE.name()));

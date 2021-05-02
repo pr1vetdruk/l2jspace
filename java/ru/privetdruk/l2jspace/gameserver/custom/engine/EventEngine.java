@@ -49,7 +49,7 @@ public abstract class EventEngine implements EventTask {
 
     protected EventSetting settings = null;
     protected List<TeamSetting> teamSettings = new ArrayList<>();
-    protected final Map<Integer, EventPlayer> players = new ConcurrentHashMap<>();
+    protected Map<Integer, EventPlayer> players = new ConcurrentHashMap<>();
 
     protected EventType eventType;
     protected EventTeamType teamMode;
@@ -72,6 +72,13 @@ public abstract class EventEngine implements EventTask {
 
     @Override
     public void run() {
+        EventEngine active = findActive();
+
+        if (active != null) {
+            logError("You cannot run several events at the same time.");
+            return;
+        }
+
         try {
             players.clear();
 
@@ -196,7 +203,6 @@ public abstract class EventEngine implements EventTask {
         ThreadPool.schedule(() -> {
             updatePlayerEventData();
             sitPlayer();
-            spawnOtherNpc();
 
             for (EventPlayer eventPlayer : players.values()) {
                 Player player = eventPlayer.getPlayer();
@@ -208,6 +214,8 @@ public abstract class EventEngine implements EventTask {
                     player.teleportTo(playerTeamSettings.getSpawnLocation(), playerTeamSettings.getOffset());
                 }
             }
+
+            spawnOtherNpc();
         }, TimeUnit.SECONDS.toMillis(WAIT_TELEPORT_SECONDS));
     }
 
@@ -376,6 +384,10 @@ public abstract class EventEngine implements EventTask {
         LOGGER.severe(settings.getEventName() + "." + method + "(): " + message);
     }
 
+    protected void logError(String message) {
+        LOGGER.severe(settings.getEventName() + ": " + message);
+    }
+
     protected void waiter(int intervalMinutes) {
         long interval = TimeUnit.MINUTES.toMillis(intervalMinutes);
         final long startWaiterTime = Chronos.currentTimeMillis();
@@ -416,11 +428,11 @@ public abstract class EventEngine implements EventTask {
                     }
                     case 1: { // 1 seconds left
                         if (eventState == REGISTRATION) {
-                            announceCritical("Registration close!");
+                            announceCritical(seconds + " second(s) till registration close!");
                         } else if (eventState == TELEPORTATION) {
-                            announceCritical("Teleported!");
+                            announceCritical(seconds + " seconds(s) till start fight!");
                         } else if (eventState == IN_PROGRESS) {
-                            announceCritical("Event finish!");
+                            announceCritical(seconds + " second(s) till event finish!");
                         }
 
                         break;
@@ -430,7 +442,6 @@ public abstract class EventEngine implements EventTask {
 
             long startOneSecondWaiterStartTime = Chronos.currentTimeMillis();
 
-            // TODO Какая-то дичь, нужно в будущем разобраться.
             // Only the try catch with Thread.sleep(1000) give bad countdown on high wait times
             while ((startOneSecondWaiterStartTime + 1000) > Chronos.currentTimeMillis()) {
                 try {
@@ -488,7 +499,7 @@ public abstract class EventEngine implements EventTask {
         }
 
 
-        if (players.get(player.getObjectId()) != null) {
+        if (players.containsKey(player.getObjectId())) {
             player.sendMessage("You already participated in the event!");
             return false;
         }
@@ -592,6 +603,8 @@ public abstract class EventEngine implements EventTask {
 
     // TODO
     public abstract void loadData(int eventId);
+
+    public abstract boolean isSitForced();
 
     protected abstract boolean preLaunchChecksCustom();
 

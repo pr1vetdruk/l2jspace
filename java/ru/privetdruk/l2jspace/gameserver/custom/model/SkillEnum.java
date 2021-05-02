@@ -3,6 +3,20 @@ package ru.privetdruk.l2jspace.gameserver.custom.model;
 public enum SkillEnum {
     CLASS;
 
+    public enum Prophet {
+        MAGIC_BARRIER(1036);
+
+        private final int id;
+
+        Prophet(int id) {
+            this.id = id;
+        }
+
+        public int getId() {
+            return id;
+        }
+    }
+
     public enum Warlock {
         ICON_BLESSING_OF_QUEEN(1331),
         BLESSING_OF_QUEEN(4699);
@@ -90,6 +104,24 @@ public enum SkillEnum {
 
         public int getId() {
             return id;
+        }
+    }
+
+    public enum Mount {
+        TYPE;
+
+        public enum Wyvern {
+            WYVERN_BREATH(4289);
+
+            private final int id;
+
+            Wyvern(int id) {
+                this.id = id;
+            }
+
+            public int getId() {
+                return id;
+            }
         }
     }
 }

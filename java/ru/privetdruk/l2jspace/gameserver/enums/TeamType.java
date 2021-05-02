@@ -5,13 +5,23 @@ public enum TeamType {
     BLUE(1),
     RED(2);
 
-    private int _id;
+    private final int id;
 
     private TeamType(int id) {
-        _id = id;
+        this.id = id;
     }
 
     public int getId() {
-        return _id;
+        return id;
+    }
+
+    public static TeamType fromId(int id) {
+        for (TeamType teamType : TeamType.values()) {
+            if (teamType.getId() == id) {
+                return teamType;
+            }
+        }
+
+        return null;
     }
 }
