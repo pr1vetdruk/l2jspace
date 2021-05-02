@@ -6,7 +6,7 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 
 public class CtfEventPlayer extends EventPlayer {
-    private Npc enemyFlag = null;
+    private CtfTeamSetting enemyFlag = null;
     private int countFlags = 0;
 
     public CtfEventPlayer(Player player, TeamSetting teamSettings) {
@@ -17,7 +17,11 @@ public class CtfEventPlayer extends EventPlayer {
         return enemyFlag != null;
     }
 
-    public void setEnemyFlag(Npc enemyFlag) {
+    public CtfTeamSetting getEnemyFlag() {
+        return enemyFlag;
+    }
+
+    public void setEnemyFlag(CtfTeamSetting enemyFlag) {
         this.enemyFlag = enemyFlag;
     }
 

@@ -1,6 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.custom.event;
 
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
+import ru.privetdruk.l2jspace.common.pool.ThreadPool;
+import ru.privetdruk.l2jspace.common.random.Rnd;
 import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.custom.builder.EventSettingBuilder;
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
@@ -14,9 +16,12 @@ import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.Throne;
 import ru.privetdruk.l2jspace.gameserver.data.sql.SpawnTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
+import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
+import ru.privetdruk.l2jspace.gameserver.enums.SayType;
 import ru.privetdruk.l2jspace.gameserver.enums.TeamType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.actor.container.player.RadarOnPlayer;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
@@ -34,7 +39,11 @@ import static ru.privetdruk.l2jspace.gameserver.custom.model.SkillEnum.Mount.Wyv
 import static ru.privetdruk.l2jspace.gameserver.custom.model.SkillEnum.Prophet.MAGIC_BARRIER;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBypass.JOIN_TEAM;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBypass.LEAVE;
-import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.*;
+import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.ERROR;
+import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.FINISH;
+import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.IN_PROGRESS;
+import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.REGISTRATION;
+import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.TELEPORTATION;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.BALANCE;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.NO;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.SHUFFLE;
@@ -171,25 +180,21 @@ public class CTF extends EventEngine {
                         if (isOutsideArea(player)) {
                             announceCritical(player.getName() + " escaped from the event holding a flag!");
 
-                            CtfTeamSetting team = findTeam(player.teamNameHaveFlagCtf);
+                            CtfTeamSetting enemyTeam = ((CtfEventPlayer) eventPlayer).getEnemyFlag();
 
-                            if (team.getFlag().getTaken()) {
-                                team.getFlag().setTaken(false);
+                            if (enemyTeam.getFlag().isTaken()) {
+                                enemyTeam.getFlag().setTaken(false);
 
-                                spawnFlag(team);
+                                spawnFlag(enemyTeam);
 
-                                Announcements.getInstance().criticalAnnounceToAll(eventName + ": " + team.getName() + " flag now returned to place.");
+                                announceCritical(enemyTeam.getName() + " flag now returned to place.");
                             }
 
-                            removeFlagFromPlayer(player);
+                            removeFlagFromPlayer(ctfPlayer);
 
                             Location spawnLocation = team.getSpawnLocation();
 
-                            player.teleToLocation(
-                                    spawnLocation.getX(),
-                                    spawnLocation.getY(),
-                                    spawnLocation.getZ()
-                            );
+                            player.teleToLocation(spawnLocation);
 
                             player.sendMessage("You have been returned to your team spawn");
                         }
@@ -212,52 +217,106 @@ public class CTF extends EventEngine {
         }
     }
 
-    public void processInFlagRange(CtfEventPlayer player) {
+    public void processInFlagRange(CtfEventPlayer eventPlayer) {
         try {
             restoreFlag();
 
-            for (CtfTeamSetting team : teamSetting) {
-                Flag flag = team.getFlag();
+            ctfTeamSettings.stream()
+                    .filter(setting -> !setting.getFlag().isTaken())
+                    .filter(setting -> inRangeOfFlag(
+                            eventPlayer.getPlayer(),
+                            setting.getFlag().getNpc().getSpawnLocation(),
+                            100
+                    ))
+                    .forEach(team -> {
+                        Player player = eventPlayer.getPlayer();
 
-                if (team.getName().equals(player.teamNameCtf)) {
-                    // If player is near his team flag holding the enemy flag
-                    if (inRangeOfFlag(player, flag.getNpc().getSpawnPosition(), 100) && !flag.getTaken() && player.haveFlagCtf) {
-                        CtfTeamSetting enemyTeam = findTeam(player.teamNameHaveFlagCtf);
+                        if (eventPlayer.getTeamSettings() == team && eventPlayer.isHasFlag()) {
+                            CtfTeamSetting enemyTeam = eventPlayer.getEnemyFlag();
 
-                        enemyTeam.getFlag().setTaken(false);
-                        spawnFlag(enemyTeam);
+                            enemyTeam.getFlag().setTaken(false);
+                            spawnFlag(enemyTeam);
 
-                        // Remove the flag from this player
-                        player.broadcastPacket(new SocialAction(player.getObjectId(), 16)); // Amazing glow TODO id
-                        player.broadcastUserInfo();
-                        player.broadcastPacket(new SocialAction(player.getObjectId(), 3)); // Victory TODO id
-                        player.broadcastUserInfo();
+                            // Remove the flag from this player
+                            player.broadcastPacket(new SocialAction(player, 16)); // Amazing glow TODO id
+                            player.broadcastUserInfo();
+                            player.broadcastPacket(new SocialAction(player, 3)); // Victory TODO id
+                            player.broadcastUserInfo();
 
-                        removeFlagFromPlayer(player);
+                            team.addPoint();
+                        } else if (eventPlayer.getTeamSettings() != team && !eventPlayer.isHasFlag() && !player.isDead()) {
+                            Flag flag = team.getFlag();
+                            flag.setTaken(true);
 
-                        team.addPoint();
+                            unspawn(flag.getSpawn());
+                            addFlagToPlayer(eventPlayer, team);
+                            displayRadar(player, team);
 
-                        Announcements.getInstance().criticalAnnounceToAll(generalSetting.getEventName() + ": " + player.getName() + " scores for " + team.getName() + ".");
-                    }
-                } else {
-                    // If the player is near a enemy flag
-                    if (inRangeOfFlag(player, flag.getNpc().getSpawnPosition(), 100) && !flag.getTaken() && !player.haveFlagCtf && !player.isDead()) {
-                        flag.setTaken(true);
-                        unspawn(flag.getSpawn());
-
-                        player.teamNameHaveFlagCtf = team.getName();
-                        addFlagToPlayer(player, flag.getItemId());
-
-                        Announcements.getInstance().criticalAnnounceToAll(generalSetting.getEventName() + ": " + team.getName() + " flag taken by " + player.getName() + "...");
-
-                        displayRadar(player, team.getName());
-
-                        break;
-                    }
-                }
-            }
+                            announceCritical(team.getName() + " flag taken by " + player.getName() + "...");
+                        }
+                    });
         } catch (Exception e) {
             LOGGER.warning(e.toString());
+        }
+    }
+
+    private void displayRadar(Player targetPlayer, CtfTeamSetting teamOurFlag) {
+        try {
+            players.values().stream()
+                    .filter(eventPlayer -> eventPlayer.getPlayer() != null
+                            && eventPlayer.getTeamSettings() == teamOurFlag
+                            && eventPlayer.getPlayer().isOnline())
+                    .forEach(eventPlayer -> {
+                        CtfEventPlayer ctfPlayer = (CtfEventPlayer) eventPlayer;
+                        Player player = ctfPlayer.getPlayer();
+
+                        player.sendMessage(targetPlayer.getName() + " took your flag!");
+
+                        if (ctfPlayer.isHasFlag()) {
+                            player.sendMessage("You can not return the flag to headquarters, until your flag is returned to it's place.");
+                            player.sendPacket(new RadarControl(1, 1, player.getX(), player.getY(), player.getZ()));
+                        } else {
+                            player.sendPacket(new RadarControl(0, 1, targetPlayer.getX(), targetPlayer.getY(), targetPlayer.getZ()));
+                            RadarOnPlayer radarOnPlayer = new RadarOnPlayer(player, targetPlayer);
+                            ThreadPool.schedule(radarOnPlayer, 10000 + Rnd.get(30000));
+                        }
+                    });
+        } catch (Exception e) {
+            LOGGER.severe(e.toString());
+        }
+    }
+
+    private boolean inRangeOfFlag(Player player, Location flag, int offset) {
+        return player.getX() > (flag.getX() - offset) &&
+                player.getX() < (flag.getX() + offset) &&
+                player.getY() > (flag.getY() - offset) &&
+                player.getY() < (flag.getY() + offset) &&
+                player.getZ() > (flag.getZ() - offset) &&
+                player.getZ() < (flag.getZ() + offset);
+    }
+
+    public void addFlagToPlayer(CtfEventPlayer eventPlayer, CtfTeamSetting team) {
+        Player player = eventPlayer.getPlayer();
+        int flagItemId = team.getFlag().getItemId();
+
+        ItemInstance activeWeapon = player.getActiveWeaponInstance();
+
+        if (activeWeapon != null) {
+            player.getInventory().unequipItemInBodySlotAndRecord(Paperdoll.RHAND.getId());
+        }
+
+        // Add the flag in his hands
+        eventPlayer.setEnemyFlag(team);
+        player.getInventory().equipItem(ItemInstance.create(flagItemId, 1, player, null));
+        player.broadcastPacket(new SocialAction(player, 16)); // Amazing glow
+        player.broadcastUserInfo();
+        player.sendPacket(new CreatureSay(player.getObjectId(), SayType.PARTYROOM_COMMANDER, ":", "You got it! Run back! ::"));
+    }
+
+    private void unspawn(Spawn spawn) {
+        if (spawn != null) {
+            spawn.getNpc().deleteMe();
+            SpawnTable.getInstance().deleteSpawn(spawn, true);
         }
     }
 
@@ -465,7 +524,7 @@ public class CTF extends EventEngine {
     }
 
     @Override
-    public String configurePageContent(Player player) {
+    public String configureMainPageContent(Player player) {
         int playerLevel = player.getStatus().getLevel();
 
         StringBuilder content = new StringBuilder();
@@ -574,10 +633,7 @@ public class CTF extends EventEngine {
 
         eventPlayer.setEnemyFlag(null);
 
-        ItemInstance weaponEquipped = player.getInventory().getPaperdollItems().stream()
-                .filter(item -> item.getItemId() == flagItemId)
-                .findFirst()
-                .orElse(null);
+        ItemInstance weaponEquipped = player.getActiveWeaponInstance();
 
         // Get your weapon back now ...
         if (weaponEquipped != null) {

@@ -40,7 +40,7 @@ public class Flag {
         this.spawn = spawn;
     }
 
-    public Boolean getTaken() {
+    public Boolean isTaken() {
         return taken;
     }
 

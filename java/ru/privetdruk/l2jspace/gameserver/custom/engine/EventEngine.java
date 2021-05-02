@@ -620,7 +620,7 @@ public abstract class EventEngine implements EventTask {
 
     protected abstract void determineWinner();
 
-    public abstract String configurePageContent(Player player);
+    public abstract String configureMainPageContent(Player player);
 
     public abstract void registerPlayer(Player player, String teamName);
 /*

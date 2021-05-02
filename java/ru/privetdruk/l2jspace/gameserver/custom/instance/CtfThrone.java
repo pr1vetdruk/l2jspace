@@ -16,7 +16,7 @@ public class CtfThrone extends Npc {
     public void onInteract(Player player) {
         CTF event = (CTF) EventEngine.findActive();
 
-        if (event == null || event.getEventState() != EventState.IN_PROGRESS) {
+        if (event == null || event.getEventState() != EventState.IN_PROGRESS || !event.getPlayers().containsKey(player.getObjectId())) {
             return;
         }
 
