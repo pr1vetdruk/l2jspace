@@ -47,6 +47,7 @@ import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.TE
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.BALANCE;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.NO;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.SHUFFLE;
+import static ru.privetdruk.l2jspace.gameserver.model.item.kind.Item.SLOT_LR_HAND;
 
 public class CTF extends EventEngine {
     private EventBorder eventBorder;
@@ -149,14 +150,12 @@ public class CTF extends EventEngine {
             resultSet.close();
         } catch (Exception e) {
             eventState = ERROR;
-            LOGGER.severe("Exception: CTF.loadData(): " + e.getMessage());
+            logError("loadData", e.getMessage());
         }
     }
 
     public void restoreFlag() {
         try {
-            String eventName = settings.getEventName();
-
             int numberFlagsTaken = 0;
 
             for (EventPlayer eventPlayer : players.values()) {
@@ -164,53 +163,51 @@ public class CTF extends EventEngine {
                     break;
                 }
 
-                if (eventPlayer.getPlayer() != null) {
-                    CtfEventPlayer ctfPlayer = (CtfEventPlayer) eventPlayer;
+                CtfEventPlayer ctfPlayer = (CtfEventPlayer) eventPlayer;
 
-                    if (!ctfPlayer.isHasFlag()) {
-                        continue;
-                    }
+                if (!ctfPlayer.isHasFlag()) {
+                    continue;
+                }
 
-                    Player player = ctfPlayer.getPlayer();
-                    CtfTeamSetting team = ctfPlayer.getTeamSettings();
+                Player player = ctfPlayer.getPlayer();
+                CtfTeamSetting team = ctfPlayer.getTeamSettings();
 
-                    if (player.isOnline()) {
-                        team.getFlag().setTaken(true);
 
-                        if (isOutsideArea(player)) {
-                            announceCritical(player.getName() + " escaped from the event holding a flag!");
+                if (player.isOnline()) {
+                    if (inRange(player, team.getThrone().getNpc().getSpawnLocation(), 150)) {
+                        returnFlag(ctfPlayer);
+                    } else if (isOutsideArea(player)) {
+                        announceCritical(player.getName() + " escaped from the event holding a flag!");
 
-                            CtfTeamSetting enemyTeam = ((CtfEventPlayer) eventPlayer).getEnemyFlag();
+                        CtfTeamSetting enemyTeam = ((CtfEventPlayer) eventPlayer).getEnemyFlag();
 
-                            if (enemyTeam.getFlag().isTaken()) {
-                                enemyTeam.getFlag().setTaken(false);
+                        if (enemyTeam.getFlag().isTaken()) {
+                            enemyTeam.getFlag().setTaken(false);
 
-                                spawnFlag(enemyTeam);
+                            spawnFlag(enemyTeam);
 
-                                announceCritical(enemyTeam.getName() + " flag now returned to place.");
-                            }
-
-                            removeFlagFromPlayer(ctfPlayer);
-
-                            Location spawnLocation = team.getSpawnLocation();
-
-                            player.teleToLocation(spawnLocation);
-
-                            player.sendMessage("You have been returned to your team spawn");
+                            announceCritical(enemyTeam.getName() + " flag now returned to place.");
                         }
-                    } else {
-                        team.getFlag().setTaken(false);
 
                         removeFlagFromPlayer(ctfPlayer);
-                        spawnFlag(team);
 
-                        announceCritical(player.getName() + " logged off with a CTF flag!");
-                        announceCritical(eventName + ": " + team.getName() + " flag now returned to place.");
+                        Location spawnLocation = team.getSpawnLocation();
+
+                        player.teleToLocation(spawnLocation);
+
+                        player.sendMessage("You have been returned to your team spawn");
                     }
+                } else {
+                    team.getFlag().setTaken(false);
 
-                    team.getFlag().setTaken(player.isOnline());
-                    numberFlagsTaken++;
+                    removeFlagFromPlayer(ctfPlayer);
+                    spawnFlag(team);
+
+                    announceCritical(player.getName() + " logged off with a CTF flag!");
+                    announceCritical(team.getName() + " flag now returned to place.");
                 }
+
+                numberFlagsTaken++;
             }
         } catch (Exception e) {
             logError("restoreFlags", e.getMessage());
@@ -222,37 +219,22 @@ public class CTF extends EventEngine {
             restoreFlag();
 
             ctfTeamSettings.stream()
-                    .filter(setting -> !setting.getFlag().isTaken())
-                    .filter(setting -> inRangeOfFlag(
+                    .filter(setting -> inRange(
                             eventPlayer.getPlayer(),
                             setting.getFlag().getNpc().getSpawnLocation(),
-                            100
+                            150
                     ))
                     .forEach(team -> {
                         Player player = eventPlayer.getPlayer();
 
+                        // If player is near his team flag holding the enemy flag
                         if (eventPlayer.getTeamSettings() == team && eventPlayer.isHasFlag()) {
-                            CtfTeamSetting enemyTeam = eventPlayer.getEnemyFlag();
-
-                            enemyTeam.getFlag().setTaken(false);
-                            spawnFlag(enemyTeam);
-
-                            // Remove the flag from this player
-                            player.broadcastPacket(new SocialAction(player, 16)); // Amazing glow TODO id
-                            player.broadcastUserInfo();
-                            player.broadcastPacket(new SocialAction(player, 3)); // Victory TODO id
-                            player.broadcastUserInfo();
-
-                            team.addPoint();
-                        } else if (eventPlayer.getTeamSettings() != team && !eventPlayer.isHasFlag() && !player.isDead()) {
-                            Flag flag = team.getFlag();
-                            flag.setTaken(true);
-
-                            unspawn(flag.getSpawn());
-                            addFlagToPlayer(eventPlayer, team);
-                            displayRadar(player, team);
-
-                            announceCritical(team.getName() + " flag taken by " + player.getName() + "...");
+                            returnFlag(eventPlayer);
+                        } else if (eventPlayer.getTeamSettings() != team // If the player is near a enemy flag
+                                && !eventPlayer.isHasFlag()
+                                && !player.isDead()
+                                && !team.getFlag().isTaken()) {
+                            pickUpFlag(eventPlayer, team);
                         }
                     });
         } catch (Exception e) {
@@ -260,11 +242,42 @@ public class CTF extends EventEngine {
         }
     }
 
+    private void pickUpFlag(CtfEventPlayer eventPlayer, CtfTeamSetting enemyTeam) {
+        enemyTeam.getFlag().setTaken(true);
+
+        unspawn(enemyTeam.getFlag().getSpawn());
+        addFlagToPlayer(eventPlayer, enemyTeam);
+        displayRadar(eventPlayer.getPlayer(), enemyTeam);
+
+        announceCritical(enemyTeam.getName() + " flag taken by " + eventPlayer.getPlayer().getName() + "!");
+    }
+
+    private void returnFlag(CtfEventPlayer eventPlayer) {
+        CtfTeamSetting enemyTeam = eventPlayer.getEnemyFlag();
+
+        enemyTeam.getFlag().setTaken(false);
+        spawnFlag(enemyTeam);
+
+        // Remove the flag from this player
+        Player player = eventPlayer.getPlayer();
+        player.broadcastPacket(new SocialAction(player, 16)); // Amazing glow TODO id
+        player.broadcastUserInfo();
+        player.broadcastPacket(new SocialAction(player, 3)); // Victory TODO id
+        player.broadcastUserInfo();
+
+        eventPlayer.setEnemyFlag(null);
+
+        CtfTeamSetting team = eventPlayer.getTeamSettings();
+        team.addPoint();
+
+        announceCritical("Игрок " + player.getName() + " player brought 1 point to his team.");
+        announceCritical("Total score for the " + team.getName() + " team: " + team.getPoints());
+    }
+
     private void displayRadar(Player targetPlayer, CtfTeamSetting teamOurFlag) {
         try {
             players.values().stream()
-                    .filter(eventPlayer -> eventPlayer.getPlayer() != null
-                            && eventPlayer.getTeamSettings() == teamOurFlag
+                    .filter(eventPlayer -> eventPlayer.getTeamSettings() == teamOurFlag
                             && eventPlayer.getPlayer().isOnline())
                     .forEach(eventPlayer -> {
                         CtfEventPlayer ctfPlayer = (CtfEventPlayer) eventPlayer;
@@ -286,7 +299,7 @@ public class CTF extends EventEngine {
         }
     }
 
-    private boolean inRangeOfFlag(Player player, Location flag, int offset) {
+    private boolean inRange(Player player, Location flag, int offset) {
         return player.getX() > (flag.getX() - offset) &&
                 player.getX() < (flag.getX() + offset) &&
                 player.getY() > (flag.getY() - offset) &&
@@ -301,8 +314,23 @@ public class CTF extends EventEngine {
 
         ItemInstance activeWeapon = player.getActiveWeaponInstance();
 
-        if (activeWeapon != null) {
-            player.getInventory().unequipItemInBodySlotAndRecord(Paperdoll.RHAND.getId());
+        /*if (activeWeapon != null) {
+            player.getInventory().unequipItemInBodySlotAndRecord(SLOT_LR_HAND);
+        }*/
+
+        if (activeWeapon == null) {
+            activeWeapon = player.getActiveWeaponInstance();
+
+            if (activeWeapon != null) {
+                player.getInventory().unequipItemInBodySlotAndRecord(SLOT_LR_HAND);
+            }
+        } else {
+            player.getInventory().unequipItemInBodySlotAndRecord(SLOT_LR_HAND);
+            activeWeapon = player.getActiveWeaponInstance();
+
+            if (activeWeapon != null) {
+                player.getInventory().unequipItemInBodySlotAndRecord(SLOT_LR_HAND);
+            }
         }
 
         // Add the flag in his hands
@@ -336,7 +364,8 @@ public class CTF extends EventEngine {
         NpcTemplate flagTemplate = NpcData.getInstance().getTemplate(flagNpc.getId());
 
         try {
-            configureSpawn(flagTemplate, flagNpc.getSpawnLocation(), team.getName() + "' Flag");
+            Spawn flagSpawn = configureSpawn(flagTemplate, flagNpc.getSpawnLocation(), team.getName() + "' Flag");
+            team.getFlag().setSpawn(flagSpawn);
         } catch (Exception e) {
             logError("spawnFlag", e.getMessage());
         }
@@ -353,8 +382,24 @@ public class CTF extends EventEngine {
     }
 
     @Override
-    protected void restorePlayerDataCustom(EventPlayer player) {
+    protected void restorePlayerDataCustom(EventPlayer eventPlayer) {
+        Player player = eventPlayer.getPlayer();
 
+        player.getAppearance().setNameColor(eventPlayer.getOriginalColorName());
+        player.setTitle(eventPlayer.getOriginalTitle());
+        player.setKarma(eventPlayer.getOriginalKarma());
+
+        if (EventConfig.CTF.AURA) {
+            player.setTeam(TeamType.NONE);
+        }
+
+        player.broadcastUserInfo();
+
+        if (teamMode == NO || teamMode == BALANCE) {
+            eventPlayer.getTeamSettings().removePlayer();
+        }
+
+        removeFlagFromPlayer((CtfEventPlayer) eventPlayer);
     }
 
     @Override
@@ -499,11 +544,11 @@ public class CTF extends EventEngine {
         SpawnTable.getInstance().addSpawn(spawn, false);
         spawn.doSpawn(true);
 
-        Npc throneNpc = spawn.getNpc();
-        throneNpc.getStatus().setHp(999999999);
-        throneNpc.decayMe();
-        throneNpc.spawnMe(throneNpc.getX(), throneNpc.getY(), throneNpc.getZ());
-        throneNpc.setTitle(title);
+        Npc npc = spawn.getNpc();
+        npc.getStatus().setHp(999999999);
+        npc.decayMe();
+        npc.spawnMe(npc.getX(), npc.getY(), npc.getZ());
+        npc.setTitle(title);
 
         return spawn;
     }
@@ -604,7 +649,7 @@ public class CTF extends EventEngine {
     }
 
     @Override
-    public void registerPlayer(Player player, String teamName) {
+    public void register(Player player, String teamName) {
         if (!checkPlayerBeforeRegistration(player) && !checkTeamBeforeRegistration(player, teamName)) {
             return;
         }

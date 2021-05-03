@@ -15,8 +15,8 @@ CREATE TABLE event_ctf_team_setting
     flag_position_y          INT(11)      NOT NULL DEFAULT 0 COMMENT 'Y-axis flag spawn coordinates',
     flag_position_z          INT(11)      NOT NULL DEFAULT 0 COMMENT 'Z-axis flag spawn coordinates',
     flag_item_id             INT          NOT NULL DEFAULT 6718 COMMENT 'Flag item ID',
-    flag_npc_id              INT          NOT NULL DEFAULT 35062 COMMENT 'Flag npc ID',
-    throne_npc_id            INT          NOT NULL DEFAULT 32027 COMMENT 'Throne npc ID',
+    flag_npc_id              INT          NOT NULL DEFAULT 50011 COMMENT 'Flag npc ID',
+    throne_npc_id            INT          NOT NULL DEFAULT 50010 COMMENT 'Throne npc ID',
     offset_throne_position_z INT(11)      NOT NULL DEFAULT 10 COMMENT 'Shifting the position of the appearance of the throne along the Z axis',
     primary key (event_id, id)
 ) ENGINE = MyISAM
@@ -29,7 +29,7 @@ INSERT INTO event_ctf_team_setting (event_id, id, name, name_color,
                               offset, position_x, position_y, position_z,
                               flag_position_x, flag_position_y, flag_position_z,
                               flag_item_id, flag_npc_id, throne_npc_id, offset_throne_position_z)
-VALUES (1, 1, 'Blue', 255, 300, 87357, -145722, -1288, 87358, -145979, -1291, 6718, 35062, 32027, 10),
-       (1, 2, 'Red', 16711680, 300, 87351, -139984, -1536,  87359, -139584, -1536, 6718, 35062, 32027, 10),
-       (2, 1, 'Blue', 255, 300, 87357, -145722, -1288, 87358, -145979, -1291, 6718, 35062, 32027, 10),
-       (2, 2, 'Red', 16711680, 300, 87351, -139984, -1536,  87359, -139584, -1536, 6718, 35062, 32027, 10);
+VALUES (1, 1, 'Blue', 255, 300, 87357, -145722, -1288, 87358, -145979, -1291, 6718, 50011, 50010, 10),
+       (1, 2, 'Red', 16711680, 300, 87351, -139984, -1536,  87359, -139584, -1536, 6718, 50011, 50010, 10),
+       (2, 1, 'Blue', 255, 300, 87357, -145722, -1288, 87358, -145979, -1291, 6718, 50011, 50010, 10),
+       (2, 2, 'Red', 16711680, 300, 87351, -139984, -1536,  87359, -139584, -1536, 6718, 50011, 50010, 10);

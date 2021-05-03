@@ -10,7 +10,6 @@ import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventType;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.TeamSetting;
-import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.CtfTeamSetting;
 import ru.privetdruk.l2jspace.gameserver.custom.service.AnnouncementService;
 import ru.privetdruk.l2jspace.gameserver.custom.task.EventTask;
 import ru.privetdruk.l2jspace.gameserver.custom.util.Chronos;
@@ -19,8 +18,6 @@ import ru.privetdruk.l2jspace.gameserver.data.sql.SpawnTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
 import ru.privetdruk.l2jspace.gameserver.enums.MessageType;
-import ru.privetdruk.l2jspace.gameserver.handler.AdminCommandHandler;
-import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
@@ -37,6 +34,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
+import static java.util.concurrent.TimeUnit.MINUTES;
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static ru.privetdruk.l2jspace.config.custom.EventConfig.Engine.WAIT_TELEPORT_SECONDS;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.*;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.SHUFFLE;
@@ -91,11 +90,10 @@ public abstract class EventEngine implements EventTask {
                 case READY_TO_START -> {
                     spawnMainEventNpc();
                     registration();
+
                     if (checkBeforeTeleport()) {
                         teleport();
-                        waiter(1);
                         startEvent();
-                        waiter(settings.getDurationEvent());
                         finishEvent();
                     } else {
                         abortEvent();
@@ -123,11 +121,15 @@ public abstract class EventEngine implements EventTask {
     }
 
     protected void startEvent() {
+        waiter(10);
+
         announceCritical("Started!");
 
         eventState = IN_PROGRESS;
 
-        sitPlayer();
+        sitPlayers();
+
+        waiter(MINUTES.toSeconds(settings.getDurationEvent()));
     }
 
     protected void abortEvent() {
@@ -147,21 +149,25 @@ public abstract class EventEngine implements EventTask {
     protected void returnPlayer() {
         announceCritical("Teleport back to participation NPC in 20 seconds!");
 
-        sitPlayer();
+        sitPlayers();
 
         ThreadPool.schedule(() -> {
             // TODO Реализовать возврат на исходную позицию перед эвентом.
             Location spawnLocation = settings.getMainNpc().getSpawnLocation();
 
-            players.values().stream()
-                    .map(EventPlayer::getPlayer)
-                    .filter(Objects::nonNull)
-                    .filter(Player::isOnline)
-                    .forEach(player -> player.teleToLocation(spawnLocation));
+            players.values().forEach(eventPlayer -> {
+                Player player = eventPlayer.getPlayer();
 
-            restorePlayerData();
-            sitPlayer();
-        }, TimeUnit.SECONDS.toMillis(20));
+                restorePlayerDataCustom(eventPlayer);
+                if (player.isOnline()) {
+                    player.teleToLocation(spawnLocation);
+                }
+
+                players.remove(player.getObjectId());
+
+                sitPlayer(player);
+            });
+        }, SECONDS.toMillis(10));
     }
 
     protected void unspawnEventNpc() {
@@ -202,21 +208,19 @@ public abstract class EventEngine implements EventTask {
 
         ThreadPool.schedule(() -> {
             updatePlayerEventData();
-            sitPlayer();
+            sitPlayers();
 
             for (EventPlayer eventPlayer : players.values()) {
                 Player player = eventPlayer.getPlayer();
 
-                if (player != null) {
-                    preTeleportPlayerChecks(player);
+                preTeleportPlayerChecks(player);
 
-                    TeamSetting playerTeamSettings = eventPlayer.getTeamSettings();
-                    player.teleportTo(playerTeamSettings.getSpawnLocation(), playerTeamSettings.getOffset());
-                }
+                TeamSetting playerTeamSettings = eventPlayer.getTeamSettings();
+                player.teleportTo(playerTeamSettings.getSpawnLocation(), playerTeamSettings.getOffset());
             }
 
             spawnOtherNpc();
-        }, TimeUnit.SECONDS.toMillis(WAIT_TELEPORT_SECONDS));
+        }, SECONDS.toMillis(WAIT_TELEPORT_SECONDS));
     }
 
     private void preTeleportPlayerChecks(Player player) {
@@ -235,18 +239,18 @@ public abstract class EventEngine implements EventTask {
         }
     }
 
-    private void sitPlayer() {
-        for (EventPlayer eventPlayer : players.values()) {
-            Player player = eventPlayer.getPlayer();
+    private void sitPlayers() {
+        players.values().stream()
+                .map(EventPlayer::getPlayer)
+                .forEach(this::sitPlayer);
+    }
 
-            if (player != null) {
-                if (player.isSitting()) {
-                    player.standUp();
-                } else {
-                    player.abortAll(true);
-                    player.sitDown();
-                }
-            }
+    private void sitPlayer(Player player) {
+        if (player.isSitting()) {
+            player.standUp();
+        } else {
+            player.abortAll(true);
+            player.sitDown();
         }
     }
 
@@ -309,7 +313,7 @@ public abstract class EventEngine implements EventTask {
             announcementService.criticalToAll(name + ": Commands .join .leave .info");
         }
 
-        waiter(settings.getTimeRegistration());
+        waiter(MINUTES.toSeconds(settings.getTimeRegistration()));
     }
 
     protected void spawnMainEventNpc() throws ClassNotFoundException, NoSuchMethodException {
@@ -388,8 +392,8 @@ public abstract class EventEngine implements EventTask {
         LOGGER.severe(settings.getEventName() + ": " + message);
     }
 
-    protected void waiter(int intervalMinutes) {
-        long interval = TimeUnit.MINUTES.toMillis(intervalMinutes);
+    protected void waiter(long intervalSeconds) {
+        long interval = SECONDS.toMillis(intervalSeconds);
         final long startWaiterTime = Chronos.currentTimeMillis();
         int seconds = (int) (interval / 1000);
 
@@ -549,7 +553,7 @@ public abstract class EventEngine implements EventTask {
         return false;
     }
 
-    public void excludePlayer(Player player) {
+    public void leave(Player player) {
         players.remove(player.getObjectId());
     }
 
@@ -608,7 +612,7 @@ public abstract class EventEngine implements EventTask {
 
     protected abstract boolean preLaunchChecksCustom();
 
-    protected abstract void restorePlayerDataCustom(EventPlayer player);
+    protected abstract void restorePlayerDataCustom(EventPlayer eventPlayer);
 
     protected abstract void updatePlayerEventData();
 
@@ -622,7 +626,7 @@ public abstract class EventEngine implements EventTask {
 
     public abstract String configureMainPageContent(Player player);
 
-    public abstract void registerPlayer(Player player, String teamName);
+    public abstract void register(Player player, String teamName);
 /*
 
 
