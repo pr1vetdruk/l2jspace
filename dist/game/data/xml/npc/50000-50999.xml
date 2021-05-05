@@ -190,7 +190,7 @@
 		<set name="usingServerSideTitle" val="true"/>
 		<set name="level" val="70"/>
 		<set name="radius" val="7"/>
-		<set name="height" val="18"/>
+		<set name="height" val="100"/>
 		<set name="rHand" val="0"/>
 		<set name="lHand" val="0"/>
 		<set name="type" val="CtfFlag"/>

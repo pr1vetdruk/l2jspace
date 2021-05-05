@@ -4,7 +4,7 @@ import java.util.List;
 
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
-import ru.privetdruk.l2jspace.gameserver.enums.TeamType;
+import ru.privetdruk.l2jspace.gameserver.enums.AuraTeamType;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.NpcSkillType;
 import ru.privetdruk.l2jspace.gameserver.enums.items.ActionType;
 import ru.privetdruk.l2jspace.gameserver.enums.items.ShotType;
@@ -150,8 +150,8 @@ public abstract class Summon extends Playable {
         return (getOwner() != null) ? getOwner().getPvpFlag() : 0;
     }
 
-    public final TeamType getTeam() {
-        return (getOwner() != null) ? getOwner().getTeam() : TeamType.NONE;
+    public final AuraTeamType getTeam() {
+        return (getOwner() != null) ? getOwner().getTeam() : AuraTeamType.NONE;
     }
 
     public final Player getOwner() {

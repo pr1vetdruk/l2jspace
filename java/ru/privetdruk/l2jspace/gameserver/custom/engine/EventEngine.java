@@ -1,6 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.custom.engine;
 
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
+import ru.privetdruk.l2jspace.common.util.StringUtil;
 import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.custom.model.NpcInfoShort;
 import ru.privetdruk.l2jspace.gameserver.custom.model.SkillEnum;
@@ -34,9 +35,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
+import static java.lang.String.format;
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static ru.privetdruk.l2jspace.config.custom.EventConfig.Engine.WAIT_TELEPORT_SECONDS;
+import static ru.privetdruk.l2jspace.common.util.StringUtil.declensionWords;
+import static ru.privetdruk.l2jspace.common.util.StringUtil.secondWords;
+import static ru.privetdruk.l2jspace.config.custom.EventConfig.Engine.DELAY_BEFORE_TELEPORT;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.*;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.SHUFFLE;
 
@@ -121,9 +125,9 @@ public abstract class EventEngine implements EventTask {
     }
 
     protected void startEvent() {
-        waiter(10);
+        waiter(EventConfig.Engine.DELAY_BEFORE_START + 1);
 
-        announceCritical("Started!");
+        announceCritical("Вперед!");
 
         eventState = IN_PROGRESS;
 
@@ -143,11 +147,15 @@ public abstract class EventEngine implements EventTask {
 
         eventState = ABORT;
 
-        announceCritical("Match aborted!");
+        announceCritical("Ивент прерван!");
     }
 
     protected void returnPlayer() {
-        announceCritical("Teleport back to participation NPC in 20 seconds!");
+        announceCritical(format(
+                "Все участники ивента будут возвращены обратно через %d %s.",
+                EventConfig.Engine.DELAY_BEFORE_TELEPORT_RETURN,
+                declensionWords(EventConfig.Engine.DELAY_BEFORE_TELEPORT_RETURN, secondWords)
+        ));
 
         sitPlayers();
 
@@ -167,7 +175,7 @@ public abstract class EventEngine implements EventTask {
 
                 sitPlayer(player);
             });
-        }, SECONDS.toMillis(10));
+        }, SECONDS.toMillis(EventConfig.Engine.DELAY_BEFORE_TELEPORT_RETURN));
     }
 
     protected void unspawnEventNpc() {
@@ -204,23 +212,26 @@ public abstract class EventEngine implements EventTask {
 
         removeOfflinePlayers();
 
-        announceCritical(String.format("Teleport to spot in %d seconds!", WAIT_TELEPORT_SECONDS));
+        announceCritical(format(
+                "Все зарегистрированные игроки будут телепортированы на ивент через %d %s.",
+                DELAY_BEFORE_TELEPORT,
+                declensionWords(DELAY_BEFORE_TELEPORT, StringUtil.secondWords)
+        ));
 
-        ThreadPool.schedule(() -> {
-            updatePlayerEventData();
-            sitPlayers();
+        waiter(DELAY_BEFORE_TELEPORT);
 
-            for (EventPlayer eventPlayer : players.values()) {
-                Player player = eventPlayer.getPlayer();
+        spawnOtherNpc();
+        updatePlayerEventData();
+        sitPlayers();
 
-                preTeleportPlayerChecks(player);
+        for (EventPlayer eventPlayer : players.values()) {
+            Player player = eventPlayer.getPlayer();
 
-                TeamSetting playerTeamSettings = eventPlayer.getTeamSettings();
-                player.teleportTo(playerTeamSettings.getSpawnLocation(), playerTeamSettings.getOffset());
-            }
+            preTeleportPlayerChecks(player);
 
-            spawnOtherNpc();
-        }, SECONDS.toMillis(WAIT_TELEPORT_SECONDS));
+            TeamSetting team = eventPlayer.getTeamSettings();
+            player.teleportTo(team.getSpawnLocation(), team.getOffset());
+        }
     }
 
     private void preTeleportPlayerChecks(Player player) {
@@ -270,7 +281,7 @@ public abstract class EventEngine implements EventTask {
         int minPlayers = settings.getMinPlayers();
 
         if (players.size() < minPlayers) {
-            String text = String.format("Not enough players for event. Min requested: %d, participating: %d.", minPlayers, players.size());
+            String text = format("Увы! Не удалось собрать достаточное кол-во игроков для запуска ивента. Минимум: %d, Зарегистрировалось: %d.", minPlayers, players.size());
             announceCritical(text);
 
             if (EventConfig.Engine.LOG_STATISTICS) {
@@ -296,21 +307,19 @@ public abstract class EventEngine implements EventTask {
     private void registration() {
         eventState = REGISTRATION;
 
-        String name = settings.getEventName();
-
-        announceCritical("Registration for the event is open");
+        announceCritical("Открыта регистрация на ивент!");
 
         Item rewardTemplate = ItemData.getInstance().getTemplate(settings.getReward().getId());
 
         if (EventConfig.Engine.ANNOUNCE_REWARD && rewardTemplate != null) {
-            announceCritical(String.format("Reward: %d %s", settings.getReward().getAmount(), rewardTemplate.getName()));
+            announceCritical(format("Награда за победу: %d %s", settings.getReward().getAmount(), rewardTemplate.getName()));
         }
 
-        announceCritical(String.format("Levels: %d - %d", settings.getMinLevel(), settings.getMaxLevel()));
-        announceCritical("Registration in " + settings.getRegistrationLocationName());
+        announceCritical(format("Уровни: %d - %d", settings.getMinLevel(), settings.getMaxLevel()));
+        announceCritical("Зарегистрироваться можно в " + settings.getRegistrationLocationName());
 
         if (EventConfig.Engine.REGISTRATION_BY_COMMANDS) {
-            announcementService.criticalToAll(name + ": Commands .join .leave .info");
+            announceCritical("Быстрые команды: .join .leave .info");
         }
 
         waiter(MINUTES.toSeconds(settings.getTimeRegistration()));
@@ -415,11 +424,14 @@ public abstract class EventEngine implements EventTask {
                             removeOfflinePlayers();
                         }
 
+                        long minutes = SECONDS.toMinutes(seconds);
+                        String minutesWord = declensionWords(minutes, StringUtil.minuteWords);
+
                         if (eventState == REGISTRATION) {
-                            announceCritical("Registration in " + settings.getRegistrationLocationName());
-                            announceCritical((seconds / 60) + " minute(s) till registration close");
+                            announceCritical("Зарегистрироваться можно в " + settings.getRegistrationLocationName());
+                            announceCritical(format("До закрытия регистрации осталось %d %s.", minutes, minutesWord));
                         } else if (eventState == IN_PROGRESS) {
-                            announceCritical((seconds / 60) + " minute(s) till event finish!");
+                            announceCritical(format("До завершения ивента осталось %d %s.", minutes, minutesWord));
                         }
 
                         break;
@@ -431,12 +443,14 @@ public abstract class EventEngine implements EventTask {
                         // fallthrou?
                     }
                     case 1: { // 1 seconds left
+                        String secondsWord = declensionWords(seconds, StringUtil.secondWords);
+
                         if (eventState == REGISTRATION) {
-                            announceCritical(seconds + " second(s) till registration close!");
+                            announceCritical(format("До закрытия регистрации осталось %d %s.", seconds, secondsWord));
                         } else if (eventState == TELEPORTATION) {
-                            announceCritical(seconds + " seconds(s) till start fight!");
+                            announceCritical(format("Приготовьтесь! До начала ивента осталось %d %s.", seconds, secondsWord));
                         } else if (eventState == IN_PROGRESS) {
-                            announceCritical(seconds + " second(s) till event finish!");
+                            announceCritical(format("До завершения ивента осталось %d %s.", seconds, secondsWord));
                         }
 
                         break;
@@ -478,33 +492,27 @@ public abstract class EventEngine implements EventTask {
 
     protected boolean checkPlayerBeforeRegistration(Player player) {
         if (player.isCursedWeaponEquipped()) {
-            player.sendMessage("You are not allowed to participate to the event because you are holding a Cursed Weapon.");
+            player.sendMessage("С Cursed Weapon запрещено принимать участие в ивенте.");
             return false;
         }
 
         if (player.getStatus().getLevel() < settings.getMinLevel()) {
-            player.sendMessage("You are not allowed to participate to the event because your level is too low.");
+            player.sendMessage("У вас недостаточный уровень для участия в ивенте");
             return false;
         }
 
         if (player.getStatus().getLevel() > settings.getMaxLevel()) {
-            player.sendMessage("You are not allowed to participate to the event because your level is too high.");
-            return false;
-        }
-
-        if (player.getKarma() > 0) {
-            player.sendMessage("You are not allowed to participate to the event because you have Karma.");
+            player.sendMessage("Ваш уровень превышает допустимый для участия в ивенте.");
             return false;
         }
 
         if (Olympiad.getInstance().isRegistered(player) || player.isInOlympiadMode()) {
-            player.sendMessage("You already participated in Olympiad!");
+            player.sendMessage("Вы участвуете в олимпиаде. Регистрация запрещена.");
             return false;
         }
 
-
         if (players.containsKey(player.getObjectId())) {
-            player.sendMessage("You already participated in the event!");
+            player.sendMessage("Вы уже участвуете в ивенте.");
             return false;
         }
 
@@ -548,7 +556,7 @@ public abstract class EventEngine implements EventTask {
                 break;
         }
 
-        player.sendMessage("Too many players in team \"" + teamName + "\"");
+        player.sendMessage("Слишком много игроков в команде \"" + teamName + "\".");
 
         return false;
     }

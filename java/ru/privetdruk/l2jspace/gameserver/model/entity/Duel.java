@@ -8,7 +8,7 @@ import java.util.concurrent.Future;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 
 import ru.privetdruk.l2jspace.gameserver.data.manager.DuelManager;
-import ru.privetdruk.l2jspace.gameserver.enums.TeamType;
+import ru.privetdruk.l2jspace.gameserver.enums.AuraTeamType;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
@@ -279,7 +279,7 @@ public class Duel {
             for (Player partyPlayer : _playerA.getParty().getMembers()) {
                 partyPlayer.cancelActiveTrade();
                 partyPlayer.setDuelState(DuelState.DUELLING);
-                partyPlayer.setTeam(TeamType.BLUE);
+                partyPlayer.setAura(AuraTeamType.BLUE);
                 partyPlayer.broadcastUserInfo();
 
                 final Summon summon = partyPlayer.getSummon();
@@ -292,7 +292,7 @@ public class Duel {
             for (Player partyPlayer : _playerB.getParty().getMembers()) {
                 partyPlayer.cancelActiveTrade();
                 partyPlayer.setDuelState(DuelState.DUELLING);
-                partyPlayer.setTeam(TeamType.RED);
+                partyPlayer.setAura(AuraTeamType.RED);
                 partyPlayer.broadcastUserInfo();
 
                 final Summon summon = partyPlayer.getSummon();
@@ -313,9 +313,9 @@ public class Duel {
         } else {
             // Set states.
             _playerA.setDuelState(DuelState.DUELLING);
-            _playerA.setTeam(TeamType.BLUE);
+            _playerA.setAura(AuraTeamType.BLUE);
             _playerB.setDuelState(DuelState.DUELLING);
-            _playerB.setTeam(TeamType.RED);
+            _playerB.setAura(AuraTeamType.RED);
 
             // Send duel Start packets.
             ExDuelReady ready = new ExDuelReady(false);
@@ -372,7 +372,7 @@ public class Duel {
         if (_isPartyDuel) {
             for (Player partyPlayer : _playerA.getParty().getMembers()) {
                 partyPlayer.setInDuel(0);
-                partyPlayer.setTeam(TeamType.NONE);
+                partyPlayer.setAura(AuraTeamType.NONE);
                 partyPlayer.broadcastUserInfo();
 
                 final Summon summon = partyPlayer.getSummon();
@@ -382,7 +382,7 @@ public class Duel {
 
             for (Player partyPlayer : _playerB.getParty().getMembers()) {
                 partyPlayer.setInDuel(0);
-                partyPlayer.setTeam(TeamType.NONE);
+                partyPlayer.setAura(AuraTeamType.NONE);
                 partyPlayer.broadcastUserInfo();
 
                 final Summon summon = partyPlayer.getSummon();
@@ -391,7 +391,7 @@ public class Duel {
             }
         } else {
             _playerA.setInDuel(0);
-            _playerA.setTeam(TeamType.NONE);
+            _playerA.setAura(AuraTeamType.NONE);
             _playerA.broadcastUserInfo();
 
             Summon summon = _playerA.getSummon();
@@ -399,7 +399,7 @@ public class Duel {
                 summon.updateAbnormalEffect();
 
             _playerB.setInDuel(0);
-            _playerB.setTeam(TeamType.NONE);
+            _playerB.setAura(AuraTeamType.NONE);
             _playerB.broadcastUserInfo();
 
             summon = _playerB.getSummon();

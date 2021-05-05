@@ -34,7 +34,7 @@ public class RadarOnPlayer implements Runnable {
 
                 if (event.getEventType() == CTF) {
                     CtfEventPlayer eventPlayer = (CtfEventPlayer) event.getPlayers().get(targetPlayer.getObjectId());
-                    if (eventPlayer != null && eventPlayer.isHasFlag()) {
+                    if (eventPlayer != null && !eventPlayer.isHasFlag()) {
                         return;
                     }
                 }

@@ -12,7 +12,9 @@ public class EventConfig {
         public static boolean ANNOUNCE_REWARD;
         public static boolean REGISTRATION_BY_COMMANDS;
         public static boolean LOG_STATISTICS;
-        public static int WAIT_TELEPORT_SECONDS;
+        public static int DELAY_BEFORE_TELEPORT;
+        public static int DELAY_BEFORE_START;
+        public static int DELAY_BEFORE_TELEPORT_RETURN;
     }
 
     public static class CTF {

@@ -3,6 +3,7 @@ package ru.privetdruk.l2jspace.gameserver.custom.event;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
+import ru.privetdruk.l2jspace.common.util.StringUtil;
 import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.custom.builder.EventSettingBuilder;
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
@@ -16,9 +17,8 @@ import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.Throne;
 import ru.privetdruk.l2jspace.gameserver.data.sql.SpawnTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
-import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
 import ru.privetdruk.l2jspace.gameserver.enums.SayType;
-import ru.privetdruk.l2jspace.gameserver.enums.TeamType;
+import ru.privetdruk.l2jspace.gameserver.enums.AuraTeamType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.container.player.RadarOnPlayer;
@@ -35,6 +35,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.String.format;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.SkillEnum.Mount.Wyvern.WYVERN_BREATH;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.SkillEnum.Prophet.MAGIC_BARRIER;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBypass.JOIN_TEAM;
@@ -177,7 +178,7 @@ public class CTF extends EventEngine {
                     if (inRange(player, team.getThrone().getNpc().getSpawnLocation(), 150)) {
                         returnFlag(ctfPlayer);
                     } else if (isOutsideArea(player)) {
-                        announceCritical(player.getName() + " escaped from the event holding a flag!");
+                        announceCritical("Игрок " + player.getName() + " сбежал с мероприятия с флагом!");
 
                         CtfTeamSetting enemyTeam = ((CtfEventPlayer) eventPlayer).getEnemyFlag();
 
@@ -186,7 +187,7 @@ public class CTF extends EventEngine {
 
                             spawnFlag(enemyTeam);
 
-                            announceCritical(enemyTeam.getName() + " flag now returned to place.");
+                            announceCritical("Флаг команды " + enemyTeam.getName() + " был возвращен на место!");
                         }
 
                         removeFlagFromPlayer(ctfPlayer);
@@ -195,7 +196,7 @@ public class CTF extends EventEngine {
 
                         player.teleToLocation(spawnLocation);
 
-                        player.sendMessage("You have been returned to your team spawn");
+                        player.sendMessage("Вы возвращены на место респавна вашей команды.");
                     }
                 } else {
                     team.getFlag().setTaken(false);
@@ -203,8 +204,8 @@ public class CTF extends EventEngine {
                     removeFlagFromPlayer(ctfPlayer);
                     spawnFlag(team);
 
-                    announceCritical(player.getName() + " logged off with a CTF flag!");
-                    announceCritical(team.getName() + " flag now returned to place.");
+                    announceCritical("Игрок " + player.getName() + " покинул игру с флагом!");
+                    announceCritical("Флаг команды " + team.getName() + " был возвращен на место!");
                 }
 
                 numberFlagsTaken++;
@@ -249,7 +250,7 @@ public class CTF extends EventEngine {
         addFlagToPlayer(eventPlayer, enemyTeam);
         displayRadar(eventPlayer.getPlayer(), enemyTeam);
 
-        announceCritical(enemyTeam.getName() + " flag taken by " + eventPlayer.getPlayer().getName() + "!");
+        announceCritical(format("Игрок %s забрал флаг команды %s!", eventPlayer.getPlayer().getName(), enemyTeam.getName()));
     }
 
     private void returnFlag(CtfEventPlayer eventPlayer) {
@@ -265,13 +266,18 @@ public class CTF extends EventEngine {
         player.broadcastPacket(new SocialAction(player, 3)); // Victory TODO id
         player.broadcastUserInfo();
 
-        eventPlayer.setEnemyFlag(null);
+        removeFlagFromPlayer(eventPlayer);
 
         CtfTeamSetting team = eventPlayer.getTeamSettings();
         team.addPoint();
 
-        announceCritical("Игрок " + player.getName() + " player brought 1 point to his team.");
-        announceCritical("Total score for the " + team.getName() + " team: " + team.getPoints());
+        announceCritical("Игрок " + player.getName() + " заработал 1 очко для своей команды.");
+        announceCritical(format(
+                "Теперь у команды %s: %d %s.",
+                team.getName(),
+                team.getPoints(),
+                StringUtil.declensionWords(team.getPoints(), StringUtil.pointWords)
+        ));
     }
 
     private void displayRadar(Player targetPlayer, CtfTeamSetting teamOurFlag) {
@@ -314,23 +320,8 @@ public class CTF extends EventEngine {
 
         ItemInstance activeWeapon = player.getActiveWeaponInstance();
 
-        /*if (activeWeapon != null) {
+        if (activeWeapon != null) {
             player.getInventory().unequipItemInBodySlotAndRecord(SLOT_LR_HAND);
-        }*/
-
-        if (activeWeapon == null) {
-            activeWeapon = player.getActiveWeaponInstance();
-
-            if (activeWeapon != null) {
-                player.getInventory().unequipItemInBodySlotAndRecord(SLOT_LR_HAND);
-            }
-        } else {
-            player.getInventory().unequipItemInBodySlotAndRecord(SLOT_LR_HAND);
-            activeWeapon = player.getActiveWeaponInstance();
-
-            if (activeWeapon != null) {
-                player.getInventory().unequipItemInBodySlotAndRecord(SLOT_LR_HAND);
-            }
         }
 
         // Add the flag in his hands
@@ -369,6 +360,7 @@ public class CTF extends EventEngine {
         } catch (Exception e) {
             logError("spawnFlag", e.getMessage());
         }
+
     }
 
     @Override
@@ -390,7 +382,7 @@ public class CTF extends EventEngine {
         player.setKarma(eventPlayer.getOriginalKarma());
 
         if (EventConfig.CTF.AURA) {
-            player.setTeam(TeamType.NONE);
+            player.setAura(AuraTeamType.NONE);
         }
 
         player.broadcastUserInfo();
@@ -413,7 +405,7 @@ public class CTF extends EventEngine {
             player.setKarma(0);
 
             if (EventConfig.CTF.AURA && teamSettings.size() == 2) {
-                player.setTeam(TeamType.fromId(teamSettings.indexOf(team) + 1));
+                player.setAura(AuraTeamType.fromId(teamSettings.indexOf(team) + 1));
             }
 
             if (player.isMounted()) {
@@ -534,10 +526,10 @@ public class CTF extends EventEngine {
         eventBorder.setOffset(Math.max(Math.max(maxX, maxY), maxZ));
     }
 
-    private Spawn configureSpawn(NpcTemplate npcTemplate, Location spawnPosition, String title) throws NoSuchMethodException, ClassNotFoundException {
+    private Spawn configureSpawn(NpcTemplate npcTemplate, SpawnLocation spawnLocation, String title) throws NoSuchMethodException, ClassNotFoundException {
         Spawn spawn = new Spawn(npcTemplate);
 
-        spawn.setLoc(spawnPosition.getX(), spawnPosition.getY(), spawnPosition.getZ(), 0);
+        spawn.setLoc(spawnLocation);
 
         spawn.setRespawnDelay(1);
 
@@ -663,7 +655,7 @@ public class CTF extends EventEngine {
 
         players.put(player.getObjectId(), new CtfEventPlayer(player, team));
 
-        sendPlayerMessage(player, "You successfully registered for the event.");
+        sendPlayerMessage(player, "Вы успешно зарегистрировались на ивент.");
     }
 
     private void removeFlagFromPlayer(CtfEventPlayer eventPlayer) {

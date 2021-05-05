@@ -1287,7 +1287,9 @@ public final class Config {
         EventConfig.Engine.ANNOUNCE_REWARD = engine.getProperty("AnnounceReward", true);
         EventConfig.Engine.REGISTRATION_BY_COMMANDS = engine.getProperty("RegistrationByCommands", true);
         EventConfig.Engine.LOG_STATISTICS = engine.getProperty("LogStatistics", true);
-        EventConfig.Engine.WAIT_TELEPORT_SECONDS = engine.getProperty("WaitTeleportSeconds", 5);
+        EventConfig.Engine.DELAY_BEFORE_TELEPORT = engine.getProperty("DelayBeforeTeleport", 5);
+        EventConfig.Engine.DELAY_BEFORE_START = engine.getProperty("DelayBeforeStart", 15);
+        EventConfig.Engine.DELAY_BEFORE_TELEPORT_RETURN = engine.getProperty("DelayBeforeTeleportReturn", 10);
 
         ExProperties ctf = initProperties(EventConfig.CTF.PROPERTIES);
 

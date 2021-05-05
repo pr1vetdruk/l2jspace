@@ -64,7 +64,7 @@ import ru.privetdruk.l2jspace.gameserver.enums.PunishmentType;
 import ru.privetdruk.l2jspace.gameserver.enums.ShortcutType;
 import ru.privetdruk.l2jspace.gameserver.enums.SpawnType;
 import ru.privetdruk.l2jspace.gameserver.enums.StatusType;
-import ru.privetdruk.l2jspace.gameserver.enums.TeamType;
+import ru.privetdruk.l2jspace.gameserver.enums.AuraTeamType;
 import ru.privetdruk.l2jspace.gameserver.enums.TeleportMode;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassId;
@@ -377,7 +377,7 @@ public final class Player extends Playable {
     private final int[] _loto = new int[5];
     private final int[] _race = new int[2];
 
-    private TeamType _team = TeamType.NONE;
+    private AuraTeamType _team = AuraTeamType.NONE;
 
     private int _alliedVarkaKetra; // lvl of alliance with ketra orcs or varka silenos, used in quests and aggro checks [-5,-1] varka, 0 neutral, [1,5] ketra
 
@@ -5173,11 +5173,11 @@ public final class Player extends Playable {
         return _lvlJoinedAcademy > 0;
     }
 
-    public void setTeam(TeamType team) {
+    public void setAura(AuraTeamType team) {
         _team = team;
     }
 
-    public TeamType getTeam() {
+    public AuraTeamType getTeam() {
         return _team;
     }
 

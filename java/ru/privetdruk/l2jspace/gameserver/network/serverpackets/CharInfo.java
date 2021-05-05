@@ -3,7 +3,7 @@ package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CursedWeaponManager;
 import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
-import ru.privetdruk.l2jspace.gameserver.enums.TeamType;
+import ru.privetdruk.l2jspace.gameserver.enums.AuraTeamType;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.AbnormalEffect;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
@@ -139,7 +139,7 @@ public class CharInfo extends L2GameServerPacket {
         writeD(_player.getStatus().getMaxCp());
         writeD((int) _player.getStatus().getCp());
         writeC((_player.isMounted()) ? 0 : _player.getEnchantEffect());
-        writeC((Config.PLAYER_SPAWN_PROTECTION > 0 && _player.isSpawnProtected()) ? TeamType.BLUE.getId() : _player.getTeam().getId());
+        writeC((Config.PLAYER_SPAWN_PROTECTION > 0 && _player.isSpawnProtected()) ? AuraTeamType.BLUE.getId() : _player.getTeam().getId());
         writeD(_player.getClanCrestLargeId());
         writeC((_player.isNoble()) ? 1 : 0);
         writeC((_player.isHero() || (_player.isGM() && Config.GM_HERO_AURA)) ? 1 : 0);
