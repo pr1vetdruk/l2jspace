@@ -379,7 +379,10 @@ public class CTF extends EventEngine {
 
         player.getAppearance().setNameColor(eventPlayer.getOriginalColorName());
         player.setTitle(eventPlayer.getOriginalTitle());
-        player.setKarma(eventPlayer.getOriginalKarma());
+
+        if (eventPlayer.getOriginalKarma() > 0) {
+            player.setKarma(eventPlayer.getOriginalKarma());
+        }
 
         if (EventConfig.CTF.AURA) {
             player.setAura(AuraTeamType.NONE);
@@ -402,7 +405,9 @@ public class CTF extends EventEngine {
             TeamSetting team = eventPlayer.getTeamSettings();
 
             player.getAppearance().setNameColor(team.getColor());
-            player.setKarma(0);
+            if (player.getKarma() > 0) {
+                player.setKarma(0);
+            }
 
             if (EventConfig.CTF.AURA && teamSettings.size() == 2) {
                 player.setAura(AuraTeamType.fromId(teamSettings.indexOf(team) + 1));

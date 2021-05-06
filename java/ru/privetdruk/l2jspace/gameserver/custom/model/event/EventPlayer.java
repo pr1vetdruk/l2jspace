@@ -3,7 +3,7 @@ package ru.privetdruk.l2jspace.gameserver.custom.model.event;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 
 public class EventPlayer {
-    private Player player;
+    private final Player player;
     private TeamSetting teamSettings;
 
     private final int originalColorName;
