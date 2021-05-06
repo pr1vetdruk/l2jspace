@@ -289,12 +289,9 @@ public class CTF extends EventEngine {
                         CtfEventPlayer ctfPlayer = (CtfEventPlayer) eventPlayer;
                         Player player = ctfPlayer.getPlayer();
 
-                        player.sendMessage(targetPlayer.getName() + " took your flag!");
+                        player.sendMessage("Игрок " + targetPlayer.getName() + " взял ваш флаг!");
 
-                        if (ctfPlayer.isHasFlag()) {
-                            player.sendMessage("You can not return the flag to headquarters, until your flag is returned to it's place.");
-                            player.sendPacket(new RadarControl(1, 1, player.getX(), player.getY(), player.getZ()));
-                        } else {
+                        if (!ctfPlayer.isHasFlag()) {
                             player.sendPacket(new RadarControl(0, 1, targetPlayer.getX(), targetPlayer.getY(), targetPlayer.getZ()));
                             RadarOnPlayer radarOnPlayer = new RadarOnPlayer(player, targetPlayer);
                             ThreadPool.schedule(radarOnPlayer, 10000 + Rnd.get(30000));
@@ -329,7 +326,7 @@ public class CTF extends EventEngine {
         player.getInventory().equipItem(ItemInstance.create(flagItemId, 1, player, null));
         player.broadcastPacket(new SocialAction(player, 16)); // Amazing glow
         player.broadcastUserInfo();
-        player.sendPacket(new CreatureSay(player.getObjectId(), SayType.PARTYROOM_COMMANDER, ":", "You got it! Run back! ::"));
+        player.sendPacket(new CreatureSay(player.getObjectId(), SayType.PARTYROOM_COMMANDER, "", "Отлично! Теперь отнеси флаг на свою базу!"));
     }
 
     private void unspawn(Spawn spawn) {
@@ -398,32 +395,30 @@ public class CTF extends EventEngine {
     }
 
     @Override
-    protected void updatePlayerEventData() {
-        players.values().forEach(e -> {
-            CtfEventPlayer eventPlayer = (CtfEventPlayer) e;
-            Player player = eventPlayer.getPlayer();
-            TeamSetting team = eventPlayer.getTeamSettings();
+    protected void updatePlayerEventDataCustom(EventPlayer e) {
+        CtfEventPlayer eventPlayer = (CtfEventPlayer) e;
+        Player player = eventPlayer.getPlayer();
+        TeamSetting team = eventPlayer.getTeamSettings();
 
-            player.getAppearance().setNameColor(team.getColor());
-            if (player.getKarma() > 0) {
-                player.setKarma(0);
+        player.getAppearance().setNameColor(team.getColor());
+        if (player.getKarma() > 0) {
+            player.setKarma(0);
+        }
+
+        if (EventConfig.CTF.AURA && teamSettings.size() == 2) {
+            player.setAura(AuraTeamType.fromId(teamSettings.indexOf(team) + 1));
+        }
+
+        if (player.isMounted()) {
+            if (player.isFlying()) {
+                player.removeSkill(WYVERN_BREATH.getId(), true);
             }
 
-            if (EventConfig.CTF.AURA && teamSettings.size() == 2) {
-                player.setAura(AuraTeamType.fromId(teamSettings.indexOf(team) + 1));
-            }
+            player.broadcastPacket(new Ride(player.getObjectId(), Ride.ACTION_DISMOUNT, 0));
+            player.dismount();
+        }
 
-            if (player.isMounted()) {
-                if (player.isFlying()) {
-                    player.removeSkill(WYVERN_BREATH.getId(), true);
-                }
-
-                player.broadcastPacket(new Ride(player.getObjectId(), Ride.ACTION_DISMOUNT, 0));
-                player.dismount();
-            }
-
-            player.broadcastUserInfo();
-        });
+        player.broadcastUserInfo();
     }
 
     @Override
@@ -436,7 +431,7 @@ public class CTF extends EventEngine {
             NpcTemplate flagTemplate = NpcData.getInstance().getTemplate(flag.getNpc().getId());
 
             try {
-                Spawn throneSpawn = configureSpawn(throneTemplate, throne.getNpc().getSpawnLocation(), team.getName() + " Throne");
+                Spawn throneSpawn = configureSpawn(throneTemplate, throne.getNpc().getSpawnLocation(), team.getName() + "'s  Throne");
                 throneSpawn.getLoc().setZ(throneSpawn.getLoc().getZ() - throne.getOffsetZ());
                 Npc throneNpc = throneSpawn.getNpc();
                 throneNpc.broadcastPacket(new MagicSkillUse(
@@ -543,6 +538,7 @@ public class CTF extends EventEngine {
 
         Npc npc = spawn.getNpc();
         npc.getStatus().setHp(999999999);
+        npc.setInvul(true);
         npc.decayMe();
         npc.spawnMe(npc.getX(), npc.getY(), npc.getZ());
         npc.setTitle(title);

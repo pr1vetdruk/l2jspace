@@ -1301,6 +1301,7 @@ public final class Config {
         EventConfig.CTF.UNSUMMON_PET = ctf.getProperty("UnsummonPet", true);
         EventConfig.CTF.REMOVE_ALL_EFFECTS = ctf.getProperty("RemoveAllEffects", false);
         EventConfig.CTF.JOIN_CURSED_WEAPON = ctf.getProperty("JoinCursedWeapon", false);
+        EventConfig.CTF.ALLOW_POTIONS = ctf.getProperty("AllowPotions", false);
     }
 
     private static void loadAddon() {

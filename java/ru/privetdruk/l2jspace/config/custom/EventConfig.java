@@ -27,5 +27,6 @@ public class EventConfig {
         public static boolean UNSUMMON_PET;
         public static boolean REMOVE_ALL_EFFECTS;
         public static boolean JOIN_CURSED_WEAPON;
+        public static boolean ALLOW_POTIONS;
     }
 }

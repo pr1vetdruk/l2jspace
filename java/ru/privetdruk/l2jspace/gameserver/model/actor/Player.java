@@ -34,6 +34,7 @@ import ru.privetdruk.l2jspace.gameserver.LoginServerThread;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.CommunityBoard;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.model.Forum;
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventPlayer;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable.FrequentSkill;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
@@ -419,6 +420,8 @@ public final class Player extends Playable {
     private Door _requestedGate;
 
     private final CachedData _cachedData = new CachedData(getObjectId());
+
+    private EventPlayer eventPlayer;
 
     /**
      * Constructor of Player (use Creature constructor).
@@ -6819,5 +6822,17 @@ public final class Player extends Playable {
             gms.add(this);
 
         return gms;
+    }
+
+    public EventPlayer getEventPlayer() {
+        return eventPlayer;
+    }
+
+    public void setEventPlayer(EventPlayer eventPlayer) {
+        this.eventPlayer = eventPlayer;
+    }
+
+    public boolean isEventPlayer() {
+        return eventPlayer != null;
     }
 }

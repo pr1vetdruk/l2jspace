@@ -2,6 +2,10 @@ package ru.privetdruk.l2jspace.gameserver.handler.itemhandlers;
 
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
 
+import ru.privetdruk.l2jspace.config.custom.EventConfig;
+import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventType;
 import ru.privetdruk.l2jspace.gameserver.handler.IItemHandler;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;
@@ -11,6 +15,7 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Servitor;
 import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.skill.effect.EffectTemplate;
@@ -32,6 +37,17 @@ public class ItemSkills implements IItemHandler {
         final boolean isPet = playable instanceof Pet;
         final Player player = playable.getActingPlayer();
         final Creature target = playable.getTarget() instanceof Creature ? (Creature) playable.getTarget() : null;
+
+        if (player.isEventPlayer() && item.isPotion()) {
+            EventEngine event = EventEngine.findActive();
+
+            boolean allowPotions = event.getEventType() == EventType.CTF && EventConfig.CTF.ALLOW_POTIONS;
+
+            if (event.getEventState() == EventState.IN_PROGRESS && !allowPotions) {
+                player.sendPacket(ActionFailed.STATIC_PACKET);
+                return;
+            }
+        }
 
         // Pets can only use tradable items.
         if (isPet && !item.isTradable()) {

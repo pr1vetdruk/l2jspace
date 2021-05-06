@@ -32,7 +32,6 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MagicSkillUse;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import static java.lang.String.format;
@@ -121,6 +120,7 @@ public abstract class EventEngine implements EventTask {
 
         unspawnEventNpc();
         determineWinner();
+        restorePlayerData();
         returnPlayer();
     }
 
@@ -159,23 +159,22 @@ public abstract class EventEngine implements EventTask {
 
         sitPlayers();
 
-        ThreadPool.schedule(() -> {
-            // TODO Реализовать возврат на исходную позицию перед эвентом.
-            Location spawnLocation = settings.getMainNpc().getSpawnLocation();
+        waiter(EventConfig.Engine.DELAY_BEFORE_TELEPORT_RETURN);
 
-            players.values().forEach(eventPlayer -> {
-                Player player = eventPlayer.getPlayer();
+        // TODO Реализовать возврат на исходную позицию перед ивентом.
+        Location spawnLocation = settings.getMainNpc().getSpawnLocation();
 
-                restorePlayerDataCustom(eventPlayer);
-                if (player.isOnline()) {
-                    player.teleToLocation(spawnLocation);
-                }
+        players.values().forEach(eventPlayer -> {
+            Player player = eventPlayer.getPlayer();
 
-                players.remove(player.getObjectId());
+            if (player.isOnline()) {
+                player.teleToLocation(spawnLocation);
+            }
 
-                sitPlayer(player);
-            });
-        }, SECONDS.toMillis(EventConfig.Engine.DELAY_BEFORE_TELEPORT_RETURN));
+            players.remove(player.getObjectId());
+
+            sitPlayer(player);
+        });
     }
 
     protected void unspawnEventNpc() {
@@ -194,9 +193,10 @@ public abstract class EventEngine implements EventTask {
     }
 
     protected void restorePlayerData() {
-        players.values().stream()
-                .filter(eventPlayer -> eventPlayer.getPlayer() != null)
-                .forEach(this::restorePlayerDataCustom);
+        players.values().forEach(eventPlayer -> {
+            eventPlayer.getPlayer().setEventPlayer(null);
+            restorePlayerDataCustom(eventPlayer);
+        });
     }
 
     public void teleport() {
@@ -225,13 +225,20 @@ public abstract class EventEngine implements EventTask {
         sitPlayers();
 
         for (EventPlayer eventPlayer : players.values()) {
-            Player player = eventPlayer.getPlayer();
+            preTeleportPlayerChecks(eventPlayer.getPlayer());
 
-            preTeleportPlayerChecks(player);
-
-            TeamSetting team = eventPlayer.getTeamSettings();
-            player.teleportTo(team.getSpawnLocation(), team.getOffset());
+            eventPlayer.getPlayer().teleportTo(
+                    eventPlayer.getTeamSettings().getSpawnLocation(),
+                    eventPlayer.getTeamSettings().getOffset()
+            );
         }
+    }
+
+    private void updatePlayerEventData() {
+        players.values().forEach(eventPlayer -> {
+            eventPlayer.getPlayer().setEventPlayer(eventPlayer);
+            updatePlayerEventDataCustom(eventPlayer);
+        });
     }
 
     private void preTeleportPlayerChecks(Player player) {
@@ -622,7 +629,7 @@ public abstract class EventEngine implements EventTask {
 
     protected abstract void restorePlayerDataCustom(EventPlayer eventPlayer);
 
-    protected abstract void updatePlayerEventData();
+    protected abstract void updatePlayerEventDataCustom(EventPlayer eventPlayer);
 
     protected abstract void spawnOtherNpc();
 

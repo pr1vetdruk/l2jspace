@@ -1,29 +1,34 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
+import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventPlayer;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState;
 import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
 
 public final class AttackRequest extends L2GameClientPacket {
-    private int _objectId;
-    private boolean _isShiftAction;
+    private int objectId;
+    private boolean isShiftAction;
 
     @Override
     protected void readImpl() {
-        _objectId = readD();
+        objectId = readD();
         readD(); // originX
         readD(); // originY
         readD(); // originZ
-        _isShiftAction = readC() != 0;
+        isShiftAction = readC() != 0;
     }
 
     @Override
     protected void runImpl() {
-        final Player player = getClient().getPlayer();
-        if (player == null)
+        Player player = getClient().getPlayer();
+        if (player == null) {
             return;
+        }
 
         if (player.isOutOfControl()) {
             player.sendPacket(ActionFailed.STATIC_PACKET);
@@ -37,14 +42,41 @@ public final class AttackRequest extends L2GameClientPacket {
         }
 
         // avoid using expensive operations if not needed
-        final WorldObject target = (player.getTargetId() == _objectId) ? player.getTarget() : World.getInstance().getObject(_objectId);
+        WorldObject target = player.getTargetId() == objectId ? player.getTarget() : World.getInstance().getObject(objectId);
 
         if (target == null) {
             player.sendPacket(ActionFailed.STATIC_PACKET);
             return;
         }
 
+        // No attacks to same team in Event
+        EventEngine event = EventEngine.findActive();
+        if (event.getEventState() == EventState.IN_PROGRESS) {
+            if (target instanceof Player) {
+                if (checkTeammate(player, (Player) target)) {
+                    player.sendPacket(ActionFailed.STATIC_PACKET);
+                    return;
+                }
+            } else if (target instanceof Summon) {
+                if (checkTeammate(player, ((Summon) target).getOwner())) {
+                    player.sendPacket(ActionFailed.STATIC_PACKET);
+                    return;
+                }
+            }
+        }
+
         // (player.getTarget() == target) -> This happens when you control + click a target without having had it selected beforehand. Behaves as the Action packet and will NOT trigger an attack.
-        target.onAction(player, (player.getTarget() == target), _isShiftAction);
+        target.onAction(player, (player.getTarget() == target), isShiftAction);
+    }
+
+    private boolean checkTeammate(Player player, Player target) {
+        if (player.isEventPlayer() && target.isEventPlayer()) {
+            String playerTeamName = player.getEventPlayer().getTeamSettings().getName();
+            String targetPlayerTeamName = target.getEventPlayer().getTeamSettings().getName();
+
+            return playerTeamName.equals(targetPlayerTeamName);
+        }
+
+        return false;
     }
 }
