@@ -6,9 +6,7 @@ import java.util.List;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillTargetType;
 import ru.privetdruk.l2jspace.gameserver.geoengine.GeoEngine;
 import ru.privetdruk.l2jspace.gameserver.handler.ITargetHandler;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Attackable;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;
+import ru.privetdruk.l2jspace.gameserver.model.actor.*;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
@@ -20,26 +18,12 @@ public class TargetArea implements ITargetHandler {
 
     @Override
     public Creature[] getTargetList(Creature caster, Creature target, L2Skill skill) {
-        final List<Creature> list = new ArrayList<>();
-        list.add(target);
-
-        for (Creature creature : target.getKnownTypeInRadius(Creature.class, skill.getSkillRadius())) {
-            if (creature == caster || creature.isDead() || !GeoEngine.getInstance().canSeeTarget(target, creature))
-                continue;
-
-            if (caster instanceof Playable && (creature instanceof Attackable || creature instanceof Playable)) {
-                if (creature.isAttackableWithoutForceBy((Playable) caster))
-                    list.add(creature);
-            } else if (caster instanceof Attackable && creature instanceof Playable) {
-                if (creature.isAttackableBy(caster))
-                    list.add(creature);
-            }
-        }
+        List<Creature> list = configureTarget(caster, target, skill);
 
         if (list.isEmpty())
             return EMPTY_TARGET_ARRAY;
 
-        return list.toArray(new Creature[list.size()]);
+        return list.toArray(new Creature[0]);
     }
 
     @Override
@@ -59,5 +43,56 @@ public class TargetArea implements ITargetHandler {
             }
         }
         return true;
+    }
+
+    public static List<Creature> configureTarget(Creature caster, Creature target, L2Skill skill) {
+        List<Creature> list = new ArrayList<>();
+        list.add(target);
+
+        boolean casterIsPlayable = caster instanceof Playable;
+        boolean casterIsAttackable = caster instanceof Attackable;
+
+        Player casterPlayer = null;
+        if (caster instanceof Player) {
+            casterPlayer = (Player) caster;
+        } else if (caster instanceof Summon) {
+            casterPlayer = ((Summon) caster).getOwner();
+        }
+
+        for (Creature creatureInRadius : target.getKnownTypeInRadius(Creature.class, skill.getSkillRadius())) {
+            if (creatureInRadius == caster
+                    || creatureInRadius.isDead()
+                    || !GeoEngine.getInstance().canSeeTarget(target, creatureInRadius)) {
+                continue;
+            }
+
+            if (casterIsPlayable && (creatureInRadius instanceof Attackable || creatureInRadius instanceof Playable)) {
+                if (casterPlayer != null) {
+                    Player playerInRadius = null;
+
+                    if (creatureInRadius instanceof Player) {
+                        playerInRadius = (Player) creatureInRadius;
+                    } else if (creatureInRadius instanceof Summon) {
+                        playerInRadius = ((Summon) creatureInRadius).getOwner();
+                    }
+
+                    if (playerInRadius != null &&
+                            ((playerInRadius.isEventPlayer() && !casterPlayer.isEventPlayer())
+                                    || (!playerInRadius.isEventPlayer() && casterPlayer.isEventPlayer()))) {
+                        continue;
+                    }
+                }
+
+                if (creatureInRadius.isAttackableWithoutForceBy((Playable) caster)) {
+                    list.add(creatureInRadius);
+                }
+            } else if (casterIsAttackable && creatureInRadius instanceof Playable) {
+                if (creatureInRadius.isAttackableBy(caster)) {
+                    list.add(creatureInRadius);
+                }
+            }
+        }
+
+        return list;
     }
 }

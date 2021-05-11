@@ -1290,6 +1290,7 @@ public final class Config {
         EventConfig.Engine.DELAY_BEFORE_TELEPORT = engine.getProperty("DelayBeforeTeleport", 5);
         EventConfig.Engine.DELAY_BEFORE_START = engine.getProperty("DelayBeforeStart", 15);
         EventConfig.Engine.DELAY_BEFORE_TELEPORT_RETURN = engine.getProperty("DelayBeforeTeleportReturn", 10);
+        EventConfig.Engine.ALLOW_INTERFERENCE = engine.getProperty("AllowInterference", false);
 
         ExProperties ctf = initProperties(EventConfig.CTF.PROPERTIES);
 

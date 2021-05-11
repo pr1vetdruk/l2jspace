@@ -15,6 +15,7 @@ public class EventConfig {
         public static int DELAY_BEFORE_TELEPORT;
         public static int DELAY_BEFORE_START;
         public static int DELAY_BEFORE_TELEPORT_RETURN;
+        public static boolean ALLOW_INTERFERENCE;
     }
 
     public static class CTF {

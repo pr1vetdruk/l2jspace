@@ -147,7 +147,6 @@ public class CTF extends EventEngine {
 
             teamSettings.addAll(ctfTeamSettings);
 
-            statement.close();
             resultSet.close();
         } catch (Exception e) {
             eventState = ERROR;

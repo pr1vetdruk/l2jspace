@@ -3,6 +3,7 @@ package ru.privetdruk.l2jspace.gameserver.handler.targethandlers;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillTargetType;
 import ru.privetdruk.l2jspace.gameserver.handler.ITargetHandler;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
@@ -20,26 +21,35 @@ public class TargetParty implements ITargetHandler {
 
     @Override
     public Creature[] getTargetList(Creature caster, Creature target, L2Skill skill) {
-        final List<Creature> list = new ArrayList<>();
+        List<Creature> list = new ArrayList<>();
         list.add(caster);
 
-        final Player player = caster.getActingPlayer();
-        if (caster instanceof Summon && skill.addCharacter(caster, player, false))
+        Player player = caster.getActingPlayer();
+        if (caster instanceof Summon && skill.addCharacter(caster, player, false)) {
             list.add(player);
-        else if (caster instanceof Player && skill.addSummon(caster, player, false))
+        } else if (caster instanceof Player && skill.addSummon(caster, player, false)) {
             list.add(player.getSummon());
+        }
 
-        final Party party = caster.getParty();
+        Party party = caster.getParty();
         if (party != null) {
-            for (Player member : party.getMembers()) {
-                if (member == player)
+            for (Player partyMember : party.getMembers()) {
+                if (partyMember == player) {
                     continue;
+                }
 
-                if (skill.addCharacter(caster, member, false))
-                    list.add(member);
+                if (!EventConfig.Engine.ALLOW_INTERFERENCE &&
+                        (partyMember.isEventPlayer() && !player.isEventPlayer() || !partyMember.isEventPlayer() && player.isEventPlayer())) {
+                    continue;
+                }
 
-                if (skill.addSummon(caster, member, false))
-                    list.add(member.getSummon());
+                if (skill.addCharacter(caster, partyMember, false)) {
+                    list.add(partyMember);
+                }
+
+                if (skill.addSummon(caster, partyMember, false)) {
+                    list.add(partyMember.getSummon());
+                }
             }
         }
 

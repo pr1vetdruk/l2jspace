@@ -27,8 +27,9 @@ public class SummonFriend implements ISkillHandler {
         final Player player = (Player) activeChar;
 
         // Check player status.
-        if (!checkSummoner(player))
+        if (!checkSummoner(player) || player.isEventPlayer()) {
             return;
+        }
 
         // Bypass target and stuff, simply retrieve Party exclude caster.
         if (skill.getSkillType() == SkillType.SUMMON_PARTY) {

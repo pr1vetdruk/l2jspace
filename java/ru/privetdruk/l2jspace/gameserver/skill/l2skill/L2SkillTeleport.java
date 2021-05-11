@@ -49,8 +49,12 @@ public class L2SkillTeleport extends L2Skill {
                 Player targetChar = (Player) target;
 
                 // Check invalid states.
-                if (targetChar.isFestivalParticipant() || targetChar.isInJail() || targetChar.isInDuel())
+                if (targetChar.isFestivalParticipant()
+                        || targetChar.isInJail()
+                        || targetChar.isInDuel()
+                        || targetChar.isEventPlayer()) {
                     continue;
+                }
 
                 if (targetChar != activeChar) {
                     if (targetChar.isInOlympiadMode())

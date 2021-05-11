@@ -30,11 +30,12 @@ public class SummonItems implements IItemHandler {
             return;
         }
 
-        if (player.isInObserverMode())
+        if (player.isInObserverMode()
+                || player.isAllSkillsDisabled()
+                || player.getCast().isCastingNow()
+                || player.isEventPlayer()) {
             return;
-
-        if (player.isAllSkillsDisabled() || player.getCast().isCastingNow())
-            return;
+        }
 
         final IntIntHolder sitem = SummonItemData.getInstance().getSummonItem(item.getItemId());
 
