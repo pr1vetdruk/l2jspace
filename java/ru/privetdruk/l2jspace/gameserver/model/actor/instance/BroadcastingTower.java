@@ -6,6 +6,7 @@ import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ItemList;
 
 /**
@@ -20,14 +21,20 @@ public final class BroadcastingTower extends Folk {
 
     @Override
     public void onBypassFeedback(Player player, String command) {
+        if (player.isEventPlayer()) {
+            player.sendMessage("Вы участвуете в ивенте. Запрещено.");
+            player.sendPacket(ActionFailed.STATIC_PACKET);
+            return;
+        }
+
         if (command.startsWith("observe")) {
             StringTokenizer st = new StringTokenizer(command);
             st.nextToken();
 
-            final int cost = Integer.parseInt(st.nextToken());
-            final int x = Integer.parseInt(st.nextToken());
-            final int y = Integer.parseInt(st.nextToken());
-            final int z = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+            int z = Integer.parseInt(st.nextToken());
 
             if (command.startsWith("observeSiege") && CastleManager.getInstance().getActiveSiege(x, y, z) == null) {
                 player.sendPacket(SystemMessageId.ONLY_VIEW_SIEGE);
@@ -38,8 +45,9 @@ public final class BroadcastingTower extends Folk {
                 player.enterObserverMode(x, y, z);
                 player.sendPacket(new ItemList(player, false));
             }
-        } else
+        } else {
             super.onBypassFeedback(player, command);
+        }
     }
 
     @Override

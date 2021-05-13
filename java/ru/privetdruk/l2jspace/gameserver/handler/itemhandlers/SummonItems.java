@@ -2,6 +2,7 @@ package ru.privetdruk.l2jspace.gameserver.handler.itemhandlers;
 
 import java.util.List;
 
+import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.SummonItemData;
@@ -33,7 +34,7 @@ public class SummonItems implements IItemHandler {
         if (player.isInObserverMode()
                 || player.isAllSkillsDisabled()
                 || player.getCast().isCastingNow()
-                || player.isEventPlayer()) {
+                || (player.isEventPlayer() && !EventConfig.Engine.ALLOW_SUMMON)) {
             return;
         }
 

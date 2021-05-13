@@ -1,6 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.custom.engine;
 
-import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.util.StringUtil;
 import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.custom.model.NpcInfoShort;
@@ -53,21 +52,24 @@ public abstract class EventEngine implements EventTask {
     protected List<TeamSetting> teamSettings = new ArrayList<>();
     protected Map<Integer, EventPlayer> players = new ConcurrentHashMap<>();
 
-    protected EventType eventType;
-    protected EventTeamType teamMode;
+    protected final EventType eventType;
+    protected final EventTeamType teamMode;
+    protected final boolean ON_START_UNSUMMON_PET;
+    protected final boolean ON_START_REMOVE_ALL_EFFECTS;
+    protected final boolean JOIN_CURSED_WEAPON;
     protected EventState eventState;
     protected String eventStartTime;
-    protected boolean onStartUnsummonPet;
-    protected boolean onStartRemoveAllEffects;
 
     public EventEngine(EventType eventType,
                        EventTeamType teamMode,
                        boolean onStartUnsummonPet,
-                       boolean onStartRemoveAllEffects) {
+                       boolean onStartRemoveAllEffects,
+                       boolean joinCursedWeapon) {
         this.eventType = eventType;
         this.teamMode = teamMode;
-        this.onStartUnsummonPet = onStartUnsummonPet;
-        this.onStartRemoveAllEffects = onStartRemoveAllEffects;
+        ON_START_UNSUMMON_PET = onStartUnsummonPet;
+        ON_START_REMOVE_ALL_EFFECTS = onStartRemoveAllEffects;
+        JOIN_CURSED_WEAPON = joinCursedWeapon;
 
         eventState = INACTIVE;
     }
@@ -121,7 +123,7 @@ public abstract class EventEngine implements EventTask {
         unspawnEventNpc();
         determineWinner();
         restorePlayerData();
-        returnPlayer();
+        returnPlayers();
     }
 
     protected void startEvent() {
@@ -142,7 +144,7 @@ public abstract class EventEngine implements EventTask {
 
         if (eventState != REGISTRATION) {
             abortCustom();
-            returnPlayer();
+            returnPlayers();
         }
 
         eventState = ABORT;
@@ -150,7 +152,7 @@ public abstract class EventEngine implements EventTask {
         announceCritical("Ивент прерван!");
     }
 
-    protected void returnPlayer() {
+    protected void returnPlayers() {
         announceCritical(format(
                 "Все участники ивента будут возвращены обратно через %d %s.",
                 EventConfig.Engine.DELAY_BEFORE_TELEPORT_RETURN,
@@ -242,13 +244,13 @@ public abstract class EventEngine implements EventTask {
     }
 
     private void preTeleportPlayerChecks(Player player) {
-        if (onStartUnsummonPet && player.hasPet()) {
+        if (ON_START_UNSUMMON_PET && player.hasPet()) {
             Summon summon = player.getSummon();
             summon.stopAllEffects();
             summon.unSummon(player);
         }
 
-        if (onStartRemoveAllEffects) {
+        if (ON_START_REMOVE_ALL_EFFECTS) {
             player.stopAllEffects();
         }
 
@@ -353,12 +355,6 @@ public abstract class EventEngine implements EventTask {
             npc.broadcastPacket(
                     new MagicSkillUse(npc, npc, SkillEnum.Bishop.REPOSE.getId(), 1, 1, 1)
             );
-
-            /* TODO switch (event) {
-                case CTF -> spawn.getLastSpawn().isCtfMainNpc = true;
-                case TVT -> spawn.getLastSpawn()._isEventMobTvT = true;
-                case DM -> spawn.getLastSpawn()._isEventMobDM = true;
-            }*/
 
             settings.setSpawnMainNpc(spawn);
         } catch (Exception e) {
@@ -498,7 +494,7 @@ public abstract class EventEngine implements EventTask {
     }
 
     protected boolean checkPlayerBeforeRegistration(Player player) {
-        if (player.isCursedWeaponEquipped()) {
+        if (player.isCursedWeaponEquipped() && !JOIN_CURSED_WEAPON) {
             player.sendMessage("С Cursed Weapon запрещено принимать участие в ивенте.");
             return false;
         }

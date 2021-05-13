@@ -73,6 +73,11 @@ public final class RequestJoinParty extends L2GameClientPacket {
             return;
         }
 
+        if (target.isEventPlayer() || requestor.isEventPlayer()) {
+            requestor.sendMessage("Вы не можете пригласить этого игрока в группу: вы или ваша цель участвуете в ивенте.");
+            return;
+        }
+
         final Party party = requestor.getParty();
         if (party != null) {
             if (!party.isLeader(requestor)) {

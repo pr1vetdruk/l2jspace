@@ -11,6 +11,8 @@ import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 
+import ru.privetdruk.l2jspace.config.custom.EventConfig;
+import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.enums.MessageType;
 import ru.privetdruk.l2jspace.gameserver.model.World;
@@ -485,9 +487,15 @@ public class CursedWeapon {
      * @param item   : The item used as reference.
      */
     public void activate(Player player, ItemInstance item) {
+        if (player.isEventPlayer() && !EventConfig.CTF.JOIN_CURSED_WEAPON) {
+            EventEngine event = EventEngine.findActive();
+            event.ex
+        }
+
         // If the Player is mounted, unmount him first.
-        if (player.isMounted())
+        if (player.isMounted()) {
             player.dismount();
+        }
 
         _isActivated = true;
 
