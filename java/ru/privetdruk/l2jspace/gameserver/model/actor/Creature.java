@@ -10,6 +10,7 @@ import ru.privetdruk.l2jspace.common.lang.StringUtil;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 
 import ru.privetdruk.l2jspace.config.Config;
+import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.data.manager.BotsPreventionManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ZoneManager;
 import ru.privetdruk.l2jspace.gameserver.data.xml.MapRegionData;
@@ -451,8 +452,9 @@ public abstract class Creature extends WorldObject {
     public boolean doDie(Creature killer) {
         // killing is only possible one time
         synchronized (this) {
-            if (isDead())
+            if (isDead()) {
                 return false;
+            }
 
             // now reset currentHp to zero
             getStatus().setHp(0);
@@ -465,19 +467,33 @@ public abstract class Creature extends WorldObject {
 
         // Stop Regeneration task, and removes all current effects
         getStatus().stopHpMpRegeneration();
-        stopAllEffectsExceptThoseThatLastThroughDeath();
+
+        if (this instanceof Player) {
+            Player player = (Player) this;
+
+            // to avoid Event Remove buffs on die
+            if (player.isEventPlayer()) {
+                if (EventEngine.findActive().isRemoveBuffsOnDie()) {
+                    stopAllEffectsExceptThoseThatLastThroughDeath();
+                }
+            }
+        } else {
+            stopAllEffectsExceptThoseThatLastThroughDeath();
+        }
 
         calculateRewards(killer);
 
-        if (Config.BOTS_PREVENTION)
+        if (Config.BOTS_PREVENTION) {
             BotsPreventionManager.getInstance().updateCounter(killer, this);
+        }
 
         // Send the Server->Client packet StatusUpdate with current HP and MP to all other Player to inform
         getStatus().broadcastStatusUpdate();
 
         // Notify Creature AI
-        if (hasAI())
+        if (hasAI()) {
             getAI().notifyEvent(AiEventType.DEAD, null, null);
+        }
 
         return true;
     }

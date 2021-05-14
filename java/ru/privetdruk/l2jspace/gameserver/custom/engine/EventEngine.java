@@ -57,6 +57,7 @@ public abstract class EventEngine implements EventTask {
     protected final boolean ON_START_UNSUMMON_PET;
     protected final boolean ON_START_REMOVE_ALL_EFFECTS;
     protected final boolean JOIN_CURSED_WEAPON;
+    protected final boolean REMOVE_BUFFS_ON_DIE;
     protected EventState eventState;
     protected String eventStartTime;
 
@@ -64,12 +65,14 @@ public abstract class EventEngine implements EventTask {
                        EventTeamType teamMode,
                        boolean onStartUnsummonPet,
                        boolean onStartRemoveAllEffects,
-                       boolean joinCursedWeapon) {
+                       boolean joinCursedWeapon,
+                       boolean removeBuffsOnDie) {
         this.eventType = eventType;
         this.teamMode = teamMode;
         ON_START_UNSUMMON_PET = onStartUnsummonPet;
         ON_START_REMOVE_ALL_EFFECTS = onStartRemoveAllEffects;
         JOIN_CURSED_WEAPON = joinCursedWeapon;
+        REMOVE_BUFFS_ON_DIE = removeBuffsOnDie;
 
         eventState = INACTIVE;
     }
@@ -568,6 +571,12 @@ public abstract class EventEngine implements EventTask {
         players.remove(player.getObjectId());
     }
 
+    public void exclude(Player player) {
+        restorePlayerDataCustom(player.getEventPlayer());
+        leave(player);
+        player.setEventPlayer(null);
+    }
+
     public static EventEngine findActive() {
         return eventTaskList.stream()
                 .filter(event -> event.eventState != INACTIVE)
@@ -614,6 +623,14 @@ public abstract class EventEngine implements EventTask {
 
     public EventSetting getSettings() {
         return settings;
+    }
+
+    public boolean isJoinCursedWeapon() {
+        return JOIN_CURSED_WEAPON;
+    }
+
+    public boolean isRemoveBuffsOnDie() {
+        return REMOVE_BUFFS_ON_DIE;
     }
 
     // TODO

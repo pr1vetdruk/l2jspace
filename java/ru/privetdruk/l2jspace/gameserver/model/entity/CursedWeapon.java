@@ -487,9 +487,12 @@ public class CursedWeapon {
      * @param item   : The item used as reference.
      */
     public void activate(Player player, ItemInstance item) {
-        if (player.isEventPlayer() && !EventConfig.CTF.JOIN_CURSED_WEAPON) {
+        if (player.isEventPlayer()) {
             EventEngine event = EventEngine.findActive();
-            event.ex
+
+            if (!event.isJoinCursedWeapon()) {
+                event.exclude(player);
+            }
         }
 
         // If the Player is mounted, unmount him first.

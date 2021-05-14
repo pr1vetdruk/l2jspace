@@ -1212,70 +1212,59 @@ public abstract class L2Skill implements IChanceSkillTrigger {
     }
 
     public boolean isDamage() {
-        switch (_skillType) {
-            case PDAM:
-            case MDAM:
-            case DRAIN:
-            case BLOW:
-            case CPDAMPERCENT:
-            case DEATHLINK:
-            case CHARGEDAM:
-            case FATAL:
-            case SIGNET_CASTTIME:
-                return true;
-        }
-        return false;
+        return switch (_skillType) {
+            case PDAM, MDAM, DRAIN, BLOW, CPDAMPERCENT, DEATHLINK, CHARGEDAM, FATAL, SIGNET_CASTTIME -> true;
+            default -> false;
+        };
     }
 
     public boolean isAOE() {
-        switch (_targetType) {
-            case AREA:
-            case AURA:
-            case BEHIND_AURA:
-            case FRONT_AREA:
-            case FRONT_AURA:
-                return true;
-        }
-        return false;
+        return switch (_targetType) {
+            case AREA, AURA, BEHIND_AURA, FRONT_AREA, FRONT_AURA -> true;
+            default -> false;
+        };
     }
 
     public boolean canTargetCorpse() {
-        switch (_targetType) {
-            case AREA_CORPSE_MOB:
-            case CORPSE:
-            case CORPSE_MOB:
-            case CORPSE_PET:
-            case CORPSE_PLAYER:
-            case CORPSE_ALLY:
-                return true;
-        }
-        return false;
+        return switch (_targetType) {
+            case AREA_CORPSE_MOB, CORPSE, CORPSE_MOB, CORPSE_PET, CORPSE_PLAYER, CORPSE_ALLY -> true;
+            default -> false;
+        };
     }
 
     public final Creature[] getTargetList(Creature caster, Creature target) {
-        final ITargetHandler handler = TargetHandler.getInstance().getHandler(getTargetType());
-        if (handler != null)
+        ITargetHandler handler = TargetHandler.getInstance().getHandler(getTargetType());
+
+        if (handler != null) {
             return handler.getTargetList(caster, target, this);
+        }
 
         caster.sendMessage(getTargetType() + " skill target type isn't currently handled.");
+
         return ITargetHandler.EMPTY_TARGET_ARRAY;
     }
 
     public final Creature getFinalTarget(Creature caster, Creature target) {
-        final ITargetHandler handler = TargetHandler.getInstance().getHandler(getTargetType());
-        if (handler != null)
+        ITargetHandler handler = TargetHandler.getInstance().getHandler(getTargetType());
+
+        if (handler != null) {
             return handler.getFinalTarget(caster, target, this);
+        }
 
         caster.sendMessage(getTargetType() + " skill target type isn't currently handled.");
+
         return null;
     }
 
     public final boolean meetCastConditions(Playable caster, Creature target, boolean isCtrlPressed) {
-        final ITargetHandler handler = TargetHandler.getInstance().getHandler(getTargetType());
-        if (handler != null)
+        ITargetHandler handler = TargetHandler.getInstance().getHandler(getTargetType());
+
+        if (handler != null) {
             return handler.meetCastConditions(caster, target, this, isCtrlPressed);
+        }
 
         caster.sendMessage(getTargetType() + " skill target type isn't currently handled.");
+
         return false;
     }
 

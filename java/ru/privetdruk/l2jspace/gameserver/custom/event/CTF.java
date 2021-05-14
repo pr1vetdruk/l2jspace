@@ -55,7 +55,15 @@ public class CTF extends EventEngine {
     private final List<CtfTeamSetting> ctfTeamSettings = new ArrayList<>();
 
     public CTF() {
-        super(EventType.CTF, EventConfig.CTF.TEAM_MODE, EventConfig.CTF.UNSUMMON_PET, EventConfig.CTF.REMOVE_ALL_EFFECTS);
+        super(
+                EventType.CTF,
+                EventConfig.CTF.TEAM_MODE,
+                EventConfig.CTF.UNSUMMON_PET,
+                EventConfig.CTF.REMOVE_ALL_EFFECTS,
+                EventConfig.CTF.JOIN_CURSED_WEAPON,
+                EventConfig.CTF.REMOVE_BUFFS_ON_DIE
+        );
+
         eventTaskList.add(this);
     }
 
@@ -572,7 +580,7 @@ public class CTF extends EventEngine {
             content.append("Currently participated: <font color=\"00FF00\">").append(players.size()).append(".</font><br>");
             content.append("Max players: <font color=\"00FF00\">").append(settings.getMaxPlayers()).append("</font><br><br>");
             content.append("<font color=\"FFFF00\">You can't participate to this event.</font><br>");
-        } else if (player.isCursedWeaponEquipped() && !EventConfig.CTF.JOIN_CURSED_WEAPON) {
+        } else if (player.isCursedWeaponEquipped() && !JOIN_CURSED_WEAPON) {
             content.append("<font color=\"FFFF00\">You can't participate to this event with a cursed Weapon.</font><br>");
         } else {
             if (eventState == REGISTRATION
