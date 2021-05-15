@@ -218,7 +218,7 @@ public abstract class EventEngine implements EventTask {
         removeOfflinePlayers();
 
         announceCritical(format(
-                "Все зарегистрированные игроки будут телепортированы на ивент через %d %s.",
+                "Все зарегистрированные игроки будут перемещены на ивент через %d %s.",
                 DELAY_BEFORE_TELEPORT,
                 declensionWords(DELAY_BEFORE_TELEPORT, StringUtil.secondWords)
         ));
@@ -655,6 +655,13 @@ public abstract class EventEngine implements EventTask {
     public abstract String configureMainPageContent(Player player);
 
     public abstract void register(Player player, String teamName);
+
+    public abstract void revive(Player player, Player playerKiller);
+
+    public void onDisconnect(Player player) {
+        exclude(player);
+        player.teleToLocation(settings.getMainNpc().getSpawnLocation());
+    }
 /*
 
 

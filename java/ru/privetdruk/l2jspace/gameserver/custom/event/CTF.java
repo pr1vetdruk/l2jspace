@@ -34,8 +34,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static java.lang.String.format;
+import static ru.privetdruk.l2jspace.common.util.StringUtil.declensionWords;
+import static ru.privetdruk.l2jspace.common.util.StringUtil.secondWords;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.SkillEnum.Mount.Wyvern.WYVERN_BREATH;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.SkillEnum.Prophet.MAGIC_BARRIER;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBypass.JOIN_TEAM;
@@ -162,7 +165,7 @@ public class CTF extends EventEngine {
         }
     }
 
-    public void restoreFlag() {
+    public void restoreFlags() {
         try {
             int numberFlagsTaken = 0;
 
@@ -222,9 +225,19 @@ public class CTF extends EventEngine {
         }
     }
 
+    public void restoreFlagOnPlayerDie(CtfEventPlayer eventPlayer) {
+        CtfTeamSetting team = eventPlayer.getEnemyFlag();
+
+        team.getFlag().setTaken(false);
+        spawnFlag(team);
+        removeFlagFromPlayer(eventPlayer);
+
+        announceCritical("Флаг команды " + team.getName() + " возвращен на базу!");
+    }
+
     public void processInFlagRange(CtfEventPlayer eventPlayer) {
         try {
-            restoreFlag();
+            restoreFlags();
 
             ctfTeamSettings.stream()
                     .filter(setting -> inRange(
@@ -664,6 +677,28 @@ public class CTF extends EventEngine {
         players.put(player.getObjectId(), new CtfEventPlayer(player, team));
 
         sendPlayerMessage(player, "Вы успешно зарегистрировались на ивент.");
+    }
+
+    @Override
+    public void revive(Player player, Player playerKiller) {
+        player.sendMessage(String.format(
+                "Вы будете воскрешены и перемещены к флагу команды через %d %s!",
+                EventConfig.CTF.DELAY_BEFORE_REVIVE,
+                declensionWords(EventConfig.CTF.DELAY_BEFORE_REVIVE, secondWords)
+        ));
+
+        CtfEventPlayer eventPlayer = (CtfEventPlayer) player.getEventPlayer();
+
+        if (eventPlayer.isHasFlag()) {
+            restoreFlagOnPlayerDie(eventPlayer);
+        }
+
+        player.broadcastUserInfo();
+
+        ThreadPool.schedule(() -> {
+            player.teleToLocation(eventPlayer.getTeamSettings().getSpawnLocation());
+            player.doRevive();
+        }, TimeUnit.SECONDS.toMillis(EventConfig.CTF.DELAY_BEFORE_REVIVE));
     }
 
     private void removeFlagFromPlayer(CtfEventPlayer eventPlayer) {

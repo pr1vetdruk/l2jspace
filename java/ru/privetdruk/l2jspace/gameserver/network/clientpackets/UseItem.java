@@ -1,6 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
 import ru.privetdruk.l2jspace.config.Config;
+import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventType;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.CtfEventPlayer;
 import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
 import ru.privetdruk.l2jspace.gameserver.enums.items.ActionType;
 import ru.privetdruk.l2jspace.gameserver.enums.items.EtcItemType;
@@ -124,6 +127,14 @@ public final class UseItem extends L2GameClientPacket {
             player.sendPacket(new PetItemList(pet));
             pet.updateAndBroadcastStatus(1);
             return;
+        }
+
+        if (player.isEventPlayer()) {
+            EventEngine event = EventEngine.findActive();
+            if (event.getEventType() == EventType.CTF && ((CtfEventPlayer) player.getEventPlayer()).isHasFlag()) {
+                player.sendMessage("Этот предмет нельзя надеть, если у вас есть флаг.");
+                return;
+            }
         }
 
         if (!item.isEquipped() && !item.getItem().checkCondition(player, player, true))

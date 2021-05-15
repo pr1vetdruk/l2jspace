@@ -468,18 +468,7 @@ public abstract class Creature extends WorldObject {
         // Stop Regeneration task, and removes all current effects
         getStatus().stopHpMpRegeneration();
 
-        if (this instanceof Player) {
-            Player player = (Player) this;
-
-            // to avoid Event Remove buffs on die
-            if (player.isEventPlayer()) {
-                if (EventEngine.findActive().isRemoveBuffsOnDie()) {
-                    stopAllEffectsExceptThoseThatLastThroughDeath();
-                }
-            }
-        } else {
-            stopAllEffectsExceptThoseThatLastThroughDeath();
-        }
+        stopAllEffectsExceptThoseThatLastThroughDeath();
 
         calculateRewards(killer);
 

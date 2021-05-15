@@ -2,9 +2,11 @@ package ru.privetdruk.l2jspace.gameserver.model.actor;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 import ru.privetdruk.l2jspace.config.Config;
+import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable.FrequentSkill;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.enums.AiEventType;
@@ -12,6 +14,7 @@ import ru.privetdruk.l2jspace.gameserver.enums.SiegeSide;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectFlag;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectType;
+import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.attack.PlayableAttack;
 import ru.privetdruk.l2jspace.gameserver.model.actor.cast.PlayableCast;
 import ru.privetdruk.l2jspace.gameserver.model.actor.container.npc.AggroInfo;
@@ -76,8 +79,9 @@ public abstract class Playable extends Creature {
     public boolean doDie(Creature killer) {
         // killing is only possible one time
         synchronized (this) {
-            if (isDead())
+            if (isDead()) {
                 return false;
+            }
 
             // now reset currentHp to zero
             getStatus().setHp(0);
@@ -91,23 +95,42 @@ public abstract class Playable extends Creature {
         // Stop HP/MP/CP Regeneration task
         getStatus().stopHpMpRegeneration();
 
-        // Stop all active skills effects in progress
-        if (isPhoenixBlessed()) {
-            // remove Lucky Charm if player has SoulOfThePhoenix/Salvation buff
-            if (getCharmOfLuck())
-                stopCharmOfLuck(null);
-            if (isNoblesseBlessed())
-                stopNoblesseBlessing(null);
-        }
-        // Same thing if the Character isn't a Noblesse Blessed L2Playable
-        else if (isNoblesseBlessed()) {
-            stopNoblesseBlessing(null);
+        Player playerKiller = Optional.ofNullable(killer).map(WorldObject::getActingPlayer).orElse(null);
+        Player player;
 
-            // remove Lucky Charm if player have Nobless blessing buff
-            if (getCharmOfLuck())
+        if (this instanceof Player) {
+            player = (Player) this;
+        } else {
+            player = ((Summon) this).getOwner();
+        }
+
+        boolean noblesseBlessed = isNoblesseBlessed();
+
+        if (player.isEventPlayer()) {
+            EventEngine event = EventEngine.findActive();
+
+            if (event.isRemoveBuffsOnDie()) {
+                stopAllEffectsExceptThoseThatLastThroughDeath();
+            }
+
+            if (this instanceof Player) {
+                event.revive(player, playerKiller);
+            }
+        }
+        // Stop all active skills effects in progress
+        // Same thing if the Character isn't a Noblesse Blessed L2Playable
+        else if (isPhoenixBlessed() || noblesseBlessed) {
+            // remove Lucky Charm if player has SoulOfThePhoenix/Salvation/NoblessBlessing buff
+            if (getCharmOfLuck()) {
                 stopCharmOfLuck(null);
-        } else
+            }
+
+            if (noblesseBlessed) {
+                stopNoblesseBlessing(null);
+            }
+        } else {
             stopAllEffectsExceptThoseThatLastThroughDeath();
+        }
 
         // Send the Server->Client packet StatusUpdate with current HP and MP to all other Player to inform
         getStatus().broadcastStatusUpdate();
@@ -116,13 +139,11 @@ public abstract class Playable extends Creature {
         getAI().notifyEvent(AiEventType.DEAD, null, null);
 
         // Notify Quest of Playable's death
-        final Player actingPlayer = getActingPlayer();
+        Player actingPlayer = getActingPlayer();
         actingPlayer.getQuestList().getQuests(Quest::isTriggeredOnDeath).forEach(q -> q.notifyDeath((killer == null ? this : killer), actingPlayer));
 
-        if (killer != null) {
-            final Player player = killer.getActingPlayer();
-            if (player != null)
-                player.onKillUpdatePvPKarma(this);
+        if (playerKiller != null) {
+            playerKiller.onKillUpdatePvPKarma(this);
         }
 
         return true;

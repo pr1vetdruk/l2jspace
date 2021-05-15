@@ -20,6 +20,6 @@ public class CtfThrone extends Npc {
             return;
         }
 
-        event.restoreFlag();
+        event.restoreFlags();
     }
 }

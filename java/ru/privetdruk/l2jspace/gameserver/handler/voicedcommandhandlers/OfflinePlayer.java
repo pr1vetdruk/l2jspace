@@ -21,8 +21,15 @@ public class OfflinePlayer implements IVoicedCommandHandler {
 
     @Override
     public boolean useVoicedCommand(String command, Player player, String target) {
-        if (player == null)
+        if (player == null) {
             return false;
+        }
+
+        if (player.isEventPlayer()) {
+            player.sendMessage("Вы участвуете в ивенте. Запрещено.");
+            player.sendPacket(ActionFailed.STATIC_PACKET);
+            return false;
+        }
 
         if ((!player.isInStoreMode() && (!player.isCrafting())) || !player.isSitting()) {
             player.sendMessage("You are not running a private store or private work shop.");

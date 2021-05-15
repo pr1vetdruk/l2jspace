@@ -9,54 +9,59 @@ import ru.privetdruk.l2jspace.gameserver.model.entity.Siege;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 
 public class Die extends L2GameServerPacket {
-    private final Creature _creature;
-    private final int _objectId;
-    private final boolean _fake;
+    private final Creature creature;
+    private final int objectId;
+    private final boolean fake;
 
-    private boolean _sweepable;
-    private boolean _allowFixedRes;
-    private Clan _clan;
+    private boolean sweepable;
+    private boolean allowFixedRes;
+    private Clan clan;
+    private boolean isTeleportToVillage;
 
     public Die(Creature creature) {
-        _creature = creature;
-        _objectId = creature.getObjectId();
-        _fake = !creature.isDead();
+        this.creature = creature;
+        objectId = creature.getObjectId();
+        fake = !creature.isDead();
 
         if (creature instanceof Player) {
             Player player = (Player) creature;
-            _allowFixedRes = player.getAccessLevel().allowFixedRes();
-            _clan = player.getClan();
-
-        } else if (creature instanceof Monster)
-            _sweepable = ((Monster) creature).getSpoilState().isSweepable();
+            allowFixedRes = player.getAccessLevel().allowFixedRes();
+            clan = player.getClan();
+            isTeleportToVillage = !player.isEventPlayer();
+        } else if (creature instanceof Monster) {
+            sweepable = ((Monster) creature).getSpoilState().isSweepable();
+        }
     }
 
     @Override
     protected final void writeImpl() {
-        if (_fake)
+        if (fake) {
             return;
+        }
 
         writeC(0x06);
-        writeD(_objectId);
-        writeD(0x01); // to nearest village
+        writeD(objectId);
+        writeD(isTeleportToVillage ? 0x01 : 0); // to nearest village
 
-        if (_clan != null) {
+        if (isTeleportToVillage && clan != null) {
             SiegeSide side = null;
 
-            final Siege siege = CastleManager.getInstance().getActiveSiege(_creature);
-            if (siege != null)
-                side = siege.getSide(_clan);
+            Siege siege = CastleManager.getInstance().getActiveSiege(creature);
 
-            writeD((_clan.hasClanHall()) ? 0x01 : 0x00); // to clanhall
-            writeD((_clan.hasCastle() || side == SiegeSide.OWNER || side == SiegeSide.DEFENDER) ? 0x01 : 0x00); // to castle
-            writeD((side == SiegeSide.ATTACKER && _clan.getFlag() != null) ? 0x01 : 0x00); // to siege HQ
+            if (siege != null) {
+                side = siege.getSide(clan);
+            }
+
+            writeD((clan.hasClanHall()) ? 0x01 : 0x00); // to clanhall
+            writeD((clan.hasCastle() || side == SiegeSide.OWNER || side == SiegeSide.DEFENDER) ? 0x01 : 0x00); // to castle
+            writeD((side == SiegeSide.ATTACKER && clan.getFlag() != null) ? 0x01 : 0x00); // to siege HQ
         } else {
             writeD(0x00); // to clanhall
             writeD(0x00); // to castle
             writeD(0x00); // to siege HQ
         }
 
-        writeD((_sweepable) ? 0x01 : 0x00); // sweepable (blue glow)
-        writeD((_allowFixedRes) ? 0x01 : 0x00); // FIXED
+        writeD((sweepable) ? 0x01 : 0x00); // sweepable (blue glow)
+        writeD((allowFixedRes) ? 0x01 : 0x00); // FIXED
     }
 }

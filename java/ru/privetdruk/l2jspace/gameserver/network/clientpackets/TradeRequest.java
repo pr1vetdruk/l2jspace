@@ -4,6 +4,7 @@ import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SendTradeRequest;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 
@@ -17,21 +18,31 @@ public final class TradeRequest extends L2GameClientPacket {
 
     @Override
     protected void runImpl() {
-        final Player player = getClient().getPlayer();
-        if (player == null)
+        Player player = getClient().getPlayer();
+
+        if (player == null) {
             return;
+        }
 
         if (!player.getAccessLevel().allowTransaction()) {
             player.sendPacket(SystemMessageId.YOU_ARE_NOT_AUTHORIZED_TO_DO_THAT);
             return;
         }
 
-        final Player target = World.getInstance().getPlayer(_objectId);
-        if (target == null)
+        Player target = World.getInstance().getPlayer(_objectId);
+
+        if (target == null) {
             return;
+        }
 
         if (!player.knows(target) || target == player) {
             player.sendPacket(SystemMessageId.TARGET_IS_INCORRECT);
+            return;
+        }
+
+        if (player.isEventPlayer() || target.isEventPlayer()) {
+            player.sendMessage("Вы не можете запросить обмен, во время участия в ивенте.");
+            player.sendPacket(ActionFailed.STATIC_PACKET);
             return;
         }
 

@@ -30,6 +30,7 @@ import ru.privetdruk.l2jspace.common.random.Rnd;
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
 
 import ru.privetdruk.l2jspace.config.Config;
+import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.LoginServerThread;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.CommunityBoard;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.model.Forum;
@@ -1361,10 +1362,8 @@ public final class Player extends Playable {
      * </ul>
      */
     public void standUp() {
-        EventEngine event = EventEngine.findActive();
-
-        if (event != null && event.isSitForced() && event.getPlayers().containsKey(getObjectId())) {
-            sendMessage("A dark force beyond your mortal understanding makes your knees to shake when you try to stand up...");
+        if (isEventPlayer() && EventEngine.findActive().isSitForced()) {
+            sendMessage("Темная сила за пределами вашего смертного понимания заставляет ваши колени дрожать, когда вы пытаетесь встать ...");
             return;
         }
 
@@ -2089,6 +2088,12 @@ public final class Player extends Playable {
 
     @Override
     public void onAction(Player player, boolean isCtrlPressed, boolean isShiftPressed) {
+        if (EventConfig.Engine.ALLOW_INTERFERENCE &&
+                ((isEventPlayer() && !player.isEventPlayer()) || (!isEventPlayer() && player.isEventPlayer()))) {
+            player.sendPacket(ActionFailed.STATIC_PACKET);
+            return;
+        }
+
         if (isShiftPressed && player.isGM()) {
             var html = new NpcHtmlMessage(0);
             AdminEditChar.gatherPlayerInfo(player, this, html);
@@ -2096,18 +2101,20 @@ public final class Player extends Playable {
             return;
         }
 
-        if (this == player && player.getTarget() == this)
+        if (this == player && player.getTarget() == this) {
             return;
+        }
 
-        if (player.getTarget() != this)
+        if (player.getTarget() != this) {
             player.setTarget(this);
-        else {
-            if (isAttackableWithoutForceBy(player) || (isCtrlPressed && isAttackableBy(player)))
+        } else {
+            if (isAttackableWithoutForceBy(player) || (isCtrlPressed && isAttackableBy(player))) {
                 player.getAI().tryToAttack(this, isCtrlPressed, isShiftPressed);
-            else if (isOperating())
+            } else if (isOperating()) {
                 player.getAI().tryToInteract(this, isCtrlPressed, isShiftPressed);
-            else
+            } else {
                 player.getAI().tryToFollow(this, isShiftPressed);
+            }
         }
     }
 
@@ -2459,51 +2466,57 @@ public final class Player extends Playable {
     @Override
     public boolean doDie(Creature killer) {
         // Kill the Player
-        if (!super.doDie(killer))
+        if (!super.doDie(killer)) {
             return false;
+        }
 
-        if (isMounted())
+        if (isMounted()) {
             stopFeed();
+        }
 
         // Clean player charges on death.
         clearCharges();
 
         synchronized (this) {
-            if (isFakeDeath())
+            if (isFakeDeath()) {
                 stopFakeDeath(true);
+            }
         }
 
         if (killer != null) {
-            final Player pk = killer.getActingPlayer();
+            Player playerKiller = killer.getActingPlayer();
 
             // Clear resurrect xp calculation
             setExpBeforeDeath(0);
 
-            if (isCursedWeaponEquipped())
+            if (isCursedWeaponEquipped()) {
                 CursedWeaponManager.getInstance().drop(_cursedWeaponEquippedId, killer);
-            else {
-                if (pk == null || !pk.isCursedWeaponEquipped()) {
+            } else {
+                if (playerKiller == null || !playerKiller.isCursedWeaponEquipped()) {
                     onDieDropItem(killer); // Check if any item should be dropped
 
                     // if the area isn't an arena
                     if (!isInArena()) {
                         // if both victim and attacker got clans & aren't academicians
-                        if (pk != null && pk.getClan() != null && getClan() != null && !isAcademyMember() && !pk.isAcademyMember()) {
+                        if (playerKiller != null && playerKiller.getClan() != null && getClan() != null && !isAcademyMember() && !playerKiller.isAcademyMember()) {
                             // if clans got mutual war, then use the reputation calcul
-                            if (_clan.isAtWarWith(pk.getClanId()) && pk.getClan().isAtWarWith(_clan.getClanId())) {
+                            if (_clan.isAtWarWith(playerKiller.getClanId()) && playerKiller.getClan().isAtWarWith(_clan.getClanId())) {
                                 // when your reputation score is 0 or below, the other clan cannot acquire any reputation points
-                                if (getClan().getReputationScore() > 0)
-                                    pk.getClan().addReputationScore(1);
+                                if (getClan().getReputationScore() > 0) {
+                                    playerKiller.getClan().addReputationScore(1);
+                                }
                                 // when the opposing sides reputation score is 0 or below, your clans reputation score doesn't decrease
-                                if (pk.getClan().getReputationScore() > 0)
+                                if (playerKiller.getClan().getReputationScore() > 0) {
                                     _clan.takeReputationScore(1);
+                                }
                             }
                         }
                     }
 
                     // Reduce player's xp and karma.
-                    if (Config.ALLOW_DELEVEL && (!hasSkill(L2Skill.SKILL_LUCKY) || getStatus().getLevel() > 9))
-                        applyDeathPenalty(pk != null && getClan() != null && pk.getClan() != null && (getClan().isAtWarWith(pk.getClanId()) || pk.getClan().isAtWarWith(getClanId())), pk != null);
+                    if (Config.ALLOW_DELEVEL && (!hasSkill(L2Skill.SKILL_LUCKY) || getStatus().getLevel() > 9)) {
+                        applyDeathPenalty(playerKiller != null && getClan() != null && playerKiller.getClan() != null && (getClan().isAtWarWith(playerKiller.getClanId()) || playerKiller.getClan().isAtWarWith(getClanId())), playerKiller != null);
+                    }
                 }
             }
         }
@@ -2511,20 +2524,24 @@ public final class Player extends Playable {
         // Unsummon Cubics
         _cubicList.stopCubics(false);
 
-        if (getFusionSkill() != null)
+        if (getFusionSkill() != null) {
             getCast().stop();
+        }
 
-        for (final Creature creature : getKnownType(Creature.class))
-            if (creature.getFusionSkill() != null && creature.getFusionSkill().getTarget() == this)
+        for (final Creature creature : getKnownType(Creature.class)) {
+            if (creature.getFusionSkill() != null && creature.getFusionSkill().getTarget() == this) {
                 creature.getCast().stop();
+            }
+        }
 
         // calculate death penalty buff
         calculateDeathPenaltyBuffLevel(killer);
 
         WaterTaskManager.getInstance().remove(this);
 
-        if (isPhoenixBlessed())
+        if (isPhoenixBlessed()) {
             reviveRequest(this, null, false);
+        }
 
         // Icons update in order to get retained buffs list
         updateEffectIcons();
@@ -2533,16 +2550,22 @@ public final class Player extends Playable {
     }
 
     private void onDieDropItem(Creature killer) {
-        if (killer == null)
+        if (killer == null || isEventPlayer()) {
             return;
+        }
 
-        final Player pk = killer.getActingPlayer();
-        if (getKarma() <= 0 && pk != null && pk.getClan() != null && getClan() != null && pk.getClan().isAtWarWith(getClanId()))
+        Player playerKiller = killer.getActingPlayer();
+        if (getKarma() <= 0
+                && playerKiller != null
+                && playerKiller.getClan() != null
+                && getClan() != null
+                && playerKiller.getClan().isAtWarWith(getClanId())) {
             return;
+        }
 
-        if ((!isInsideZone(ZoneId.PVP) || pk == null) && (!isGM() || Config.KARMA_DROP_GM)) {
-            final boolean isKillerNpc = (killer instanceof Npc);
-            final int pkLimit = Config.KARMA_PK_LIMIT;
+        if ((!isInsideZone(ZoneId.PVP) || playerKiller == null) && (!isGM() || Config.KARMA_DROP_GM)) {
+            boolean isKillerNpc = (killer instanceof Npc);
+            int pkLimit = Config.KARMA_PK_LIMIT;
 
             int dropEquip = 0;
             int dropEquipWeapon = 0;
@@ -2568,24 +2591,33 @@ public final class Player extends Playable {
                 int dropCount = 0;
                 int itemDropPercent = 0;
 
-                for (final ItemInstance itemDrop : getInventory().getItems()) {
+                for (ItemInstance itemDrop : getInventory().getItems()) {
                     // Don't drop those following things
-                    if (!itemDrop.isDropable() || itemDrop.isShadowItem() || itemDrop.getItemId() == 57 || itemDrop.getItem().getType2() == Item.TYPE2_QUEST || (_summon != null && _summon.getControlItemId() == itemDrop.getItemId()) || ArraysUtil.contains(Config.KARMA_NONDROPPABLE_ITEMS, itemDrop.getItemId()) || ArraysUtil.contains(Config.KARMA_NONDROPPABLE_PET_ITEMS, itemDrop.getItemId()))
+                    if (!itemDrop.isDropable()
+                            || itemDrop.isShadowItem()
+                            || itemDrop.getItemId() == 57
+                            || itemDrop.getItem().getType2() == Item.TYPE2_QUEST
+                            || (_summon != null && _summon.getControlItemId() == itemDrop.getItemId())
+                            || ArraysUtil.contains(Config.KARMA_NONDROPPABLE_ITEMS, itemDrop.getItemId())
+                            || ArraysUtil.contains(Config.KARMA_NONDROPPABLE_PET_ITEMS, itemDrop.getItemId())) {
                         continue;
+                    }
 
                     if (itemDrop.isEquipped()) {
                         // Set proper chance according to Item type of equipped Item
                         itemDropPercent = itemDrop.getItem().getType2() == Item.TYPE2_WEAPON ? dropEquipWeapon : dropEquip;
                         getInventory().unequipItemInSlot(itemDrop.getLocationSlot());
-                    } else
+                    } else {
                         itemDropPercent = dropItem; // Item in inventory
+                    }
 
                     // NOTE: Each time an item is dropped, the chance of another item being dropped gets lesser (dropCount * 2)
                     if (Rnd.get(100) < itemDropPercent) {
                         dropItem("DieDrop", itemDrop, killer, true);
 
-                        if (++dropCount >= dropLimit)
+                        if (++dropCount >= dropLimit) {
                             break;
+                        }
                     }
                 }
             }
@@ -2607,8 +2639,9 @@ public final class Player extends Playable {
      * @param target The L2Playable victim.
      */
     public void onKillUpdatePvPKarma(Playable target) {
-        if (target == null)
+        if (target == null || isEventPlayer()) {
             return;
+        }
 
         final Player targetPlayer = target.getActingPlayer();
         if (targetPlayer == null || targetPlayer == this)
@@ -6251,6 +6284,14 @@ public final class Player extends Playable {
         }
     }
 
+    public static Player definePlayer(Playable actor) {
+        if (actor instanceof Player) {
+            return (Player) actor;
+        } else {
+            return ((Summon) actor).getOwner();
+        }
+    }
+
     public int getMailPosition() {
         return _mailPosition;
     }
@@ -6264,7 +6305,7 @@ public final class Player extends Playable {
      * @return true if character falling now On the start of fall return false for correct coord sync !
      */
     public final boolean isFalling(int z) {
-        if (isDead() || getMove().getMoveType() != MoveType.GROUND)
+        if (isDead() || getMove().getMoveType() != MoveType.GROUND || isEventPlayer())
             return false;
 
         if (System.currentTimeMillis() < _fallingTimestamp)

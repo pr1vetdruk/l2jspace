@@ -1305,6 +1305,7 @@ public final class Config {
         EventConfig.CTF.JOIN_CURSED_WEAPON = ctf.getProperty("JoinCursedWeapon", false);
         EventConfig.CTF.ALLOW_POTIONS = ctf.getProperty("AllowPotions", false);
         EventConfig.CTF.REMOVE_BUFFS_ON_DIE = ctf.getProperty("RemoveBuffsOnDie", false);
+        EventConfig.CTF.DELAY_BEFORE_REVIVE = ctf.getProperty("DelayBeforeRevive", 20);
     }
 
     private static void loadAddon() {

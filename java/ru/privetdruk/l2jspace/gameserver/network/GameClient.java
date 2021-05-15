@@ -19,6 +19,7 @@ import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.LoginServerThread;
+import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.data.sql.ClanTable;
 import ru.privetdruk.l2jspace.gameserver.data.sql.OfflineTradersTable;
 import ru.privetdruk.l2jspace.gameserver.data.sql.PlayerInfoTable;
@@ -185,39 +186,48 @@ public final class GameClient extends MMOClient<MMOConnection<GameClient>> imple
     @Override
     protected void onDisconnection() {
         try {
-            ThreadPool.execute(() ->
-            {
+            ThreadPool.execute(() -> {
                 boolean fast = true;
-                if (getPlayer() != null && !isDetached()) {
+
+                Player player = getPlayer();
+
+                if (player != null && !isDetached()) {
                     setDetached(true);
 
-                    if (OfflineTradersTable.offlineMode(getPlayer())) {
-                        if (getPlayer().getParty() != null)
-                            getPlayer().getParty().removePartyMember(getPlayer(), MessageType.DISCONNECTED);
+                    if (player.isEventPlayer()) {
+                        EventEngine.findActive().onDisconnect(player);
+                    }
 
-                        OlympiadManager.getInstance().unRegisterNoble(getPlayer());
+                    if (OfflineTradersTable.offlineMode(player)) {
+                        if (player.getParty() != null) {
+                            player.getParty().removePartyMember(player, MessageType.DISCONNECTED);
+                        }
 
-                        if (getPlayer().getSummon() != null) {
-                            getPlayer().getSummon().doRevive();
-                            getPlayer().getSummon().unSummon(getPlayer());
+                        OlympiadManager.getInstance().unRegisterNoble(player);
+
+                        if (player.getSummon() != null) {
+                            player.getSummon().doRevive();
+                            player.getSummon().unSummon(player);
                         }
 
                         if (Config.OFFLINE_SLEEP_EFFECT) {
-                            getPlayer().startAbnormalEffect(Integer.decode("0x80"));
-                            getPlayer().broadcastUserInfo();
+                            player.startAbnormalEffect(Integer.decode("0x80"));
+                            player.broadcastUserInfo();
                         }
 
-                        if (getPlayer().getOfflineStartTime() == 0)
-                            getPlayer().setOfflineStartTime(System.currentTimeMillis());
+                        if (player.getOfflineStartTime() == 0) {
+                            player.setOfflineStartTime(System.currentTimeMillis());
+                        }
 
                         return;
                     }
 
-                    fast = !getPlayer().isInCombat() && !getPlayer().isLocked();
+                    fast = !player.isInCombat() && !player.isLocked();
                 }
+
                 cleanMe(fast);
             });
-        } catch (RejectedExecutionException e) {
+        } catch (RejectedExecutionException ignored) {
         }
     }
 
@@ -571,13 +581,19 @@ public final class GameClient extends MMOClient<MMOConnection<GameClient>> imple
             if (_autoSaveInDB != null)
                 _autoSaveInDB.cancel(true);
 
+            Player player = getPlayer();
             // This should only happen on connection loss.
-            if (getPlayer() != null) {
-                // Prevent closing again.
-                getPlayer().setClient(null);
+            if (player != null) {
+                if (player.isEventPlayer()) {
+                    EventEngine.findActive().onDisconnect(player);
+                }
 
-                if (getPlayer().isOnline())
-                    getPlayer().deleteMe();
+                // Prevent closing again.
+                player.setClient(null);
+
+                if (player.isOnline()) {
+                    player.deleteMe();
+                }
             }
             setPlayer(null);
 

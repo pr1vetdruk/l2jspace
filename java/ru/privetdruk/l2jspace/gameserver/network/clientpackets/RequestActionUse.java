@@ -6,6 +6,7 @@ import ru.privetdruk.l2jspace.common.util.ArraysUtil;
 import ru.privetdruk.l2jspace.gameserver.enums.SayType;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
 import ru.privetdruk.l2jspace.gameserver.model.actor.ai.type.SummonAI;
@@ -145,16 +146,28 @@ public final class RequestActionUse extends L2GameClientPacket {
 
             case 16:
             case 22: // Attack (pet attack)
-                if (target == null || summon == null || summon == target || player == target)
+                if (target == null || summon == null || summon == target || player == target) {
                     return;
+                }
+
+                if (player.isEventPlayer() && target instanceof Playable) {
+                    Player targetPlayer = Player.definePlayer((Playable) target);
+
+                    if (!targetPlayer.isEventPlayer()) {
+                        player.sendMessage("Вы не можете атаковать игроков не участвующих на ивенте.");
+                        return;
+                    }
+                }
 
                 // If target is trully dead, then do nothing at all. Fake Death is handled elsewhere (attack task).
-                if (target instanceof Creature && ((Creature) target).isDead())
+                if (target instanceof Creature && ((Creature) target).isDead()) {
                     return;
+                }
 
                 // Sin eater, Big Boom, Wyvern can't attack with attack button.
-                if (ArraysUtil.contains(PASSIVE_SUMMONS, summon.getNpcId()))
+                if (ArraysUtil.contains(PASSIVE_SUMMONS, summon.getNpcId())) {
                     return;
+                }
 
                 if (summon.isOutOfControl()) {
                     player.sendPacket(SystemMessageId.PET_REFUSING_ORDER);
@@ -171,10 +184,12 @@ public final class RequestActionUse extends L2GameClientPacket {
                 // Summon loses follow status, no matter what.
                 // summon.getAI().setFollowStatus(false);
 
-                if (target instanceof Creature)
+                if (target instanceof Creature) {
                     summon.getAI().tryToAttack((Creature) target, _isCtrlPressed, _isShiftPressed);
-                else
+                } else {
                     summon.getAI().tryToInteract(target, _isCtrlPressed, _isShiftPressed);
+                }
+
                 break;
 
             case 17:
@@ -207,7 +222,13 @@ public final class RequestActionUse extends L2GameClientPacket {
                 break;
 
             case 38: // pet mount/dismount
-                player.mountPlayer(summon);
+                if (player.isEventPlayer()) {
+                    // A strider cannot be ridden while in event
+                    player.sendPacket(SystemMessageId.STRIDER_IN_BATLLE_CANT_BE_RIDDEN);
+                } else {
+                    player.mountPlayer(summon);
+                }
+
                 break;
 
             case 32: // Wild Hog Cannon - Mode Change

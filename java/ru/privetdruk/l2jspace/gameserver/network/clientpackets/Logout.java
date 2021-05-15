@@ -14,16 +14,20 @@ public final class Logout extends L2GameClientPacket {
 
     @Override
     protected void runImpl() {
-        final Player player = getClient().getPlayer();
-        if (player == null)
+        Player player = getClient().getPlayer();
+
+        if (player == null) {
             return;
+        }
 
         if (player.getActiveEnchantItem() != null || player.isLocked()) {
             player.sendPacket(ActionFailed.STATIC_PACKET);
             return;
         }
 
-        if (player.isInsideZone(ZoneId.NO_RESTART)) {
+        if (player.isInsideZone(ZoneId.NO_RESTART)
+                || (player.isEventPlayer() && !player.isGM())
+                || (player.isFestivalParticipant() && FestivalOfDarknessManager.getInstance().isFestivalInitialized())) {
             player.sendPacket(SystemMessageId.NO_LOGOUT_HERE);
             player.sendPacket(ActionFailed.STATIC_PACKET);
             return;
@@ -31,12 +35,6 @@ public final class Logout extends L2GameClientPacket {
 
         if (AttackStanceTaskManager.getInstance().isInAttackStance(player) && !player.isGM()) {
             player.sendPacket(SystemMessageId.CANT_LOGOUT_WHILE_FIGHTING);
-            player.sendPacket(ActionFailed.STATIC_PACKET);
-            return;
-        }
-
-        if (player.isFestivalParticipant() && FestivalOfDarknessManager.getInstance().isFestivalInitialized()) {
-            player.sendPacket(SystemMessageId.NO_LOGOUT_HERE);
             player.sendPacket(ActionFailed.STATIC_PACKET);
             return;
         }
