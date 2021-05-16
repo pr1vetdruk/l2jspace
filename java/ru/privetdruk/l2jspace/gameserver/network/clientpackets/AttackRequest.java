@@ -50,8 +50,7 @@ public final class AttackRequest extends L2GameClientPacket {
         }
 
         // No attacks to same team in Event
-        EventEngine event = EventEngine.findActive();
-        if (event.getEventState() == EventState.IN_PROGRESS) {
+        if (player.isEventPlayer()) {
             if (target instanceof Player) {
                 if (checkTeammate(player, (Player) target)) {
                     player.sendPacket(ActionFailed.STATIC_PACKET);

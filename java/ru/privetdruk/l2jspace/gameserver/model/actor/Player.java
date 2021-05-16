@@ -2108,7 +2108,10 @@ public final class Player extends Playable {
         if (player.getTarget() != this) {
             player.setTarget(this);
         } else {
-            if (isAttackableWithoutForceBy(player) || (isCtrlPressed && isAttackableBy(player))) {
+            if (isAttackableWithoutForceBy(player)
+                    || (isCtrlPressed && isAttackableBy(player))
+                    || (isEventPlayer() && player.isEventPlayer() &&
+                    getEventPlayer().getTeamSettings() != player.getEventPlayer().getTeamSettings())) {
                 player.getAI().tryToAttack(this, isCtrlPressed, isShiftPressed);
             } else if (isOperating()) {
                 player.getAI().tryToInteract(this, isCtrlPressed, isShiftPressed);
@@ -2711,18 +2714,22 @@ public final class Player extends Playable {
     }
 
     public void updatePvPStatus(Creature target) {
-        final Player player = target.getActingPlayer();
-        if (player == null)
-            return;
+        Player player = target.getActingPlayer();
 
-        if (isInDuel() && player.getDuelId() == getDuelId())
+        if (player == null) {
             return;
+        }
+
+        if ((isInDuel() && player.getDuelId() == getDuelId()) || isEventPlayer()) {
+            return;
+        }
 
         if ((!isInsideZone(ZoneId.PVP) || !target.isInsideZone(ZoneId.PVP)) && player.getKarma() == 0) {
             PvpFlagTaskManager.getInstance().add(this, checkIfPvP(player) ? Config.PVP_PVP_TIME : Config.PVP_NORMAL_TIME);
 
-            if (getPvpFlag() == 0)
+            if (getPvpFlag() == 0) {
                 updatePvPFlag(1);
+            }
         }
     }
 

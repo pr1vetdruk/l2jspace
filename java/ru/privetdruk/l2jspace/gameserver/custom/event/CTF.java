@@ -697,6 +697,7 @@ public class CTF extends EventEngine {
 
         ThreadPool.schedule(() -> {
             player.teleToLocation(eventPlayer.getTeamSettings().getSpawnLocation());
+            waiter(1); // q
             player.doRevive();
         }, TimeUnit.SECONDS.toMillis(EventConfig.CTF.DELAY_BEFORE_REVIVE));
     }
