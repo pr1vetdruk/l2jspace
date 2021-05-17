@@ -123,19 +123,24 @@ public abstract class Summon extends Playable {
     @Override
     public void onAction(Player player, boolean isCtrlPressed, boolean isShiftPressed) {
         // Set the target of the player
-        if (player.getTarget() != this)
+        if (player.getTarget() != this) {
             player.setTarget(this);
-        else {
+        } else {
             if (player == _owner) {
-                if (isCtrlPressed)
+                if (isCtrlPressed) {
                     player.getAI().tryToAttack(this, isCtrlPressed, isShiftPressed);
-                else
+                } else {
                     player.getAI().tryToInteract(this, isCtrlPressed, isShiftPressed);
+                }
             } else {
-                if (isAttackableWithoutForceBy(player) || (isCtrlPressed && isAttackableBy(player)))
+                if (isAttackableWithoutForceBy(player)
+                        || (isCtrlPressed && isAttackableBy(player))
+                || (_owner.isEventPlayer() && player.isEventPlayer() &&
+                        _owner.getEventPlayer().getTeamSettings() != player.getEventPlayer().getTeamSettings())) {
                     player.getAI().tryToAttack(this, isCtrlPressed, isShiftPressed);
-                else
+                } else {
                     player.getAI().tryToFollow(this, isShiftPressed);
+                }
             }
         }
     }

@@ -62,6 +62,10 @@ public final class Appearance {
         return _nameColor;
     }
 
+    public void setNameColor(String hex) {
+        _nameColor = Integer.parseInt(hex, 16);
+    }
+
     public void setNameColor(int nameColor) {
         _nameColor = nameColor;
     }

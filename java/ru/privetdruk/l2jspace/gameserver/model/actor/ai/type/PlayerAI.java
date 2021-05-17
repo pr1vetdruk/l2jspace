@@ -212,43 +212,48 @@ public class PlayerAI extends PlayableAI {
 
     @Override
     protected void thinkCast() {
-        if (getActor().denyAiAction() || getActor().getAllSkillsDisabled() || getActor().getCast().isCastingNow()) {
+        Player actor = getActor();
+
+        if (actor.denyAiAction() || actor.getAllSkillsDisabled() || actor.getCast().isCastingNow()) {
             doIdleIntention();
             clientActionFailed();
             return;
         }
 
-        final Creature target = _currentIntention.getFinalTarget();
+        Creature target = _currentIntention.getFinalTarget();
+
         if (target == null) {
             doIdleIntention();
             return;
         }
 
-        final L2Skill skill = _currentIntention.getSkill();
+        L2Skill skill = _currentIntention.getSkill();
+
         if (isTargetLost(target, skill)) {
             doIdleIntention();
             return;
         }
 
-        if (!getActor().getCast().canAttemptCast(target, skill)) {
+        if (!actor.getCast().canAttemptCast(target, skill)) {
             doIdleIntention();
             return;
         }
 
-        final boolean isShiftPressed = _currentIntention.isShiftPressed();
+        boolean isShiftPressed = _currentIntention.isShiftPressed();
+
         if (skill.getTargetType() == SkillTargetType.GROUND) {
-            if (getActor().getMove().maybeMoveToLocation(getActor().getCast().getSignetLocation(), skill.getCastRange(), false, isShiftPressed)) {
+            if (actor.getMove().maybeMoveToLocation(actor.getCast().getSignetLocation(), skill.getCastRange(), false, isShiftPressed)) {
                 if (isShiftPressed) {
-                    getActor().sendPacket(SystemMessageId.TARGET_TOO_FAR);
+                    actor.sendPacket(SystemMessageId.TARGET_TOO_FAR);
                     doIdleIntention();
                 }
 
                 return;
             }
         } else {
-            if (getActor().getMove().maybeMoveToPawn(target, skill.getCastRange(), isShiftPressed)) {
+            if (actor.getMove().maybeMoveToPawn(target, skill.getCastRange(), isShiftPressed)) {
                 if (isShiftPressed) {
-                    getActor().sendPacket(SystemMessageId.TARGET_TOO_FAR);
+                    actor.sendPacket(SystemMessageId.TARGET_TOO_FAR);
                     doIdleIntention();
                 }
 
@@ -256,31 +261,45 @@ public class PlayerAI extends PlayableAI {
             }
         }
 
-        if (skill.isToggle()) {
-            getActor().getMove().stop();
-            getActor().getCast().doToggleCast(skill, target);
-        } else {
-            final boolean isCtrlPressed = _currentIntention.isCtrlPressed();
-            final int itemObjectId = _currentIntention.getItemObjectId();
 
-            if (!getActor().getCast().canDoCast(target, skill, isCtrlPressed, itemObjectId)) {
-                if (skill.nextActionIsAttack() && target.isAttackableWithoutForceBy(getActor()))
+        if (skill.isToggle()) {
+            actor.getMove().stop();
+            actor.getCast().doToggleCast(skill, target);
+        } else {
+            boolean isCtrlPressed = _currentIntention.isCtrlPressed();
+            int itemObjectId = _currentIntention.getItemObjectId();
+
+            Player targetPlayer = null;
+
+            if (actor.isEventPlayer()) {
+                if (target instanceof Player) {
+                    targetPlayer = (Player) target;
+                } else if (target instanceof Summon) {
+                    targetPlayer = ((Summon) target).getOwner();
+                }
+            }
+
+            if (!actor.getCast().canDoCast(target, skill, isCtrlPressed, itemObjectId)
+                    && (!actor.isEventPlayer() && (targetPlayer == null || !targetPlayer.isEventPlayer()))) {
+                if ((skill.nextActionIsAttack() && target.isAttackableWithoutForceBy(actor))) {
                     doAttackIntention(target, isCtrlPressed, isShiftPressed);
-                else {
-                    getActor().sendPacket(new StopMove(getActor()));
+                } else {
+                    actor.sendPacket(new StopMove(actor));
                     doIdleIntention();
                 }
 
                 return;
             }
 
-            if (skill.getHitTime() > 50)
-                getActor().getMove().stop();
+            if (skill.getHitTime() > 50) {
+                actor.getMove().stop();
+            }
 
-            if (skill.getSkillType() == SkillType.FUSION || skill.getSkillType() == SkillType.SIGNET_CASTTIME)
-                getActor().getCast().doFusionCast(skill, target);
-            else
-                getActor().getCast().doCast(skill, target, _actor.getInventory().getItemByObjectId(itemObjectId));
+            if (skill.getSkillType() == SkillType.FUSION || skill.getSkillType() == SkillType.SIGNET_CASTTIME) {
+                actor.getCast().doFusionCast(skill, target);
+            } else {
+                actor.getCast().doCast(skill, target, _actor.getInventory().getItemByObjectId(itemObjectId));
+            }
         }
     }
 

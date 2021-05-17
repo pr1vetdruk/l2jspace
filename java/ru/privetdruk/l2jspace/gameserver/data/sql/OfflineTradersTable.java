@@ -216,24 +216,24 @@ public final class OfflineTradersTable {
         }
     }
 
-    public static boolean offlineMode(final Player player) {
-        if (player.isInOlympiadMode() || player.isFestivalParticipant() || player.isInJail() || player.getBoat() != null)
+    public static boolean offlineMode(Player player) {
+        if (player.isInOlympiadMode()
+                || player.isFestivalParticipant()
+                || player.isInJail()
+                || player.getBoat() != null
+                || player.isEventPlayer()) {
             return false;
-
-        boolean canSetShop = false;
-        switch (player.getOperateType()) {
-            case SELL:
-            case PACKAGE_SELL:
-            case BUY:
-                canSetShop = Config.OFFLINE_TRADE_ENABLE;
-                break;
-            case MANUFACTURE:
-                canSetShop = Config.OFFLINE_CRAFT_ENABLE;
-                break;
         }
 
-        if (Config.OFFLINE_MODE_IN_PEACE_ZONE && !player.isInsideZone(ZoneId.PEACE))
+        boolean canSetShop = switch (player.getOperateType()) {
+            case SELL, PACKAGE_SELL, BUY -> Config.OFFLINE_TRADE_ENABLE;
+            case MANUFACTURE -> Config.OFFLINE_CRAFT_ENABLE;
+            default -> false;
+        };
+
+        if (Config.OFFLINE_MODE_IN_PEACE_ZONE && !player.isInsideZone(ZoneId.PEACE)) {
             canSetShop = false;
+        }
 
         return canSetShop;
     }

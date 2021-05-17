@@ -6,11 +6,11 @@ public class TeamSetting {
     protected String name;
     protected int players;
     protected int points;
-    protected int color;
+    protected String color;
     protected int offset;
     protected Location spawnLocation;
 
-    public TeamSetting(String name, Integer color, int offset, Location spawnLocation) {
+    public TeamSetting(String name, String color, int offset, Location spawnLocation) {
         this.name = name;
         this.color = color;
         this.offset = offset;
@@ -29,7 +29,7 @@ public class TeamSetting {
         return points;
     }
 
-    public Integer getColor() {
+    public String getColor() {
         return color;
     }
 

@@ -6291,12 +6291,14 @@ public final class Player extends Playable {
         }
     }
 
-    public static Player definePlayer(Playable actor) {
+    public static Player definePlayer(WorldObject actor) {
         if (actor instanceof Player) {
             return (Player) actor;
-        } else {
+        } else if (actor instanceof Summon) {
             return ((Summon) actor).getOwner();
         }
+
+        return null;
     }
 
     public int getMailPosition() {

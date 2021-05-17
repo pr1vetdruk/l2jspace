@@ -122,7 +122,7 @@ public class CTF extends EventEngine {
                         new CtfTeamSetting(
                                 resultSet.getInt("id"),
                                 resultSet.getString("name"),
-                                resultSet.getInt("name_color"),
+                                resultSet.getString("name_color"),
                                 resultSet.getInt("offset"),
                                 new Location(
                                         resultSet.getInt("position_x"),
@@ -182,7 +182,6 @@ public class CTF extends EventEngine {
 
                 Player player = ctfPlayer.getPlayer();
                 CtfTeamSetting team = ctfPlayer.getTeamSettings();
-
 
                 if (player.isOnline()) {
                     if (inRange(player, team.getThrone().getNpc().getSpawnLocation(), 150)) {
@@ -466,12 +465,12 @@ public class CTF extends EventEngine {
 
                 Spawn flagSpawn = configureSpawn(flagTemplate, flag.getNpc().getSpawnLocation(), team.getName() + "'s Flag");
                 flag.setSpawn(flagSpawn);
-
-                calculateOutSide(); // Sets event boundaries so players don't run with the flag.
             } catch (Exception e) {
                 logError("spawnOtherNpc", e.getMessage());
             }
         });
+
+        calculateOutSide(); // Sets event boundaries so players don't run with the flag.
     }
 
     private void calculateOutSide() {
@@ -696,9 +695,8 @@ public class CTF extends EventEngine {
         player.broadcastUserInfo();
 
         ThreadPool.schedule(() -> {
-            player.teleToLocation(eventPlayer.getTeamSettings().getSpawnLocation());
-            waiter(1); // q
             player.doRevive();
+            player.teleToLocation(eventPlayer.getTeamSettings().getSpawnLocation());
         }, TimeUnit.SECONDS.toMillis(EventConfig.CTF.DELAY_BEFORE_REVIVE));
     }
 

@@ -8,8 +8,8 @@ public class CtfTeamSetting extends TeamSetting {
     protected Flag flag;
     protected Throne throne;
 
-    public CtfTeamSetting(int id, String name, Integer playersCount, int offset, Location spawnLocation, Flag flag, Throne throne) {
-        super(name, playersCount, offset, spawnLocation);
+    public CtfTeamSetting(int id, String name, String nameColor, int offset, Location spawnLocation, Flag flag, Throne throne) {
+        super(name, nameColor, offset, spawnLocation);
 
         this.id = id;
         this.flag = flag;
