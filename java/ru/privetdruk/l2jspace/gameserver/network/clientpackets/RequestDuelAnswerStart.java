@@ -20,16 +20,22 @@ public final class RequestDuelAnswerStart extends L2GameClientPacket {
 
     @Override
     protected void runImpl() {
-        final Player player = getClient().getPlayer();
-        if (player == null)
+        Player player = getClient().getPlayer();
+        if (player == null) {
             return;
+        }
 
-        final Player requestor = player.getActiveRequester();
-        if (requestor == null)
+        Player requestor = player.getActiveRequester();
+        if (requestor == null) {
             return;
+        }
 
         player.setActiveRequester(null);
         requestor.onTransactionResponse();
+
+        if (player.isEventPlayer() || requestor.isEventPlayer()) {
+            return;
+        }
 
         if (_duelAccepted) {
             // Check if duel is possible.

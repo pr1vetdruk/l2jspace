@@ -1286,7 +1286,6 @@ public final class Config {
 
         EventConfig.Engine.ANNOUNCE_REWARD = engine.getProperty("AnnounceReward", true);
         EventConfig.Engine.REGISTRATION_BY_COMMANDS = engine.getProperty("RegistrationByCommands", true);
-        EventConfig.Engine.LOG_STATISTICS = engine.getProperty("LogStatistics", true);
         EventConfig.Engine.DELAY_BEFORE_TELEPORT = engine.getProperty("DelayBeforeTeleport", 5);
         EventConfig.Engine.DELAY_BEFORE_START = engine.getProperty("DelayBeforeStart", 15);
         EventConfig.Engine.DELAY_BEFORE_TELEPORT_RETURN = engine.getProperty("DelayBeforeTeleportReturn", 10);
@@ -1306,6 +1305,7 @@ public final class Config {
         EventConfig.CTF.ALLOW_POTIONS = ctf.getProperty("AllowPotions", false);
         EventConfig.CTF.REMOVE_BUFFS_ON_DIE = ctf.getProperty("RemoveBuffsOnDie", false);
         EventConfig.CTF.DELAY_BEFORE_REVIVE = ctf.getProperty("DelayBeforeRevive", 20);
+        EventConfig.CTF.ANNOUNCE_TEAM_STATS = ctf.getProperty("AnnounceTeamStats", true);
     }
 
     private static void loadAddon() {

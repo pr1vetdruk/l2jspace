@@ -2107,18 +2107,14 @@ public final class Player extends Playable {
 
         if (player.getTarget() != this) {
             player.setTarget(this);
+        } else if (isAttackableWithoutForceBy(player) || (isCtrlPressed && isAttackableBy(player))) {
+            player.getAI().tryToAttack(this, isCtrlPressed, isShiftPressed);
+        } else if (isOperating()) {
+            player.getAI().tryToInteract(this, isCtrlPressed, isShiftPressed);
         } else {
-            if (isAttackableWithoutForceBy(player)
-                    || (isCtrlPressed && isAttackableBy(player))
-                    || (isEventPlayer() && player.isEventPlayer() &&
-                    getEventPlayer().getTeamSettings() != player.getEventPlayer().getTeamSettings())) {
-                player.getAI().tryToAttack(this, isCtrlPressed, isShiftPressed);
-            } else if (isOperating()) {
-                player.getAI().tryToInteract(this, isCtrlPressed, isShiftPressed);
-            } else {
-                player.getAI().tryToFollow(this, isShiftPressed);
-            }
+            player.getAI().tryToFollow(this, isShiftPressed);
         }
+
     }
 
     @Override

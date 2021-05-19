@@ -11,7 +11,6 @@ public class EventConfig {
         public static final String PROPERTIES = "./config/custom/event/engine.properties";
         public static boolean ANNOUNCE_REWARD;
         public static boolean REGISTRATION_BY_COMMANDS;
-        public static boolean LOG_STATISTICS;
         public static int DELAY_BEFORE_TELEPORT;
         public static int DELAY_BEFORE_START;
         public static int DELAY_BEFORE_TELEPORT_RETURN;
@@ -32,5 +31,6 @@ public class EventConfig {
         public static boolean ALLOW_POTIONS;
         public static boolean REMOVE_BUFFS_ON_DIE;
         public static int DELAY_BEFORE_REVIVE;
+        public static boolean ANNOUNCE_TEAM_STATS;
     }
 }

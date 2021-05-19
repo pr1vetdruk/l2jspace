@@ -27,6 +27,7 @@ import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.model.location.SpawnLocation;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
+import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
 
 import java.sql.Connection;
@@ -34,7 +35,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 import static ru.privetdruk.l2jspace.common.util.StringUtil.declensionWords;
@@ -51,6 +55,7 @@ import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.TE
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.BALANCE;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.NO;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.SHUFFLE;
+import static ru.privetdruk.l2jspace.gameserver.custom.model.event.ResultPlayerEvent.*;
 import static ru.privetdruk.l2jspace.gameserver.model.item.kind.Item.SLOT_LR_HAND;
 
 public class CTF extends EventEngine {
@@ -161,7 +166,7 @@ public class CTF extends EventEngine {
             resultSet.close();
         } catch (Exception e) {
             eventState = ERROR;
-            logError("loadData", e.getMessage());
+            logError("loadData", e);
         }
     }
 
@@ -220,7 +225,7 @@ public class CTF extends EventEngine {
                 numberFlagsTaken++;
             }
         } catch (Exception e) {
-            logError("restoreFlags", e.getMessage());
+            logError("restoreFlags", e);
         }
     }
 
@@ -374,7 +379,7 @@ public class CTF extends EventEngine {
             Spawn flagSpawn = configureSpawn(flagTemplate, flagNpc.getSpawnLocation(), team.getName() + "' Flag");
             team.getFlag().setSpawn(flagSpawn);
         } catch (Exception e) {
-            logError("spawnFlag", e.getMessage());
+            logError("spawnFlag", e);
         }
 
     }
@@ -466,7 +471,7 @@ public class CTF extends EventEngine {
                 Spawn flagSpawn = configureSpawn(flagTemplate, flag.getNpc().getSpawnLocation(), team.getName() + "'s Flag");
                 flag.setSpawn(flagSpawn);
             } catch (Exception e) {
-                logError("spawnOtherNpc", e.getMessage());
+                logError("spawnOtherNpc", e);
             }
         });
 
@@ -567,17 +572,85 @@ public class CTF extends EventEngine {
 
     @Override
     protected void unspawnNpcCustom() {
-
+        try {
+            for (CtfTeamSetting team : ctfTeamSettings) {
+                unspawn(team.getThrone().getSpawn());
+                unspawn(team.getFlag().getSpawn());
+            }
+        } catch (Exception e) {
+            logError("unspawnNpcCustom", e);
+        }
     }
 
     @Override
     protected void abortCustom() {
-
+        unspawnNpcCustom();
     }
 
     @Override
     protected void determineWinner() {
+        Map.Entry<Integer, List<CtfTeamSetting>> winningTeamEntry = ctfTeamSettings.stream()
+                .filter(team -> team.getPoints() > 0)
+                .collect(
+                        Collectors.groupingBy(
+                                CtfTeamSetting::getPoints,
+                                TreeMap::new,
+                                Collectors.toList()
+                        )
+                ).lastEntry();
 
+        if (winningTeamEntry != null) {
+            List<CtfTeamSetting> winningTeamList = winningTeamEntry.getValue();
+
+            for (EventPlayer eventPlayer : players.values()) {
+                boolean isWinner = winningTeamList.contains((CtfTeamSetting) eventPlayer.getTeamSettings());
+                boolean isTie = winningTeamEntry.getValue().size() > 1;
+
+                playAnimation(eventPlayer.getPlayer(), isWinner);
+                giveReward(eventPlayer.getPlayer(), isTie ? TIE : isWinner ? WON : LOST);
+            }
+
+
+            if (EventConfig.CTF.ANNOUNCE_TEAM_STATS) {
+                announceCritical("Статистика:");
+                for (CtfTeamSetting team : ctfTeamSettings) {
+                    announceCritical("Команда: " + team.getName() + " - принесла флагов: " + team.getPoints());
+                }
+            }
+
+            CtfTeamSetting winningTeam = winningTeamList.get(0);
+
+            if (winningTeamList.size() == 1) {
+                announceCritical("Поздравляем! Победила команда - " + winningTeam.getName() + "!");
+            } else {
+                announceCritical("Ивент завершился в ничью!");
+            }
+        } else {
+            announceCritical("Ни одной команде не удалось принести флаг на свою базу!");
+        }
+    }
+
+    private void giveReward(Player player, ResultPlayerEvent result) {
+        if (player == null || !player.isOnline() || !player.isEventPlayer()) {
+            return;
+        }
+
+        String message;
+
+        switch (result) {
+            case WON -> {
+                Reward reward = settings.getReward();
+                player.addItem("CTF", reward.getId(), reward.getAmount(), player, true);
+                message = "Ваша команда побеждает в соревновании!";
+            }
+            case LOST -> message = "Ваша команда проиграла";
+            default -> message = "Ваша команда сыграла вничью";
+        }
+
+        player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.LET_THE_DUEL_BEGIN).addString(message));
+
+        // Send a Server->Client ActionFailed to the PlayerInstance in order to avoid that the client wait another packet
+        player.sendPacket(ActionFailed.STATIC_PACKET);
     }
 
     @Override

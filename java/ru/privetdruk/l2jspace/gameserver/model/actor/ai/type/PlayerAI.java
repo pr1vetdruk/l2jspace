@@ -269,18 +269,7 @@ public class PlayerAI extends PlayableAI {
             boolean isCtrlPressed = _currentIntention.isCtrlPressed();
             int itemObjectId = _currentIntention.getItemObjectId();
 
-            Player targetPlayer = null;
-
-            if (actor.isEventPlayer()) {
-                if (target instanceof Player) {
-                    targetPlayer = (Player) target;
-                } else if (target instanceof Summon) {
-                    targetPlayer = ((Summon) target).getOwner();
-                }
-            }
-
-            if (!actor.getCast().canDoCast(target, skill, isCtrlPressed, itemObjectId)
-                    && (!actor.isEventPlayer() && (targetPlayer == null || !targetPlayer.isEventPlayer()))) {
+            if (!actor.getCast().canDoCast(target, skill, isCtrlPressed, itemObjectId)) {
                 if ((skill.nextActionIsAttack() && target.isAttackableWithoutForceBy(actor))) {
                     doAttackIntention(target, isCtrlPressed, isShiftPressed);
                 } else {

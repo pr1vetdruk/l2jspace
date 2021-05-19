@@ -28,6 +28,7 @@ import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.model.olympiad.Olympiad;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MagicSkillUse;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -96,7 +97,7 @@ public abstract class EventEngine implements EventTask {
             switch (eventState) {
                 case ABORT -> logInfo("Failed to start the event because failed to pass prelaunch checks.");
                 case READY_TO_START -> {
-                    spawnMainEventNpc();
+                    spawnMainNpc();
                     registration();
 
                     if (checkBeforeTeleport()) {
@@ -110,10 +111,21 @@ public abstract class EventEngine implements EventTask {
                 default -> logInfo("Failed to start the event because the state of the event is incorrect.");
             }
         } catch (Exception e) {
-            logError("run", e.getMessage());
+            logError("run", e);
         } finally {
             eventState = INACTIVE;
         }
+    }
+
+    public static boolean isCanAttack(Player player, Player targetPlayer) {
+        if (player.isEventPlayer() && targetPlayer.isEventPlayer()) {
+            TeamSetting playerTeam = player.getEventPlayer().getTeamSettings();
+            TeamSetting targetTeam = targetPlayer.getEventPlayer().getTeamSettings();
+
+            return playerTeam != targetTeam;
+        }
+
+        return false;
     }
 
     protected void finishEvent() {
@@ -202,6 +214,12 @@ public abstract class EventEngine implements EventTask {
             eventPlayer.getPlayer().setEventPlayer(null);
             restorePlayerDataCustom(eventPlayer);
         });
+    }
+
+    protected void playAnimation(Player player, boolean isWinner) {
+        if (player != null) {
+            player.broadcastPacket(new SocialAction(player, isWinner ? 3 : 7));
+        }
     }
 
     public void teleport() {
@@ -296,10 +314,6 @@ public abstract class EventEngine implements EventTask {
             String text = format("Увы! Не удалось собрать достаточное кол-во игроков для запуска ивента. Минимум: %d, Зарегистрировалось: %d.", minPlayers, players.size());
             announceCritical(text);
 
-            if (EventConfig.Engine.LOG_STATISTICS) {
-                logInfo(text);
-            }
-
             return false;
         }
 
@@ -337,7 +351,7 @@ public abstract class EventEngine implements EventTask {
         waiter(MINUTES.toSeconds(settings.getTimeRegistration()));
     }
 
-    protected void spawnMainEventNpc() throws ClassNotFoundException, NoSuchMethodException {
+    protected void spawnMainNpc() throws ClassNotFoundException, NoSuchMethodException {
         NpcInfoShort npcInfo = settings.getMainNpc();
         NpcTemplate npcTemplate = NpcData.getInstance().getTemplate(npcInfo.getId());
 
@@ -361,7 +375,7 @@ public abstract class EventEngine implements EventTask {
 
             settings.setSpawnMainNpc(spawn);
         } catch (Exception e) {
-            logError("spawnMainEventNpc", e.getMessage());
+            logError("spawnMainNpc", e);
             throw e;
         }
     }
@@ -399,8 +413,8 @@ public abstract class EventEngine implements EventTask {
         LOGGER.info(settings.getEventName() + ": " + message);
     }
 
-    protected void logError(String method, String message) {
-        LOGGER.severe(settings.getEventName() + "." + method + "(): " + message);
+    protected void logError(String method, Exception e) {
+        LOGGER.severe(settings.getEventName() + "." + method + "(): " + e);
     }
 
     protected void logError(String message) {

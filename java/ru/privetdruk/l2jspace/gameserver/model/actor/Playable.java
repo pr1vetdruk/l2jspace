@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.TeamSetting;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable.FrequentSkill;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.enums.AiEventType;
@@ -332,60 +333,91 @@ public abstract class Playable extends Creature {
      */
     public boolean canCastOffensiveSkillOnPlayable(Playable target, L2Skill skill, boolean isCtrlPressed) {
         // No checks for players in Olympiad
-        final Player targetPlayer = target.getActingPlayer();
-        if (getActingPlayer().isInOlympiadMode() && targetPlayer.isInOlympiadMode() && getActingPlayer().getOlympiadGameId() == targetPlayer.getOlympiadGameId())
+        Player targetPlayer = target.getActingPlayer();
+        Player player = getActingPlayer();
+
+        if (player.isInOlympiadMode()
+                && targetPlayer.isInOlympiadMode()
+                && player.getOlympiadGameId() == targetPlayer.getOlympiadGameId()) {
             return true;
+        }
 
         // No checks for players in Duel
-        if (getActingPlayer().isInDuel() && targetPlayer.isInDuel() && getActingPlayer().getDuelId() == targetPlayer.getDuelId())
+        if (player.isInDuel() && targetPlayer.isInDuel()
+                && player.getDuelId() == targetPlayer.getDuelId()) {
             return true;
+        }
 
-        final boolean sameParty = (isInParty() && targetPlayer.isInParty() && getParty().getLeader() == targetPlayer.getParty().getLeader());
-        final boolean sameCommandChannel = (isInParty() && targetPlayer.isInParty() && getParty().getCommandChannel() != null && getParty().getCommandChannel().containsPlayer(targetPlayer));
-        final boolean sameClan = (getActingPlayer().getClanId() > 0 && getActingPlayer().getClanId() == targetPlayer.getClanId());
-        final boolean sameAlliance = (getActingPlayer().getAllyId() > 0 && getActingPlayer().getAllyId() == targetPlayer.getAllyId());
+        if (player.isEventPlayer() && targetPlayer.isEventPlayer()) {
+            return EventEngine.isCanAttack(player, targetPlayer);
+        }
 
+        boolean sameParty = (isInParty() && targetPlayer.isInParty() && getParty().getLeader() == targetPlayer.getParty().getLeader());
+        boolean sameCommandChannel = (isInParty() && targetPlayer.isInParty() && getParty().getCommandChannel() != null && getParty().getCommandChannel().containsPlayer(targetPlayer));
+        boolean sameClan = (player.getClanId() > 0 && player.getClanId() == targetPlayer.getClanId());
+        boolean sameAlliance = (player.getAllyId() > 0 && player.getAllyId() == targetPlayer.getAllyId());
         boolean sameSiegeSide = false;
-        final Siege siege = CastleManager.getInstance().getActiveSiege(this);
+        Siege siege = CastleManager.getInstance().getActiveSiege(this);
+
         if (siege != null) {
-            sameSiegeSide = ((siege.checkSides(targetPlayer.getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER) && siege.checkSides(getActingPlayer().getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER)) || (siege.checkSide(targetPlayer.getClan(), SiegeSide.ATTACKER) && siege.checkSide(getActingPlayer().getClan(), SiegeSide.ATTACKER)));
-            sameSiegeSide &= target.isInsideZone(ZoneId.SIEGE) && getActingPlayer().isInsideZone(ZoneId.SIEGE);
+            sameSiegeSide = ((siege.checkSides(targetPlayer.getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER) && siege.checkSides(player.getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER)) || (siege.checkSide(targetPlayer.getClan(), SiegeSide.ATTACKER) && siege.checkSide(player.getClan(), SiegeSide.ATTACKER)));
+            sameSiegeSide &= target.isInsideZone(ZoneId.SIEGE) && player.isInsideZone(ZoneId.SIEGE);
         }
 
         // Players in the same CC/party/alliance/clan may only damage each other with ctrlPressed.
         // If it's an AOE skill, only the mainTarget will be hit. PvpFlag / Karma do not influence these checks.
-        final boolean isMainTarget = getAI().getCurrentIntention().getFinalTarget() == target;
-        final boolean isCtrlDamagingTheMainTarget = isCtrlPressed && skill.isDamage() && isMainTarget;
-        if (sameParty || sameCommandChannel || sameClan || sameAlliance || sameSiegeSide)
+        boolean isMainTarget = getAI().getCurrentIntention().getFinalTarget() == target;
+        boolean isCtrlDamagingTheMainTarget = isCtrlPressed && skill.isDamage() && isMainTarget;
+
+        if (sameParty || sameCommandChannel || sameClan || sameAlliance || sameSiegeSide) {
             return isCtrlDamagingTheMainTarget;
+        }
 
         // If the target not from the same CC/party/alliance/clan/SiegeSide is in a PVP area, you can do anything.
-        if (isInsideZone(ZoneId.PVP) && targetPlayer.isInsideZone(ZoneId.PVP))
+        if (isInsideZone(ZoneId.PVP) && targetPlayer.isInsideZone(ZoneId.PVP)) {
             return true;
+        }
 
-        if (targetPlayer.getProtectionBlessing() && (getActingPlayer().getStatus().getLevel() - targetPlayer.getStatus().getLevel() >= 10) && getActingPlayer().getKarma() > 0)
-            return false;
+        int playerLevel = player.getStatus().getLevel();
+        int targetLevel = targetPlayer.getStatus().getLevel();
 
-        if (getActingPlayer().getProtectionBlessing() && (targetPlayer.getStatus().getLevel() - getActingPlayer().getStatus().getLevel() >= 10) && targetPlayer.getKarma() > 0)
+        if (targetPlayer.getProtectionBlessing()
+                && (playerLevel - targetLevel >= 10)
+                && player.getKarma() > 0) {
             return false;
+        }
 
-        if (targetPlayer.isCursedWeaponEquipped() && getActingPlayer().getStatus().getLevel() <= 20)
+        if (player.getProtectionBlessing()
+                && (targetLevel - playerLevel >= 10)
+                && targetPlayer.getKarma() > 0) {
             return false;
+        }
 
-        if (getActingPlayer().isCursedWeaponEquipped() && targetPlayer.getStatus().getLevel() <= 20)
+        if (targetPlayer.isCursedWeaponEquipped() && playerLevel <= 20) {
             return false;
+        }
+
+        if (player.isCursedWeaponEquipped() && targetLevel <= 20) {
+            return false;
+        }
 
         // If the target not from the same CC/party/alliance/clan/SiegeSide is flagged / PK, you can do anything.
-        if (targetPlayer.getPvpFlag() > 0 || targetPlayer.getKarma() > 0)
+        if (targetPlayer.getPvpFlag() > 0 || targetPlayer.getKarma() > 0) {
             return true;
+        }
 
         // If the caster not from the same CC/party/alliance/clan is at war with the target, then With CTRL he may damage and debuff.
         // CTRL is still necessary for damaging. You can do anything so long as you have CTRL pressed.
         // pvpFlag / Karma do not influence these checks
-        final Clan aClan = getActingPlayer().getClan();
-        final Clan tClan = targetPlayer.getClan();
-        if (aClan != null && tClan != null && aClan.isAtWarWith(tClan.getClanId()) && tClan.isAtWarWith(aClan.getClanId()))
+        Clan aClan = player.getClan();
+        Clan tClan = targetPlayer.getClan();
+
+        if (aClan != null
+                && tClan != null
+                && aClan.isAtWarWith(tClan.getClanId())
+                && tClan.isAtWarWith(aClan.getClanId())) {
             return isCtrlPressed;
+        }
 
         return isCtrlDamagingTheMainTarget;
     }
@@ -441,30 +473,34 @@ public abstract class Playable extends Creature {
     @Override
     public boolean isAttackableWithoutForceBy(Playable attacker) {
         Player attackerPlayer = attacker.getActingPlayer();
+        Player player = getActingPlayer();
 
         if (attackerPlayer.isInOlympiadMode()
-                && getActingPlayer().isInOlympiadMode()
-                && getActingPlayer().isOlympiadStart()
-                && attackerPlayer.getOlympiadGameId() == getActingPlayer().getOlympiadGameId()) {
+                && player.isInOlympiadMode()
+                && player.isOlympiadStart()
+                && attackerPlayer.getOlympiadGameId() == player.getOlympiadGameId()) {
             return true;
         }
 
-        if (getActingPlayer().getDuelState() == DuelState.DUELLING
-                && getActingPlayer().getDuelId() == attackerPlayer.getDuelId()) {
+        if (player.getDuelState() == DuelState.DUELLING
+                && player.getDuelId() == attackerPlayer.getDuelId()) {
             return true;
+        }
+
+        if (player.isEventPlayer() && attackerPlayer.isEventPlayer()) {
+            return EventEngine.isCanAttack(player, attackerPlayer);
         }
 
         boolean sameParty = (isInParty() && attackerPlayer.isInParty() && getParty().getLeader() == attackerPlayer.getParty().getLeader());
         boolean sameCommandChannel = (isInParty() && attackerPlayer.isInParty() && getParty().getCommandChannel() != null && getParty().getCommandChannel().containsPlayer(attackerPlayer));
-        boolean sameClan = (getActingPlayer().getClanId() > 0 && getActingPlayer().getClanId() == attackerPlayer.getClanId());
-        boolean sameAlliance = (getActingPlayer().getAllyId() > 0 && getActingPlayer().getAllyId() == attackerPlayer.getAllyId());
-
+        boolean sameClan = (player.getClanId() > 0 && player.getClanId() == attackerPlayer.getClanId());
+        boolean sameAlliance = (player.getAllyId() > 0 && player.getAllyId() == attackerPlayer.getAllyId());
         boolean sameSiegeSide = false;
         Siege siege = CastleManager.getInstance().getActiveSiege(this);
 
         if (siege != null) {
-            sameSiegeSide = ((siege.checkSides(attackerPlayer.getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER) && siege.checkSides(getActingPlayer().getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER)) || (siege.checkSide(attackerPlayer.getClan(), SiegeSide.ATTACKER) && siege.checkSide(getActingPlayer().getClan(), SiegeSide.ATTACKER)));
-            sameSiegeSide &= attackerPlayer.isInsideZone(ZoneId.SIEGE) && getActingPlayer().isInsideZone(ZoneId.SIEGE);
+            sameSiegeSide = ((siege.checkSides(attackerPlayer.getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER) && siege.checkSides(player.getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER)) || (siege.checkSide(attackerPlayer.getClan(), SiegeSide.ATTACKER) && siege.checkSide(player.getClan(), SiegeSide.ATTACKER)));
+            sameSiegeSide &= attackerPlayer.isInsideZone(ZoneId.SIEGE) && player.isInsideZone(ZoneId.SIEGE);
         }
 
         // Players in the same CC/party/alliance/clan cannot attack without CTRL
