@@ -222,7 +222,7 @@ public abstract class Creature extends WorldObject {
     @Override
     public boolean isInsideZone(ZoneId zone) {
         if (zone == ZoneId.PEACE) {
-            Player player = Player.definePlayer(this);
+            Player player = getActingPlayer();
 
             if (player != null && player.isEventPlayer()) {
                 return false;

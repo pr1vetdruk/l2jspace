@@ -9,7 +9,11 @@ import ru.privetdruk.l2jspace.gameserver.custom.builder.EventSettingBuilder;
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.custom.model.NpcInfoShort;
 import ru.privetdruk.l2jspace.gameserver.custom.model.Reward;
-import ru.privetdruk.l2jspace.gameserver.custom.model.event.*;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBorder;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventPlayer;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventType;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.ResultPlayerEvent;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.TeamSetting;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.CtfEventPlayer;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.CtfTeamSetting;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.Flag;
@@ -27,8 +31,14 @@ import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.model.location.SpawnLocation;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
-import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.CreatureSay;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.InventoryUpdate;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ItemList;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MagicSkillUse;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.RadarControl;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.Ride;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -55,7 +65,9 @@ import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.TE
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.BALANCE;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.NO;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.SHUFFLE;
-import static ru.privetdruk.l2jspace.gameserver.custom.model.event.ResultPlayerEvent.*;
+import static ru.privetdruk.l2jspace.gameserver.custom.model.event.ResultPlayerEvent.LOST;
+import static ru.privetdruk.l2jspace.gameserver.custom.model.event.ResultPlayerEvent.TIE;
+import static ru.privetdruk.l2jspace.gameserver.custom.model.event.ResultPlayerEvent.WON;
 import static ru.privetdruk.l2jspace.gameserver.model.item.kind.Item.SLOT_LR_HAND;
 
 public class CTF extends EventEngine {
@@ -76,6 +88,12 @@ public class CTF extends EventEngine {
     }
 
     @Override
+    protected void announceStart() {
+        announceCritical("Вперед!");
+        announceCritical("Если кто-то сбежит с ивента, прихватив с собой флаг, то просто нажмите на любой имеющийся флаг, либо трон под ним, чтобы вернуть беглеца и флаг на место.");
+    }
+
+    @Override
     public void loadData(int eventId) {
         try (Connection connection = ConnectionPool.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM event WHERE id = ? AND type = ?");
@@ -85,7 +103,7 @@ public class CTF extends EventEngine {
             ResultSet resultSet = statement.executeQuery();
 
             if (!resultSet.next()) {
-                LOGGER.warning("Setting ctf not found!");
+                LOGGER.warning("Не удалось найти настройки для CTF.");
                 return;
             }
 
@@ -210,7 +228,7 @@ public class CTF extends EventEngine {
 
                         player.teleToLocation(spawnLocation);
 
-                        player.sendMessage("Вы возвращены на место респавна вашей команды.");
+                        sendPlayerMessage(player, "Вы возвращены на место респавна вашей команды.");
                     }
                 } else {
                     team.getFlag().setTaken(false);
@@ -313,7 +331,7 @@ public class CTF extends EventEngine {
                         CtfEventPlayer ctfPlayer = (CtfEventPlayer) eventPlayer;
                         Player player = ctfPlayer.getPlayer();
 
-                        player.sendMessage("Игрок " + targetPlayer.getName() + " взял ваш флаг!");
+                        sendPlayerMessage(player, "Игрок " + targetPlayer.getName() + " взял ваш флаг!");
 
                         if (!ctfPlayer.isHasFlag()) {
                             player.sendPacket(new RadarControl(0, 1, targetPlayer.getX(), targetPlayer.getY(), targetPlayer.getZ()));
@@ -350,7 +368,7 @@ public class CTF extends EventEngine {
         player.getInventory().equipItem(ItemInstance.create(flagItemId, 1, player, null));
         player.broadcastPacket(new SocialAction(player, 16)); // Amazing glow
         player.broadcastUserInfo();
-        player.sendPacket(new CreatureSay(player.getObjectId(), SayType.PARTYROOM_COMMANDER, "", "Отлично! Теперь отнеси флаг на свою базу!"));
+        player.sendPacket(new CreatureSay(player.getObjectId(), SayType.PARTYROOM_COMMANDER, "Event Manager", "Отлично! Теперь отнеси флаг на свою базу!"));
     }
 
     private void unspawn(Spawn spawn) {
@@ -376,7 +394,7 @@ public class CTF extends EventEngine {
         NpcTemplate flagTemplate = NpcData.getInstance().getTemplate(flagNpc.getId());
 
         try {
-            Spawn flagSpawn = configureSpawn(flagTemplate, flagNpc.getSpawnLocation(), team.getName() + "' Flag");
+            Spawn flagSpawn = configureSpawn(flagTemplate, flagNpc.getSpawnLocation(), team.getName() + "'s Flag");
             team.getFlag().setSpawn(flagSpawn);
         } catch (Exception e) {
             logError("spawnFlag", e);
@@ -630,24 +648,40 @@ public class CTF extends EventEngine {
         }
     }
 
+    @Override
+    public void addDisconnectedPlayer(Player player) {
+        switch (eventState) {
+            case TELEPORTATION, PREPARE_TO_START, IN_PROGRESS -> {
+                EventPlayer eventPlayer = allPlayers.get(player.getObjectId());
+
+                if (eventPlayer != null) {
+                    eventPlayer.setPlayer(player);
+                    player.setEventPlayer(eventPlayer);
+                    players.put(player.getObjectId(), eventPlayer); // adding new objectId to vector
+
+                    updatePlayerEventDataCustom(eventPlayer);
+                    teleport(eventPlayer);
+                }
+            }
+        }
+    }
+
     private void giveReward(Player player, ResultPlayerEvent result) {
         if (player == null || !player.isOnline() || !player.isEventPlayer()) {
             return;
         }
 
-        String message;
-
-        switch (result) {
-            case WON -> {
-                Reward reward = settings.getReward();
-                player.addItem("CTF", reward.getId(), reward.getAmount(), player, true);
-                message = "Ваша команда побеждает в соревновании!";
-            }
-            case LOST -> message = "Ваша команда проиграла";
-            default -> message = "Ваша команда сыграла вничью";
+        if (result == WON) {
+            player.addItem(
+                    settings.getEventName(),
+                    settings.getReward().getId(),
+                    settings.getReward().getAmount(),
+                    player,
+                    true
+            );
         }
 
-        player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.LET_THE_DUEL_BEGIN).addString(message));
+        player.sendPacket(new CreatureSay(player.getObjectId(), SayType.PARTYROOM_COMMANDER, settings.getEventName(), result.name()));
 
         // Send a Server->Client ActionFailed to the PlayerInstance in order to avoid that the client wait another packet
         player.sendPacket(ActionFailed.STATIC_PACKET);
@@ -660,13 +694,13 @@ public class CTF extends EventEngine {
         StringBuilder content = new StringBuilder();
 
         if (eventState != IN_PROGRESS && eventState != REGISTRATION) {
-            content.append("<center>Wait till the admin/gm start the participation.</center>");
+            content.append("<center>В данным момент ивент не проводится.</center>");
         } else if (eventState != IN_PROGRESS && teamMode == SHUFFLE && players.size() >= settings.getMaxPlayers()) {
-            content.append("Currently participated: <font color=\"00FF00\">").append(players.size()).append(".</font><br>");
-            content.append("Max players: <font color=\"00FF00\">").append(settings.getMaxPlayers()).append("</font><br><br>");
-            content.append("<font color=\"FFFF00\">You can't participate to this event.</font><br>");
+            content.append("Участников: <font color=\"00FF00\">").append(players.size()).append(".</font><br>");
+            content.append("Максимум игроков: <font color=\"00FF00\">").append(settings.getMaxPlayers()).append("</font><br><br>");
+            content.append("<font color=\"FFFF00\">Вы не можете участвовать в этом ивенте.</font><br>");
         } else if (player.isCursedWeaponEquipped() && !JOIN_CURSED_WEAPON) {
-            content.append("<font color=\"FFFF00\">You can't participate to this event with a cursed Weapon.</font><br>");
+            content.append("<font color=\"FFFF00\">Вы не можете участвовать в этом ивенте с проклятым оружием.</font><br>");
         } else {
             if (eventState == REGISTRATION
                     && playerLevel >= settings.getMinLevel() && playerLevel <= settings.getMaxLevel()) {
@@ -674,32 +708,32 @@ public class CTF extends EventEngine {
 
                 if (eventPlayer != null) {
                     if (teamMode == NO || teamMode == BALANCE) {
-                        content.append("You participated already in team <font color=\"LEVEL\">").append(eventPlayer.getTeamSettings().getName()).append("</font><br><br>");
+                        content.append("Вы уже участвуете в команде <font color=\"LEVEL\">").append(eventPlayer.getTeamSettings().getName()).append("</font><br><br>");
                     } else if (teamMode == SHUFFLE) {
-                        content.append("<center><font color=\"3366CC\">You participated already!</font></center><br><br>");
+                        content.append("<center><font color=\"3366CC\">Вы уже принимаете участие!</font></center><br><br>");
                     }
 
-                    content.append("<center>Joined Players: <font color=\"00FF00\">").append(players.size()).append("</font></center><br>");
-                    content.append("<center><font color=\"3366CC\">Wait till event start or remove your participation!</font><center>");
-                    content.append("<center><button value=\"Remove\" action=\"bypass -h npc_%objectId%_")
+                    content.append("<center>Участников: <font color=\"00FF00\">").append(players.size()).append("</font></center><br>");
+                    content.append("<center><font color=\"3366CC\">Дождитесь начала ивента или откажитесь от участия!</font><center>");
+                    content.append("<center><button value=\"Покинуть\" action=\"bypass -h npc_%objectId%_")
                             .append(LEAVE.getBypass())
-                            .append("\" width=85 height=21 back=\"L2UI_ch3.Btn1_normalOn\" fore=\"L2UI_ch3.Btn1_normal\"></center>");
+                            .append("\" width=\"90\" height=21 back=\"L2UI_ch3.Btn1_normalOn\" fore=\"L2UI_ch3.Btn1_normal\"></center>");
                 } else {
-                    content.append("<center><font color=\"3366CC\">You want to participate in the event?</font></center><br>");
-                    content.append("<center><td width=\"200\">Min lvl: <font color=\"00FF00\">").append(settings.getMinLevel()).append("</font></center></td><br>");
-                    content.append("<center><td width=\"200\">Max lvl: <font color=\"00FF00\">").append(settings.getMaxLevel()).append("</font></center></td><br><br>");
-                    content.append("<center><font color=\"3366CC\">Teams:</font></center><br>");
+                    content.append("<center><font color=\"3366CC\">Вы хотите принять участие в ивенте?</font></center><br>");
+                    content.append("<center><td width=\"200\">Минимальный уровень: <font color=\"00FF00\">").append(settings.getMinLevel()).append("</font></center></td><br>");
+                    content.append("<center><td width=\"200\">Максимальный уровень: <font color=\"00FF00\">").append(settings.getMaxLevel()).append("</font></center></td><br><br>");
+                    content.append("<center><font color=\"3366CC\">Команды:</font></center><br>");
 
                     if (teamMode == NO || teamMode == BALANCE) {
                         content.append("<center><table border=\"0\">");
                         for (TeamSetting team : teamSettings) {
                             content.append("<tr><td width=\"100\"><font color=\"LEVEL\">")
-                                    .append(team.getName()).append("</font>&nbsp;(").append(team.getPlayers()).append(" joined)</td>");
-                            content.append("<center><td width=\"60\"><button value=\"Join\" action=\"bypass -h npc_%objectId%_")
+                                    .append(team.getName()).append("</font>&nbsp;(").append(team.getPlayers()).append(" участников)</td>");
+                            content.append("<center><td width=\"90\"><button value=\"Участвовать\" action=\"bypass -h npc_%objectId%_")
                                     .append(JOIN_TEAM.getBypass())
                                     .append(" ")
                                     .append(team.getName())
-                                    .append("\" width=85 height=21 back=\"L2UI_ch3.Btn1_normalOn\" fore=\"L2UI_ch3.Btn1_normal\"></center></td></tr>");
+                                    .append("\" width=\"60\" height=21 back=\"L2UI_ch3.Btn1_normalOn\" fore=\"L2UI_ch3.Btn1_normal\"></center></td></tr>");
                         }
                         content.append("</table></center>");
                     } else if (teamMode == SHUFFLE) {
@@ -711,22 +745,22 @@ public class CTF extends EventEngine {
 
                         content.append("</center><br>");
 
-                        content.append("<center><button value=\"Join Event\" action=\"bypass -h npc_%objectId%_")
+                        content.append("<center><button value=\"Участвовать\" action=\"bypass -h npc_%objectId%_")
                                 .append(JOIN_TEAM.getBypass())
-                                .append(" eventShuffle\" width=85 height=21 back=\"L2UI_ch3.Btn1_normalOn\" fore=\"L2UI_ch3.Btn1_normal\"></center>");
-                        content.append("<center><font color=\"3366CC\">Teams will be randomly generated!</font></center><br>");
-                        content.append("<center>Joined Players:</font> <font color=\"LEVEL\">").append(players.size()).append("</center></font><br>");
-                        content.append("<center>Reward: <font color=\"LEVEL\">").append(settings.getReward().getAmount())
+                                .append(" eventShuffle\" \"90\" height=21 back=\"L2UI_ch3.Btn1_normalOn\" fore=\"L2UI_ch3.Btn1_normal\"></center>");
+                        content.append("<center><font color=\"3366CC\">Команды будут выбраны случайным образом!</font></center><br>");
+                        content.append("<center>Участников:</font> <font color=\"LEVEL\">").append(players.size()).append("</center></font><br>");
+                        content.append("<center>Награда: <font color=\"LEVEL\">").append(settings.getReward().getAmount())
                                 .append(" ").append(ItemData.getInstance().getTemplate(settings.getReward().getId()).getName()).append("</center></font>");
                     }
                 }
             } else if (eventState == IN_PROGRESS) {
-                content.append("<center>").append(settings.getEventName()).append(" match is in progress.</center>");
+                content.append("<center>К сожалению ивент ").append(settings.getEventName()).append(" уже начался.</center>");
             } else if (playerLevel < settings.getMinLevel() || playerLevel > settings.getMaxLevel()) {
-                content.append("Your lvl: <font color=\"00FF00\">").append(playerLevel).append("</font><br>");
-                content.append("Min lvl: <font color=\"00FF00\">").append(settings.getMinLevel()).append("</font><br>");
-                content.append("Max lvl: <font color=\"00FF00\">").append(settings.getMaxLevel()).append("</font><br><br>");
-                content.append("<font color=\"FFFF00\">You can't participate to this event.</font><br>");
+                content.append("Ваш уровень: <font color=\"00FF00\">").append(playerLevel).append("</font><br>");
+                content.append("Минимальный уровень: <font color=\"00FF00\">").append(settings.getMinLevel()).append("</font><br>");
+                content.append("Максимальный уровень: <font color=\"00FF00\">").append(settings.getMaxLevel()).append("</font><br><br>");
+                content.append("<font color=\"FFFF00\">Вы не можете участвовать в этом ивенте.</font><br>");
             }
         }
 
@@ -753,7 +787,7 @@ public class CTF extends EventEngine {
 
     @Override
     public void revive(Player player, Player playerKiller) {
-        player.sendMessage(String.format(
+        sendPlayerMessage(player, String.format(
                 "Вы будете воскрешены и перемещены к флагу команды через %d %s!",
                 EventConfig.CTF.DELAY_BEFORE_REVIVE,
                 declensionWords(EventConfig.CTF.DELAY_BEFORE_REVIVE, secondWords)

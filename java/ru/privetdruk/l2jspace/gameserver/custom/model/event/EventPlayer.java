@@ -3,7 +3,7 @@ package ru.privetdruk.l2jspace.gameserver.custom.model.event;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 
 public class EventPlayer {
-    private final Player player;
+    private Player player;
     private TeamSetting teamSettings;
 
     private final int originalColorName;
@@ -16,6 +16,10 @@ public class EventPlayer {
         this.originalColorName = player.getAppearance().getNameColor();
         this.originalKarma = player.getKarma();
         this.originalTitle = player.getTitle();
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     public Player getPlayer() {

@@ -3,10 +3,10 @@ package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
 
+import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.enums.SayType;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
 import ru.privetdruk.l2jspace.gameserver.model.actor.ai.type.SummonAI;
@@ -149,12 +149,9 @@ public final class RequestActionUse extends L2GameClientPacket {
                 if (target == null || summon == null || summon == target || player == target) {
                     return;
                 }
-
-                if (player.isEventPlayer() && target instanceof Playable) {
-                    Player targetPlayer = Player.definePlayer((Playable) target);
-
-                    if (!targetPlayer.isEventPlayer()) {
-                        player.sendMessage("Вы не можете атаковать игроков не участвующих на ивенте.");
+                Player targetPlayer = target.getActingPlayer();
+                if (player.isEventPlayer() && targetPlayer != null) {
+                    if (!EventEngine.isCanAttack(player, targetPlayer)) {
                         return;
                     }
                 }

@@ -4,6 +4,7 @@ public enum EventState {
     ABORT,
     ERROR,
     INACTIVE,
+    PREPARE_TO_START,
     READY_TO_START,
     REGISTRATION,
     TELEPORTATION,

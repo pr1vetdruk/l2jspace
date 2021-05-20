@@ -4572,32 +4572,46 @@ public final class Player extends Playable {
 
     public boolean canCastBeneficialSkillOnPlayable(Playable target, L2Skill skill, boolean isCtrlPressed) {
         // You can do beneficial skills on yourself anytime
-        if (this == target)
+        if (this == target) {
             return true;
+        }
 
-        final Player targetPlayer = target.getActingPlayer();
+        Player targetPlayer = target.getActingPlayer();
         // No checks for players in Arena
-        if (isInsideZone(ZoneId.PVP) && targetPlayer.isInsideZone(ZoneId.PVP))
+        if (isInsideZone(ZoneId.PVP) && targetPlayer.isInsideZone(ZoneId.PVP)) {
             return true;
+        }
 
         // No checks for players in Olympiad
-        if (isInOlympiadMode() && targetPlayer.isInOlympiadMode() && getOlympiadGameId() == targetPlayer.getOlympiadGameId())
+        if (isInOlympiadMode()
+                && targetPlayer.isInOlympiadMode()
+                && getOlympiadGameId() == targetPlayer.getOlympiadGameId()) {
             return true;
+        }
 
         // No checks for players in Duel
-        if (isInDuel() && targetPlayer.isInDuel() && getDuelId() == targetPlayer.getDuelId())
+        if (isInDuel() && targetPlayer.isInDuel() && getDuelId() == targetPlayer.getDuelId()) {
             return true;
+        }
 
-        final boolean sameParty = (isInParty() && targetPlayer.isInParty() && getParty().getLeader() == targetPlayer.getParty().getLeader());
-        final boolean sameCommandChannel = (isInParty() && targetPlayer.isInParty() && getParty().getCommandChannel() != null && getParty().getCommandChannel().containsPlayer(targetPlayer));
-        final boolean sameClan = (getClanId() > 0 && getClanId() == targetPlayer.getClanId());
-        final boolean sameAlliance = (getAllyId() > 0 && getAllyId() == targetPlayer.getAllyId());
-        if (sameParty || sameCommandChannel || sameClan || sameAlliance)
+        if ((isEventPlayer() && !targetPlayer.isEventPlayer())
+                || (!isEventPlayer() && targetPlayer.isEventPlayer())) {
+            return false;
+        }
+
+        boolean sameParty = (isInParty() && targetPlayer.isInParty() && getParty().getLeader() == targetPlayer.getParty().getLeader());
+        boolean sameCommandChannel = (isInParty() && targetPlayer.isInParty() && getParty().getCommandChannel() != null && getParty().getCommandChannel().containsPlayer(targetPlayer));
+        boolean sameClan = (getClanId() > 0 && getClanId() == targetPlayer.getClanId());
+        boolean sameAlliance = (getAllyId() > 0 && getAllyId() == targetPlayer.getAllyId());
+
+        if (sameParty || sameCommandChannel || sameClan || sameAlliance) {
             return true;
+        }
 
         // If the target not from the same CC/party/alliance/clan is flagged / PK, you can buff with isCtrlPressed.
-        if (targetPlayer.getPvpFlag() > 0 || targetPlayer.getKarma() > 0)
+        if (targetPlayer.getPvpFlag() > 0 || targetPlayer.getKarma() > 0) {
             return isCtrlPressed;
+        }
 
         // If the target not from the same CC/party/alliance/clan is white, it may be freely buffed
         return true;
@@ -6285,16 +6299,6 @@ public final class Player extends Playable {
             _chargeTask.cancel(false);
             _chargeTask = null;
         }
-    }
-
-    public static Player definePlayer(WorldObject actor) {
-        if (actor instanceof Player) {
-            return (Player) actor;
-        } else if (actor instanceof Summon) {
-            return ((Summon) actor).getOwner();
-        }
-
-        return null;
     }
 
     public int getMailPosition() {

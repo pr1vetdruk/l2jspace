@@ -4,6 +4,7 @@ import java.util.Map.Entry;
 
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.manager.MailBBSManager;
+import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable.FrequentSkill;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ClanHallManager;
@@ -96,6 +97,12 @@ public class EnterWorld extends L2GameClientPacket {
         player.sendPacket(new HennaInfo(player));
         player.updateEffectIcons();
         player.sendPacket(new EtcStatusUpdate(player));
+
+        EventEngine event = EventEngine.findActive();
+
+        if (event != null) {
+            event.addDisconnectedPlayer(player);
+        }
 
         // Clan checks.
         final Clan clan = player.getClan();

@@ -35,13 +35,13 @@ public class CtfFlag extends Npc {
         NpcHtmlMessage dialog = new NpcHtmlMessage(5);
         StringBuilder page = new StringBuilder("<html><head><body><center>");
 
-        page.append("CTF Flag<br><br>");
-        page.append("<font color=\"00FF00\">").append(team.getName()).append("'s Flag</font><br1>");
+        page.append("<br><br>");
+        page.append("<font color=\"00FF00\">Флаг команды ").append(team.getName()).append("</font><br1>");
 
         if (team.getFlag().getSpawn().getNpc().equals(this)) {
-            page.append("<font color=\"LEVEL\">This is your Flag</font><br1>");
+            page.append("<font color=\"LEVEL\">Это ваш флаг!</font><br1>");
         } else {
-            page.append("<font color=\"LEVEL\">Enemy Flag!</font><br1>");
+            page.append("<font color=\"LEVEL\">Это флаг противника!</font><br1>");
         }
 
         page.append("</center></body></html>");

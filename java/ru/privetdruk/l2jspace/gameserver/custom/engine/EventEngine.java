@@ -27,6 +27,7 @@ import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.model.olympiad.Olympiad;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ChangeWaitType;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MagicSkillUse;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 
@@ -52,6 +53,7 @@ public abstract class EventEngine implements EventTask {
     protected EventSetting settings = null;
     protected List<TeamSetting> teamSettings = new ArrayList<>();
     protected Map<Integer, EventPlayer> players = new ConcurrentHashMap<>();
+    protected Map<Integer, EventPlayer> allPlayers;
 
     protected final EventType eventType;
     protected final EventTeamType teamMode;
@@ -88,7 +90,7 @@ public abstract class EventEngine implements EventTask {
         }
 
         try {
-            players.clear();
+            clearPlayers();
 
             logInfo("Notification start.");
 
@@ -114,6 +116,15 @@ public abstract class EventEngine implements EventTask {
             logError("run", e);
         } finally {
             eventState = INACTIVE;
+            clearPlayers();
+        }
+    }
+
+    private void clearPlayers() {
+        players.clear();
+
+        if (allPlayers != null) {
+            allPlayers.clear();
         }
     }
 
@@ -142,9 +153,13 @@ public abstract class EventEngine implements EventTask {
     }
 
     protected void startEvent() {
+        eventState = PREPARE_TO_START;
+
+        allPlayers = new HashMap<>(players);
+
         waiter(EventConfig.Engine.DELAY_BEFORE_START + 1);
 
-        announceCritical("Вперед!");
+        announceStart();
 
         eventState = IN_PROGRESS;
 
@@ -185,7 +200,7 @@ public abstract class EventEngine implements EventTask {
             Player player = eventPlayer.getPlayer();
 
             if (player.isOnline()) {
-                player.teleToLocation(spawnLocation);
+                player.teleportTo(spawnLocation, eventPlayer.getTeamSettings().getOffset());
             }
 
             players.remove(player.getObjectId());
@@ -236,7 +251,7 @@ public abstract class EventEngine implements EventTask {
         removeOfflinePlayers();
 
         announceCritical(format(
-                "Все зарегистрированные игроки будут перемещены на ивент через %d %s.",
+                "Все участники ивента будут телепортированы на ивент через %d %s.",
                 DELAY_BEFORE_TELEPORT,
                 declensionWords(DELAY_BEFORE_TELEPORT, StringUtil.secondWords)
         ));
@@ -247,14 +262,20 @@ public abstract class EventEngine implements EventTask {
         updatePlayerEventData();
         sitPlayers();
 
-        for (EventPlayer eventPlayer : players.values()) {
-            preTeleportPlayerChecks(eventPlayer.getPlayer());
+        waiter(1);
 
-            eventPlayer.getPlayer().teleportTo(
-                    eventPlayer.getTeamSettings().getSpawnLocation(),
-                    eventPlayer.getTeamSettings().getOffset()
-            );
-        }
+        players.values().forEach(this::teleport);
+    }
+
+    protected void teleport(EventPlayer eventPlayer) {
+        Player player = eventPlayer.getPlayer();
+
+        preTeleportPlayerChecks(player);
+
+        player.teleportTo(
+                eventPlayer.getTeamSettings().getSpawnLocation(),
+                eventPlayer.getTeamSettings().getOffset()
+        );
     }
 
     private void updatePlayerEventData() {
@@ -429,51 +450,62 @@ public abstract class EventEngine implements EventTask {
         while (((startWaiterTime + interval) > Chronos.currentTimeMillis()) && eventState != ABORT) {
             seconds--; // Here because we don't want to see two time announce at the same time
 
-            if (eventState == REGISTRATION || eventState == IN_PROGRESS || eventState == TELEPORTATION) {
-                switch (seconds) {
-                    case 3600: // 1 hour left
-                    case 1800: // 30 minutes left
-                    case 900: // 15 minutes left
-                    case 600: // 10 minutes left
-                    case 300: // 5 minutes left
-                    case 240: // 4 minutes left
-                    case 180: // 3 minutes left
-                    case 120: // 2 minutes left
-                    case 60: { // 1 minute left
-                        if (seconds == 3600) {
+            switch (eventState) {
+                case REGISTRATION, IN_PROGRESS, TELEPORTATION, PREPARE_TO_START -> {
+                    switch (seconds) {
+                        case 3600: // 1 hour left
+                        case 1800: // 30 minutes left
+                        case 900: // 15 minutes left
+                        case 600: // 10 minutes left
+                        case 300: // 5 minutes left
+                        case 240: // 4 minutes left
+                        case 180: // 3 minutes left
+                        case 120: // 2 minutes left
+                        case 60: { // 1 minute left
+                            if (seconds == 3600) {
+                                removeOfflinePlayers();
+                            }
+
+                            long minutes = SECONDS.toMinutes(seconds);
+                            String minutesWord = declensionWords(minutes, StringUtil.minuteWords);
+
+                            if (eventState == REGISTRATION) {
+                                announceCritical("Зарегистрироваться можно в " + settings.getRegistrationLocationName());
+                                announceCritical(format("До закрытия регистрации осталось %d %s.", minutes, minutesWord));
+                            } else if (eventState == IN_PROGRESS) {
+                                announceCritical(format("До завершения ивента осталось %d %s.", minutes, minutesWord));
+                            }
+
+                            break;
+                        }
+                        case 30: // 30 seconds left
+                        case 15: // 15 seconds left
+                        case 10: { // 10 seconds left
                             removeOfflinePlayers();
+                            // fallthrou?
                         }
+                        case 1: { // 1 seconds left
+                            String secondsWord = declensionWords(seconds, StringUtil.secondWords);
+                            String message = null;
 
-                        long minutes = SECONDS.toMinutes(seconds);
-                        String minutesWord = declensionWords(minutes, StringUtil.minuteWords);
+                            switch (eventState) {
+                                case PREPARE_TO_START -> message = "До начала ивента осталось %d %s.";
+                                case REGISTRATION -> message = "До закрытия регистрации осталось %d %s.";
+                                case TELEPORTATION -> {
+                                    if (seconds == 1) {
+                                        secondsWord = "секунду";
+                                    }
+                                    message = "Все участники будут телепортированы через %d %s.";
+                                }
+                                case IN_PROGRESS -> message = "До завершения ивента осталось %d %s.";
+                            }
 
-                        if (eventState == REGISTRATION) {
-                            announceCritical("Зарегистрироваться можно в " + settings.getRegistrationLocationName());
-                            announceCritical(format("До закрытия регистрации осталось %d %s.", minutes, minutesWord));
-                        } else if (eventState == IN_PROGRESS) {
-                            announceCritical(format("До завершения ивента осталось %d %s.", minutes, minutesWord));
+                            if (message != null) {
+                                announceCritical(format(message, seconds, secondsWord));
+                            }
+
+                            break;
                         }
-
-                        break;
-                    }
-                    case 30: // 30 seconds left
-                    case 15: // 15 seconds left
-                    case 10: { // 10 seconds left
-                        removeOfflinePlayers();
-                        // fallthrou?
-                    }
-                    case 1: { // 1 seconds left
-                        String secondsWord = declensionWords(seconds, StringUtil.secondWords);
-
-                        if (eventState == REGISTRATION) {
-                            announceCritical(format("До закрытия регистрации осталось %d %s.", seconds, secondsWord));
-                        } else if (eventState == TELEPORTATION) {
-                            announceCritical(format("Приготовьтесь! До начала ивента осталось %d %s.", seconds, secondsWord));
-                        } else if (eventState == IN_PROGRESS) {
-                            announceCritical(format("До завершения ивента осталось %d %s.", seconds, secondsWord));
-                        }
-
-                        break;
                     }
                 }
             }
@@ -648,6 +680,9 @@ public abstract class EventEngine implements EventTask {
     }
 
     // TODO
+
+    protected abstract void announceStart();
+
     public abstract void loadData(int eventId);
 
     public abstract boolean isSitForced();
@@ -666,9 +701,11 @@ public abstract class EventEngine implements EventTask {
 
     protected abstract void determineWinner();
 
-    public abstract String configureMainPageContent(Player player);
-
     public abstract void register(Player player, String teamName);
+
+    public abstract void addDisconnectedPlayer(Player player);
+
+    public abstract String configureMainPageContent(Player player);
 
     public abstract void revive(Player player, Player playerKiller);
 
