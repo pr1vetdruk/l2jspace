@@ -15,6 +15,7 @@ import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CursedWeaponManager;
 import ru.privetdruk.l2jspace.gameserver.data.xml.HerbDropData;
 import ru.privetdruk.l2jspace.gameserver.enums.BossInfoType;
+import ru.privetdruk.l2jspace.gameserver.enums.items.ItemEnum;
 import ru.privetdruk.l2jspace.gameserver.geoengine.GeoEngine;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Attackable;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
@@ -505,30 +506,26 @@ public class Monster extends Attackable {
         }
 
         // Applies Drop rates
-        if (drop.getItemId() == 57) {
-            if (lastAttacker.getPremiumService() == 1)
-                dropChance *= Config.PREMIUM_RATE_DROP_ADENA;
-            else
-                dropChance *= Config.RATE_DROP_ADENA;
-        } else if (isSweep)
-            if (lastAttacker.getPremiumService() == 1)
-                dropChance *= Config.PREMIUM_RATE_DROP_SPOIL;
-            else
-                dropChance *= Config.RATE_DROP_SPOIL;
-        else if (lastAttacker.getPremiumService() == 1)
+        if (drop.getItemId() == ItemEnum.ADENA.getId()) {
+            dropChance *= (lastAttacker.getPremiumService() == 1 ? Config.PREMIUM_RATE_DROP_ADENA : Config.RATE_DROP_ADENA);
+        } else if (isSweep) {
+            dropChance *= (lastAttacker.getPremiumService() == 1 ? Config.PREMIUM_RATE_DROP_SPOIL : Config.RATE_DROP_SPOIL);
+        } else if (lastAttacker.getPremiumService() == 1) {
             dropChance *= (isRaidBoss()) ? Config.PREMIUM_RATE_DROP_ITEMS_BY_RAID : Config.PREMIUM_RATE_DROP_ITEMS;
-        else if (isRaidBoss())
+        } else if (isRaidBoss()) {
             dropChance *= (this instanceof GrandBoss) ? Config.RATE_DROP_ITEMS_BY_GRAND : Config.RATE_DROP_ITEMS_BY_RAID;
-        else
+        } else {
             dropChance *= Config.RATE_DROP_ITEMS;
+        }
 
         // Set our limits for chance of drop
-        if (dropChance < 1)
+        if (dropChance < 1) {
             dropChance = 1;
+        }
 
         // Get min and max Item quantity that can be dropped in one time
-        final int minCount = drop.getMinDrop();
-        final int maxCount = drop.getMaxDrop();
+        int minCount = drop.getMinDrop();
+        int maxCount = drop.getMaxDrop();
 
         // Get the item quantity dropped
         int itemCount = 0;
@@ -537,19 +534,21 @@ public class Monster extends Attackable {
         int random = Rnd.get(DropData.MAX_CHANCE);
         while (random < dropChance) {
             // Get the item quantity dropped
-            if (minCount < maxCount)
+            if (minCount < maxCount) {
                 itemCount += Rnd.get(minCount, maxCount);
-            else if (minCount == maxCount)
+            } else if (minCount == maxCount) {
                 itemCount += minCount;
-            else
+            } else {
                 itemCount++;
+            }
 
             // Prepare for next iteration if dropChance > DropData.MAX_CHANCE
             dropChance -= DropData.MAX_CHANCE;
         }
 
-        if (itemCount > 0)
+        if (itemCount > 0) {
             return new IntIntHolder(drop.getItemId(), itemCount);
+        }
 
         return null;
     }

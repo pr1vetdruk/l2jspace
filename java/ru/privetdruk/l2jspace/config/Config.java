@@ -2,14 +2,19 @@ package ru.privetdruk.l2jspace.config;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
+import java.util.stream.Collectors;
 
 import ru.privetdruk.l2jspace.common.config.ExProperties;
 import ru.privetdruk.l2jspace.common.logging.CLogger;
@@ -29,10 +34,12 @@ import ru.privetdruk.l2jspace.gameserver.model.olympiad.enums.OlympiadPeriod;
 public final class Config {
     private static final CLogger LOGGER = new CLogger(Config.class.getName());
 
+    public static final String CHAT_FILTER_FILE = "./config/chat-filter.txt";
+    public static final String HEX_ID_FILE = "./config/hex-id.txt";
+
     public static final String CLAN_FILE = "./config/clan.properties";
     public static final String EVENT_FILE = "./config/event.properties";
     public static final String GEO_ENGINE_FILE = "./config/geo-engine.properties";
-    public static final String HEX_ID_FILE = "./config/hexid.txt";
     public static final String LOGIN_SERVER_FILE = "./config/login-server.properties";
     public static final String NPC_FILE = "./config/npc.properties";
     public static final String OFFLINE_FILE = "./config/offline-trade.properties";
@@ -41,8 +48,6 @@ public final class Config {
     public static final String ADDON_FILE = "./config/addon.properties";
     public static final String GAME_SERVER_FILE = "./config/game-server.properties";
     public static final String SIEGE_FILE = "./config/siege.properties";
-
-    public static final EventConfig.Engine EVENT_ENGINE = new EventConfig.Engine();
 
 
     /* ######################################################
@@ -484,6 +489,9 @@ public final class Config {
     public static String DATABASE_LOGIN;
     public static String DATABASE_PASSWORD;
     public static int DATABASE_MAX_CONNECTIONS;
+    public static String CNAME_TEMPLATE;
+    public static String TITLE_TEMPLATE;
+    public static String PET_NAME_TEMPLATE;
 
     // ServerList & Test
     public static boolean SERVER_LIST_BRACKET;
@@ -647,6 +655,7 @@ public final class Config {
 
     public static boolean ENABLE_MODIFY_SKILL_DURATION;
     public static HashMap<Integer, Integer> SKILL_DURATION_LIST;
+    public static int TOTAL_LIFE_TIME;
     public static String GLOBAL_CHAT;
     public static String TRADE_CHAT;
     public static int CHAT_ALL_LEVEL;
@@ -672,6 +681,16 @@ public final class Config {
     public static boolean GAME_SUBCLASS_EVERYWHERE;
     public static boolean SHOW_NPC_INFO;
     public static boolean ALLOW_GRAND_BOSSES_TELEPORT;
+    public static boolean ALLOW_DUALBOX;
+    public static int ALLOWED_BOXES;
+    public static boolean ALLOW_DUALBOX_OLY;
+    public static boolean PVP_SAME_IP;
+    public static boolean PVP_SUMMON;
+
+    // chatfilter
+    public static List<String> FILTER_LIST;
+    public static boolean USE_SAY_FILTER;
+    public static String CHAT_FILTER_CHARS;
 
 
     /**
@@ -1161,6 +1180,10 @@ public final class Config {
         DATABASE_PASSWORD = server.getProperty("Password", "");
         DATABASE_MAX_CONNECTIONS = server.getProperty("MaximumDbConnections", 10);
 
+        CNAME_TEMPLATE = server.getProperty("CnameTemplate", ".*");
+        TITLE_TEMPLATE = server.getProperty("TitleTemplate", ".*");
+        PET_NAME_TEMPLATE = server.getProperty("PetNameTemplate", ".*");
+
         SERVER_LIST_BRACKET = server.getProperty("ServerListBrackets", false);
         SERVER_LIST_CLOCK = server.getProperty("ServerListClock", false);
         SERVER_GM_ONLY = server.getProperty("ServerGMOnly", false);
@@ -1364,6 +1387,25 @@ public final class Config {
         GAME_SUBCLASS_EVERYWHERE = addon.getProperty("SubclassEverywhere", false);
         SHOW_NPC_INFO = addon.getProperty("ShowNpcInfo", false);
         ALLOW_GRAND_BOSSES_TELEPORT = addon.getProperty("AllowGrandBossesTeleport", false);
+
+        ALLOW_DUALBOX_OLY = addon.getProperty("AllowDualBoxInOly", true);
+        ALLOWED_BOXES = addon.getProperty("AllowedBoxes", 99);
+        ALLOW_DUALBOX = addon.getProperty("AllowDualBox", true);
+        PVP_SAME_IP = addon.getProperty("PvPSameIP", false);
+        PVP_SUMMON = addon.getProperty("PvPSumon", false);
+
+        USE_SAY_FILTER = addon.getProperty("UseChatFilter", false);
+        CHAT_FILTER_CHARS = addon.getProperty("ChatFilterChars", "^_^");
+
+        try {
+            FILTER_LIST = Files.lines(Paths.get(CHAT_FILTER_FILE), StandardCharsets.UTF_8)
+                    .map(String::trim)
+                    .filter(line -> !line.isEmpty() && line.charAt(0) != '#')
+                    .collect(Collectors.toList());
+            LOGGER.info("Loaded " + FILTER_LIST.size() + " Filter Words.");
+        } catch (IOException e) {
+            LOGGER.warn("Error while loading chat filter words!", e);
+        }
     }
 
     /**

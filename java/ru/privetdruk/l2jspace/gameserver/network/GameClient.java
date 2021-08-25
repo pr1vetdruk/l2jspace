@@ -102,13 +102,17 @@ public final class GameClient extends MMOClient<MMOConnection<GameClient>> imple
         _stats = new ClientStats();
         _packetQueue = new ArrayBlockingQueue<>(Config.CLIENT_PACKET_QUEUE_SIZE);
 
-        _autoSaveInDB = ThreadPool.scheduleAtFixedRate(() ->
-        {
+        _autoSaveInDB = ThreadPool.scheduleAtFixedRate(() -> {
             if (getPlayer() != null && getPlayer().isOnline()) {
                 getPlayer().store();
 
-                if (getPlayer().getSummon() != null)
+                if (getPlayer().getSummon() != null) {
                     getPlayer().getSummon().store();
+                }
+
+                if (_player.getActiveBoxes() != -1) {
+                    _player.decreaseBoxes();
+                }
             }
         }, 300000L, 900000L);
     }
@@ -193,6 +197,10 @@ public final class GameClient extends MMOClient<MMOConnection<GameClient>> imple
 
                 if (player != null && !isDetached()) {
                     setDetached(true);
+
+                    if (_player.getActiveBoxes() != -1) {
+                        _player.decreaseBoxes();
+                    }
 
                     if (player.isEventPlayer()) {
                         EventEngine.findActive().onDisconnect(player);

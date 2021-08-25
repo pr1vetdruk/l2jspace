@@ -27,10 +27,10 @@ public class Menu implements IVoicedCommandHandler {
                     int flag = Integer.parseInt(addcmd.substring(3).trim());
                     if (flag == 0) {
                         player.setStopExp(true);
-                        player.sendMessage("Вы не можете получить опыт, убивая мобов.");
+                        player.sendMessage("Вы можете получить опыт, убивая мобов.");
                     } else {
                         player.setStopExp(false);
-                        player.sendMessage("Вы можете получить опыт, убивая мобов.");
+                        player.sendMessage("Вы не можете получить опыт, убивая мобов.");
                     }
 
                     showHtm(player);

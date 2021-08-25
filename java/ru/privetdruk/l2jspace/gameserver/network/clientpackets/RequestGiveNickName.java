@@ -2,6 +2,7 @@ package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
 
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.ClanMember;
@@ -24,7 +25,7 @@ public class RequestGiveNickName extends L2GameClientPacket {
         if (player == null)
             return;
 
-        if (!StringUtil.isValidString(_title, "^[a-zA-Z0-9 !@#$&()\\-`.+,/\"]*{0,16}$")) {
+        if (!StringUtil.isValidString(_title, Config.TITLE_TEMPLATE)) {
             player.sendPacket(SystemMessageId.NOT_WORKING_PLEASE_TRY_AGAIN_LATER);
             return;
         }

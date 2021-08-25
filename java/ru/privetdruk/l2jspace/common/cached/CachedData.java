@@ -36,7 +36,7 @@ public class CachedData {
         player.sendPacket(packet);
     }
 
-    public static final boolean BOOLEAN_DEFAULT = false;
+    public static final boolean BOOLEAN_DEFAULT = true;
 
     public static final byte BYTE_DEFAULT = (byte) 0;
 

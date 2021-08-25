@@ -3,6 +3,26 @@ package ru.privetdruk.l2jspace.gameserver.custom.model;
 public enum SkillEnum {
     CLASS;
 
+    public enum Admin {
+        SUPER_HASTE(7029, 4);
+
+        private final int id;
+        private final int maxLevel;
+
+        Admin(int id, int maxLevel) {
+            this.id = id;
+            this.maxLevel = maxLevel;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public int getMaxLevel() {
+            return maxLevel;
+        }
+    }
+
     public enum Prophet {
         MAGIC_BARRIER(1036);
 

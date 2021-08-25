@@ -181,16 +181,21 @@ public class Attackable extends Npc {
     public boolean returnHome() {
         // TODO Is this necessary?
         // Do nothing if the Attackable is already dead.
-        if (isDead())
+        if (isDead()) {
             return false;
+        }
 
         // TODO Gordon temporary bypass (the only attackable i can think of that doesn't return to its spawn)
-        if (getNpcId() == 29095)
+        if (getNpcId() == 29095) {
             return false;
+        }
 
-        // Minions are simply squeezed if they lose activity.
+        // FIXME Minions are simply squeezed if they lose activity.
         if (isMinion() && !isRaidRelated()) {
-            deleteMe();
+            if (getAggroList().isEmpty()) {
+                ThreadPool.schedule(this::deleteMe, 10000);
+            }
+
             return true;
         }
 
@@ -201,8 +206,10 @@ public class Attackable extends Npc {
             setIsReturningToSpawnPoint(true);
             forceWalkStance();
             getAI().tryToMoveTo(getSpawn().getLoc(), null);
+
             return true;
         }
+
         return false;
     }
 

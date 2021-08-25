@@ -468,7 +468,9 @@ public class CreatureMove<T extends Creature> {
         }
 
         // Feed the geopath with whole path.
-        _geoPath.addAll(path);
+        if (!_geoPath.isEmpty()) {
+            _geoPath.addAll(path);
+        }
 
         // Retrieve first Location.
         return _geoPath.poll();

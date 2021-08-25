@@ -16,6 +16,7 @@ import ru.privetdruk.l2jspace.gameserver.skill.l2skill.L2SkillSignet;
 
 public class EffectSignet extends AbstractEffect {
     private EffectPoint _actor;
+    private boolean srcInArena;
 
     public EffectSignet(EffectTemplate template, L2Skill skill, Creature effected, Creature effector) {
         super(template, skill, effected, effector);
@@ -28,26 +29,38 @@ public class EffectSignet extends AbstractEffect {
 
     @Override
     public boolean onStart() {
-        if (!(_skill instanceof L2SkillSignet))
+        if (!(_skill instanceof L2SkillSignet)) {
             return false;
+        }
 
+        srcInArena = getEffector().isInsideZone(ZoneId.PVP) && !getEffector().isInsideZone(ZoneId.SIEGE);
         _actor = (EffectPoint) getEffected();
+
         return true;
     }
 
     @Override
     public boolean onActionTime() {
-        final List<Creature> list = _actor.getKnownTypeInRadius(Creature.class, _skill.getSkillRadius(), creature -> !creature.isDead() && !(creature instanceof Door) && !creature.isInsideZone(ZoneId.PEACE));
-        if (list.isEmpty())
+        List<Creature> list = _actor.getKnownTypeInRadius(Creature.class, _skill.getSkillRadius(), creature -> !creature.isDead() && !(creature instanceof Door) && !creature.isInsideZone(ZoneId.PEACE));
+        if (list.isEmpty()) {
             return true;
+        }
 
-        final L2Skill signetSkill = SkillTable.getInstance().getInfo(((L2SkillSignet) _skill).effectId, _skill.getLevel());
-        final Creature[] targets = list.toArray(new Creature[list.size()]);
+        L2Skill signetSkill = SkillTable.getInstance().getInfo(((L2SkillSignet) _skill).effectId, _skill.getLevel());
+        Creature[] targets = list.toArray(new Creature[list.size()]);
+
         for (Creature creature : targets) {
+            // isSignetOffensiveSkill only really checks for Day of Doom, the other signets ahve different Effects
+            if (_skill.isOffensive() && !_skill.checkForAreaOffensiveSkill(getEffector(), creature, true, srcInArena)) {
+                continue;
+            }
+
             signetSkill.getEffects(_actor, creature);
             _actor.broadcastPacket(new MagicSkillUse(_actor, creature, signetSkill.getId(), signetSkill.getLevel(), 0, 0));
         }
+
         _actor.broadcastPacket(new MagicSkillLaunched(_actor, signetSkill, targets));
+
         return true;
     }
 

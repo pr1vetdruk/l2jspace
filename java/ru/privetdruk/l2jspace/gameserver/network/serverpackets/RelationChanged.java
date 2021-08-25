@@ -1,6 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
 import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
 
 public class RelationChanged extends L2GameServerPacket {
     public static final int RELATION_PVP_FLAG = 0x00002; // pvp ???
@@ -16,15 +18,21 @@ public class RelationChanged extends L2GameServerPacket {
     private final int _objectId;
     private final int _relation;
     private final int _autoAttackable;
-    private final int _karma;
-    private final int _pvpFlag;
+    private int _karma;
+    private int _pvpFlag;
 
     public RelationChanged(Playable playable, int relation, boolean isAutoAttackable) {
         _objectId = playable.getObjectId();
         _relation = relation;
         _autoAttackable = (isAutoAttackable) ? 1 : 0;
-        _karma = playable.getKarma();
-        _pvpFlag = playable.getPvpFlag();
+
+        if (playable instanceof Player) {
+            _karma = playable.getKarma();
+            _pvpFlag = playable.getPvpFlag();
+        } else if (playable instanceof Summon) {
+            _karma = ((Summon) playable).getOwner().getKarma();
+            _pvpFlag = ((Summon) playable).getOwner().getPvpFlag();
+        }
     }
 
     @Override

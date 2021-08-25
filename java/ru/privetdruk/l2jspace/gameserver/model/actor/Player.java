@@ -420,7 +420,12 @@ public final class Player extends Playable {
 
     private Door _requestedGate;
 
-    private final CachedData _cachedData = new CachedData(getObjectId());
+    private final CachedData cachedData = new CachedData(getObjectId());
+    private final CachedDataValueBoolean stopExp = cachedData.newBoolean("stopexp");
+    private final CachedDataValueBoolean messageRefusal = cachedData.newBoolean("traderefusal");
+
+    private int activeBoxes = -1;
+    private List<String> activeBoxesCharacters = new ArrayList<>();
 
     private EventPlayer eventPlayer;
 
@@ -2094,14 +2099,14 @@ public final class Player extends Playable {
             return;
         }
 
+        if (this == player && player.getTarget() == this) {
+            return;
+        }
+
         if (isShiftPressed && player.isGM()) {
             var html = new NpcHtmlMessage(0);
             AdminEditChar.gatherPlayerInfo(player, this, html);
             player.sendPacket(html);
-            return;
-        }
-
-        if (this == player && player.getTarget() == this) {
             return;
         }
 
@@ -2642,9 +2647,10 @@ public final class Player extends Playable {
             return;
         }
 
-        final Player targetPlayer = target.getActingPlayer();
-        if (targetPlayer == null || targetPlayer == this)
+        Player targetPlayer = target.getActingPlayer();
+        if (targetPlayer == null || targetPlayer == this) {
             return;
+        }
 
         // Don't rank up the CW if it was a summon.
         if (isCursedWeaponEquipped() && target instanceof Player) {
@@ -2652,23 +2658,40 @@ public final class Player extends Playable {
             return;
         }
 
+        if (Config.PVP_SAME_IP) {
+            String player = getClient().getConnection().getInetAddress().getHostAddress();
+            String playerTarget = targetPlayer.getClient().getConnection().getInetAddress().getHostAddress();
+            if (player.equals(playerTarget))
+                return;
+        }
+
+        if (Config.PVP_SUMMON) {
+            if (target instanceof Summon) {
+                return;
+            }
+        }
+
         // If in duel and you kill (only can kill l2summon), do nothing
-        if (isInDuel() && targetPlayer.isInDuel())
+        if (isInDuel() && targetPlayer.isInDuel()) {
             return;
+        }
 
         // If in pvp zone, do nothing.
         if (isInsideZone(ZoneId.PVP) && targetPlayer.isInsideZone(ZoneId.PVP)) {
             // Until the zone was a siege zone. Check also if victim was a player. Randomers aren't counted.
             if (target instanceof Player && getSiegeState() > 0 && targetPlayer.getSiegeState() > 0 && getSiegeState() != targetPlayer.getSiegeState()) {
                 // Now check clan relations.
-                final Clan killerClan = getClan();
-                if (killerClan != null)
+                Clan killerClan = getClan();
+                if (killerClan != null) {
                     killerClan.setSiegeKills(killerClan.getSiegeKills() + 1);
+                }
 
-                final Clan targetClan = targetPlayer.getClan();
-                if (targetClan != null)
+                Clan targetClan = targetPlayer.getClan();
+                if (targetClan != null) {
                     targetClan.setSiegeDeaths(targetClan.getSiegeDeaths() + 1);
+                }
             }
+
             return;
         }
 
@@ -3030,8 +3053,9 @@ public final class Player extends Playable {
     public void setOperateType(OperateType type) {
         _operateType = type;
 
-        if (Config.OFFLINE_DISCONNECT_FINISHED && type == OperateType.NONE && ((getClient() == null) || getClient().isDetached()))
-            deleteMe();
+        if (Config.OFFLINE_DISCONNECT_FINISHED && type == OperateType.NONE && ((getClient() == null) || getClient().isDetached())) {
+            logout(true);
+        }
     }
 
     /**
@@ -4054,7 +4078,7 @@ public final class Player extends Playable {
      * Restores secondary data for the Player, based on the current class index.
      */
     private void restoreCharData() {
-        _cachedData.load();
+        cachedData.load();
 
         // Retrieve from the database all skills of this Player and add them to _skills.
         restoreSkills();
@@ -4085,7 +4109,7 @@ public final class Player extends Playable {
      * @param storeActiveEffects
      */
     public synchronized void store(boolean storeActiveEffects) {
-        _cachedData.store();
+        cachedData.store();
 
         storeCharBase();
         storeCharSub();
@@ -6697,10 +6721,7 @@ public final class Player extends Playable {
             statement.setLong(5, 0);
             statement.executeUpdate();
         } catch (Exception e) {
-            LOGGER.error("Could not insert char data: " + e);
-            if (Config.DEVELOPER)
-                e.printStackTrace();
-            return;
+            LOGGER.warn("Could not insert char data: " + e);
         }
     }
 
@@ -6712,9 +6733,7 @@ public final class Player extends Playable {
             statement.setString(3, account);
             statement.execute();
         } catch (SQLException e) {
-            LOGGER.error("PremiumService: Could not increase data");
-            if (Config.DEVELOPER)
-                e.printStackTrace();
+            LOGGER.warn("PremiumService: Could not increase data");
         }
     }
 
@@ -6730,7 +6749,7 @@ public final class Player extends Playable {
                         _endDate = rs.getLong("enddate");
                 }
             } catch (Exception e) {
-                LOGGER.error("Could not restore prem service data " + e);
+                LOGGER.warn("PremiumService: Could not restore prem service data " + e);
             }
         }
 
@@ -6754,15 +6773,13 @@ public final class Player extends Playable {
                         }
                     }
 
-                    if (sucess == false) {
+                    if (!sucess) {
                         player.createPSdb();
                         player.setPremiumService(0);
                     }
                 }
             } catch (SQLException e) {
-                LOGGER.warn("PremiumService: Could not restore PremiumService data for:" + account + "." + e);
-                if (Config.DEVELOPER)
-                    e.printStackTrace();
+                LOGGER.warn("PremiumService: Could not restore data for:" + account + "." + e);
             }
 
         } else {
@@ -6835,32 +6852,105 @@ public final class Player extends Playable {
     }
 
     public CachedData getCachedData() {
-        return _cachedData;
+        return cachedData;
     }
 
-    private final CachedDataValueBoolean _stopExp = _cachedData.newBoolean("stopexp");
-    private final CachedDataValueBoolean _messageRefusal = _cachedData.newBoolean("traderefusal");
-
     public void setStopExp(boolean value) {
-        _stopExp.set(value);
+        stopExp.set(value);
     }
 
     public boolean isStopExp() {
-        return _stopExp.get();
+        return stopExp.get();
     }
 
     public void setTradeRefusal(boolean value) {
-        _messageRefusal.set(value);
+        messageRefusal.set(value);
     }
 
     public boolean isTradeRefusal() {
-        return _messageRefusal.get();
+        return messageRefusal.get();
     }
 
     public final int displayAugmentation(Shortcut sc) {
-        final ItemInstance item = getInventory().getItemByObjectId(sc.getId());
+        ItemInstance item = getInventory().getItemByObjectId(sc.getId());
+
         return item == null || !item.isAugmented() ? 0 : item.getAugmentation().getId();
     }
+
+    public boolean checkMultiBox() {
+        boolean output = true;
+
+        int boxesNumber = 0; // this one
+        final List<String> activeBoxesList = new ArrayList<>();
+
+        if (getClient() != null && getClient().getConnection() != null && !getClient().getConnection().isClosed() && getClient().getConnection().getInetAddress() != null) {
+            final String thisIp = getClient().getConnection().getInetAddress().getHostAddress();
+            final Collection<Player> allPlayers = World.getInstance().getPlayers();
+            for (final Player player : allPlayers) {
+                if (player != null) {
+                    if (player.isOnline() && player.getClient() != null && player.getClient().getConnection() != null && !player.getClient().getConnection().isClosed() && player.getClient().getConnection().getInetAddress() != null && !player.getName().equals(this.getName())) {
+                        final String ip = player.getClient().getConnection().getInetAddress().getHostAddress();
+                        if (thisIp.equals(ip) && this != player) {
+                            if (!Config.ALLOW_DUALBOX) {
+                                output = false;
+                                break;
+                            }
+
+                            if (boxesNumber + 1 > Config.ALLOWED_BOXES) // actual count+actual player one
+                            {
+                                output = false;
+                                break;
+                            }
+
+                            boxesNumber++;
+                            activeBoxesList.add(player.getName());
+                        }
+                    }
+                }
+            }
+        }
+
+        if (output) {
+            activeBoxes = boxesNumber + 1; // current number of boxes+this one
+
+            if (!activeBoxesList.contains(this.getName())) {
+                activeBoxesList.add(this.getName());
+                this.activeBoxesCharacters = activeBoxesList;
+            }
+
+            refreshOtherBoxes();
+        }
+
+        return output;
+    }
+
+    public void decreaseBoxes() {
+        activeBoxes = activeBoxes - 1;
+        activeBoxesCharacters.remove(this.getName());
+        refreshOtherBoxes();
+    }
+
+    public void refreshOtherBoxes() {
+        if (getClient() != null && getClient().getConnection() != null && !getClient().getConnection().isClosed() && getClient().getConnection().getInetAddress() != null) {
+            final String thisip = getClient().getConnection().getInetAddress().getHostAddress();
+            final Collection<Player> allPlayers = World.getInstance().getPlayers();
+            final Player[] players = allPlayers.toArray(new Player[allPlayers.size()]);
+
+            for (Player player : players) {
+                if (player != null && player.isOnline()) {
+                    if (player.getClient() != null && player.getClient().getConnection() != null && !player.getClient().getConnection().isClosed() && !player.getName().equals(this.getName())) {
+                        String ip = player.getClient().getConnection().getInetAddress().getHostAddress();
+
+                        if (thisip.equals(ip) && this != player) {
+                            player.activeBoxes = activeBoxes;
+                            player.activeBoxesCharacters = activeBoxesCharacters;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
     /**
      * Added to other GMs, test also this {@link Player} instance. If GM, set it.
@@ -6884,5 +6974,13 @@ public final class Player extends Playable {
 
     public boolean isEventPlayer() {
         return eventPlayer != null;
+    }
+
+    public int getActiveBoxes() {
+        return activeBoxes;
+    }
+
+    public List<String> getActiveBoxesCharacters() {
+        return activeBoxesCharacters;
     }
 }

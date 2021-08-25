@@ -10,6 +10,7 @@ import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.math.MathUtil;
 
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
+import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
 import ru.privetdruk.l2jspace.gameserver.enums.items.ArmorType;
 import ru.privetdruk.l2jspace.gameserver.enums.items.WeaponType;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.ElementType;
@@ -18,6 +19,7 @@ import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillOpType;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillTargetType;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillType;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.Stats;
+import ru.privetdruk.l2jspace.gameserver.geoengine.GeoEngine;
 import ru.privetdruk.l2jspace.gameserver.handler.ITargetHandler;
 import ru.privetdruk.l2jspace.gameserver.handler.TargetHandler;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
@@ -368,6 +370,52 @@ public abstract class L2Skill implements IChanceSkillTrigger {
 
             _extractableItems = parseExtractableSkill(_id, _level, capsuledItems);
         }
+    }
+
+    /**
+     * TODO sourceInArena isn't used.
+     *
+     * @param caster        : The {@link Creature} caster launching this {@link L2Skill}.
+     * @param target        : The {@link Creature} target to check.
+     * @param isCtrlPressed : Has the skill been cast with the control key pressed?
+     * @param sourceInArena : True means the caster is in a pvp or siege zone, and so the additional check will be skipped.
+     * @return True if a {@link Creature} target can be added on target list, or false otherwise.
+     */
+    public final boolean checkForAreaOffensiveSkill(Creature caster, Creature target, boolean isCtrlPressed, boolean sourceInArena) {
+        if (target == null || target.isDead() || target == caster) {
+            return false;
+        }
+
+        Player player = caster.getActingPlayer();
+        Player targetPlayer = target.getActingPlayer();
+
+        if (player != null && targetPlayer != null) {
+            if (targetPlayer == player) {
+                return false;
+            }
+
+            if (targetPlayer.isInObserverMode()) {
+                return false;
+            }
+
+            if (targetPlayer.isInsideZone(ZoneId.PEACE)) {
+                return false;
+            }
+
+            if (!player.canCastOffensiveSkillOnPlayable(targetPlayer, this, isCtrlPressed)) {
+                return false;
+            }
+        } else if (target instanceof Attackable) {
+            if (caster instanceof Attackable && !caster.isConfused()) {
+                return false;
+            }
+
+            if (!target.isAttackableBy(caster)) {
+                return false;
+            }
+        }
+
+        return GeoEngine.getInstance().canSeeTarget(caster, target);
     }
 
     public abstract void useSkill(Creature caster, WorldObject[] targets);

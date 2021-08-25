@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Pet;
@@ -46,7 +47,7 @@ public final class RequestChangePetName extends L2GameClientPacket {
         }
 
         // Invalid name pattern.
-        if (!StringUtil.isValidString(_name, "^[A-Za-z0-9]{1,16}$")) {
+        if (!StringUtil.isValidString(_name, Config.PET_NAME_TEMPLATE)) {
             player.sendPacket(SystemMessageId.NAMING_PETNAME_CONTAINS_INVALID_CHARS);
             return;
         }

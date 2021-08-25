@@ -8,7 +8,7 @@ public class DoorStatusUpdate extends L2GameServerPacket {
 
     public DoorStatusUpdate(Door door) {
         _door = door;
-        _showHp = door.getCastle() != null && door.getCastle().getSiege().isInProgress();
+        _showHp = door.getCastle() != null && door.getCastle().getSiege().isInProgress() && !door.getCastle().getSiege().isMidVictory();
     }
 
     @Override

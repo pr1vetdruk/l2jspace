@@ -47,8 +47,7 @@ public class Unlock implements ISkillHandler {
                 chest.getAggroList().addDamageHate(activeChar, 0, 200);
                 chest.getAI().tryToAttack(activeChar);
             }
-        } else
-            activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.INVALID_TARGET));
+        }
     }
 
     private static final boolean doorUnlock(L2Skill skill) {

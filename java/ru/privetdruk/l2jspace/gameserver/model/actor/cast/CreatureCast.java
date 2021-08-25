@@ -97,18 +97,18 @@ public class CreatureCast<T extends Creature> {
     public void doCast(L2Skill skill, Creature target, ItemInstance itemInstance) {
         int hitTime = skill.getHitTime();
         int coolTime = skill.getCoolTime();
+
         if (!skill.isStaticHitTime()) {
             hitTime = Formulas.calcAtkSpd(_actor, skill, hitTime);
-            if (coolTime > 0)
+
+            if (coolTime > 0) {
                 coolTime = Formulas.calcAtkSpd(_actor, skill, coolTime);
+            }
 
             if (skill.isMagic() && (_actor.isChargedShot(ShotType.SPIRITSHOT) || _actor.isChargedShot(ShotType.BLESSED_SPIRITSHOT))) {
                 hitTime = (int) (0.70 * hitTime);
                 coolTime = (int) (0.70 * coolTime);
             }
-
-            if (skill.getHitTime() >= 500 && hitTime < 500)
-                hitTime = 500;
         }
 
         int reuseDelay = skill.getReuseDelay();
@@ -150,11 +150,13 @@ public class CreatureCast<T extends Creature> {
 
         setCastTask(skill, target, hitTime, coolTime, castInterruptTime);
 
-        if (_hitTime > 410) {
-            if (_actor instanceof Player)
+        if (_hitTime > 0) {
+            if (_actor instanceof Player) {
                 _actor.sendPacket(new SetupGauge(GaugeColor.BLUE, _hitTime));
-        } else
+            }
+        } else {
             _hitTime = 0;
+        }
 
         _castTask = ThreadPool.schedule(this::onMagicLaunch, hitTime > 410 ? hitTime - 400 : 0);
     }
@@ -338,8 +340,16 @@ public class CreatureCast<T extends Creature> {
             return false;
         }
 
-        if (!skill.getWeaponDependancy(_actor))
+        if (!skill.getWeaponDependancy(_actor)) {
             return false;
+        }
+
+        if (skill.getSkillType() == SkillType.BUFF && (_actor instanceof Player) && (target instanceof Player)) {
+            if (target.isInArena() && !isCtrlPressed && (_actor.getParty() == null || !_actor.getParty().containsPlayer(target))) {
+                _actor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.INVALID_TARGET));
+                return false;
+            }
+        }
 
         return true;
     }
@@ -425,8 +435,11 @@ public class CreatureCast<T extends Creature> {
         if (player != null) {
             for (final Creature target : targets) {
                 if (skill.isOffensive()) {
-                    if (player.getSummon() != target)
-                        player.updatePvPStatus(target);
+                    if (skill.getSkillType() != SkillType.SIGNET && skill.getSkillType() != SkillType.SIGNET_CASTTIME) {
+                        if (player.getSummon() != target) {
+                            player.updatePvPStatus(target);
+                        }
+                    }
                 } else {
                     if (target instanceof Player) {
                         if (!(target.equals(_actor) || target.equals(player)) && (((Player) target).getPvpFlag() > 0 || ((Player) target).getKarma() > 0))

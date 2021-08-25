@@ -92,7 +92,6 @@ public class Tutorial extends Quest {
         TCLc.put(50, "tutorial_22kb.htm");
     }
 
-    private static final int TUTORIAL_GUIDE = 5588;
     private static final int BLUE_GEMSTONE = 6353;
 
     public Tutorial() {
@@ -102,18 +101,17 @@ public class Tutorial extends Quest {
     @Override
     public String onTimer(String name, Npc npc, Player player) {
         if (name.startsWith("QT")) {
-            final QuestState st = player.getQuestList().getQuestState(qn);
-            if (st == null)
+            QuestState st = player.getQuestList().getQuestState(qn);
+            if (st == null) {
                 return null;
+            }
 
-            final int Ex = st.getInteger("Ex");
+            int Ex = st.getInteger("Ex");
             if (Ex == -2) {
-                final Event evt = EVENTS.get(player.getClassId().getId());
-                if (evt == null)
+                Event evt = EVENTS.get(player.getClassId().getId());
+                if (evt == null) {
                     return null;
-
-                if (!player.getInventory().hasItems(TUTORIAL_GUIDE))
-                    giveItems(player, TUTORIAL_GUIDE, 1);
+                }
 
                 st.set("Ex", -3);
                 playTutorialVoice(player, evt._initialVoice);
@@ -130,6 +128,7 @@ public class Tutorial extends Quest {
                 playTutorialVoice(player, "tutorial_voice_008");
             }
         }
+
         return null;
     }
 

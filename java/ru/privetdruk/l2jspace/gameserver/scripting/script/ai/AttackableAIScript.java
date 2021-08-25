@@ -109,7 +109,7 @@ public class AttackableAIScript extends Quest {
 
     @Override
     public String onAttack(Npc npc, Creature attacker, int damage, L2Skill skill) {
-        ((Attackable) npc).getAggroList().addDamageHate(attacker, damage, damage / (npc.getStatus().getLevel() + 7) * ((npc.isRaidRelated()) ? 20000 : 100));
+        ((Attackable) npc).getAggroList().addDamageHate(attacker, damage, (damage * 100) / (npc.getStatus().getLevel() + 7));
         return null;
     }
 

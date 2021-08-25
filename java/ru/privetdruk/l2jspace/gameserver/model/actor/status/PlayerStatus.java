@@ -433,14 +433,12 @@ public class PlayerStatus extends PlayableStatus<Player> {
 
     @Override
     public boolean addExp(long value) {
-        // Allowed to gain exp?
-        if (_actor.isStopExp())
+        if (!super.addExp(value)) {
             return false;
-
-        if (!super.addExp(value))
-            return false;
+        }
 
         _actor.sendPacket(new UserInfo(_actor));
+
         return true;
     }
 
@@ -494,12 +492,13 @@ public class PlayerStatus extends PlayableStatus<Player> {
      * @return
      */
     public boolean addExpAndSp(long addToExp, int addToSp, Map<Creature, RewardInfo> rewards) {
-        if (_actor.isStopExp())
-            return false;
+        if (!_actor.isStopExp()) {
+            return true;
+        }
 
         // If this player has a pet, give the xp to the pet now (if any).
         if (_actor.hasPet()) {
-            final Pet pet = (Pet) _actor.getSummon();
+            Pet pet = (Pet) _actor.getSummon();
             if (pet.getStatus().getExp() <= (pet.getTemplate().getPetDataEntry(81).getMaxExp() + 10000) && !pet.isDead() && pet.isIn3DRadius(_actor, Config.PARTY_RANGE)) {
                 long petExp = 0;
                 int petSp = 0;
@@ -515,8 +514,9 @@ public class PlayerStatus extends PlayableStatus<Player> {
                     }
                 } else {
                     // now adjust the max ratio to avoid the owner earning negative exp/sp
-                    if (ratio > 100)
+                    if (ratio > 100) {
                         ratio = 100;
+                    }
 
                     petExp = Math.round(addToExp * (1 - (ratio / 100.0)));
                     petSp = (int) Math.round(addToSp * (1 - (ratio / 100.0)));
@@ -527,6 +527,7 @@ public class PlayerStatus extends PlayableStatus<Player> {
                 pet.addExpAndSp(petExp, petSp);
             }
         }
+
         return addExpAndSp(addToExp, addToSp);
     }
 

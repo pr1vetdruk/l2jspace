@@ -316,37 +316,35 @@ public class PcInventory extends Inventory {
             if (adjItem.isStackable()) {
                 if (adjItem.getItemId() == item.getItem().getItemId() && (adjItem.getEnchantLevel() == item.getEnchant())) {
                     item.setObjectId(adjItem.getObjectId());
-                    if (adjItem.getCount() < item.getCount())
-                        item.setCount(adjItem.getCount());
-                    else {
-                        item.setCount(item.getCount());
-                    }
+                    item.setCount(Math.min(adjItem.getCount(), item.getCount()));
+
                     return item;
                 }
             } else {
                 if (adjItem.getItemId() == item.getItem().getItemId() && (adjItem.getEnchantLevel() == item.getEnchant())) {
                     boolean found = false;
+
                     for (TradeItem actual : list) {
                         if (actual.getObjectId() == adjItem.getObjectId()) {
                             found = true;
                             break;
                         }
                     }
+
                     if (found) {
                         continue;
                     }
+
                     item.setObjectId(adjItem.getObjectId());
-                    if (adjItem.getCount() < item.getCount())
-                        item.setCount(adjItem.getCount());
-                    else {
-                        item.setCount(item.getCount());
-                    }
+                    item.setCount(Math.min(adjItem.getCount(), item.getCount()));
+
                     return item;
                 }
             }
         }
 
         item.setCount(0);
+
         return item;
     }
 

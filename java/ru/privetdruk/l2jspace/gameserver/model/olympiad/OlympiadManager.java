@@ -10,6 +10,7 @@ import ru.privetdruk.l2jspace.common.data.StatSet;
 
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.OlympiadType;
+import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
@@ -105,6 +106,22 @@ public class OlympiadManager {
         if (!Olympiad.getInstance().isInCompPeriod()) {
             player.sendPacket(SystemMessageId.THE_OLYMPIAD_GAME_IS_NOT_CURRENTLY_IN_PROGRESS);
             return false;
+        }
+
+        // Olympiad dualbox protection
+        if (player.getActiveBoxes() > 1 && !Config.ALLOW_DUALBOX_OLY) {
+            List<String> playersInBoxes = player.getActiveBoxesCharacters();
+
+            if (playersInBoxes != null && playersInBoxes.size() > 1) {
+                for (String characterName : playersInBoxes) {
+                    Player activeChar = World.getInstance().getPlayer(characterName);
+
+                    if (activeChar != null && (activeChar.getOlympiadGameId() > 0 || activeChar.isInOlympiadMode() || OlympiadManager.getInstance().isRegistered(activeChar))) {
+                        activeChar.sendMessage("You are already participating in Olympiad with another char!");
+                        return false;
+                    }
+                }
+            }
         }
 
         if (Olympiad.getInstance().getMillisToCompEnd() < 600000) {

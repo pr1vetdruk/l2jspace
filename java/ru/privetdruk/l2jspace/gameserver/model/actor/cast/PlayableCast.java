@@ -4,6 +4,8 @@ import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Chest;
+import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Door;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MagicSkillUse;
@@ -57,11 +59,13 @@ public class PlayableCast<T extends Playable> extends CreatureCast<T> {
 
     @Override
     public boolean canDoCast(Creature target, L2Skill skill, boolean isCtrlPressed, int itemObjectId) {
-        if (!super.canDoCast(target, skill, isCtrlPressed, itemObjectId))
+        if (!super.canDoCast(target, skill, isCtrlPressed, itemObjectId)) {
             return false;
+        }
 
-        if (!skill.checkCondition(_actor, target, false))
+        if (!skill.checkCondition(_actor, target, false)) {
             return false;
+        }
 
         if (_actor.getActingPlayer().isInOlympiadMode() && (skill.isHeroSkill() || skill.getSkillType() == SkillType.RESURRECT)) {
             _actor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.THIS_SKILL_IS_NOT_AVAILABLE_FOR_THE_OLYMPIAD_EVENT));
@@ -74,8 +78,16 @@ public class PlayableCast<T extends Playable> extends CreatureCast<T> {
             return false;
         }
 
+        if ((skill.getSkillType() == SkillType.UNLOCK || skill.getSkillType() == SkillType.UNLOCK_SPECIAL)) {
+            if (!(target instanceof Door || target instanceof Chest)) {
+                _actor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.INVALID_TARGET));
+                return false;
+            }
+        }
+
         if (skill.getItemConsumeId() > 0) {
-            final ItemInstance requiredItems = _actor.getInventory().getItemByItemId(skill.getItemConsumeId());
+            ItemInstance requiredItems = _actor.getInventory().getItemByItemId(skill.getItemConsumeId());
+
             if (requiredItems == null || requiredItems.getCount() < skill.getItemConsume()) {
                 _actor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_CANNOT_BE_USED).addSkillName(skill));
                 return false;

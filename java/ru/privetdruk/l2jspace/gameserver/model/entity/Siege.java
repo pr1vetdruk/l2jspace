@@ -49,6 +49,7 @@ public class Siege implements Siegable {
     private static final String ADD_OR_UPDATE_SIEGE_CLAN = "INSERT INTO siege_clans (clan_id,castle_id,type) VALUES (?,?,?) ON DUPLICATE KEY UPDATE type=VALUES(type)";
 
     private final Castle _castle;
+    private boolean isMidVictory = false;
 
     private final Map<Clan, SiegeSide> _registeredClans = new ConcurrentHashMap<>();
 
@@ -338,19 +339,23 @@ public class Siege implements Siegable {
      * When control of castle changed during siege.
      */
     public void midVictory() {
-        if (!isInProgress())
+        isMidVictory = true;
+
+        if (!isInProgress()) {
             return;
+        }
 
         _castle.despawnSiegeGuardsOrMercenaries();
 
-        if (_castle.getOwnerId() <= 0)
+        if (_castle.getOwnerId() <= 0) {
             return;
+        }
 
-        final List<Clan> attackers = getAttackerClans();
-        final List<Clan> defenders = getDefenderClans();
+        List<Clan> attackers = getAttackerClans();
+        List<Clan> defenders = getDefenderClans();
 
-        final Clan castleOwner = ClanTable.getInstance().getClan(_castle.getOwnerId());
-        final int allyId = castleOwner.getAllyId();
+        Clan castleOwner = ClanTable.getInstance().getClan(_castle.getOwnerId());
+        int allyId = castleOwner.getAllyId();
 
         // No defending clans.
         if (defenders.isEmpty()) {
@@ -986,7 +991,12 @@ public class Siege implements Siegable {
         } else if (timeRemaining > 0) {
             announce(SystemMessage.getSystemMessage(SystemMessageId.CASTLE_SIEGE_S1_SECONDS_LEFT).addNumber(1), SiegeSide.ATTACKER, SiegeSide.DEFENDER);
             ThreadPool.schedule(this::processSiegeTimer, timeRemaining);
-        } else
+        } else {
             endSiege();
+        }
+    }
+
+    public boolean isMidVictory() {
+        return isMidVictory;
     }
 }

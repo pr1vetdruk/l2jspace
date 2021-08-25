@@ -14,6 +14,7 @@ import ru.privetdruk.l2jspace.gameserver.enums.skills.ElementType;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.Stats;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Monster;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.StatusUpdate;
 import ru.privetdruk.l2jspace.gameserver.skill.Calculator;
 import ru.privetdruk.l2jspace.gameserver.skill.Formulas;
@@ -232,12 +233,21 @@ public class CreatureStatus<T extends Creature> {
         }
 
         // Reduce HPs. The value is blocked to 1 if the Creature isn't mortal.
-        if (value > 0)
+        if (value > 0) {
             setHp(Math.max(_hp - value, (_actor.isMortal()) ? 0 : 1));
+        }
 
         // Handle die process if value is too low.
-        if (_hp < 0.5)
+        if (_hp < 0.5) {
             _actor.doDie(attacker);
+        }
+
+        if (_actor.isDead()) {
+            _actor.getAttack().stop();
+            _actor.doDie(attacker);
+        } else if (_actor instanceof Monster) {
+            ((Monster) _actor).getOverhitState().test(attacker, value);
+        }
     }
 
     public final double getMp() {

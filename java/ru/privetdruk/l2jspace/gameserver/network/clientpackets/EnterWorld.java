@@ -5,6 +5,8 @@ import java.util.Map.Entry;
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.manager.MailBBSManager;
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
+import ru.privetdruk.l2jspace.gameserver.custom.model.SkillEnum;
+import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable.FrequentSkill;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ClanHallManager;
@@ -73,19 +75,29 @@ public class EnterWorld extends L2GameClientPacket {
         final int objectId = player.getObjectId();
 
         if (player.isGM()) {
-            if (Config.GM_STARTUP_INVULNERABLE && AdminData.getInstance().hasAccess("admin_invul", player.getAccessLevel()))
+            SkillEnum.Admin superHaste = SkillEnum.Admin.SUPER_HASTE;
+
+            SkillTable.getInstance()
+                    .getInfo(superHaste.getId(), superHaste.getMaxLevel())
+                    .getEffects(player, player);
+
+            if (Config.GM_STARTUP_INVULNERABLE && AdminData.getInstance().hasAccess("admin_invul", player.getAccessLevel())) {
                 player.setInvul(true);
+            }
 
-            if (Config.GM_STARTUP_INVISIBLE && AdminData.getInstance().hasAccess("admin_hide", player.getAccessLevel()))
+            if (Config.GM_STARTUP_INVISIBLE && AdminData.getInstance().hasAccess("admin_hide", player.getAccessLevel())) {
                 player.getAppearance().setVisible(false);
+            }
 
-            if (Config.GM_STARTUP_BLOCK_ALL)
+            if (Config.GM_STARTUP_BLOCK_ALL) {
                 player.getBlockList().setInBlockingAll(true);
+            }
 
-            if (Config.GM_STARTUP_AUTO_LIST && AdminData.getInstance().hasAccess("admin_gmlist", player.getAccessLevel()))
+            if (Config.GM_STARTUP_AUTO_LIST && AdminData.getInstance().hasAccess("admin_gmlist", player.getAccessLevel())) {
                 AdminData.getInstance().addGm(player, false);
-            else
+            } else {
                 AdminData.getInstance().addGm(player, true);
+            }
         }
 
         // Set dead status if applies
@@ -208,6 +220,12 @@ public class EnterWorld extends L2GameClientPacket {
         player.sendPacket(SystemMessageId.WELCOME_TO_LINEAGE);
         player.sendPacket(SevenSignsManager.getInstance().getCurrentPeriod().getMessageId());
         AnnouncementData.getInstance().showAnnouncements(player, false);
+
+        // Means that it's not ok multiBox situation, so logout
+        if (!player.checkMultiBox()) {
+            player.sendMessage("I'm sorry, but multibox is not allowed here.");
+            player.logout(true);
+        }
 
         // If the Player is a Dark Elf, check for Shadow Sense at night.
         if (player.getRace() == ClassRace.DARK_ELF && player.hasSkill(L2Skill.SKILL_SHADOW_SENSE))

@@ -103,6 +103,10 @@ public class BoatMove extends CreatureMove<Boat> {
      * @param path : The BoatLocation array used as path.
      */
     public void executePath(BoatLocation[] path) {
+        // Current coordinates is zero on first call. Lets initialize it.
+        _xAccurate = _actor.getX();
+        _yAccurate = _actor.getY();
+
         // Initialize values.
         _pathIndex = 0;
         _currentPath = path;

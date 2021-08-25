@@ -2,6 +2,7 @@ package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
 
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.sql.PlayerInfoTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.PlayerData;
@@ -75,7 +76,7 @@ public final class RequestCharacterCreate extends L2GameClientPacket {
         }
 
         // Invalid name typo.
-        if (!StringUtil.isValidString(_name, "^[A-Za-z0-9]{1,16}$")) {
+        if (!StringUtil.isValidString(_name, Config.CNAME_TEMPLATE)) {
             sendPacket(CharCreateFail.REASON_INCORRECT_NAME);
             return;
         }

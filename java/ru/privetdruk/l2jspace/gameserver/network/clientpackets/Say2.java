@@ -113,8 +113,14 @@ public final class Say2 extends L2GameClientPacket {
             return;
         }
 
-        if (type == SayType.PETITION_PLAYER && player.isGM())
+        // Say Filter implementation
+        if (Config.USE_SAY_FILTER) {
+            checkText();
+        }
+
+        if (type == SayType.PETITION_PLAYER && player.isGM()) {
             type = SayType.PETITION_GM;
+        }
 
         if (Config.LOG_CHAT) {
             LogRecord record = new LogRecord(Level.INFO, _text);
@@ -158,5 +164,13 @@ public final class Say2 extends L2GameClientPacket {
     @Override
     protected boolean triggersOnActionRequest() {
         return false;
+    }
+
+    private void checkText() {
+        String filteredText = _text;
+        for (String pattern : Config.FILTER_LIST) {
+            filteredText = filteredText.replaceAll("(?i)" + pattern, Config.CHAT_FILTER_CHARS);
+        }
+        _text = filteredText;
     }
 }

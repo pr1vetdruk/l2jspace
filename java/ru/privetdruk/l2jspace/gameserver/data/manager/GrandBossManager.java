@@ -53,7 +53,7 @@ public class GrandBossManager {
     }
 
     public int getBossStatus(int bossId) {
-        return _bossStatus.get(bossId);
+        return _bossStatus.getOrDefault(bossId, -1);
     }
 
     public void setBossStatus(int bossId, int status) {

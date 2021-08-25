@@ -60,11 +60,11 @@ public class TamedBeastAI extends AttackableAI {
                 return;
             }
 
-            // Destroy the food from owner's inventory ; if none is found, delete the pet.
-            if (!owner.destroyItemByItemId("BeastMob", getActor().getFoodId(), 1, getActor(), true)) {
+            // FIXME Destroy the food from owner's inventory ; if none is found, delete the pet.
+            /*if (!owner.destroyItemByItemId("BeastMob", getActor().getFoodId(), 1, getActor(), true)) {
                 getActor().deleteMe();
                 return;
-            }
+            }*/
 
             getActor().broadcastPacket(new SocialAction(getActor(), 2));
             getActor().broadcastNpcSay(Rnd.get(FOOD_CHAT));

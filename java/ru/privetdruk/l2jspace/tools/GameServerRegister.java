@@ -118,10 +118,10 @@ public class GameServerRegister {
 
                                 GameServerManager.getInstance().getRegisteredGameServers().put(id, new GameServerInfo(id, hexId));
                                 GameServerManager.getInstance().registerServerOnDB(hexId, id, "");
-                                Config.saveHexId(id, new BigInteger(hexId).toString(16), "hexid(server " + id + ").txt");
+                                Config.saveHexId(id, new BigInteger(hexId).toString(16), "hex-id(server " + id + ").txt");
 
-                                System.out.println("Server registered under 'hexid(server " + id + ").txt'.");
-                                System.out.println("Put this file in /config gameserver folder and rename it 'hexid.txt'.");
+                                System.out.println("Server registered under 'hex-id(server " + id + ").txt'.");
+                                System.out.println("Put this file in /config gameserver folder and rename it 'hex-id.txt'.");
                             }
                         }
                     } catch (NumberFormatException nfe) {

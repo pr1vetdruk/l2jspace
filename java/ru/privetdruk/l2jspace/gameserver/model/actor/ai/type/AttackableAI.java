@@ -95,6 +95,7 @@ public class AttackableAI extends CreatureAI implements Runnable {
 
     @Override
     protected void thinkAttack() {
+        // FIXME
         if (!_isInCombatMode) {
             _isInCombatMode = true;
             _attackTimeout = System.currentTimeMillis() + MAX_ATTACK_TIMEOUT;

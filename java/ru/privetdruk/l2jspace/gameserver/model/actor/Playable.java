@@ -357,10 +357,12 @@ public abstract class Playable extends Creature {
         boolean sameClan = (player.getClanId() > 0 && player.getClanId() == targetPlayer.getClanId());
         boolean sameAlliance = (player.getAllyId() > 0 && player.getAllyId() == targetPlayer.getAllyId());
         boolean sameSiegeSide = false;
-        Siege siege = CastleManager.getInstance().getActiveSiege(this);
 
+        Siege siege = CastleManager.getInstance().getActiveSiege(this);
         if (siege != null) {
-            sameSiegeSide = ((siege.checkSides(targetPlayer.getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER) && siege.checkSides(player.getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER)) || (siege.checkSide(targetPlayer.getClan(), SiegeSide.ATTACKER) && siege.checkSide(player.getClan(), SiegeSide.ATTACKER)));
+            sameSiegeSide = siege.checkSides(targetPlayer.getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER)
+                    && siege.checkSides(getActingPlayer().getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER);
+
             sameSiegeSide &= target.isInsideZone(ZoneId.SIEGE) && player.isInsideZone(ZoneId.SIEGE);
         }
 
@@ -409,14 +411,25 @@ public abstract class Playable extends Creature {
         // If the caster not from the same CC/party/alliance/clan is at war with the target, then With CTRL he may damage and debuff.
         // CTRL is still necessary for damaging. You can do anything so long as you have CTRL pressed.
         // pvpFlag / Karma do not influence these checks
-        Clan aClan = player.getClan();
-        Clan tClan = targetPlayer.getClan();
+        Clan playerClan = player.getClan();
+        Clan targetPlayerClan = targetPlayer.getClan();
 
-        if (aClan != null
-                && tClan != null
-                && aClan.isAtWarWith(tClan.getClanId())
-                && tClan.isAtWarWith(aClan.getClanId())) {
+        if (playerClan != null && targetPlayerClan != null
+                && playerClan.isAtWarWith(targetPlayerClan.getClanId())
+                && targetPlayerClan.isAtWarWith(playerClan.getClanId())
+                && !(isInsideZone(ZoneId.CASTLE)
+                && targetPlayer.isInsideZone(ZoneId.CASTLE)
+                && isInsideZone(ZoneId.PVP)
+                && targetPlayer.isInsideZone(ZoneId.PVP))) {
             return isCtrlPressed;
+        } else if (playerClan != null && targetPlayerClan != null
+                && playerClan.isAtWarWith(targetPlayerClan.getClanId())
+                && targetPlayerClan.isAtWarWith(playerClan.getClanId())
+                && (isInsideZone(ZoneId.CASTLE)
+                && targetPlayer.isInsideZone(ZoneId.CASTLE)
+                && isInsideZone(ZoneId.PVP)
+                && targetPlayer.isInsideZone(ZoneId.PVP))) {
+            return true;
         }
 
         return isCtrlDamagingTheMainTarget;
@@ -495,16 +508,9 @@ public abstract class Playable extends Creature {
         boolean sameCommandChannel = (isInParty() && attackerPlayer.isInParty() && getParty().getCommandChannel() != null && getParty().getCommandChannel().containsPlayer(attackerPlayer));
         boolean sameClan = (player.getClanId() > 0 && player.getClanId() == attackerPlayer.getClanId());
         boolean sameAlliance = (player.getAllyId() > 0 && player.getAllyId() == attackerPlayer.getAllyId());
-        boolean sameSiegeSide = false;
-        Siege siege = CastleManager.getInstance().getActiveSiege(this);
-
-        if (siege != null) {
-            sameSiegeSide = ((siege.checkSides(attackerPlayer.getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER) && siege.checkSides(player.getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER)) || (siege.checkSide(attackerPlayer.getClan(), SiegeSide.ATTACKER) && siege.checkSide(player.getClan(), SiegeSide.ATTACKER)));
-            sameSiegeSide &= attackerPlayer.isInsideZone(ZoneId.SIEGE) && player.isInsideZone(ZoneId.SIEGE);
-        }
 
         // Players in the same CC/party/alliance/clan cannot attack without CTRL
-        if (sameParty || sameCommandChannel || sameClan || sameAlliance || sameSiegeSide) {
+        if (sameParty || sameCommandChannel || sameClan || sameAlliance) {
             return false;
         }
 
