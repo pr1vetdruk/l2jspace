@@ -85,7 +85,7 @@
 		<set name="operateType" val="PASSIVE" />
 		<for>
 			<addMul stat="holyRes" val="20" />
-			<sub stat="darkPower" val="20" />
+			<sub stat="darkPower" val="1" />
 		</for>
 	</skill>
 	<skill id="4008" levels="1" name="Insect Skin">

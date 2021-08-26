@@ -570,7 +570,7 @@
 		<enchant2 name="magicLvl" val="#enchantMagicLvl" />
 		<enchant2 name="lvlDepend" val="1" />
 		<enchant2 name="isDebuff" val="true" />
-		<enchant2 name="elementPower" val="20" />
+		<enchant2 name="elementPower" val="1" />
 		<enchant2 name="element" val="EARTH" />
 		<enchant2 name="power" val="100" />
 		<enchant2 name="skillType" val="DOT" />
@@ -1219,12 +1219,12 @@
 		<enchant2 name="mpConsume" val="#ench2MpConsume"/>
 		<for>
 			<effect name="Buff" time="120" val="0" stackOrder="1" stackType="dance_of_light">
-				<add stat="holyPower" val="20" />
+				<add stat="holyPower" val="1" />
 			</effect>
 		</for>
 		<enchant1for>
 			<effect name="Buff" time="#ench1time" val="0" stackOrder="1" stackType="dance_of_light">
-				<add stat="holyPower" val="20" />
+				<add stat="holyPower" val="1" />
 			</effect>
 		</enchant1for>
 	</skill>

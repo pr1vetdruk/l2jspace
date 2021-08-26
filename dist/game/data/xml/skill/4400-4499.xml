@@ -251,7 +251,7 @@
 		<set name="operateType" val="PASSIVE" />
 		<for>
 			<addMul stat="fireRes" val="#vuln" />
-			<add stat="firePower" val="10" />
+			<add stat="firePower" val="1" />
 		</for>
 	</skill>
 	<skill id="4419" levels="5" name="Water Attacks">
@@ -261,7 +261,7 @@
 		<set name="operateType" val="PASSIVE" />
 		<for>
 			<addMul stat="waterRes" val="#vuln" />
-			<add stat="waterPower" val="10" />
+			<add stat="waterPower" val="1" />
 		</for>
 	</skill>
 	<skill id="4420" levels="5" name="Wind Attacks">
@@ -271,7 +271,7 @@
 		<set name="operateType" val="PASSIVE" />
 		<for>
 			<addMul stat="windRes" val="#vuln" />
-			<add stat="windPower" val="10" />
+			<add stat="windPower" val="1" />
 		</for>
 	</skill>
 	<skill id="4421" levels="5" name="Earth Attacks">
@@ -281,7 +281,7 @@
 		<set name="operateType" val="PASSIVE" />
 		<for>
 			<addMul stat="earthRes" val="#vuln" />
-			<add stat="earthPower" val="10" />
+			<add stat="earthPower" val="1" />
 		</for>
 	</skill>
 	<skill id="4422" levels="5" name="Dark Attacks">
@@ -291,7 +291,7 @@
 		<set name="operateType" val="PASSIVE" />
 		<for>
 			<addMul stat="darkRes" val="#vuln" />
-			<add stat="darkPower" val="10" />
+			<add stat="darkPower" val="1" />
 		</for>
 	</skill>
 	<skill id="4423" levels="5" name="Sacred Attacks">
@@ -301,7 +301,7 @@
 		<set name="operateType" val="PASSIVE" />
 		<for>
 			<addMul stat="holyRes" val="#vuln" />
-			<add stat="holyPower" val="10" />
+			<add stat="holyPower" val="1" />
 		</for>
 	</skill>
 	<skill id="4424" levels="5" name="Resist Hand-to-hand Weapons">
@@ -1131,7 +1131,7 @@
 		<set name="target" val="AREA" />
 		<set name="skillRadius" val="200" />
 		<set name="element" val="HOLY" />
-		<set name="elementPower" val="20" />
+		<set name="elementPower" val="1" />
 		<set name="hitTime" val="5000" />
 		<set name="skillType" val="MDAM" />
 		<set name="operateType" val="ACTIVE" />
@@ -1160,7 +1160,7 @@
 		<set name="mpConsume" val="#mpConsume" />
 		<for>
 			<effect name="Buff" time="120" val="0" effectPower="40" effectType="DEBUFF" stackOrder="1" stackType="holy_attack">
-				<add stat="holyPower" val="20" />
+				<add stat="holyPower" val="1" />
 			</effect>
 		</for>
 	</skill>

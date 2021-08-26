@@ -2190,22 +2190,13 @@
 	<npc id="21163" locx="16495" locy="-248064" locz="-9583" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21163" locx="13885" locy="-247266" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21164" locx="15734" locy="-243992" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21164" locx="15734" locy="-243992" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21164" locx="17690" locy="-243713" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21164" locx="17690" locy="-243713" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21164" locx="17686" locy="-248611" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21164" locx="17686" locy="-248611" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21164" locx="19575" locy="-248296" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21164" locx="19575" locy="-248296" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21164" locx="18417" locy="-245958" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21164" locx="18417" locy="-245958" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21164" locx="15733" locy="-244576" locz="-9583" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21164" locx="15733" locy="-244576" locz="-9583" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21164" locx="18453" locy="-248310" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21164" locx="18453" locy="-248310" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21164" locx="18442" locy="-246543" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21164" locx="18442" locy="-246543" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21164" locx="18465" locy="-244028" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21164" locx="18465" locy="-244028" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21165" locx="20502" locy="-245515" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21165" locx="21243" locy="-244089" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
@@ -2218,396 +2209,200 @@
 	<npc id="21165" locx="23083" locy="-248299" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21165" locx="23052" locy="-246067" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21254" locx="14388" locy="-246863" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21254" locx="14388" locy="-246863" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21254" locx="13532" locy="-246858" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21254" locx="13532" locy="-246858" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21254" locx="17377" locy="-248314" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21254" locx="17377" locy="-248314" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21254" locx="16107" locy="-248224" locz="-9583" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21254" locx="16107" locy="-248224" locz="-9583" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21254" locx="16105" locy="-247670" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21254" locx="16105" locy="-247670" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21254" locx="17021" locy="-246234" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21254" locx="17021" locy="-246234" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21254" locx="16152" locy="-245010" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21254" locx="16152" locy="-245010" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21254" locx="16417" locy="-246216" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21254" locx="16417" locy="-246216" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21254" locx="17348" locy="-244056" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21254" locx="17348" locy="-244056" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21254" locx="13793" locy="-245895" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21254" locx="13793" locy="-245895" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21254" locx="12941" locy="-245884" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21254" locx="12941" locy="-245884" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21254" locx="16157" locy="-244363" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21254" locx="16157" locy="-244363" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21254" locx="13095" locy="-243715" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21254" locx="13095" locy="-243715" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21255" locx="21347" locy="-248715" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21255" locx="21347" locy="-248715" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21255" locx="19877" locy="-248625" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21255" locx="19877" locy="-248625" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21255" locx="18855" locy="-246991" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21255" locx="18855" locy="-246991" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21255" locx="18803" locy="-243701" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21255" locx="18803" locy="-243701" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21255" locx="23109" locy="-243741" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21255" locx="23109" locy="-243741" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21255" locx="18824" locy="-246367" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21255" locx="18824" locy="-246367" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21255" locx="23413" locy="-248636" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21255" locx="23413" locy="-248636" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21255" locx="23445" locy="-245726" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21255" locx="23445" locy="-245726" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21255" locx="18803" locy="-248642" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21255" locx="18803" locy="-248642" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21255" locx="23448" locy="-246385" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21255" locx="23448" locy="-246385" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21255" locx="20872" locy="-245911" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21255" locx="20872" locy="-245911" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21255" locx="20891" locy="-245040" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21255" locx="20891" locy="-245040" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21255" locx="21014" locy="-243651" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21255" locx="21014" locy="-243651" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21255" locx="21981" locy="-248697" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21255" locx="21981" locy="-248697" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
-	<npc id="21255" locx="21670" locy="-243654" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21255" locx="21670" locy="-243654" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="0" />
 	<npc id="21185" locx="12796" locy="-243710" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" /><!-- First Week (Angels & Demons) -->
-	<npc id="21185" locx="12796" locy="-243710" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21185" locx="13875" locy="-245473" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21185" locx="13875" locy="-245473" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21185" locx="13441" locy="-247268" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21185" locx="13441" locy="-247268" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21185" locx="14399" locy="-247186" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21185" locx="14399" locy="-247186" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21185" locx="16132" locy="-244601" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21185" locx="16132" locy="-244601" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21185" locx="12958" locy="-245530" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21185" locx="12958" locy="-245530" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21185" locx="17393" locy="-248624" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21185" locx="17393" locy="-248624" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21185" locx="16489" locy="-247677" locz="-9583" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21185" locx="16489" locy="-247677" locz="-9583" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21185" locx="16436" locy="-245811" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21185" locx="16436" locy="-245811" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21185" locx="17070" locy="-245815" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21185" locx="17070" locy="-245815" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21185" locx="16521" locy="-248380" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21185" locx="16521" locy="-248380" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21185" locx="17711" locy="-244019" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21185" locx="17711" locy="-244019" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21185" locx="16143" locy="-243999" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21185" locx="16143" locy="-243999" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21186" locx="18439" locy="-246230" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21186" locx="18439" locy="-246230" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21186" locx="19569" locy="-248631" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21186" locx="19569" locy="-248631" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21186" locx="18430" locy="-246998" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21186" locx="18430" locy="-246998" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21186" locx="18484" locy="-248619" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21186" locx="18484" locy="-248619" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21186" locx="20538" locy="-245058" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21186" locx="20538" locy="-245058" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21186" locx="23036" locy="-246414" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21186" locx="23036" locy="-246414" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21186" locx="23016" locy="-245687" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21186" locx="23016" locy="-245687" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21186" locx="23414" locy="-248308" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21186" locx="23414" locy="-248308" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21186" locx="21362" locy="-248294" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21186" locx="21362" locy="-248294" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21186" locx="22005" locy="-248293" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21186" locx="22005" locy="-248293" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21186" locx="21015" locy="-244099" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21186" locx="21015" locy="-244099" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21186" locx="21648" locy="-244076" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21186" locx="21648" locy="-244076" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21186" locx="20517" locy="-246031" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21186" locx="20517" locy="-246031" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21186" locx="23400" locy="-243730" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21186" locx="23400" locy="-243730" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21186" locx="18461" locy="-243700" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21186" locx="18461" locy="-243700" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21206" locx="13081" locy="-244022" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21206" locx="13081" locy="-244022" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21206" locx="12981" locy="-246885" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21206" locx="12981" locy="-246885" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21206" locx="14354" locy="-245863" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21206" locx="14354" locy="-245863" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21206" locx="13436" locy="-245920" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21206" locx="13436" locy="-245920" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21206" locx="16090" locy="-248697" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21206" locx="16090" locy="-248697" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21206" locx="15756" locy="-244352" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21206" locx="15756" locy="-244352" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21206" locx="14040" locy="-246857" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21206" locx="14040" locy="-246857" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21206" locx="15781" locy="-244963" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21206" locx="15781" locy="-244963" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21206" locx="16083" locy="-247949" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21206" locx="16083" locy="-247949" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21206" locx="17440" locy="-246214" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21206" locx="17440" locy="-246214" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21206" locx="17691" locy="-248330" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21206" locx="17691" locy="-248330" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21206" locx="17393" locy="-243724" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21206" locx="17393" locy="-243724" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21206" locx="16829" locy="-246221" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21206" locx="16829" locy="-246221" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21207" locx="20619" locy="-243671" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21207" locx="20619" locy="-243671" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21207" locx="20886" locy="-245500" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21207" locx="20886" locy="-245500" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21207" locx="20883" locy="-246510" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21207" locx="20883" locy="-246510" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21207" locx="20946" locy="-248705" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21207" locx="20946" locy="-248705" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21207" locx="21296" locy="-243682" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21207" locx="21296" locy="-243682" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21207" locx="21572" locy="-248697" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21207" locx="21572" locy="-248697" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21207" locx="23094" locy="-248624" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21207" locx="23094" locy="-248624" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21207" locx="23098" locy="-244027" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21207" locx="23098" locy="-244027" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21207" locx="18823" locy="-245981" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21207" locx="18823" locy="-245981" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21207" locx="23420" locy="-246737" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21207" locx="23420" locy="-246737" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21207" locx="19863" locy="-248333" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21207" locx="19863" locy="-248333" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21207" locx="23430" locy="-246127" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21207" locx="23430" locy="-246127" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21207" locx="18816" locy="-248301" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21207" locx="18816" locy="-248301" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21207" locx="18813" locy="-244024" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21207" locx="18813" locy="-244024" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
 	<npc id="21207" locx="18840" locy="-246600" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21207" locx="18840" locy="-246600" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="1" />
-	<npc id="21206" locx="12796" locy="-243710" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" /><!-- Second Week (Angels) -->
 	<npc id="21206" locx="12796" locy="-243710" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="13875" locy="-245473" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="13875" locy="-245473" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="13441" locy="-247268" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="13441" locy="-247268" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="14399" locy="-247186" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="14399" locy="-247186" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="16132" locy="-244601" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="16132" locy="-244601" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="12958" locy="-245530" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="12958" locy="-245530" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="17393" locy="-248624" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="17393" locy="-248624" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="16489" locy="-247677" locz="-9583" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="16489" locy="-247677" locz="-9583" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="16436" locy="-245811" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="16436" locy="-245811" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="17070" locy="-245815" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="17070" locy="-245815" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="16521" locy="-248380" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="16521" locy="-248380" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="17711" locy="-244019" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="17711" locy="-244019" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="16143" locy="-243999" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="16143" locy="-243999" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="18439" locy="-246230" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="18439" locy="-246230" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="19569" locy="-248631" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="19569" locy="-248631" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="18430" locy="-246998" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="18430" locy="-246998" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="18484" locy="-248619" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="18484" locy="-248619" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="20538" locy="-245058" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="20538" locy="-245058" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="23036" locy="-246414" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="23036" locy="-246414" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="23016" locy="-245687" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="23016" locy="-245687" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="23414" locy="-248308" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="23414" locy="-248308" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="21362" locy="-248294" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="21362" locy="-248294" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="22005" locy="-248293" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="22005" locy="-248293" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="21015" locy="-244099" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="21015" locy="-244099" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="21648" locy="-244076" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="21648" locy="-244076" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="20517" locy="-246031" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="20517" locy="-246031" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="23400" locy="-243730" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="23400" locy="-243730" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="18461" locy="-243700" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="18461" locy="-243700" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="13081" locy="-244022" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="13081" locy="-244022" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="12981" locy="-246885" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="12981" locy="-246885" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="14354" locy="-245863" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="14354" locy="-245863" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="13436" locy="-245920" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="13436" locy="-245920" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="16090" locy="-248697" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="16090" locy="-248697" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="15756" locy="-244352" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="15756" locy="-244352" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="14040" locy="-246857" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="14040" locy="-246857" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="15781" locy="-244963" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="15781" locy="-244963" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="16083" locy="-247949" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="16083" locy="-247949" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="17440" locy="-246214" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="17440" locy="-246214" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="17691" locy="-248330" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="17691" locy="-248330" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="17393" locy="-243724" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="17393" locy="-243724" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21206" locx="16829" locy="-246221" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21206" locx="16829" locy="-246221" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="20619" locy="-243671" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="20619" locy="-243671" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="20886" locy="-245500" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="20886" locy="-245500" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="20883" locy="-246510" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="20883" locy="-246510" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="20946" locy="-248705" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="20946" locy="-248705" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="21296" locy="-243682" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="21296" locy="-243682" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="21572" locy="-248697" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="21572" locy="-248697" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="23094" locy="-248624" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="23094" locy="-248624" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="23098" locy="-244027" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="23098" locy="-244027" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="18823" locy="-245981" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="18823" locy="-245981" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="23420" locy="-246737" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="23420" locy="-246737" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="19863" locy="-248333" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="19863" locy="-248333" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="23430" locy="-246127" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="23430" locy="-246127" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="18816" locy="-248301" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="18816" locy="-248301" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="18813" locy="-244024" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="18813" locy="-244024" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
-	<npc id="21207" locx="18840" locy="-246600" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21207" locx="18840" locy="-246600" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="2" />
 	<npc id="21185" locx="12796" locy="-243710" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" /><!-- Third Week (Demons) -->
-	<npc id="21185" locx="12796" locy="-243710" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="13875" locy="-245473" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="13875" locy="-245473" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="13441" locy="-247268" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="13441" locy="-247268" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="14399" locy="-247186" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="14399" locy="-247186" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="16132" locy="-244601" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="16132" locy="-244601" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="12958" locy="-245530" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="12958" locy="-245530" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="17393" locy="-248624" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="17393" locy="-248624" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="16489" locy="-247677" locz="-9583" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="16489" locy="-247677" locz="-9583" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="16436" locy="-245811" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="16436" locy="-245811" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="17070" locy="-245815" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="17070" locy="-245815" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="16521" locy="-248380" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="16521" locy="-248380" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="17711" locy="-244019" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="17711" locy="-244019" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="16143" locy="-243999" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="16143" locy="-243999" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="18439" locy="-246230" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="18439" locy="-246230" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="19569" locy="-248631" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="19569" locy="-248631" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="18430" locy="-246998" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="18430" locy="-246998" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="18484" locy="-248619" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="18484" locy="-248619" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="20538" locy="-245058" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="20538" locy="-245058" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="23036" locy="-246414" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="23036" locy="-246414" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="23016" locy="-245687" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="23016" locy="-245687" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="23414" locy="-248308" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="23414" locy="-248308" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="21362" locy="-248294" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="21362" locy="-248294" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="22005" locy="-248293" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="22005" locy="-248293" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="21015" locy="-244099" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="21015" locy="-244099" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="21648" locy="-244076" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="21648" locy="-244076" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="20517" locy="-246031" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="20517" locy="-246031" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="23400" locy="-243730" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="23400" locy="-243730" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="18461" locy="-243700" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="18461" locy="-243700" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="13081" locy="-244022" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="13081" locy="-244022" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="12981" locy="-246885" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="12981" locy="-246885" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="14354" locy="-245863" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="14354" locy="-245863" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="13436" locy="-245920" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="13436" locy="-245920" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="16090" locy="-248697" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="16090" locy="-248697" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="15756" locy="-244352" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="15756" locy="-244352" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="14040" locy="-246857" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="14040" locy="-246857" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="15781" locy="-244963" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="15781" locy="-244963" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="16083" locy="-247949" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="16083" locy="-247949" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="17440" locy="-246214" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="17440" locy="-246214" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="17691" locy="-248330" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="17691" locy="-248330" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="17393" locy="-243724" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="17393" locy="-243724" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21185" locx="16829" locy="-246221" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21185" locx="16829" locy="-246221" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="20619" locy="-243671" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="20619" locy="-243671" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="20886" locy="-245500" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="20886" locy="-245500" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="20883" locy="-246510" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="20883" locy="-246510" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="20946" locy="-248705" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="20946" locy="-248705" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="21296" locy="-243682" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="21296" locy="-243682" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="21572" locy="-248697" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="21572" locy="-248697" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="23094" locy="-248624" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="23094" locy="-248624" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="23098" locy="-244027" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="23098" locy="-244027" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="18823" locy="-245981" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="18823" locy="-245981" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="23420" locy="-246737" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="23420" locy="-246737" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="19863" locy="-248333" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="19863" locy="-248333" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="23430" locy="-246127" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="23430" locy="-246127" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="18816" locy="-248301" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="18816" locy="-248301" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="18813" locy="-244024" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="18813" locy="-244024" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
-	<npc id="21186" locx="18840" locy="-246600" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 	<npc id="21186" locx="18840" locy="-246600" locz="-9580" heading="-1" respawn_random="40" respawn_time="122" week="3" />
 <!-- Necropolis of Sacrifice -->
 	<npc id="21139" locx="-49142" locy="210331" locz="-5086" heading="-1" respawn_random="40" respawn_time="139" week="0" /><!-- Neutral Mobs -->

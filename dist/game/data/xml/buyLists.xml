@@ -9284,36 +9284,6 @@
 		<product id="8200" price="6000"/>
 		<product id="8202" price="6000"/>
 	</buyList>
-	<buyList id="418" npcId="31616">
-		<product id="7807" price="60"/>
-		<product id="7808" price="84"/>
-		<product id="7809" price="72"/>
-		<product id="6520" price="144"/>
-		<product id="6523" price="216"/>
-		<product id="6526" price="180"/>
-		<product id="8506" price="144"/>
-		<product id="8509" price="216"/>
-		<product id="8512" price="180"/>
-		<product id="8484" price="288"/>
-		<product id="8485" price="288"/>
-		<product id="8486" price="120"/>
-		<product id="6529" price="36000"/>
-		<product id="6530" price="120000"/>
-		<product id="6531" price="480000"/>
-		<product id="6532" price="1440000"/>
-		<product id="6533" price="4800000"/>
-		<product id="6534" price="12000000"/>
-		<product id="7561" price="120"/>
-		<product id="8193" price="6000"/>
-		<product id="8194" price="6000"/>
-		<product id="8195" price="6000"/>
-		<product id="8196" price="6000"/>
-		<product id="8197" price="6000"/>
-		<product id="8198" price="6000"/>
-		<product id="8199" price="6000"/>
-		<product id="8200" price="6000"/>
-		<product id="8202" price="6000"/>
-	</buyList>
 	<buyList id="419" npcId="31696">
 		<product id="7807" price="60"/>
 		<product id="7808" price="84"/>
@@ -9375,6 +9345,36 @@
 		<product id="8202" price="6000"/>
 	</buyList>
 	<buyList id="421" npcId="31989">
+		<product id="7807" price="60"/>
+		<product id="7808" price="84"/>
+		<product id="7809" price="72"/>
+		<product id="6520" price="144"/>
+		<product id="6523" price="216"/>
+		<product id="6526" price="180"/>
+		<product id="8506" price="144"/>
+		<product id="8509" price="216"/>
+		<product id="8512" price="180"/>
+		<product id="8484" price="288"/>
+		<product id="8485" price="288"/>
+		<product id="8486" price="120"/>
+		<product id="6529" price="36000"/>
+		<product id="6530" price="120000"/>
+		<product id="6531" price="480000"/>
+		<product id="6532" price="1440000"/>
+		<product id="6533" price="4800000"/>
+		<product id="6534" price="12000000"/>
+		<product id="7561" price="120"/>
+		<product id="8193" price="6000"/>
+		<product id="8194" price="6000"/>
+		<product id="8195" price="6000"/>
+		<product id="8196" price="6000"/>
+		<product id="8197" price="6000"/>
+		<product id="8198" price="6000"/>
+		<product id="8199" price="6000"/>
+		<product id="8200" price="6000"/>
+		<product id="8202" price="6000"/>
+	</buyList>
+	<buyList id="422" npcId="32007">
 		<product id="7807" price="60"/>
 		<product id="7808" price="84"/>
 		<product id="7809" price="72"/>

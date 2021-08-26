@@ -3,6 +3,7 @@
 <list applyTaxes="true">
 	<npcs>
 		<npc>30846</npc> <!-- Wilbert (Blacksmith) -->
+		<npc>31316</npc> <!-- Vincenz (Blacksmith) -->
 	</npcs>
 	<item>
 		<production id="2576" count="1"/>

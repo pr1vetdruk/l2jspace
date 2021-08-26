@@ -5631,6 +5631,9 @@
 				<drop itemid="57" min="726" max="1472" chance="700000"/>
 			</category>
 		</drops>
+		<minions>
+			<minion id="22093" min="3" max="3"/>
+		</minions>
 	</npc>
 	<npc id="22095" name="Ursus Cub" title="">
 		<set name="level" val="61"/>
@@ -6875,7 +6878,7 @@
 		<set name="walkSpd" val="40"/>
 		<set name="runSpd" val="200"/>
 		<set name="dropHerbGroup" val="0"/>
-		<ai type="DEFAULT" ssCount="200" ssRate="30" spsCount="0" spsRate="0" aggro="500" clan="spike_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="200" ssRate="30" spsCount="0" spsRate="0" aggro="500" clan="spike_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4028" level="1"/>
 			<skill id="4073" level="1"/>
@@ -7202,7 +7205,7 @@
 		<set name="walkSpd" val="130"/>
 		<set name="runSpd" val="200"/>
 		<set name="dropHerbGroup" val="0"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="200" spsRate="30" aggro="500" clan="spike_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="200" spsRate="30" aggro="500" clan="spike_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4078" level="1"/>
 			<skill id="4408" level="12"/>
@@ -11378,7 +11381,7 @@
 		<set name="walkSpd" val="33"/>
 		<set name="runSpd" val="180"/>
 		<set name="dropHerbGroup" val="0"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="velociraptor_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="velociraptor_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4416" level="3"/>
 			<skill id="5081" level="1"/>
@@ -11436,7 +11439,7 @@
 		<set name="walkSpd" val="33"/>
 		<set name="runSpd" val="210"/>
 		<set name="dropHerbGroup" val="0"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="velociraptor_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="velociraptor_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4073" level="1"/>
 			<skill id="4416" level="3"/>
@@ -11499,7 +11502,7 @@
 		<set name="walkSpd" val="33"/>
 		<set name="runSpd" val="170"/>
 		<set name="dropHerbGroup" val="0"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="velociraptor_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="velociraptor_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4416" level="3"/>
 			<skill id="5079" level="1"/>
@@ -11560,7 +11563,7 @@
 		<set name="walkSpd" val="54"/>
 		<set name="runSpd" val="210"/>
 		<set name="dropHerbGroup" val="0"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4073" level="1"/>
 			<skill id="4244" level="1"/>
@@ -11622,7 +11625,7 @@
 		<set name="walkSpd" val="36"/>
 		<set name="runSpd" val="170"/>
 		<set name="dropHerbGroup" val="0"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="ornithomimus_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="ornithomimus_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4416" level="3"/>
 			<skill id="5079" level="1"/>
@@ -11687,7 +11690,7 @@
 		<set name="walkSpd" val="36"/>
 		<set name="runSpd" val="200"/>
 		<set name="dropHerbGroup" val="2"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="ornithomimus_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="ornithomimus_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4416" level="3"/>
 			<skill id="5079" level="1"/>
@@ -11748,7 +11751,7 @@
 		<set name="walkSpd" val="36"/>
 		<set name="runSpd" val="160"/>
 		<set name="dropHerbGroup" val="2"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="ornithomimus_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="ornithomimus_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4416" level="3"/>
 			<skill id="5079" level="1"/>
@@ -11805,7 +11808,7 @@
 		<set name="walkSpd" val="24"/>
 		<set name="runSpd" val="160"/>
 		<set name="dropHerbGroup" val="0"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="deinonychus_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="deinonychus_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4416" level="3"/>
 			<skill id="5079" level="1"/>
@@ -11862,7 +11865,7 @@
 		<set name="walkSpd" val="24"/>
 		<set name="runSpd" val="190"/>
 		<set name="dropHerbGroup" val="2"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="deinonychus_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="deinonychus_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4032" level="1"/>
 			<skill id="4416" level="3"/>
@@ -11917,7 +11920,7 @@
 		<set name="walkSpd" val="24"/>
 		<set name="runSpd" val="160"/>
 		<set name="dropHerbGroup" val="2"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="deinonychus_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="deinonychus_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4416" level="3"/>
 			<skill id="5079" level="1"/>
@@ -11970,7 +11973,7 @@
 		<set name="walkSpd" val="33"/>
 		<set name="runSpd" val="150"/>
 		<set name="dropHerbGroup" val="0"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="pachy_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="pachy_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4067" level="1"/>
 			<skill id="4416" level="3"/>
@@ -12022,7 +12025,7 @@
 		<set name="walkSpd" val="33"/>
 		<set name="runSpd" val="170"/>
 		<set name="dropHerbGroup" val="2"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="pachy_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="pachy_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4416" level="3"/>
 			<skill id="5083" level="1"/>
@@ -12071,7 +12074,7 @@
 		<set name="walkSpd" val="33"/>
 		<set name="runSpd" val="150"/>
 		<set name="dropHerbGroup" val="2"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="pachy_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="pachy_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4067" level="1"/>
 			<skill id="4416" level="3"/>
@@ -12122,7 +12125,7 @@
 		<set name="walkSpd" val="50"/>
 		<set name="runSpd" val="150"/>
 		<set name="dropHerbGroup" val="0"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="wildstrider_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="wildstrider_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4232" level="1"/>
 			<skill id="4416" level="3"/>
@@ -12177,7 +12180,7 @@
 		<set name="walkSpd" val="50"/>
 		<set name="runSpd" val="170"/>
 		<set name="dropHerbGroup" val="2"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="wildstrider_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="wildstrider_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4067" level="1"/>
 			<skill id="4416" level="3"/>
@@ -12227,7 +12230,7 @@
 		<set name="walkSpd" val="50"/>
 		<set name="runSpd" val="150"/>
 		<set name="dropHerbGroup" val="2"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="wildstrider_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="wildstrider_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4232" level="1"/>
 			<skill id="4416" level="3"/>
@@ -12275,7 +12278,7 @@
 		<set name="walkSpd" val="60"/>
 		<set name="runSpd" val="180"/>
 		<set name="dropHerbGroup" val="2"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4151" level="1"/>
 			<skill id="4416" level="6"/>
@@ -12331,7 +12334,7 @@
 		<set name="walkSpd" val="88"/>
 		<set name="runSpd" val="188"/>
 		<set name="dropHerbGroup" val="0"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4416" level="3"/>
 		</skills>
@@ -12384,7 +12387,7 @@
 		<set name="walkSpd" val="88"/>
 		<set name="runSpd" val="188"/>
 		<set name="dropHerbGroup" val="0"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4416" level="3"/>
 		</skills>
@@ -12437,7 +12440,7 @@
 		<set name="walkSpd" val="88"/>
 		<set name="runSpd" val="188"/>
 		<set name="dropHerbGroup" val="0"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4416" level="3"/>
 		</skills>
@@ -12490,7 +12493,7 @@
 		<set name="walkSpd" val="33"/>
 		<set name="runSpd" val="200"/>
 		<set name="dropHerbGroup" val="0"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="velociraptor_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="velociraptor_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4032" level="1"/>
 			<skill id="4416" level="3"/>
@@ -12544,7 +12547,7 @@
 		<set name="walkSpd" val="36"/>
 		<set name="runSpd" val="190"/>
 		<set name="dropHerbGroup" val="2"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="ornithomimus_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="ornithomimus_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4416" level="3"/>
 			<skill id="5080" level="1"/>
@@ -12600,7 +12603,7 @@
 		<set name="walkSpd" val="24"/>
 		<set name="runSpd" val="180"/>
 		<set name="dropHerbGroup" val="2"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="deinonychus_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="deinonychus_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4067" level="1"/>
 			<skill id="4416" level="3"/>
@@ -12655,7 +12658,7 @@
 		<set name="walkSpd" val="33"/>
 		<set name="runSpd" val="150"/>
 		<set name="dropHerbGroup" val="2"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="pachy_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="pachy_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4416" level="3"/>
 			<skill id="5080" level="1"/>
@@ -12706,7 +12709,7 @@
 		<set name="walkSpd" val="50"/>
 		<set name="runSpd" val="150"/>
 		<set name="dropHerbGroup" val="2"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="wildstrider_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="wildstrider_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4067" level="1"/>
 			<skill id="4416" level="3"/>
@@ -12758,7 +12761,7 @@
 		<set name="walkSpd" val="33"/>
 		<set name="runSpd" val="180"/>
 		<set name="dropHerbGroup" val="0"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="velociraptor_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="velociraptor_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4416" level="3"/>
 			<skill id="5080" level="1"/>
@@ -12810,7 +12813,7 @@
 		<set name="walkSpd" val="36"/>
 		<set name="runSpd" val="170"/>
 		<set name="dropHerbGroup" val="2"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="ornithomimus_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="ornithomimus_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4416" level="3"/>
 			<skill id="5080" level="1"/>
@@ -12873,7 +12876,7 @@
 		<set name="walkSpd" val="24"/>
 		<set name="runSpd" val="160"/>
 		<set name="dropHerbGroup" val="2"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="deinonychus_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="deinonychus_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4416" level="3"/>
 			<skill id="5080" level="1"/>
@@ -12931,7 +12934,7 @@
 		<set name="walkSpd" val="33"/>
 		<set name="runSpd" val="140"/>
 		<set name="dropHerbGroup" val="0"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="pachy_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="pachy_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4067" level="1"/>
 			<skill id="4416" level="3"/>
@@ -12982,7 +12985,7 @@
 		<set name="walkSpd" val="50"/>
 		<set name="runSpd" val="140"/>
 		<set name="dropHerbGroup" val="0"/>
-		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="wildstrider_clan" clanRange="500" canMove="true" seedable="false"/>
+		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="1000" clan="wildstrider_clan" clanRange="500" canMove="true" seedable="true"/>
 		<skills>
 			<skill id="4232" level="1"/>
 			<skill id="4416" level="3"/>

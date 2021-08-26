@@ -214,7 +214,7 @@
 		<set name="operateType" val="PASSIVE"/>
 		<for>
 			<add stat="runSpd" val="7"/>
-			<mul stat="regHp" val="1.0524"/>
+			<mul stat="regHp" val="1.0526"/>
 			<add stat="STR" val="3"/>
 			<sub stat="CON" val="1"/>
 			<sub stat="DEX" val="2"/>
@@ -263,7 +263,7 @@
 		<set name="operateType" val="PASSIVE"/>
 		<for>
 			<add stat="maxMp" val="206"/> 
-			<mul stat="regMp" val="1.0524"/>
+			<mul stat="regMp" val="1.0526"/>
 			<sub stat="INT" val="2"/>
 			<sub stat="MEN" val="1"/>
 			<add stat="WIT" val="3"/>
@@ -276,7 +276,7 @@
 		<for>
 			<add stat="runSpd" val="7"/>
 			<add stat="breath" val="200"/>
-			<mul stat="regMp" val="1.0524"/>
+			<mul stat="regMp" val="1.0526"/>
 			<add stat="INT" val="2"/>
 			<add stat="MEN" val="1"/>
 			<sub stat="WIT" val="3"/>

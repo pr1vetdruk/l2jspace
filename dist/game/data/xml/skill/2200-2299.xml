@@ -523,7 +523,7 @@
 		</cond>
 		<for>
 			<effect name="Buff" time="1200" val="0" stackOrder="1" stackType="valakas_item">
-				<add stat="valakas" val="11" />
+				<add stat="valakasPower" val="1" />
 			</effect>
 		</for>
 	</skill>
@@ -731,7 +731,7 @@
 		</cond>
 		<for>
 			<effect name="Buff" time="600" val="0" stackOrder="1" stackType="holy_attack">
-				<add stat="firePower" val="20" />
+				<add stat="firePower" val="1" />
 			</effect>
 		</for>
 	</skill>
@@ -749,7 +749,7 @@
 		</cond>
 		<for>
 			<effect name="Buff" time="600" val="0" stackOrder="1" stackType="holy_attack">
-				<add stat="waterPower" val="20" />
+				<add stat="waterPower" val="1" />
 			</effect>
 		</for>
 	</skill>
@@ -767,7 +767,7 @@
 		</cond>
 		<for>
 			<effect name="Buff" time="600" val="0" stackOrder="1" stackType="holy_attack">
-				<add stat="windPower" val="20" />
+				<add stat="windPower" val="1" />
 			</effect>
 		</for>
 	</skill>
@@ -803,7 +803,7 @@
 		</cond>
 		<for>
 			<effect name="Buff" time="600" val="0" stackOrder="1" stackType="holy_attack">
-				<add stat="darkPower" val="20" />
+				<add stat="darkPower" val="1" />
 			</effect>
 		</for>
 	</skill>
@@ -821,7 +821,7 @@
 		</cond>
 		<for>
 			<effect name="Buff" time="600" val="0" stackOrder="1" stackType="holy_attack">
-				<add stat="holyPower" val="20" />
+				<add stat="holyPower" val="1" />
 			</effect>
 		</for>
 	</skill>

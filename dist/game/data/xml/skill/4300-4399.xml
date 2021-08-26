@@ -423,7 +423,7 @@
 		<set name="skillType" val="BUFF" />
 		<set name="operateType" val="PASSIVE" />
 		<for>
-			<add stat="holyPower" val="20" />
+			<add stat="holyPower" val="1" />
 		</for>
 	</skill>
 	<skill id="4336" levels="5" name="Dark Attack Weak Point">

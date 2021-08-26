@@ -187,6 +187,7 @@
 	<seed id="6759" level="70" cropId="6542" matureId="6556" reward1="1888" reward2="4040" castleId="6" isAlternative="0" seedsLimit="129" cropsLimit="480"/> <!-- Seed: Red Coba -->
 	<seed id="6764" level="76" cropId="6544" matureId="6558" reward1="4043" reward2="1890" castleId="6" isAlternative="0" seedsLimit="86" cropsLimit="360"/> <!-- Seed: Desert Coba -->
 	<seed id="6776" level="73" cropId="6543" matureId="6557" reward1="1887" reward2="4041" castleId="6" isAlternative="0" seedsLimit="99" cropsLimit="411"/> <!-- Seed: Golden Coba -->
+	<seed id="6751" level="73" cropId="6550" matureId="6564" reward1="1887" reward2="4041" castleId="6" isAlternative="1" seedsLimit="384" cropsLimit="142"/> <!-- Seed: Alternative Golden Coba -->
 	
 	<!-- castleId="7"  -->
 	<seed id="6727" level="85" cropId="6554" matureId="6568" reward1="5549" reward2="5550" castleId="7" isAlternative="1" seedsLimit="208" cropsLimit="90"/> <!-- Seed: Alternative Great Coba -->
@@ -195,7 +196,6 @@
 	<seed id="6741" level="82" cropId="6553" matureId="6567" reward1="1885" reward2="1893" castleId="7" isAlternative="1" seedsLimit="250" cropsLimit="100"/> <!-- Seed: Alternative Twin Coba -->
 	<seed id="6745" level="67" cropId="6548" matureId="6562" reward1="1894" reward2="4039" castleId="7" isAlternative="1" seedsLimit="625" cropsLimit="200"/> <!-- Seed: Alternative Blue Coba -->
 	<seed id="6750" level="73" cropId="6550" matureId="6564" reward1="1887" reward2="4041" castleId="7" isAlternative="1" seedsLimit="384" cropsLimit="142"/> <!-- Seed: Alternative Golden Coba -->
-	<seed id="6751" level="73" cropId="6550" matureId="6564" reward1="1887" reward2="4041" castleId="7" isAlternative="1" seedsLimit="384" cropsLimit="142"/> <!-- Seed: Alternative Golden Coba -->
 	<seed id="6753" level="85" cropId="6547" matureId="6561" reward1="5549" reward2="5550" castleId="7" isAlternative="0" seedsLimit="75" cropsLimit="363"/> <!-- Seed: Great Coba -->
 	<seed id="6756" level="79" cropId="6545" matureId="6559" reward1="4044" reward2="4042" castleId="7" isAlternative="0" seedsLimit="100" cropsLimit="444"/> <!-- Seed: Sea Coba -->
 	<seed id="6760" level="70" cropId="6542" matureId="6556" reward1="1888" reward2="4040" castleId="7" isAlternative="0" seedsLimit="180" cropsLimit="666"/> <!-- Seed: Red Coba -->

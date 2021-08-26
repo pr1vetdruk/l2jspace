@@ -19302,7 +19302,7 @@
 		<set name="height" val="24"/>
 		<set name="rHand" val="8"/>
 		<set name="lHand" val="0"/>
-		<set name="type" val="Fisherman"/>
+		<set name="type" val="Folk"/>
 		<set name="exp" val="0"/>
 		<set name="sp" val="0"/>
 		<set name="hp" val="2444.46819"/>

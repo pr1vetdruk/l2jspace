@@ -631,6 +631,7 @@
 		<table name="#stackOrder"> 1 2 3 4 5 6 7 7 8 8 9 9 </table>
 		<set name="castRange" val="600" />
 		<set name="effectRange" val="1100" />
+		<set name="stayAfterDeath" val="true" />
 		<set name="isDebuff" val="true" />
 		<set name="isMagic" val="true" />
 		<set name="magicLvl" val="#magicLvl" />
