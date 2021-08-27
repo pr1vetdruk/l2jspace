@@ -110,8 +110,8 @@ public class BossSpawn {
      */
     public void onDeath() {
         // getRespawnMinDelay() is used as fixed timer, while getRespawnMaxDelay() is used as random timer.
-        final int respawnDelay = _spawn.getRespawnMinDelay() + Rnd.get(-_spawn.getRespawnMaxDelay(), _spawn.getRespawnMaxDelay());
-        final long respawnTime = System.currentTimeMillis() + (respawnDelay * 3600000);
+        int respawnDelay = (_spawn.getRespawnMinDelay() * 60) + Rnd.get(-60 * _spawn.getRespawnMaxDelay(), 60 * _spawn.getRespawnMaxDelay());
+        long respawnTime = System.currentTimeMillis() + (respawnDelay * 60000L);
 
         // Refresh data.
         _status = BossStatus.DEAD;

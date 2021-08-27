@@ -41,6 +41,5 @@ public final class RequestJoinAlly extends L2GameClientPacket {
 
         target.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S2_ALLIANCE_LEADER_OF_S1_REQUESTED_ALLIANCE).addString(clan.getAllyName()).addCharName(player));
         target.sendPacket(new AskJoinAlly(player.getObjectId(), clan.getAllyName()));
-        return;
     }
 }

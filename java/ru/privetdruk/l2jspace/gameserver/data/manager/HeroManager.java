@@ -189,8 +189,8 @@ public class HeroManager {
         fightTime = fightTime / 1000;
         String seconds = String.format(format, fightTime % 60);
         String minutes = String.format(format, (fightTime % 3600) / 60);
-        String time = minutes + ":" + seconds;
-        return time;
+
+        return minutes + ":" + seconds;
     }
 
     /**
@@ -381,11 +381,12 @@ public class HeroManager {
     }
 
     public void showHeroDiary(Player player, int heroclass, int objectId, int page) {
-        final List<StatSet> mainList = _heroDiaries.get(objectId);
-        if (mainList == null)
+        List<StatSet> mainList = _heroDiaries.get(objectId);
+        if (mainList == null) {
             return;
+        }
 
-        final NpcHtmlMessage html = new NpcHtmlMessage(0);
+        NpcHtmlMessage html = new NpcHtmlMessage(0);
         html.setFile("data/html/olympiad/herodiary.htm");
         html.replace("%heroname%", PlayerInfoTable.getInstance().getPlayerName(objectId));
         html.replace("%message%", _heroMessages.get(objectId));
@@ -398,30 +399,34 @@ public class HeroManager {
 
             boolean color = true;
             int counter = 0;
-            int breakat = 0;
-            final int perpage = 10;
+            int breakAt = 0;
+            int perPage = 10;
 
-            final StringBuilder sb = new StringBuilder(500);
-            for (int i = ((page - 1) * perpage); i < list.size(); i++) {
-                breakat = i;
-                StatSet _diaryentry = list.get(i);
-                StringUtil.append(sb, "<tr><td>", ((color) ? "<table width=270 bgcolor=\"131210\">" : "<table width=270>"), "<tr><td width=270><font color=\"LEVEL\">", _diaryentry.getString("date"), ":xx</font></td></tr><tr><td width=270>", _diaryentry.getString("action"), "</td></tr><tr><td>&nbsp;</td></tr></table></td></tr>");
+            StringBuilder sb = new StringBuilder(500);
+
+            for (int i = ((page - 1) * perPage); i < list.size(); i++) {
+                breakAt = i;
+                StatSet diaryEntry = list.get(i);
+                StringUtil.append(sb, "<tr><td>", ((color) ? "<table width=270 bgcolor=\"131210\">" : "<table width=270>"), "<tr><td width=270><font color=\"LEVEL\">", diaryEntry.getString("date"), ":xx</font></td></tr><tr><td width=270>", diaryEntry.getString("action"), "</td></tr><tr><td>&nbsp;</td></tr></table></td></tr>");
                 color = !color;
 
                 counter++;
-                if (counter >= perpage)
+                if (counter >= perPage) {
                     break;
+                }
             }
 
-            if (breakat < (list.size() - 1))
+            if (breakAt < (list.size() - 1)) {
                 html.replace("%buttprev%", "<button value=\"Prev\" action=\"bypass _diary?class=" + heroclass + "&page=" + (page + 1) + "\" width=60 height=25 back=\"L2UI_ct1.button_df\" fore=\"L2UI_ct1.button_df\">");
-            else
+            } else {
                 html.replace("%buttprev%", "");
+            }
 
-            if (page > 1)
+            if (page > 1) {
                 html.replace("%buttnext%", "<button value=\"Next\" action=\"bypass _diary?class=" + heroclass + "&page=" + (page - 1) + "\" width=60 height=25 back=\"L2UI_ct1.button_df\" fore=\"L2UI_ct1.button_df\">");
-            else
+            } else {
                 html.replace("%buttnext%", "");
+            }
 
             html.replace("%list%", sb.toString());
         } else {
@@ -429,13 +434,15 @@ public class HeroManager {
             html.replace("%buttprev%", "");
             html.replace("%buttnext%", "");
         }
+
         player.sendPacket(html);
     }
 
-    public void showHeroFights(Player player, int heroclass, int objectId, int page) {
-        final List<StatSet> list = _heroFights.get(objectId);
-        if (list == null)
+    public void showHeroFights(Player player, int heroClass, int objectId, int page) {
+        List<StatSet> list = _heroFights.get(objectId);
+        if (list == null) {
             return;
+        }
 
         int win = 0;
         int loss = 0;
@@ -447,39 +454,42 @@ public class HeroManager {
         html.disableValidation();
 
         if (!list.isEmpty()) {
-            if (_heroCounts.containsKey(objectId)) {
-                StatSet _herocount = _heroCounts.get(objectId);
-                win = _herocount.getInteger("victory");
-                loss = _herocount.getInteger("loss");
-                draw = _herocount.getInteger("draw");
+            StatSet heroCount = _heroCounts.get(objectId);
+            if (heroCount != null) {
+                win = heroCount.getInteger("victory");
+                loss = heroCount.getInteger("loss");
+                draw = heroCount.getInteger("draw");
             }
 
             boolean color = true;
             int counter = 0;
-            int breakat = 0;
-            final int perpage = 20;
+            int breakAt = 0;
+            final int perPage = 20;
 
-            final StringBuilder sb = new StringBuilder(500);
-            for (int i = ((page - 1) * perpage); i < list.size(); i++) {
-                breakat = i;
+            StringBuilder sb = new StringBuilder(500);
+            for (int i = ((page - 1) * perPage); i < list.size(); i++) {
+                breakAt = i;
                 StatSet fight = list.get(i);
                 StringUtil.append(sb, "<tr><td>", ((color) ? "<table width=270 bgcolor=\"131210\">" : "<table width=270><tr><td width=220><font color=\"LEVEL\">"), fight.getString("start"), "</font>&nbsp;&nbsp;", fight.getString("result"), "</td><td width=50 align=right>", ((fight.getInteger("classed") > 0) ? "<font color=\"FFFF99\">cls</font>" : "<font color=\"999999\">non-cls<font>"), "</td></tr><tr><td width=220>vs ", fight.getString("oponent"), " (", fight.getString("oponentclass"), ")</td><td width=50 align=right>(", fight.getString("time"), ")</td></tr><tr><td colspan=2>&nbsp;</td></tr></table></td></tr>");
                 color = !color;
 
                 counter++;
-                if (counter >= perpage)
+                if (counter >= perPage) {
                     break;
+                }
             }
 
-            if (breakat < (list.size() - 1))
-                html.replace("%buttprev%", "<button value=\"Prev\" action=\"bypass _match?class=" + heroclass + "&page=" + (page + 1) + "\" width=60 height=25 back=\"L2UI_ct1.button_df\" fore=\"L2UI_ct1.button_df\">");
-            else
+            if (breakAt < (list.size() - 1)) {
+                html.replace("%buttprev%", "<button value=\"Prev\" action=\"bypass _match?class=" + heroClass + "&page=" + (page + 1) + "\" width=60 height=25 back=\"L2UI_ct1.button_df\" fore=\"L2UI_ct1.button_df\">");
+            } else {
                 html.replace("%buttprev%", "");
+            }
 
-            if (page > 1)
-                html.replace("%buttnext%", "<button value=\"Next\" action=\"bypass _match?class=" + heroclass + "&page=" + (page - 1) + "\" width=60 height=25 back=\"L2UI_ct1.button_df\" fore=\"L2UI_ct1.button_df\">");
-            else
+            if (page > 1) {
+                html.replace("%buttnext%", "<button value=\"Next\" action=\"bypass _match?class=" + heroClass + "&page=" + (page - 1) + "\" width=60 height=25 back=\"L2UI_ct1.button_df\" fore=\"L2UI_ct1.button_df\">");
+            } else {
                 html.replace("%buttnext%", "");
+            }
 
             html.replace("%list%", sb.toString());
         } else {
@@ -743,12 +753,14 @@ public class HeroManager {
      * @param objectId : The Player objectId.
      */
     public void saveHeroMessage(int objectId) {
-        if (!_heroMessages.containsKey(objectId))
+        String message = _heroMessages.get(objectId);
+        if (message == null) {
             return;
+        }
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(UPDATE_MESSAGE)) {
-            ps.setString(1, _heroMessages.get(objectId));
+            ps.setString(1, message);
             ps.setInt(2, objectId);
             ps.execute();
         } catch (Exception e) {
@@ -760,8 +772,18 @@ public class HeroManager {
      * Save all hero messages to DB.
      */
     public void shutdown() {
-        for (int charId : _heroMessages.keySet())
-            saveHeroMessage(charId);
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(UPDATE_MESSAGE)) {
+            for (Map.Entry<Integer, String> entry : _heroMessages.entrySet()) {
+                ps.setString(1, entry.getValue());
+                ps.setInt(2, entry.getKey());
+                ps.addBatch();
+            }
+
+            ps.executeBatch();
+        } catch (Exception e) {
+            LOGGER.error("Couldn't save hero messages upon shutdown.", e);
+        }
     }
 
     public boolean isActiveHero(int id) {

@@ -13,11 +13,11 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q373_SupplierOfReagents extends Quest {
-    private static final String qn = "Q373_SupplierOfReagents";
+    private static final String QUEST_NAME = "Q373_SupplierOfReagents";
 
     // Variables
-    private static final String _ingredient = "ingredient";
-    private static final String _catalyst = "catalyst";
+    private static final String INGREDIENT = "ingredient";
+    private static final String CATALYST = "catalyst";
 
     // NPCs
     private static final int WESLEY = 30166;
@@ -83,50 +83,50 @@ public class Q373_SupplierOfReagents extends Quest {
      * <li>LAVA_WYRM : 75% chance to drop - wyrm's blood (50,5%) and lava stone (24,5%)</li>
      * </ul>
      */
-    private static final Map<Integer, int[]> DROPLIST = new HashMap<>();
+    private static final Map<Integer, int[]> DROP_LIST = new HashMap<>();
 
-    {
-        DROPLIST.put(PLATINUM_GUARDIAN_SHAMAN, new int[]
+    static {
+        DROP_LIST.put(PLATINUM_GUARDIAN_SHAMAN, new int[]
                 {
                         REAGENT_BOX,
                         442000,
                         0
                 });
-        DROPLIST.put(HAMES_ORC_SHAMAN, new int[]
+        DROP_LIST.put(HAMES_ORC_SHAMAN, new int[]
                 {
                         REAGENT_POUCH_3,
                         470000,
                         0
                 });
-        DROPLIST.put(PLATINUM_TRIBE_SHAMAN, new int[]
+        DROP_LIST.put(PLATINUM_TRIBE_SHAMAN, new int[]
                 {
                         REAGENT_POUCH_2,
                         QUICKSILVER,
                         680,
                         1000
                 });
-        DROPLIST.put(HALLATE_MAID, new int[]
+        DROP_LIST.put(HALLATE_MAID, new int[]
                 {
                         REAGENT_POUCH_1,
                         VOLCANIC_ASH,
                         664,
                         844
                 });
-        DROPLIST.put(HALLATE_GUARDIAN, new int[]
+        DROP_LIST.put(HALLATE_GUARDIAN, new int[]
                 {
                         DEMONS_BLOOD,
                         MOONSTONE_SHARD,
                         729,
                         833
                 });
-        DROPLIST.put(CRENDION, new int[]
+        DROP_LIST.put(CRENDION, new int[]
                 {
                         ROTTEN_BONE,
                         QUICKSILVER,
                         618,
                         1000
                 });
-        DROPLIST.put(LAVA_WYRM, new int[]
+        DROP_LIST.put(LAVA_WYRM, new int[]
                 {
                         WYRMS_BLOOD,
                         LAVA_STONE,
@@ -262,7 +262,7 @@ public class Q373_SupplierOfReagents extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -292,7 +292,7 @@ public class Q373_SupplierOfReagents extends Quest {
                 if (player.getInventory().getItemCount(regentId) < formula[0])
                     break;
 
-                st.set(_ingredient, regentId);
+                st.set(INGREDIENT, regentId);
                 return htmltext;
             }
             htmltext = "31149-04.htm";
@@ -303,10 +303,10 @@ public class Q373_SupplierOfReagents extends Quest {
             if (!player.getInventory().hasItems(catalyst))
                 return "31149-04.htm";
 
-            st.set(_catalyst, catalyst);
+            st.set(CATALYST, catalyst);
         } else if (event.startsWith("31149-12-")) {
-            int regent = st.getInteger(_ingredient);
-            int catalyst = st.getInteger(_catalyst);
+            int regent = st.getInteger(INGREDIENT);
+            int catalyst = st.getInteger(CATALYST);
 
             for (int[] formula : FORMULAS) {
                 if (formula[1] != regent || formula[2] != catalyst)
@@ -324,7 +324,7 @@ public class Q373_SupplierOfReagents extends Quest {
                 takeItems(player, catalyst, 1);
 
                 int tempIndex = Integer.parseInt(event.substring(9, 10));
-                for (int temperature[] : TEMPERATURES) {
+                for (int[] temperature : TEMPERATURES) {
                     if (temperature[0] != tempIndex)
                         continue;
 
@@ -343,7 +343,7 @@ public class Q373_SupplierOfReagents extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -370,7 +370,7 @@ public class Q373_SupplierOfReagents extends Quest {
         if (st == null)
             return null;
 
-        final int[] drop = DROPLIST.get(npc.getNpcId());
+        final int[] drop = DROP_LIST.get(npc.getNpcId());
 
         if (drop[2] == 0)
             dropItems(st.getPlayer(), drop[0], 1, 0, drop[1]);

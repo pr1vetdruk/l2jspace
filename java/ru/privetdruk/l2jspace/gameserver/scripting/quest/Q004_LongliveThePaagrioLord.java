@@ -11,21 +11,19 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q004_LongliveThePaagrioLord extends Quest {
-    private static final String qn = "Q004_LongliveThePaagrioLord";
+    private static final String QUEST_NAME = "Q004_LongliveThePaagrioLord";
 
-    private static final Map<Integer, Integer> NPC_GIFTS = new HashMap<>();
+    private static final Map<Integer, Integer> NPC_GIFTS = new HashMap<>(6);
 
-    {
+    public Q004_LongliveThePaagrioLord() {
+        super(4, "Long live the Pa'agrio Lord!");
+
         NPC_GIFTS.put(30585, 1542);
         NPC_GIFTS.put(30566, 1541);
         NPC_GIFTS.put(30562, 1543);
         NPC_GIFTS.put(30560, 1544);
         NPC_GIFTS.put(30559, 1545);
         NPC_GIFTS.put(30587, 1546);
-    }
-
-    public Q004_LongliveThePaagrioLord() {
-        super(4, "Long live the Pa'agrio Lord!");
 
         setItemsIds(1541, 1542, 1543, 1544, 1545, 1546);
 
@@ -36,7 +34,7 @@ public class Q004_LongliveThePaagrioLord extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -52,7 +50,7 @@ public class Q004_LongliveThePaagrioLord extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

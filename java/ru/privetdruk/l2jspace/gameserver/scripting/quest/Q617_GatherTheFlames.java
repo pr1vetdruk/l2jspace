@@ -14,7 +14,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q617_GatherTheFlames extends Quest {
-    private static final String qn = "Q617_GatherTheFlames";
+    private static final String QUEST_NAME = "Q617_GatherTheFlames";
 
     // NPCs
     private static final int HILDA = 31271;
@@ -27,7 +27,7 @@ public class Q617_GatherTheFlames extends Quest {
     // Drop chances
     private static final Map<Integer, Integer> CHANCES = new HashMap<>();
 
-    {
+    static {
         CHANCES.put(21381, 510000);
         CHANCES.put(21653, 510000);
         CHANCES.put(21387, 530000);
@@ -57,7 +57,7 @@ public class Q617_GatherTheFlames extends Quest {
     }
 
     // Rewards
-    private static final int REWARDS[] =
+    private static final int[] REWARDS =
             {
                     6881,
                     6883,
@@ -86,7 +86,7 @@ public class Q617_GatherTheFlames extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -118,7 +118,7 @@ public class Q617_GatherTheFlames extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

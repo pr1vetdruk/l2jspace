@@ -40,7 +40,7 @@ public class PrivateStoreManageListBuy extends L2GameServerPacket {
         for (TradeItem item : _buyList) {
             writeD(item.getItem().getItemId());
             writeH(item.getEnchant());
-            writeD(item.getCount());
+            writeD(item.getQuantity());
             writeD(item.getItem().getReferencePrice());
             writeH(0x00);
             writeD(item.getItem().getBodyPart());

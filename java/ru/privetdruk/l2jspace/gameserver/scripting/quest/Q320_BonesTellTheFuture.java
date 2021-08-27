@@ -9,7 +9,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q320_BonesTellTheFuture extends Quest {
-    private static final String qn = "Q320_BonesTellTheFuture";
+    private static final String QUEST_NAME = "Q320_BonesTellTheFuture";
 
     // Quest item
     private static final int BONE_FRAGMENT = 809;
@@ -28,7 +28,7 @@ public class Q320_BonesTellTheFuture extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -43,7 +43,7 @@ public class Q320_BonesTellTheFuture extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;

@@ -52,7 +52,6 @@ public class GameServerThread extends Thread {
     private OutputStream _out;
 
     private NewCrypt _blowfish;
-    private byte[] _blowfishKey;
 
     private GameServerInfo _gsi;
 
@@ -172,10 +171,8 @@ public class GameServerThread extends Thread {
     }
 
     private void onReceiveBlowfishKey(byte[] data) {
-        final BlowFishKey bfk = new BlowFishKey(data, _privateKey);
-
-        _blowfishKey = bfk.getKey();
-        _blowfish = new NewCrypt(_blowfishKey);
+        BlowFishKey bfk = new BlowFishKey(data, _privateKey);
+        _blowfish = new NewCrypt(bfk.getKey());
     }
 
     private void onGameServerAuth(byte[] data) {

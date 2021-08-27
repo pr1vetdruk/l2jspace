@@ -161,12 +161,12 @@ public final class ItemInstance extends WorldObject implements Runnable, Compara
      * Sets the ownerID of the item
      *
      * @param process   : String Identifier of process triggering this action
-     * @param owner_id  : int designating the ID of the owner
+     * @param ownerId  : int designating the ID of the owner
      * @param creator   : Player Player requesting the item creation
      * @param reference : WorldObject Object referencing current action like NPC selling item or previous item in transformation
      */
-    public void setOwnerId(String process, int owner_id, Player creator, WorldObject reference) {
-        setOwnerId(owner_id);
+    public void setOwnerId(String process, int ownerId, Player creator, WorldObject reference) {
+        setOwnerId(ownerId);
 
         if (Config.LOG_ITEMS) {
             final LogRecord record = new LogRecord(Level.INFO, "CHANGE:" + process);
@@ -697,26 +697,25 @@ public final class ItemInstance extends WorldObject implements Runnable, Compara
     }
 
     /**
-     * @return true if this item is a shadow item. Shadow items have a limited life-time.
+     * @return True if this {@link ItemInstance} is a shadow item. Shadow items have a limited life-time.
      */
     public boolean isShadowItem() {
         return _mana >= 0;
     }
 
     /**
-     * Sets the mana for this shadow item.
-     *
-     * @param period
-     * @return return remaining mana of this shadow item
+     * Decrease the mana for this {@link ItemInstance}.
+     +	 * @return The remaining mana of this {@link ItemInstance}.
      */
-    public int decreaseMana(int period) {
+    public int decreaseMana() {
         _storedInDb = false;
+        _mana--;
 
-        return _mana -= period;
+        return _mana;
     }
 
     /**
-     * @return the remaining mana of this shadow item (left life-time).
+     * @return The remaining mana of this {@link ItemInstance}.
      */
     public int getMana() {
         return _mana / 60;
@@ -772,51 +771,48 @@ public final class ItemInstance extends WorldObject implements Runnable, Compara
      * @return a ItemInstance stored in database from its objectID
      */
     public static ItemInstance restoreFromDb(int ownerId, ResultSet rs) {
-        ItemInstance inst = null;
-        int objectId, itemId, slot, enchant, type1, type2, manaLeft, count;
-        long time;
-        ItemLocation loc;
-
         try {
-            objectId = rs.getInt(1);
-            itemId = rs.getInt("item_id");
-            count = rs.getInt("count");
-            loc = ItemLocation.valueOf(rs.getString("loc"));
-            slot = rs.getInt("loc_data");
-            enchant = rs.getInt("enchant_level");
-            type1 = rs.getInt("custom_type1");
-            type2 = rs.getInt("custom_type2");
-            manaLeft = rs.getInt("mana_left");
-            time = rs.getLong("time");
+            int objectId = rs.getInt(1);
+            int itemId = rs.getInt("item_id");
+            int count = rs.getInt("count");
+            ItemLocation loc = ItemLocation.valueOf(rs.getString("loc"));
+            int slot = rs.getInt("loc_data");
+            int enchant = rs.getInt("enchant_level");
+            int type1 = rs.getInt("custom_type1");
+            int type2 = rs.getInt("custom_type2");
+            int manaLeft = rs.getInt("mana_left");
+            long time = rs.getLong("time");
+
+            Item template = ItemData.getInstance().getTemplate(itemId);
+            if (template == null) {
+                return null;
+            }
+
+            ItemInstance item = new ItemInstance(objectId, template);
+            item._ownerId = ownerId;
+            item.setCount(count);
+            item._enchantLevel = enchant;
+            item._type1 = type1;
+            item._type2 = type2;
+            item._loc = loc;
+            item._locData = slot;
+            item._existsInDb = true;
+            item._storedInDb = true;
+
+            // Setup life time for shadow weapons
+            item._mana = manaLeft;
+            item._time = time;
+
+            // load augmentation
+            if (item.isEquipable()) {
+                item.restoreAttributes();
+            }
+
+            return item;
         } catch (Exception e) {
             LOGGER.error("Couldn't restore an item owned by {}.", e, ownerId);
             return null;
         }
-
-        final Item item = ItemData.getInstance().getTemplate(itemId);
-        if (item == null)
-            return null;
-
-        inst = new ItemInstance(objectId, item);
-        inst._ownerId = ownerId;
-        inst.setCount(count);
-        inst._enchantLevel = enchant;
-        inst._type1 = type1;
-        inst._type2 = type2;
-        inst._loc = loc;
-        inst._locData = slot;
-        inst._existsInDb = true;
-        inst._storedInDb = true;
-
-        // Setup life time for shadow weapons
-        inst._mana = manaLeft;
-        inst._time = time;
-
-        // load augmentation
-        if (inst.isEquipable())
-            inst.restoreAttributes();
-
-        return inst;
     }
 
     /**

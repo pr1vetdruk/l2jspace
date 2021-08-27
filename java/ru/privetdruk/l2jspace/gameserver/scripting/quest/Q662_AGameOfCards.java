@@ -15,7 +15,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q662_AGameOfCards extends Quest {
-    private static final String qn = "Q662_AGameOfCards";
+    private static final String QUEST_NAME = "Q662_AGameOfCards";
 
     // NPC
     private static final int KLUMP = 30845;
@@ -35,7 +35,7 @@ public class Q662_AGameOfCards extends Quest {
     // All cards
     private static final Map<Integer, String> CARDS = new HashMap<>();
 
-    {
+    static {
         CARDS.put(0, "?");
         CARDS.put(1, "!");
         CARDS.put(2, "=");
@@ -56,7 +56,7 @@ public class Q662_AGameOfCards extends Quest {
     // Drop chances
     private static final Map<Integer, Integer> CHANCES = new HashMap<>();
 
-    {
+    static {
         CHANCES.put(18001, 232000); // Blood Queen
         CHANCES.put(20672, 357000); // Trives
         CHANCES.put(20673, 373000); // Falibati
@@ -114,7 +114,7 @@ public class Q662_AGameOfCards extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -196,35 +196,35 @@ public class Q662_AGameOfCards extends Quest {
             }
         } else if (event.equals("First") || event.equals("Second") || event.equals("Third") || event.equals("Fourth") || event.equals("Fifth")) // reply 11 12 13 14 15
         {
-            int state = st.getInteger("state");
-            int stateEx = st.getInteger("stateEx");
+            int i0 = st.getInteger("state");
+            int i1 = st.getInteger("stateEx");
 
-            int i0, i1, i2, i3, i4, i5, i6, i8, i9;
+            int i5 = i1 % 100;
+            int i9 = i1 / 100;
 
-            i0 = state;
-            i1 = stateEx;
-            i5 = i1 % 100;
-            i9 = i1 / 100;
             i1 = i0 % 100;
-            i2 = i0 % 10000 / 100;
-            i3 = i0 % 1000000 / 10000;
-            i4 = i0 % 100000000 / 1000000;
+            int i2 = i0 % 10000 / 100;
+            int i3 = i0 % 1000000 / 10000;
+            int i4 = i0 % 100000000 / 1000000;
+
+            int i6;
+            int i8;
 
             if (event.equals("First")) {
                 if (i9 % 2 < 1)
-                    i9 = i9 + 1;
+                    i9 += 1;
             } else if (event.equals("Second")) {
                 if (i9 % 4 < 2)
-                    i9 = i9 + 2;
+                    i9 += 2;
             } else if (event.equals("Third")) {
                 if (i9 % 8 < 4)
-                    i9 = i9 + 4;
+                    i9 += 4;
             } else if (event.equals("Fourth")) {
                 if (i9 % 16 < 8)
-                    i9 = i9 + 8;
+                    i9 += 8;
             } else if (event.equals("Fifth")) {
                 if (i9 % 32 < 16)
-                    i9 = i9 + 16;
+                    i9 += 16;
             }
 
             if (i9 % 32 < 31) {
@@ -236,123 +236,97 @@ public class Q662_AGameOfCards extends Quest {
 
                 if (i1 >= 1 && i1 <= 14 && i2 >= 1 && i2 <= 14 && i3 >= 1 && i3 <= 14 && i4 >= 1 && i4 <= 14 && i5 >= 1 && i5 <= 14) {
                     if (i1 == i2) {
-                        i6 = i6 + 10;
-                        i8 = i8 + 8;
+                        i6 += 10;
+                        i8 += 8;
                     }
 
                     if (i1 == i3) {
-                        i6 = i6 + 10;
-                        i8 = i8 + 4;
+                        i6 += 10;
+                        i8 += 4;
                     }
 
                     if (i1 == i4) {
-                        i6 = i6 + 10;
-                        i8 = i8 + 2;
+                        i6 += 10;
+                        i8 += 2;
                     }
 
                     if (i1 == i5) {
-                        i6 = i6 + 10;
-                        i8 = i8 + 1;
+                        i6 += 10;
+                        i8 += 1;
                     }
 
                     if (i6 % 100 < 10) {
                         if (i8 % 16 < 8) {
-                            if (i8 % 8 < 4) {
-                                if (i2 == i3) {
-                                    i6 = i6 + 10;
-                                    i8 = i8 + 4;
-                                }
+                            if (i8 % 8 < 4 && i2 == i3) {
+                                i6 += 10;
+                                i8 += 4;
                             }
 
-                            if (i8 % 4 < 2) {
-                                if (i2 == i4) {
-                                    i6 = i6 + 10;
-                                    i8 = i8 + 2;
-                                }
+                            if (i8 % 4 < 2 && i2 == i4) {
+                                i6 += 10;
+                                i8 += 2;
                             }
 
-                            if (i8 % 2 < 1) {
-                                if (i2 == i5) {
-                                    i6 = i6 + 10;
-                                    i8 = i8 + 1;
-                                }
+                            if (i8 % 2 < 1 && i2 == i5) {
+                                i6 += 10;
+                                i8 += 1;
                             }
                         }
                     } else if (i6 % 10 == 0) {
                         if (i8 % 16 < 8) {
-                            if (i8 % 8 < 4) {
-                                if (i2 == i3) {
-                                    i6 = i6 + 1;
-                                    i8 = i8 + 4;
-                                }
+                            if (i8 % 4 < 2 && i2 == i3) {
+                                i6 += 1;
+                                i8 += 4;
                             }
 
-                            if (i8 % 4 < 2) {
-                                if (i2 == i4) {
-                                    i6 = i6 + 1;
-                                    i8 = i8 + 2;
-                                }
+                            if (i8 % 4 < 2 && i2 == i4) {
+                                i6 += 1;
+                                i8 += 2;
                             }
 
-                            if (i8 % 2 < 1) {
-                                if (i2 == i5) {
-                                    i6 = i6 + 1;
-                                    i8 = i8 + 1;
-                                }
+                            if (i8 % 2 < 1 && i2 == i5) {
+                                i6 += 1;
+                                i8 += 1;
                             }
                         }
                     }
 
                     if (i6 % 100 < 10) {
                         if (i8 % 8 < 4) {
-                            if (i8 % 4 < 2) {
-                                if (i3 == i4) {
-                                    i6 = i6 + 10;
-                                    i8 = i8 + 2;
-                                }
+                            if (i8 % 4 < 2 && i3 == i4) {
+                                i6 += 10;
+                                i8 += 2;
                             }
 
-                            if (i8 % 2 < 1) {
-                                if (i3 == i5) {
-                                    i6 = i6 + 10;
-                                    i8 = i8 + 1;
-                                }
+                            if (i8 % 2 < 1 && i3 == i5) {
+                                i6 += 10;
+                                i8 += 1;
                             }
                         }
                     } else if (i6 % 10 == 0) {
                         if (i8 % 8 < 4) {
-                            if (i8 % 4 < 2) {
-                                if (i3 == i4) {
-                                    i6 = i6 + 1;
-                                    i8 = i8 + 2;
-                                }
+                            if (i8 % 4 < 2 && i3 == i4) {
+                                i6 += 1;
+                                i8 += 2;
                             }
 
-                            if (i8 % 2 < 1) {
-                                if (i3 == i5) {
-                                    i6 = i6 + 1;
-                                    i8 = i8 + 1;
-                                }
+                            if (i8 % 2 < 1 && i3 == i5) {
+                                i6 += 1;
+                                i8 += 1;
                             }
                         }
                     }
 
                     if (i6 % 100 < 10) {
                         if (i8 % 4 < 2) {
-                            if (i8 % 2 < 1) {
-                                if (i4 == i5) {
-                                    i6 = i6 + 10;
-                                    i8 = i8 + 1;
-                                }
+                            if (i8 % 2 < 1 && i4 == i5) {
+                                i6 += 10;
                             }
                         }
                     } else if (i6 % 10 == 0) {
                         if (i8 % 4 < 2) {
-                            if (i8 % 2 < 1) {
-                                if (i4 == i5) {
-                                    i6 = i6 + 1;
-                                    i8 = i8 + 1;
-                                }
+                            if (i8 % 2 < 1 && i4 == i5) {
+                                i6 += 1;
                             }
                         }
                     }
@@ -405,32 +379,26 @@ public class Q662_AGameOfCards extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
         switch (st.getState()) {
-            case CREATED:
-                htmltext = (player.getStatus().getLevel() < 61) ? "30845-02.htm" : "30845-01.htm";
-                break;
+            case CREATED -> htmltext = (player.getStatus().getLevel() < 61) ? "30845-02.htm" : "30845-01.htm";
+            case STARTED -> {
+                int i0 = st.getInteger("state");
+                int i1 = st.getInteger("stateEx");
 
-            case STARTED:
-                int state = st.getInteger("state");
-                int stateEx = st.getInteger("stateEx");
-
-                if (state == 0 && stateEx == 0)
+                if (i0 == 0 && i1 == 0) {
                     htmltext = (player.getInventory().getItemCount(RED_GEM) < 50) ? "30845-04.htm" : "30845-05.htm";
-                else if (state != 0 && stateEx != 0) {
-                    int i0, i1, i2, i3, i4, i5, i9;
+                } else if (i0 != 0 && i1 != 0) {
+                    int i5 = i1 % 100;
+                    int i9 = i1 / 100;
 
-                    i0 = state;
-                    i1 = stateEx;
-                    i5 = i1 % 100;
-                    i9 = i1 / 100;
                     i1 = i0 % 100;
-                    i2 = i0 % 10000 / 100;
-                    i3 = i0 % 1000000 / 10000;
-                    i4 = i0 % 100000000 / 1000000;
+                    int i2 = i0 % 10000 / 100;
+                    int i3 = i0 % 1000000 / 10000;
+                    int i4 = i0 % 100000000 / 1000000;
 
                     htmltext = getHtmlText("30845-11a.htm");
                     htmltext = htmltext.replace("%FontColor1%", (i9 % 2 < 1) ? "ffff00" : "ff6f6f").replace("%Cell1%", (i9 % 2 < 1) ? CARDS.get(0) : CARDS.get(i1));
@@ -439,7 +407,7 @@ public class Q662_AGameOfCards extends Quest {
                     htmltext = htmltext.replace("%FontColor4%", (i9 % 16 < 8) ? "ffff00" : "ff6f6f").replace("%Cell4%", (i9 % 16 < 8) ? CARDS.get(0) : CARDS.get(i4));
                     htmltext = htmltext.replace("%FontColor5%", (i9 % 32 < 16) ? "ffff00" : "ff6f6f").replace("%Cell5%", (i9 % 32 < 16) ? CARDS.get(0) : CARDS.get(i5));
                 }
-                break;
+            }
         }
 
         return htmltext;

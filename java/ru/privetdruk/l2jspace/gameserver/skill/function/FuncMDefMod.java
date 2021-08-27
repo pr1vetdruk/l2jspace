@@ -4,7 +4,7 @@ import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.Stats;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
-import ru.privetdruk.l2jspace.gameserver.skill.Formulas;
+import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.skill.function.base.Func;
 
@@ -38,7 +38,7 @@ public class FuncMDefMod extends Func {
             if (player.getInventory().hasItemIn(Paperdoll.NECK))
                 value -= 13;
         }
-        return value * Formulas.MEN_BONUS[effector.getStatus().getMEN()] * effector.getStatus().getLevelMod();
+        return value * Formula.MEN_BONUS[effector.getStatus().getMEN()] * effector.getStatus().getLevelMod();
     }
 
     public static Func getInstance() {

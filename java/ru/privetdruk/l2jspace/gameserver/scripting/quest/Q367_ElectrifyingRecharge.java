@@ -11,7 +11,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class Q367_ElectrifyingRecharge extends Quest {
-    private static final String qn = "Q367_ElectrifyingRecharge";
+    private static final String QUEST_NAME = "Q367_ElectrifyingRecharge";
 
     // NPCs
     private static final int LORAIN = 30673;
@@ -41,7 +41,7 @@ public class Q367_ElectrifyingRecharge extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -60,7 +60,7 @@ public class Q367_ElectrifyingRecharge extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

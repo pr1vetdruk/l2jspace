@@ -9,11 +9,12 @@ import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q171_ActsOfEvil extends Quest {
-    private static final String qn = "Q171_ActsOfEvil";
+    private static final String QUEST_NAME = "Q171_ActsOfEvil";
 
     // Items
     private static final int BLADE_MOLD = 4239;
@@ -35,6 +36,7 @@ public class Q171_ActsOfEvil extends Quest {
     private static final int ROLENTO = 30437;
     private static final int NETI = 30425;
     private static final int BURAI = 30617;
+    private static final int OL_MAHUM_SUPPORT_TROOP = 27190;
 
     // Turek Orcs drop chances
     private static final Map<Integer, Integer> CHANCES = new HashMap<>();
@@ -55,12 +57,13 @@ public class Q171_ActsOfEvil extends Quest {
         addTalkId(ALVAH, ARODIN, TYRA, ROLENTO, NETI, BURAI);
 
         addKillId(20496, 20497, 20498, 20499, 20062, 20064, 20066, 20438);
+        addDecayId(OL_MAHUM_SUPPORT_TROOP);
     }
 
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -96,7 +99,7 @@ public class Q171_ActsOfEvil extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;
@@ -215,6 +218,15 @@ public class Q171_ActsOfEvil extends Quest {
     }
 
     @Override
+    public String onDecay(Npc npc) {
+        if (!npc.isDead()) {
+            npc.broadcastNpcSay(NpcStringId.ID_17151);
+        }
+
+        return null;
+    }
+
+    @Override
     public String onKill(Npc npc, Creature killer) {
         final Player player = killer.getActingPlayer();
 
@@ -231,8 +243,10 @@ public class Q171_ActsOfEvil extends Quest {
             case 20499:
                 if (st.getCond() == 2 && !dropItems(player, BLADE_MOLD, 1, 20, CHANCES.get(npcId))) {
                     final int count = player.getInventory().getItemCount(BLADE_MOLD);
-                    if (count == 5 || (count >= 10 && Rnd.get(100) < 25))
-                        addSpawn(27190, player, false, 0, true);
+                    if (count == 5 || (count >= 10 && Rnd.get(100) < 25)) {
+                        Npc troop = addSpawn(OL_MAHUM_SUPPORT_TROOP, npc, false, 200000, true);
+                        troop.forceAttack(player, 2000);
+                    }
                 }
                 break;
 

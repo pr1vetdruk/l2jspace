@@ -10,13 +10,13 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q358_IllegitimateChildOfAGoddess extends Quest {
-    private static final String qn = "Q358_IllegitimateChildOfAGoddess";
+    private static final String QUEST_NAME = "Q358_IllegitimateChildOfAGoddess";
 
     // Item
     private static final int SCALE = 5868;
 
     // Reward
-    private static final int REWARDS[] =
+    private static final int[] REWARDS =
             {
                     6329,
                     6331,
@@ -42,7 +42,7 @@ public class Q358_IllegitimateChildOfAGoddess extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -58,7 +58,7 @@ public class Q358_IllegitimateChildOfAGoddess extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

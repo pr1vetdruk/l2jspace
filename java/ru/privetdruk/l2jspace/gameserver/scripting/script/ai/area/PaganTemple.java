@@ -22,6 +22,6 @@ public class PaganTemple extends AttackableAIScript {
         if (!player.getInventory().hasAtLeastOneItem(8064, 8065, 8067))
             player.teleportTo(43797, -48141, -792, 0);
 
-        return super.onAggro(npc, player, isPet);
+        return null;
     }
 }

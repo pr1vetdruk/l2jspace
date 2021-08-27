@@ -19,31 +19,39 @@ public class Sweep implements ISkillHandler {
 
     @Override
     public void useSkill(Creature activeChar, L2Skill skill, WorldObject[] targets) {
-        if (!(activeChar instanceof Player))
+        if (!(activeChar instanceof Player)) {
             return;
+        }
 
-        final Player player = (Player) activeChar;
+        Player player = (Player) activeChar;
 
         for (WorldObject target : targets) {
-            if (!(target instanceof Monster))
+            if (!(target instanceof Monster)) {
                 continue;
-
-            final Monster monster = ((Monster) target);
-
-            final List<IntIntHolder> items = monster.getSpoilState();
-            if (items.isEmpty())
-                continue;
-
-            // Reward spoiler, based on sweep items retained on List.
-            for (IntIntHolder item : items) {
-                if (player.isInParty())
-                    player.getParty().distributeItem(player, item, true, monster);
-                else
-                    player.addItem("Sweep", item.getId(), item.getValue(), player, true);
             }
 
-            // Reset variables.
-            monster.getSpoilState().clear();
+            Monster monster = ((Monster) target);
+
+            if (monster.getSpoilState().getSpoilerId() == player.getObjectId()) {
+                List<IntIntHolder> items = monster.getSpoilState();
+                if (items.isEmpty()) {
+                    continue;
+                }
+
+                // Reward spoiler, based on sweep items retained on List.
+                for (IntIntHolder item : items) {
+                    if (player.isInParty()) {
+                        player.getParty().distributeItem(player, item, true, monster);
+                    } else {
+                        player.addItem("Sweep", item.getId(), item.getValue(), player, true);
+                    }
+                }
+
+                // Reset variables.
+                monster.getSpoilState().clear();
+            }
+
+            monster.endDecayTask();
         }
     }
 

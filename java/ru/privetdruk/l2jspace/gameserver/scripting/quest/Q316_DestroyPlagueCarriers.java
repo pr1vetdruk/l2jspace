@@ -5,11 +5,13 @@ import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassRace;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
+import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class Q316_DestroyPlagueCarriers extends Quest {
-    private static final String qn = "Q316_DestroyPlagueCarriers";
+    private static final String QUEST_NAME = "Q316_DestroyPlagueCarriers";
 
     // Items
     private static final int WERERAT_FANG = 1042;
@@ -28,13 +30,14 @@ public class Q316_DestroyPlagueCarriers extends Quest {
         addStartNpc(30155); // Ellenia
         addTalkId(30155);
 
+        addAttackId(VAROOL_FOULCLAW);
         addKillId(SUKAR_WERERAT, SUKAR_WERERAT_LEADER, VAROOL_FOULCLAW);
     }
 
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -53,7 +56,7 @@ public class Q316_DestroyPlagueCarriers extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -83,6 +86,16 @@ public class Q316_DestroyPlagueCarriers extends Quest {
         }
 
         return htmltext;
+    }
+
+    @Override
+    public String onAttack(Npc npc, Creature attacker, int damage, L2Skill skill) {
+        if (npc.getScriptValue() == 0) {
+            npc.broadcastNpcSay(NpcStringId.ID_31603);
+            npc.setScriptValue(1);
+        }
+
+        return null;
     }
 
     @Override

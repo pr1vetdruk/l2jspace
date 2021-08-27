@@ -9,7 +9,7 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q213_TrialOfTheSeeker extends SecondClassQuest {
-    private static final String qn = "Q213_TrialOfTheSeeker";
+    private static final String QUEST_NAME = "Q213_TrialOfTheSeeker";
 
     // Items
     private static final int DUFNER_LETTER = 2647;
@@ -75,7 +75,7 @@ public class Q213_TrialOfTheSeeker extends SecondClassQuest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -166,7 +166,7 @@ public class Q213_TrialOfTheSeeker extends SecondClassQuest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

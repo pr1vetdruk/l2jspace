@@ -11,7 +11,7 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q215_TrialOfThePilgrim extends SecondClassQuest {
-    private static final String qn = "Q215_TrialOfThePilgrim";
+    private static final String QUEST_NAME = "Q215_TrialOfThePilgrim";
 
     // Items
     private static final int BOOK_OF_SAGE = 2722;
@@ -63,7 +63,7 @@ public class Q215_TrialOfThePilgrim extends SecondClassQuest {
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
 
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -107,7 +107,7 @@ public class Q215_TrialOfThePilgrim extends SecondClassQuest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

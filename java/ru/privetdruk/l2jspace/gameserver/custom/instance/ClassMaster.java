@@ -180,7 +180,7 @@ public final class ClassMaster extends Folk {
 
         // Weight/Inventory check
         if (!Config.CLASS_MASTER_SETTINGS.getRewardItems(newJobLevel).isEmpty()) {
-            if (player.getWeightPenalty() > 2) {
+            if (player.getWeightPenalty().ordinal() > 2) {
                 player.sendPacket(SystemMessageId.INVENTORY_LESS_THAN_80_PERCENT);
                 return false;
             }

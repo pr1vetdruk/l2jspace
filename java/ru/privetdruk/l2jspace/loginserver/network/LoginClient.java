@@ -41,7 +41,7 @@ public final class LoginClient extends MMOClient<MMOConnection<LoginClient>> {
 
         _state = LoginClientState.CONNECTED;
         _scrambledPair = LoginController.getInstance().getScrambledRSAKeyPair();
-        _blowfishKey = LoginController.getInstance().getBlowfishKey();
+        _blowfishKey = LoginController.getInstance().getRandomBlowfishKey();
         _sessionId = Rnd.nextInt();
         _connectionStartTime = System.currentTimeMillis();
         _loginCrypt = new LoginCrypt();

@@ -10,7 +10,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class Q225_TestOfTheSearcher extends SecondClassQuest {
-    private static final String qn = "Q225_TestOfTheSearcher";
+    private static final String QUEST_NAME = "Q225_TestOfTheSearcher";
 
     // Items
     private static final int LUTHER_LETTER = 2784;
@@ -78,7 +78,7 @@ public class Q225_TestOfTheSearcher extends SecondClassQuest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -157,7 +157,7 @@ public class Q225_TestOfTheSearcher extends SecondClassQuest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

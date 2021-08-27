@@ -10,7 +10,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q125_TheNameOfEvil_1 extends Quest {
-    public static final String qn = "Q125_TheNameOfEvil_1";
+    public static final String QUEST_NAME = "Q125_TheNameOfEvil_1";
 
     private static final int MUSHIKA = 32114;
     private static final int KARAKAWEI = 32117;
@@ -64,7 +64,7 @@ public class Q125_TheNameOfEvil_1 extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -100,14 +100,14 @@ public class Q125_TheNameOfEvil_1 extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;
 
         switch (st.getState()) {
             case CREATED:
-                QuestState first = player.getQuestList().getQuestState(Q124_MeetingTheElroki.qn);
+                QuestState first = player.getQuestList().getQuestState(Q124_MeetingTheElroki.QUEST_NAME);
                 if (first != null && first.isCompleted() && player.getStatus().getLevel() >= 76)
                     htmltext = "32114-01.htm";
                 else
@@ -191,22 +191,24 @@ public class Q125_TheNameOfEvil_1 extends Quest {
 
     @Override
     public String onKill(Npc npc, Creature killer) {
-        final Player player = killer.getActingPlayer();
+        Player player = killer.getActingPlayer();
 
-        final QuestState st = checkPlayerCondition(player, npc, 3);
-        if (st == null)
+        QuestState questState = checkPlayerCondition(player, npc, 3);
+        if (questState == null) {
             return null;
-
-        final int npcId = npc.getNpcId();
-        if (ArraysUtil.contains(ORNITHOMIMUS, npcId)) {
-            if (dropItems(player, ORNITHOMIMUS_CLAW, 1, 2, 50000))
-                if (player.getInventory().getItemCount(DEINONYCHUS_BONE) == 2)
-                    st.setCond(4);
-        } else if (ArraysUtil.contains(DEINONYCHUS, npcId)) {
-            if (dropItems(player, DEINONYCHUS_BONE, 1, 2, 50000))
-                if (player.getInventory().getItemCount(ORNITHOMIMUS_CLAW) == 2)
-                    st.setCond(4);
         }
+
+        int npcId = npc.getNpcId();
+        if (ArraysUtil.contains(ORNITHOMIMUS, npcId)) {
+            if (dropItems(player, ORNITHOMIMUS_CLAW, 1, 2, 50000) && player.getInventory().getItemCount(DEINONYCHUS_BONE) == 2) {
+                questState.setCond(4);
+            }
+        } else if (ArraysUtil.contains(DEINONYCHUS, npcId)) {
+            if (dropItems(player, DEINONYCHUS_BONE, 1, 2, 50000) && player.getInventory().getItemCount(ORNITHOMIMUS_CLAW) == 2) {
+                questState.setCond(4);
+            }
+        }
+
         return null;
     }
 }

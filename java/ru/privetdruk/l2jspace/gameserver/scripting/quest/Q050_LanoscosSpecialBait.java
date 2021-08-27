@@ -8,7 +8,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q050_LanoscosSpecialBait extends Quest {
-    private static final String qn = "Q050_LanoscosSpecialBait";
+    private static final String QUEST_NAME = "Q050_LanoscosSpecialBait";
 
     // Item
     private static final int ESSENCE_OF_WIND = 7621;
@@ -30,7 +30,7 @@ public class Q050_LanoscosSpecialBait extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -51,7 +51,7 @@ public class Q050_LanoscosSpecialBait extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;

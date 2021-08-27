@@ -14,7 +14,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q419_GetAPet extends Quest {
-    private static final String qn = "Q419_GetAPet";
+    private static final String QUEST_NAME = "Q419_GetAPet";
 
     // Items
     private static final int ANIMAL_LOVER_LIST = 3417;
@@ -129,7 +129,7 @@ public class Q419_GetAPet extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -187,7 +187,7 @@ public class Q419_GetAPet extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

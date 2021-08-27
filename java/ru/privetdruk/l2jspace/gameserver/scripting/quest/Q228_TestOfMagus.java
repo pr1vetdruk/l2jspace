@@ -5,11 +5,12 @@ import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassId;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q228_TestOfMagus extends SecondClassQuest {
-    private static final String qn = "Q228_TestOfMagus";
+    private static final String QUEST_NAME = "Q228_TestOfMagus";
 
     // Items
     private static final int RUKAL_LETTER = 2841;
@@ -79,7 +80,7 @@ public class Q228_TestOfMagus extends SecondClassQuest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -132,7 +133,7 @@ public class Q228_TestOfMagus extends SecondClassQuest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -328,7 +329,7 @@ public class Q228_TestOfMagus extends SecondClassQuest {
             switch (npc.getNpcId()) {
                 case SINGING_FLOWER_PHANTASM:
                     if (!player.getInventory().hasItems(GOLDEN_SEED_1)) {
-                        npc.broadcastNpcSay("I am a tree of nothing... a tree... that knows where to return...");
+                        npc.broadcastNpcSay(NpcStringId.ID_22819);
                         dropItemsAlways(player, GOLDEN_SEED_1, 1, 1);
                         if (player.getInventory().hasItems(GOLDEN_SEED_2, GOLDEN_SEED_3))
                             st.setCond(4);
@@ -337,7 +338,7 @@ public class Q228_TestOfMagus extends SecondClassQuest {
 
                 case SINGING_FLOWER_NIGHTMARE:
                     if (!player.getInventory().hasItems(GOLDEN_SEED_2)) {
-                        npc.broadcastNpcSay("I am a creature that shows the truth of the place deep in my heart...");
+                        npc.broadcastNpcSay(NpcStringId.ID_22820);
                         dropItemsAlways(player, GOLDEN_SEED_2, 1, 1);
                         if (player.getInventory().hasItems(GOLDEN_SEED_1, GOLDEN_SEED_3))
                             st.setCond(4);
@@ -346,7 +347,7 @@ public class Q228_TestOfMagus extends SecondClassQuest {
 
                 case SINGING_FLOWER_DARKLING:
                     if (!player.getInventory().hasItems(GOLDEN_SEED_3)) {
-                        npc.broadcastNpcSay("I am a mirror of darkness... a virtual image of darkness...");
+                        npc.broadcastNpcSay(NpcStringId.ID_22821);
                         dropItemsAlways(player, GOLDEN_SEED_3, 1, 1);
                         if (player.getInventory().hasItems(GOLDEN_SEED_1, GOLDEN_SEED_2))
                             st.setCond(4);

@@ -714,7 +714,7 @@ public final class GameClient extends MMOClient<MMOConnection<GameClient>> imple
             if (value[fp.getId()] > currentTime)
                 return false;
 
-            value[fp.getId()] = currentTime + reuseDelay * 1000000;
+            value[fp.getId()] = currentTime + reuseDelay * 1000000L;
             return true;
         }
     }

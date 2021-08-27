@@ -206,12 +206,10 @@ public class AttackableAIScript extends Quest {
                 sideCount++;
         }
 
-        final int[] array =
-                {
-                        frontCount,
-                        backCount,
-                        sideCount
-                };
-        return array;
+        return new int[]{
+                frontCount,
+                backCount,
+                sideCount
+        };
     }
 }

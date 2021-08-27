@@ -9,12 +9,15 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Q377_ExplorationOfTheGiantsCave_Part2 extends Quest {
-    private static final String qn = "Q377_ExplorationOfTheGiantsCave_Part2";
+    private static final String QUEST_NAME = "Q377_ExplorationOfTheGiantsCave_Part2";
 
     // Items
-    private static final int ANCIENT_BOOK = 5955;
-    private static final int DICTIONARY_INTERMEDIATE = 5892;
+    private static final int ANCIENT_TITAN_BOOK = 5955;
+    private static final int ANCIENT_DICTIONARY_INTERMEDIATE_LEVEL = 5892;
 
     private static final int[][] BOOKS =
             {
@@ -51,19 +54,31 @@ public class Q377_ExplorationOfTheGiantsCave_Part2 extends Quest {
                     }
             };
 
+    // Drop chances
+    private static final Map<Integer, Integer> CHANCES = new HashMap<>();
+
+    static {
+        CHANCES.put(20654, 25000);
+        CHANCES.put(20656, 22000);
+        CHANCES.put(20657, 16000);
+        CHANCES.put(20658, 15000);
+    }
+
     public Q377_ExplorationOfTheGiantsCave_Part2() {
         super(377, "Exploration of the Giants' Cave, Part 2");
 
         addStartNpc(31147); // Sobling
         addTalkId(31147);
 
-        addKillId(20654, 20656, 20657, 20658);
+        for (int npcId : CHANCES.keySet()) {
+            addKillId(npcId);
+        }
     }
 
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -84,13 +99,13 @@ public class Q377_ExplorationOfTheGiantsCave_Part2 extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
         switch (st.getState()) {
             case CREATED:
-                htmltext = (player.getStatus().getLevel() < 57 || !player.getInventory().hasItems(DICTIONARY_INTERMEDIATE)) ? "31147-01.htm" : "31147-02.htm";
+                htmltext = (player.getStatus().getLevel() < 57 || !player.getInventory().hasItems(ANCIENT_DICTIONARY_INTERMEDIATE_LEVEL)) ? "31147-01.htm" : "31147-02.htm";
                 break;
 
             case STARTED:
@@ -109,7 +124,7 @@ public class Q377_ExplorationOfTheGiantsCave_Part2 extends Quest {
         if (st == null)
             return null;
 
-        dropItems(st.getPlayer(), ANCIENT_BOOK, 1, 0, 18000);
+        dropItems(st.getPlayer(), ANCIENT_TITAN_BOOK, 1, 0, CHANCES.get(npc.getNpcId()));
 
         return null;
     }

@@ -10,7 +10,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q101_SwordOfSolidarity extends Quest {
-    private static final String qn = "Q101_SwordOfSolidarity";
+    private static final String QUEST_NAME = "Q101_SwordOfSolidarity";
 
     // NPCs
     private static final int ROIEN = 30008;
@@ -46,7 +46,7 @@ public class Q101_SwordOfSolidarity extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -83,7 +83,7 @@ public class Q101_SwordOfSolidarity extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

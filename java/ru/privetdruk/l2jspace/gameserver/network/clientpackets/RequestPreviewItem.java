@@ -63,9 +63,10 @@ public final class RequestPreviewItem extends L2GameClientPacket {
             return;
 
         // Check current target of the player and the INTERACTION_DISTANCE
-        final WorldObject target = player.getTarget();
-        if (!player.isGM() && (target == null || !(target instanceof Merchant) || !player.isIn3DRadius(target, Npc.INTERACTION_DISTANCE)))
+        WorldObject target = player.getTarget();
+        if (!player.isGM() && (!(target instanceof Merchant) || !player.isIn3DRadius(target, Npc.INTERACTION_DISTANCE))) {
             return;
+        }
 
         // Get the current merchant targeted by the player
         final Merchant merchant = (target instanceof Merchant) ? (Merchant) target : null;
@@ -121,7 +122,7 @@ public final class RequestPreviewItem extends L2GameClientPacket {
             {
                 player.sendPacket(SystemMessageId.NO_LONGER_TRYING_ON);
                 player.sendPacket(new UserInfo(player));
-            }, Config.WEAR_DELAY * 1000);
+            }, Config.WEAR_DELAY * 1000L);
         }
     }
 }

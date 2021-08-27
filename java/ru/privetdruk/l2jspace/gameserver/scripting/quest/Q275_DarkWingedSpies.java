@@ -11,7 +11,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q275_DarkWingedSpies extends Quest {
-    private static final String qn = "Q275_DarkWingedSpies";
+    private static final String QUEST_NAME = "Q275_DarkWingedSpies";
 
     // Monsters
     private static final int DARKWING_BAT = 20316;
@@ -35,7 +35,7 @@ public class Q275_DarkWingedSpies extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -50,7 +50,7 @@ public class Q275_DarkWingedSpies extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;

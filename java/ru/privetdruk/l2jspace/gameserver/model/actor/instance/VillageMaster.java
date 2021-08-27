@@ -290,7 +290,7 @@ public class VillageMaster extends Folk {
                     }
 
                     // Subclasses may not be added while you are over your weight limit.
-                    if (player.getStatus().isOverburden() || player.getWeightPenalty() > 2) {
+                    if (player.getStatus().isOverburden() || player.getWeightPenalty().ordinal() > 2) {
                         player.sendPacket(SystemMessageId.NOT_SUBCLASS_WHILE_OVERWEIGHT);
                         return;
                     }
@@ -323,7 +323,7 @@ public class VillageMaster extends Folk {
                     }
 
                     // Subclasses may not be changed while a you are over your weight limit.
-                    if (player.getStatus().isOverburden() || player.getWeightPenalty() > 2) {
+                    if (player.getStatus().isOverburden() || player.getWeightPenalty().ordinal() > 2) {
                         player.sendPacket(SystemMessageId.NOT_SUBCLASS_WHILE_OVERWEIGHT);
                         return;
                     }

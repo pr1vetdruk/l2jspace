@@ -3,6 +3,7 @@ package ru.privetdruk.l2jspace.gameserver.handler.skillhandlers;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.enums.SiegeSide;
 import ru.privetdruk.l2jspace.gameserver.enums.items.ShotType;
+import ru.privetdruk.l2jspace.gameserver.enums.skills.ShieldDefense;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillType;
 import ru.privetdruk.l2jspace.gameserver.handler.ISkillHandler;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
@@ -12,7 +13,7 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Door;
 import ru.privetdruk.l2jspace.gameserver.model.entity.Siege;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
-import ru.privetdruk.l2jspace.gameserver.skill.Formulas;
+import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class StriderSiegeAssault implements ISkillHandler {
@@ -34,16 +35,17 @@ public class StriderSiegeAssault implements ISkillHandler {
         if (door.isAlikeDead())
             return;
 
-        final boolean crit = Formulas.calcCrit(activeChar, door, skill);
-        final boolean ss = activeChar.isChargedShot(ShotType.SOULSHOT);
-        final byte shld = Formulas.calcShldUse(activeChar, door, skill);
-        final int damage = (int) Formulas.calcPhysDam(activeChar, door, skill, shld, crit, ss);
+        boolean isCrit = Formula.calcCrit(activeChar, door, skill);
+        boolean ss = activeChar.isChargedShot(ShotType.SOULSHOT);
+        ShieldDefense shieldDefense = Formula.calcShieldUse(activeChar, door, skill, isCrit);
 
+        int damage = (int) Formula.calcPhysicalSkillDamage(activeChar, door, skill, shieldDefense, isCrit, ss);
         if (damage > 0) {
             activeChar.sendDamageMessage(door, damage, false, false, false);
             door.reduceCurrentHp(damage, activeChar, skill);
-        } else
+        } else {
             activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.ATTACK_FAILED));
+        }
 
         activeChar.setChargedShot(ShotType.SOULSHOT, skill.isStaticReuse());
     }

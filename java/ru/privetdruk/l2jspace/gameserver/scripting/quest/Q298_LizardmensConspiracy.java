@@ -8,7 +8,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q298_LizardmensConspiracy extends Quest {
-    private static final String qn = "Q298_LizardmensConspiracy";
+    private static final String QUEST_NAME = "Q298_LizardmensConspiracy";
 
     // NPCs
     private static final int PRAGA = 30333;
@@ -33,7 +33,7 @@ public class Q298_LizardmensConspiracy extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -62,7 +62,7 @@ public class Q298_LizardmensConspiracy extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;

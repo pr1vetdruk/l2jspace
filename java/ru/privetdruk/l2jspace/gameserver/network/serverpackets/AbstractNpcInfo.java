@@ -7,31 +7,53 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Monster;
+import ru.privetdruk.l2jspace.gameserver.model.actor.status.CreatureStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 
 public abstract class AbstractNpcInfo extends L2GameServerPacket {
-    protected int _x, _y, _z, _heading;
+    protected int _x;
+    protected int _y;
+    protected int _z;
+    protected int _heading;
+
     protected int _idTemplate;
-    protected boolean _isAttackable, _isSummoned;
-    protected int _mAtkSpd, _pAtkSpd;
-    protected int _runSpd, _walkSpd;
-    protected int _rhand, _lhand, _chest, _enchantEffect;
-    protected double _collisionHeight, _collisionRadius;
-    protected int _clanCrest, _allyCrest, _allyId, _clanId;
+    protected boolean _isAttackable;
+	protected boolean _isSummoned;
 
-    protected String _name = "", _title = "";
+    protected int _mAtkSpd;
+    protected int _pAtkSpd;
+    protected int _runSpd;
+    protected int _walkSpd;
 
-    public AbstractNpcInfo(Creature cha) {
-        _isSummoned = cha.isShowSummonAnimation();
-        _x = cha.getX();
-        _y = cha.getY();
-        _z = cha.getZ();
-        _heading = cha.getHeading();
-        _mAtkSpd = cha.getStatus().getMAtkSpd();
-        _pAtkSpd = cha.getStatus().getPAtkSpd();
-        _runSpd = cha.getStatus().getBaseRunSpeed();
-        _walkSpd = cha.getStatus().getBaseWalkSpeed();
+    protected int _rhand;
+    protected int _lhand;
+    protected int _chest;
+    protected int _enchantEffect;
+
+    protected double _collisionHeight;
+    protected double _collisionRadius;
+
+    protected int _clanCrest;
+    protected int _allyCrest;
+    protected int _allyId;
+    protected int _clanId;
+
+    protected String _name = "";
+    protected String _title = "";
+
+    protected AbstractNpcInfo(Creature creature) {
+        _isSummoned = creature.isShowSummonAnimation();
+        _x = creature.getX();
+        _y = creature.getY();
+        _z = creature.getZ();
+        _heading = creature.getHeading();
+
+        CreatureStatus<? extends Creature> status = creature.getStatus();
+        _mAtkSpd = status.getMAtkSpd();
+        _pAtkSpd = status.getPAtkSpd();
+        _runSpd = status.getBaseRunSpeed();
+        _walkSpd = status.getBaseWalkSpeed();
     }
 
     /**
@@ -40,9 +62,9 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket {
     public static class NpcInfo extends AbstractNpcInfo {
         private final Npc _npc;
 
-        public NpcInfo(Npc cha, Player attacker) {
-            super(cha);
-            _npc = cha;
+        public NpcInfo(Npc npc, Player attacker) {
+            super(npc);
+            _npc = npc;
 
             _enchantEffect = _npc.getEnchantEffect();
             _isAttackable = _npc.isAttackableWithoutForceBy(attacker);
@@ -50,14 +72,18 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket {
             // Support for polymorph.
             if (_npc.getPolymorphTemplate() != null) {
                 _idTemplate = _npc.getPolymorphTemplate().getIdTemplate();
+
                 _rhand = _npc.getPolymorphTemplate().getRightHand();
                 _lhand = _npc.getPolymorphTemplate().getLeftHand();
+
                 _collisionHeight = _npc.getPolymorphTemplate().getCollisionHeight();
                 _collisionRadius = _npc.getPolymorphTemplate().getCollisionRadius();
             } else {
                 _idTemplate = _npc.getTemplate().getIdTemplate();
+
                 _rhand = _npc.getRightHandItemId();
                 _lhand = _npc.getLeftHandItemId();
+
                 _collisionHeight = _npc.getCollisionHeight();
                 _collisionRadius = _npc.getCollisionRadius();
             }
@@ -121,7 +147,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket {
             writeC(_npc.isRunning() ? 1 : 0);
             writeC(_npc.isInCombat() ? 1 : 0);
             writeC(_npc.isAlikeDead() ? 1 : 0);
-            writeC(_isSummoned ? 2 : 0);
+            writeC(2);
 
             writeS(_name);
             writeS(_title);
@@ -154,16 +180,15 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket {
     public static class SummonInfo extends AbstractNpcInfo {
         private final Summon _summon;
         private final Player _owner;
-        private int _summonAnimation = 0;
+        private final int _summonAnimation;
 
-        public SummonInfo(Summon cha, Player attacker, int val) {
-            super(cha);
-            _summon = cha;
+        public SummonInfo(Summon summon, Player attacker, int val) {
+            super(summon);
+
+            _summon = summon;
             _owner = _summon.getOwner();
 
-            _summonAnimation = val;
-            if (_summon.isShowSummonAnimation())
-                _summonAnimation = 2; // override for spawn
+            _summonAnimation = (_summon.isShowSummonAnimation()) ? 2 : val;
 
             _isAttackable = _summon.isAttackableWithoutForceBy(attacker);
             _rhand = _summon.getWeapon();
@@ -264,12 +289,13 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket {
         private final NpcTemplate _template;
         private final int _swimSpd;
 
-        public PcMorphInfo(Player cha, NpcTemplate template) {
-            super(cha);
-            _pc = cha;
+        public PcMorphInfo(Player player, NpcTemplate template) {
+            super(player);
+
+            _pc = player;
             _template = template;
 
-            _swimSpd = cha.getStatus().getBaseSwimSpeed();
+            _swimSpd = player.getStatus().getBaseSwimSpeed();
 
             _rhand = _template.getRightHand();
             _lhand = _template.getLeftHand();

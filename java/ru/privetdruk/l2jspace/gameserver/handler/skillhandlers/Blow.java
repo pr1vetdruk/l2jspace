@@ -1,6 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.handler.skillhandlers;
 
 import ru.privetdruk.l2jspace.gameserver.enums.items.ShotType;
+import ru.privetdruk.l2jspace.gameserver.enums.skills.ShieldDefense;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillType;
 import ru.privetdruk.l2jspace.gameserver.handler.ISkillHandler;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
@@ -9,7 +10,7 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
-import ru.privetdruk.l2jspace.gameserver.skill.Formulas;
+import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class Blow implements ISkillHandler {
@@ -33,48 +34,50 @@ public class Blow implements ISkillHandler {
             if (target.isAlikeDead())
                 continue;
 
-            if (Formulas.calcBlowRate(activeChar, target, skill)) {
+            if (Formula.calcBlowRate(activeChar, target, skill)) {
                 // Calculate skill evasion.
-                if (Formulas.calcPhysicalSkillEvasion(target, skill)) {
-                    if (activeChar instanceof Player)
+                if (Formula.calcPhysicalSkillEvasion(target, skill)) {
+                    if (activeChar instanceof Player) {
                         activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_DODGES_ATTACK).addCharName(target));
+                    }
 
-                    if (target instanceof Player)
+                    if (target instanceof Player) {
                         target.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.AVOIDED_S1_ATTACK).addCharName(activeChar));
+                    }
 
                     continue;
                 }
 
-                final byte shld = Formulas.calcShldUse(activeChar, target, skill);
+                boolean isCrit = skill.getBaseCritRate() > 0 && Formula.calcCrit(skill.getBaseCritRate() * 10 * Formula.getSTRBonus(activeChar));
+                ShieldDefense shieldDefense = Formula.calcShieldUse(activeChar, target, skill, isCrit);
 
                 // Calculate skill reflect
-                final byte reflect = Formulas.calcSkillReflect(target, skill);
+                byte reflect = Formula.calcSkillReflect(target, skill);
                 if (skill.hasEffects()) {
-                    if (reflect == Formulas.SKILL_REFLECT_SUCCEED) {
+                    if (reflect == Formula.SKILL_REFLECT_SUCCEED) {
                         activeChar.stopSkillEffects(skill.getId());
                         skill.getEffects(target, activeChar);
                         activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_FEEL_S1_EFFECT).addSkillName(skill));
                     } else {
                         target.stopSkillEffects(skill.getId());
-                        if (Formulas.calcSkillSuccess(activeChar, target, skill, shld, true)) {
-                            skill.getEffects(activeChar, target, shld, false);
+                        if (Formula.calcSkillSuccess(activeChar, target, skill, shieldDefense, true)) {
+                            skill.getEffects(activeChar, target, shieldDefense, false);
                             target.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_FEEL_S1_EFFECT).addSkillName(skill));
-                        } else
+                        } else {
                             activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_RESISTED_YOUR_S2).addCharName(target).addSkillName(skill));
+                        }
                     }
                 }
 
-                // Default damages.
-                double damage = (int) Formulas.calcBlowDamage(activeChar, target, skill, shld, ss);
-
-                // Critical check, modified with STR bonus.
-                if (Formulas.calcCrit(skill.getBaseCritRate() * 10 * Formulas.getSTRBonus(activeChar)))
+                double damage = (int) Formula.calcBlowDamage(activeChar, target, skill, shieldDefense, ss);
+                if (isCrit) {
                     damage *= 2;
+                }
 
                 target.reduceCurrentHp(damage, activeChar, skill);
 
                 // vengeance reflected damage
-                if ((reflect & Formulas.SKILL_REFLECT_VENGEANCE) != 0) {
+                if ((reflect & Formula.SKILL_REFLECT_VENGEANCE) != 0) {
                     if (target instanceof Player)
                         target.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.COUNTERED_S1_ATTACK).addCharName(activeChar));
 
@@ -87,7 +90,7 @@ public class Blow implements ISkillHandler {
                 }
 
                 // Manage cast break of the target (calculating rate, sending message...)
-                Formulas.calcCastBreak(target, damage);
+                Formula.calcCastBreak(target, damage);
 
                 // Send damage message.
                 activeChar.sendDamageMessage(target, (int) damage, false, true, false);
@@ -96,7 +99,7 @@ public class Blow implements ISkillHandler {
             }
 
             // Possibility of a lethal strike
-            Formulas.calcLethalHit(activeChar, target, skill);
+            Formula.calcLethalHit(activeChar, target, skill);
 
             if (skill.hasSelfEffects()) {
                 final AbstractEffect effect = activeChar.getFirstEffect(skill.getId());

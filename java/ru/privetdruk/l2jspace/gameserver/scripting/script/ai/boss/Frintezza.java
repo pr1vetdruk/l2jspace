@@ -2196,8 +2196,8 @@ public class Frintezza extends AttackableAIScript {
             startQuestTimer("morph_16", npc, null, 0);
 
             GrandBossManager.getInstance().setBossStatus(FRINTEZZA, DEAD);
-            long respawnTime = (long) Config.SPAWN_INTERVAL_FRINTEZZA + Rnd.get(-Config.RANDOM_SPAWN_TIME_FRINTEZZA, Config.RANDOM_SPAWN_TIME_FRINTEZZA);
-            respawnTime *= 3600000;
+            long respawnTime = (long) Config.SPAWN_INTERVAL_FRINTEZZA * 60 + Rnd.get(-60 * Config.RANDOM_SPAWN_TIME_FRINTEZZA, 60 * Config.RANDOM_SPAWN_TIME_FRINTEZZA);
+            respawnTime *= 60000;
 
             cancelQuestTimers("spawn_minion");
             cancelQuestTimers("frintezza_despawn");

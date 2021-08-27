@@ -9,12 +9,13 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.BossSpawn;
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class Q610_MagicalPowerOfWater_Part2 extends Quest {
-    private static final String qn = "Q610_MagicalPowerOfWater_Part2";
+    private static final String QUEST_NAME = "Q610_MagicalPowerOfWater_Part2";
 
     // Monster
     private static final int SOUL_OF_WATER_ASHUTAR = 25316;
@@ -58,7 +59,7 @@ public class Q610_MagicalPowerOfWater_Part2 extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -117,7 +118,7 @@ public class Q610_MagicalPowerOfWater_Part2 extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -172,6 +173,8 @@ public class Q610_MagicalPowerOfWater_Part2 extends Quest {
             }
         }
 
+        npc.broadcastNpcSay(NpcStringId.ID_61051);
+
         // despawn raid (reset info)
         despawnRaid(npc);
 
@@ -200,7 +203,7 @@ public class Q610_MagicalPowerOfWater_Part2 extends Quest {
 
             // teleport raid from secret place
             raid.teleportTo(104771, -36993, -1149, 100);
-            raid.broadcastNpcSay("The water charm then is the storm and the tsunami strength! Opposes with it only has the blind alley!");
+            raid.broadcastNpcSay(NpcStringId.ID_61050);
 
             // set raid status
             _status = IDLE_INTERVAL;

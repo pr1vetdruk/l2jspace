@@ -2,6 +2,7 @@ package ru.privetdruk.l2jspace.gameserver.skill.l2skill;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
 
+import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
 import ru.privetdruk.l2jspace.gameserver.enums.items.ShotType;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillTargetType;
@@ -10,6 +11,7 @@ import ru.privetdruk.l2jspace.gameserver.idfactory.IdFactory;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Servitor;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.SiegeSummon;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
@@ -33,6 +35,8 @@ public class L2SkillSummon extends L2Skill {
     private final int _itemConsumeOT;
     private final int _itemConsumeIdOT;
     private final int _itemConsumeSteps;
+
+    private static final int SUMMON_SOULLESS = 1278;
 
     public L2SkillSummon(StatSet set) {
         super(set);
@@ -138,6 +142,12 @@ public class L2SkillSummon extends L2Skill {
 
             summon.spawnMe(spawnLoc);
             summon.getAI().setFollowStatus(true);
+
+            if (getId() == SUMMON_SOULLESS) {
+                SkillTable.getInstance()
+                        .getInfo(Summon.CONTRACT_PAYMENT, Math.max(1, getLevel() - 2))
+                        .getEffects(activeChar, activeChar);
+            }
         }
 
         activeChar.setChargedShot(activeChar.isChargedShot(ShotType.BLESSED_SPIRITSHOT) ? ShotType.BLESSED_SPIRITSHOT : ShotType.SPIRITSHOT, isStaticReuse());

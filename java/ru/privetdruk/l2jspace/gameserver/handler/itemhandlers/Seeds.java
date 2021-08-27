@@ -19,24 +19,29 @@ public class Seeds implements IItemHandler {
         if (!Config.ALLOW_MANOR || !(playable instanceof Player))
             return;
 
-        final WorldObject target = playable.getTarget();
+        WorldObject target = playable.getTarget();
         if (!(target instanceof Monster)) {
             playable.sendPacket(SystemMessageId.THE_TARGET_IS_UNAVAILABLE_FOR_SEEDING);
             return;
         }
 
-        final Monster monster = (Monster) target;
+        Monster monster = (Monster) target;
         if (!monster.getTemplate().isSeedable()) {
             playable.sendPacket(SystemMessageId.THE_TARGET_IS_UNAVAILABLE_FOR_SEEDING);
             return;
         }
 
-        if (monster.isDead() || monster.getSeedState().isSeeded()) {
+        if (monster.isDead()) {
             playable.sendPacket(SystemMessageId.INVALID_TARGET);
             return;
         }
 
-        final Seed seed = CastleManorManager.getInstance().getSeed(item.getItemId());
+        if (monster.getSeedState().isSeeded()) {
+            playable.sendPacket(SystemMessageId.THE_SEED_HAS_BEEN_SOWN);
+            return;
+        }
+
+        Seed seed = CastleManorManager.getInstance().getSeed(item.getItemId());
         if (seed == null)
             return;
 
@@ -47,7 +52,7 @@ public class Seeds implements IItemHandler {
 
         monster.getSeedState().setSeeded(seed, playable.getObjectId());
 
-        final IntIntHolder[] skills = item.getEtcItem().getSkills();
+        IntIntHolder[] skills = item.getEtcItem().getSkills();
         if (skills != null) {
             if (skills[0] == null)
                 return;

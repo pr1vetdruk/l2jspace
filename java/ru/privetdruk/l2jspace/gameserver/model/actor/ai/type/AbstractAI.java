@@ -343,6 +343,12 @@ abstract class AbstractAI {
             return;
         }
 
+        Creature finalTarget = skill.getFinalTarget(_actor, target);
+        if (finalTarget == null || !_actor.getCast().canAttemptCast(finalTarget, skill)) {
+            clientActionFailed();
+            return;
+        }
+
         // These situations are waited out regardless. Any Intention that is added is scheduled as nextIntention.
         if (_actor.getAttack().isAttackingNow() || _actor.getCast().isCastingNow() || _actor.isSittingNow() || _actor.isStandingNow() || canScheduleAfter(_currentIntention.getType(), IntentionType.CAST)) {
             getNextIntention().updateAsCast(_actor, target, skill, isCtrlPressed, isShiftPressed, itemObjectId);
@@ -364,7 +370,7 @@ abstract class AbstractAI {
     }
 
     public synchronized void tryToFollow(Creature target, boolean isShiftPressed) {
-        if (_actor.denyAiAction()) {
+        if (_actor == target || _actor.denyAiAction()) {
             clientActionFailed();
             return;
         }

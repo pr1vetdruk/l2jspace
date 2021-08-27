@@ -22,28 +22,30 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.WarehouseDepositL
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.WarehouseWithdrawList;
 
 public class ClanHallManagerNpc extends Merchant {
-    private static final String hp_grade0 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 20\">20%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 40\">40%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 220\">220%</a>]";
-    private static final String hp_grade1 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 40\">40%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 100\">100%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 160\">160%</a>]";
-    private static final String hp_grade2 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 80\">80%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 140\">140%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 200\">200%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 260\">260%</a>]";
-    private static final String hp_grade3 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 80\">80%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 120\">120%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 180\">180%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 240\">240%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 300\">300%</a>]";
-    private static final String exp_grade0 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 5\">5%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 10\">10%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 25\">25%</a>]";
-    private static final String exp_grade1 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 5\">5%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 15\">15%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 30\">30%</a>]";
-    private static final String exp_grade2 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 5\">5%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 15\">15%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 25\">25%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 40\">40%</a>]";
-    private static final String exp_grade3 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 15\">15%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 25\">25%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 35\">35%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 50\">50%</a>]";
-    private static final String mp_grade0 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 5\">5%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 10\">10%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 25\">25%</a>]";
-    private static final String mp_grade1 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 5\">5%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 15\">15%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 25\">25%</a>]";
-    private static final String mp_grade2 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 5\">5%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 15\">15%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 30\">30%</a>]";
-    private static final String mp_grade3 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 5\">5%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 15\">15%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 30\">30%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 40\">40%</a>]";
+    private static final String HP_GRADE_0 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 20\">20%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 40\">40%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 220\">220%</a>]";
+    private static final String HP_GRADE_1 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 40\">40%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 100\">100%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 160\">160%</a>]";
+    private static final String HP_GRADE_2 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 80\">80%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 140\">140%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 200\">200%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 260\">260%</a>]";
+    private static final String HP_GRADE_3 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 80\">80%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 120\">120%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 180\">180%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 240\">240%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 300\">300%</a>]";
 
-    private static final String tele = "[<a action=\"bypass -h npc_%objectId%_manage other edit_tele 1\">Level 1</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_tele 2\">Level 2</a>]";
-    private static final String support_grade0 = "[<a action=\"bypass -h npc_%objectId%_manage other edit_support 1\">Level 1</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_support 2\">Level 2</a>]";
-    private static final String support_grade1 = "[<a action=\"bypass -h npc_%objectId%_manage other edit_support 1\">Level 1</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_support 2\">Level 2</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_support 4\">Level 4</a>]";
-    private static final String support_grade2 = "[<a action=\"bypass -h npc_%objectId%_manage other edit_support 3\">Level 3</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_support 4\">Level 4</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_support 5\">Level 5</a>]";
-    private static final String support_grade3 = "[<a action=\"bypass -h npc_%objectId%_manage other edit_support 3\">Level 3</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_support 5\">Level 5</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_support 7\">Level 7</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_support 8\">Level 8</a>]";
-    private static final String item = "[<a action=\"bypass -h npc_%objectId%_manage other edit_item 1\">Level 1</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_item 2\">Level 2</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_item 3\">Level 3</a>]";
+    private static final String EXP_GRADE_0 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 5\">5%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 10\">10%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 25\">25%</a>]";
+    private static final String EXP_GRADE_1 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 5\">5%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 15\">15%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 30\">30%</a>]";
+    private static final String EXP_GRADE_2 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 5\">5%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 15\">15%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 25\">25%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 40\">40%</a>]";
+    private static final String EXP_GRADE_3 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 15\">15%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 25\">25%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 35\">35%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 50\">50%</a>]";
 
-    private static final String curtains = "[<a action=\"bypass -h npc_%objectId%_manage deco edit_curtains 1\">Level 1</a>][<a action=\"bypass -h npc_%objectId%_manage deco edit_curtains 2\">Level 2</a>]";
-    private static final String fixtures = "[<a action=\"bypass -h npc_%objectId%_manage deco edit_fixtures 1\">Level 1</a>][<a action=\"bypass -h npc_%objectId%_manage deco edit_fixtures 2\">Level 2</a>]";
+    private static final String MP_GRADE_0 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 5\">5%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 10\">10%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 25\">25%</a>]";
+	private static final String MP_GRADE_1 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 5\">5%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 15\">15%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 25\">25%</a>]";
+	private static final String MP_GRADE_2 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 5\">5%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 15\">15%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 30\">30%</a>]";
+	private static final String MP_GRADE_3 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 5\">5%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 15\">15%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 30\">30%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_mp 40\">40%</a>]";
+
+	private static final String SUPPORT_GRADE_0 = "[<a action=\"bypass -h npc_%objectId%_manage other edit_support 1\">Level 1</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_support 2\">Level 2</a>]";
+	private static final String SUPPORT_GRADE_1 = "[<a action=\"bypass -h npc_%objectId%_manage other edit_support 1\">Level 1</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_support 2\">Level 2</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_support 4\">Level 4</a>]";
+	private static final String SUPPORT_GRADE_2 = "[<a action=\"bypass -h npc_%objectId%_manage other edit_support 3\">Level 3</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_support 4\">Level 4</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_support 5\">Level 5</a>]";
+	private static final String SUPPORT_GRADE_3 = "[<a action=\"bypass -h npc_%objectId%_manage other edit_support 3\">Level 3</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_support 5\">Level 5</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_support 7\">Level 7</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_support 8\">Level 8</a>]";
+
+	private static final String ITEM = "[<a action=\"bypass -h npc_%objectId%_manage other edit_item 1\">Level 1</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_item 2\">Level 2</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_item 3\">Level 3</a>]";
+	private static final String TELE = "[<a action=\"bypass -h npc_%objectId%_manage other edit_tele 1\">Level 1</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_tele 2\">Level 2</a>]";
+	private static final String CURTAINS = "[<a action=\"bypass -h npc_%objectId%_manage deco edit_curtains 1\">Level 1</a>][<a action=\"bypass -h npc_%objectId%_manage deco edit_curtains 2\">Level 2</a>]";
+	private static final String FIXTURES = "[<a action=\"bypass -h npc_%objectId%_manage deco edit_fixtures 1\">Level 1</a>][<a action=\"bypass -h npc_%objectId%_manage deco edit_fixtures 2\">Level 2</a>]";
 
     public ClanHallManagerNpc(int objectId, NpcTemplate template) {
         super(objectId, template);
@@ -571,19 +573,19 @@ public class ClanHallManagerNpc extends Merchant {
 
                         switch (grade) {
                             case 0:
-                                html.replace("%change_hp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery hp_cancel\">Remove</a>]" + hp_grade0);
+                                html.replace("%change_hp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery hp_cancel\">Remove</a>]" + HP_GRADE_0);
                                 break;
 
                             case 1:
-                                html.replace("%change_hp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery hp_cancel\">Remove</a>]" + hp_grade1);
+                                html.replace("%change_hp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery hp_cancel\">Remove</a>]" + HP_GRADE_1);
                                 break;
 
                             case 2:
-                                html.replace("%change_hp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery hp_cancel\">Remove</a>]" + hp_grade2);
+                                html.replace("%change_hp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery hp_cancel\">Remove</a>]" + HP_GRADE_2);
                                 break;
 
                             case 3:
-                                html.replace("%change_hp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery hp_cancel\">Remove</a>]" + hp_grade3);
+                                html.replace("%change_hp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery hp_cancel\">Remove</a>]" + HP_GRADE_3);
                                 break;
                         }
                     } else {
@@ -592,19 +594,19 @@ public class ClanHallManagerNpc extends Merchant {
 
                         switch (grade) {
                             case 0:
-                                html.replace("%change_hp%", hp_grade0);
+                                html.replace("%change_hp%", HP_GRADE_0);
                                 break;
 
                             case 1:
-                                html.replace("%change_hp%", hp_grade1);
+                                html.replace("%change_hp%", HP_GRADE_1);
                                 break;
 
                             case 2:
-                                html.replace("%change_hp%", hp_grade2);
+                                html.replace("%change_hp%", HP_GRADE_2);
                                 break;
 
                             case 3:
-                                html.replace("%change_hp%", hp_grade3);
+                                html.replace("%change_hp%", HP_GRADE_3);
                                 break;
                         }
                     }
@@ -617,19 +619,19 @@ public class ClanHallManagerNpc extends Merchant {
 
                         switch (grade) {
                             case 0:
-                                html.replace("%change_exp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery exp_cancel\">Remove</a>]" + exp_grade0);
+                                html.replace("%change_exp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery exp_cancel\">Remove</a>]" + EXP_GRADE_0);
                                 break;
 
                             case 1:
-                                html.replace("%change_exp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery exp_cancel\">Remove</a>]" + exp_grade1);
+                                html.replace("%change_exp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery exp_cancel\">Remove</a>]" + EXP_GRADE_1);
                                 break;
 
                             case 2:
-                                html.replace("%change_exp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery exp_cancel\">Remove</a>]" + exp_grade2);
+                                html.replace("%change_exp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery exp_cancel\">Remove</a>]" + EXP_GRADE_2);
                                 break;
 
                             case 3:
-                                html.replace("%change_exp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery exp_cancel\">Remove</a>]" + exp_grade3);
+                                html.replace("%change_exp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery exp_cancel\">Remove</a>]" + EXP_GRADE_3);
                                 break;
                         }
                     } else {
@@ -638,19 +640,19 @@ public class ClanHallManagerNpc extends Merchant {
 
                         switch (grade) {
                             case 0:
-                                html.replace("%change_exp%", exp_grade0);
+                                html.replace("%change_exp%", EXP_GRADE_0);
                                 break;
 
                             case 1:
-                                html.replace("%change_exp%", exp_grade1);
+                                html.replace("%change_exp%", EXP_GRADE_1);
                                 break;
 
                             case 2:
-                                html.replace("%change_exp%", exp_grade2);
+                                html.replace("%change_exp%", EXP_GRADE_2);
                                 break;
 
                             case 3:
-                                html.replace("%change_exp%", exp_grade3);
+                                html.replace("%change_exp%", EXP_GRADE_3);
                                 break;
                         }
                     }
@@ -663,19 +665,19 @@ public class ClanHallManagerNpc extends Merchant {
 
                         switch (grade) {
                             case 0:
-                                html.replace("%change_mp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery mp_cancel\">Remove</a>]" + mp_grade0);
+                                html.replace("%change_mp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery mp_cancel\">Remove</a>]" + MP_GRADE_0);
                                 break;
 
                             case 1:
-                                html.replace("%change_mp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery mp_cancel\">Remove</a>]" + mp_grade1);
+                                html.replace("%change_mp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery mp_cancel\">Remove</a>]" + MP_GRADE_1);
                                 break;
 
                             case 2:
-                                html.replace("%change_mp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery mp_cancel\">Remove</a>]" + mp_grade2);
+                                html.replace("%change_mp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery mp_cancel\">Remove</a>]" + MP_GRADE_2);
                                 break;
 
                             case 3:
-                                html.replace("%change_mp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery mp_cancel\">Remove</a>]" + mp_grade3);
+                                html.replace("%change_mp%", "[<a action=\"bypass -h npc_%objectId%_manage recovery mp_cancel\">Remove</a>]" + MP_GRADE_3);
                                 break;
                         }
                     } else {
@@ -684,19 +686,19 @@ public class ClanHallManagerNpc extends Merchant {
 
                         switch (grade) {
                             case 0:
-                                html.replace("%change_mp%", mp_grade0);
+                                html.replace("%change_mp%", MP_GRADE_0);
                                 break;
 
                             case 1:
-                                html.replace("%change_mp%", mp_grade1);
+                                html.replace("%change_mp%", MP_GRADE_1);
                                 break;
 
                             case 2:
-                                html.replace("%change_mp%", mp_grade2);
+                                html.replace("%change_mp%", MP_GRADE_2);
                                 break;
 
                             case 3:
-                                html.replace("%change_mp%", mp_grade3);
+                                html.replace("%change_mp%", MP_GRADE_3);
                                 break;
                         }
                     }
@@ -985,11 +987,11 @@ public class ClanHallManagerNpc extends Merchant {
                     if (chfTel != null) {
                         html.replace("%tele%", "- Stage " + chfTel.getLvl() + "</font> (<font color=\"FFAABB\">" + chfTel.getLease() + "</font> adenas / " + (Config.CH_TELE_FEE_RATIO / 86400000) + " day)");
                         html.replace("%tele_period%", "Next fee at " + new SimpleDateFormat("dd-MM-yyyy HH:mm").format(chfTel.getEndTime()));
-                        html.replace("%change_tele%", "[<a action=\"bypass -h npc_%objectId%_manage other tele_cancel\">Remove</a>]" + tele);
+                        html.replace("%change_tele%", "[<a action=\"bypass -h npc_%objectId%_manage other tele_cancel\">Remove</a>]" + TELE);
                     } else {
                         html.replace("%tele%", "none");
                         html.replace("%tele_period%", "none");
-                        html.replace("%change_tele%", tele);
+                        html.replace("%change_tele%", TELE);
                     }
 
                     final int grade = getClanHall().getGrade();
@@ -1001,19 +1003,19 @@ public class ClanHallManagerNpc extends Merchant {
 
                         switch (grade) {
                             case 0:
-                                html.replace("%change_support%", "[<a action=\"bypass -h npc_%objectId%_manage other support_cancel\">Remove</a>]" + support_grade0);
+                                html.replace("%change_support%", "[<a action=\"bypass -h npc_%objectId%_manage other support_cancel\">Remove</a>]" + SUPPORT_GRADE_0);
                                 break;
 
                             case 1:
-                                html.replace("%change_support%", "[<a action=\"bypass -h npc_%objectId%_manage other support_cancel\">Remove</a>]" + support_grade1);
+                                html.replace("%change_support%", "[<a action=\"bypass -h npc_%objectId%_manage other support_cancel\">Remove</a>]" + SUPPORT_GRADE_1);
                                 break;
 
                             case 2:
-                                html.replace("%change_support%", "[<a action=\"bypass -h npc_%objectId%_manage other support_cancel\">Remove</a>]" + support_grade2);
+                                html.replace("%change_support%", "[<a action=\"bypass -h npc_%objectId%_manage other support_cancel\">Remove</a>]" + SUPPORT_GRADE_2);
                                 break;
 
                             case 3:
-                                html.replace("%change_support%", "[<a action=\"bypass -h npc_%objectId%_manage other support_cancel\">Remove</a>]" + support_grade3);
+                                html.replace("%change_support%", "[<a action=\"bypass -h npc_%objectId%_manage other support_cancel\">Remove</a>]" + SUPPORT_GRADE_3);
                                 break;
                         }
                     } else {
@@ -1022,19 +1024,19 @@ public class ClanHallManagerNpc extends Merchant {
 
                         switch (grade) {
                             case 0:
-                                html.replace("%change_support%", support_grade0);
+                                html.replace("%change_support%", SUPPORT_GRADE_0);
                                 break;
 
                             case 1:
-                                html.replace("%change_support%", support_grade1);
+                                html.replace("%change_support%", SUPPORT_GRADE_1);
                                 break;
 
                             case 2:
-                                html.replace("%change_support%", support_grade2);
+                                html.replace("%change_support%", SUPPORT_GRADE_2);
                                 break;
 
                             case 3:
-                                html.replace("%change_support%", support_grade3);
+                                html.replace("%change_support%", SUPPORT_GRADE_3);
                                 break;
                         }
                     }
@@ -1043,11 +1045,11 @@ public class ClanHallManagerNpc extends Merchant {
                     if (chfCreate != null) {
                         html.replace("%item%", "- Stage " + chfCreate.getLvl() + "</font> (<font color=\"FFAABB\">" + chfCreate.getLease() + "</font> adenas / " + (Config.CH_ITEM_FEE_RATIO / 86400000) + " day)");
                         html.replace("%item_period%", "Next fee at " + new SimpleDateFormat("dd-MM-yyyy HH:mm").format(chfCreate.getEndTime()));
-                        html.replace("%change_item%", "[<a action=\"bypass -h npc_%objectId%_manage other item_cancel\">Remove</a>]" + item);
+                        html.replace("%change_item%", "[<a action=\"bypass -h npc_%objectId%_manage other item_cancel\">Remove</a>]" + ITEM);
                     } else {
                         html.replace("%item%", "none");
                         html.replace("%item_period%", "none");
-                        html.replace("%change_item%", item);
+                        html.replace("%change_item%", ITEM);
                     }
                     html.replace("%objectId%", getObjectId());
                     player.sendPacket(html);
@@ -1205,22 +1207,22 @@ public class ClanHallManagerNpc extends Merchant {
                     if (chfCurtains != null) {
                         html.replace("%curtain%", "- Stage " + chfCurtains.getLvl() + "</font> (<font color=\"FFAABB\">" + chfCurtains.getLease() + "</font> adenas / " + (Config.CH_CURTAIN_FEE_RATIO / 86400000) + " day)");
                         html.replace("%curtain_period%", "Next fee at " + new SimpleDateFormat("dd-MM-yyyy HH:mm").format(chfCurtains.getEndTime()));
-                        html.replace("%change_curtain%", "[<a action=\"bypass -h npc_%objectId%_manage deco curtains_cancel\">Remove</a>]" + curtains);
+                        html.replace("%change_curtain%", "[<a action=\"bypass -h npc_%objectId%_manage deco curtains_cancel\">Remove</a>]" + CURTAINS);
                     } else {
                         html.replace("%curtain%", "none");
                         html.replace("%curtain_period%", "none");
-                        html.replace("%change_curtain%", curtains);
+                        html.replace("%change_curtain%", CURTAINS);
                     }
 
                     final ClanHallFunction chfPlateform = getClanHall().getFunction(ClanHall.FUNC_DECO_FRONTPLATEFORM);
                     if (chfPlateform != null) {
                         html.replace("%fixture%", "- Stage " + chfPlateform.getLvl() + "</font> (<font color=\"FFAABB\">" + chfPlateform.getLease() + "</font> adenas / " + (Config.CH_FRONT_FEE_RATIO / 86400000) + " day)");
                         html.replace("%fixture_period%", "Next fee at " + new SimpleDateFormat("dd-MM-yyyy HH:mm").format(chfPlateform.getEndTime()));
-                        html.replace("%change_fixture%", "[<a action=\"bypass -h npc_%objectId%_manage deco fixtures_cancel\">Remove</a>]" + fixtures);
+                        html.replace("%change_fixture%", "[<a action=\"bypass -h npc_%objectId%_manage deco fixtures_cancel\">Remove</a>]" + FIXTURES);
                     } else {
                         html.replace("%fixture%", "none");
                         html.replace("%fixture_period%", "none");
-                        html.replace("%change_fixture%", fixtures);
+                        html.replace("%change_fixture%", FIXTURES);
                     }
                     html.replace("%objectId%", getObjectId());
                     player.sendPacket(html);

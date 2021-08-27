@@ -11,10 +11,10 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q385_YokeOfThePast extends Quest {
-    private static final String qn = "Q385_YokeOfThePast";
+    private static final String QUEST_NAME = "Q385_YokeOfThePast";
 
     // NPCs
-    private static final int GATEKEEPER_ZIGGURAT[] =
+    private static final int[] GATEKEEPER_ZIGGURAT =
             {
                     31095,
                     31096,
@@ -56,7 +56,7 @@ public class Q385_YokeOfThePast extends Quest {
     // Drop chances
     private static final Map<Integer, Integer> CHANCES = new HashMap<>();
 
-    {
+    static {
         CHANCES.put(21208, 70000);
         CHANCES.put(21209, 80000);
         CHANCES.put(21210, 110000);
@@ -115,7 +115,7 @@ public class Q385_YokeOfThePast extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -133,7 +133,7 @@ public class Q385_YokeOfThePast extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;

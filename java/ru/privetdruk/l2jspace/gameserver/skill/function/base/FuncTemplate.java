@@ -11,7 +11,7 @@ import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.skill.condition.Condition;
 
 public final class FuncTemplate {
-    private static final CLogger LOG = new CLogger(FuncTemplate.class.getName());
+    private static final CLogger LOGGER = new CLogger(FuncTemplate.class.getName());
 
     private final Condition _attachCond;
     private final Condition _applyCond;
@@ -76,7 +76,7 @@ public final class FuncTemplate {
         try {
             return (Func) _constructor.newInstance(owner, _stat, _value, _applyCond);
         } catch (Exception e) {
-            LOG.warn(FuncTemplate.class.getSimpleName() + ": " + e.getMessage());
+            LOGGER.error("An error occured during getFunc.", e);
         }
         return null;
     }

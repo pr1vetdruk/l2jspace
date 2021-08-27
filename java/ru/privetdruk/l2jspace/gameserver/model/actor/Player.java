@@ -69,12 +69,7 @@ import ru.privetdruk.l2jspace.gameserver.enums.StatusType;
 import ru.privetdruk.l2jspace.gameserver.enums.AuraTeamType;
 import ru.privetdruk.l2jspace.gameserver.enums.TeleportMode;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
-import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassId;
-import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassRace;
-import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassType;
-import ru.privetdruk.l2jspace.gameserver.enums.actors.MoveType;
-import ru.privetdruk.l2jspace.gameserver.enums.actors.OperateType;
-import ru.privetdruk.l2jspace.gameserver.enums.actors.Sex;
+import ru.privetdruk.l2jspace.gameserver.enums.actors.*;
 import ru.privetdruk.l2jspace.gameserver.enums.bbs.ForumAccess;
 import ru.privetdruk.l2jspace.gameserver.enums.bbs.ForumType;
 import ru.privetdruk.l2jspace.gameserver.enums.items.ActionType;
@@ -160,11 +155,12 @@ import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
-import ru.privetdruk.l2jspace.gameserver.skill.Formulas;
+import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.skill.effect.EffectTemplate;
 import ru.privetdruk.l2jspace.gameserver.skill.function.FuncHenna;
 import ru.privetdruk.l2jspace.gameserver.skill.function.FuncMaxCpMul;
+import ru.privetdruk.l2jspace.gameserver.skill.function.FuncRegenCpMul;
 import ru.privetdruk.l2jspace.gameserver.taskmanager.AttackStanceTaskManager;
 import ru.privetdruk.l2jspace.gameserver.taskmanager.GameTimeTaskManager;
 import ru.privetdruk.l2jspace.gameserver.taskmanager.PvpFlagTaskManager;
@@ -205,7 +201,7 @@ public final class Player extends Playable {
 
     private static final String UPDATE_NOBLESS = "UPDATE characters SET nobless=? WHERE obj_Id=?";
 
-    private static final String INSERT_PREMIUMSERVICE = "INSERT INTO account_premium (account_name,premium_service,enddate) values(?,?,?) ON DUPLICATE KEY UPDATE premium_service = ?, enddate = ?";
+    private static final String INSERT_PREMIUMSERVICE = "INSERT INTO account_premium (account_name,premium_service,enddate) values(?,?,?) ON DUPLICATE KEY UPDATE premium_service=?, enddate=?";
     private static final String RESTORE_PREMIUMSERVICE = "SELECT premium_service,enddate FROM account_premium WHERE account_name=?";
     private static final String UPDATE_PREMIUMSERVICE = "UPDATE account_premium SET premium_service=?,enddate=? WHERE account_name=?";
 
@@ -243,7 +239,7 @@ public final class Player extends Playable {
     private int _pkKills;
     private byte _pvpFlag;
     private int _siegeState;
-    private int _weightPenalty;
+    private WeightPenalty _weightPenalty = WeightPenalty.NONE;
 
     private int _lastCompassZone; // the last compass zone update send to the client
 
@@ -367,8 +363,8 @@ public final class Player extends Playable {
     private long _recentFakeDeathEndTime;
     private boolean _isFakeDeath;
 
-    private int _expertiseArmorPenalty;
-    private boolean _expertiseWeaponPenalty;
+    private int armorGradePenalty;
+    private boolean weaponGradePenalty;
 
     private ItemInstance _activeEnchantItem;
 
@@ -539,11 +535,12 @@ public final class Player extends Playable {
     }
 
     @Override
-    public void addFuncsToNewCharacter() {
+    public void addFunctionsToNewCharacter() {
         // Add Creature functionalities.
-        super.addFuncsToNewCharacter();
+        super.addFunctionsToNewCharacter();
 
         addStatFunc(FuncMaxCpMul.getInstance());
+        addStatFunc(FuncRegenCpMul.getInstance());
 
         addStatFunc(FuncHenna.getSTR());
         addStatFunc(FuncHenna.getCON());
@@ -994,18 +991,18 @@ public final class Player extends Playable {
      */
     @Override
     public int getWeightLimit() {
-        return (int) getStatus().calcStat(Stats.WEIGHT_LIMIT, 69000 * Formulas.CON_BONUS[getStatus().getCON()] * Config.WEIGHT_LIMIT, this, null);
+        return (int) getStatus().calcStat(Stats.WEIGHT_LIMIT, 69000 * Formula.CON_BONUS[getStatus().getCON()] * Config.WEIGHT_LIMIT, this, null);
     }
 
-    public int getExpertiseArmorPenalty() {
-        return _expertiseArmorPenalty;
+    public int getArmorGradePenalty() {
+        return armorGradePenalty;
     }
 
-    public boolean getExpertiseWeaponPenalty() {
-        return _expertiseWeaponPenalty;
+    public boolean getWeaponGradePenalty() {
+        return weaponGradePenalty;
     }
 
-    public int getWeightPenalty() {
+    public WeightPenalty getWeightPenalty() {
         return _weightPenalty;
     }
 
@@ -1013,31 +1010,28 @@ public final class Player extends Playable {
      * Update the overloaded status of the Player.
      */
     public void refreshWeightPenalty() {
-        final int weightLimit = getWeightLimit();
-        if (weightLimit <= 0)
+        int weightLimit = getWeightLimit();
+        if (weightLimit <= 0) {
             return;
+        }
 
-        final double ratio = (getCurrentWeight() - getStatus().calcStat(Stats.WEIGHT_PENALTY, 0, this, null)) / weightLimit;
+        double ratio = (getCurrentWeight() - getStatus().calcStat(Stats.WEIGHT_PENALTY, 0, this, null)) / weightLimit;
 
-        int newWeightPenalty;
-        if (ratio < 0.5)
-            newWeightPenalty = 0;
-        else if (ratio < 0.666)
-            newWeightPenalty = 1;
-        else if (ratio < 0.8)
-            newWeightPenalty = 2;
-        else if (ratio < 1)
-            newWeightPenalty = 3;
-        else
-            newWeightPenalty = 4;
+        WeightPenalty newWeightPenalty;
+        if (ratio < 0.5) {
+            newWeightPenalty = WeightPenalty.NONE;
+        } else if (ratio < 0.666) {
+            newWeightPenalty = WeightPenalty.LEVEL_1;
+        } else if (ratio < 0.8) {
+            newWeightPenalty = WeightPenalty.LEVEL_2;
+        } else if (ratio < 1) {
+            newWeightPenalty = WeightPenalty.LEVEL_3;
+        } else {
+            newWeightPenalty = WeightPenalty.LEVEL_4;
+        }
 
         if (_weightPenalty != newWeightPenalty) {
             _weightPenalty = newWeightPenalty;
-
-            if (newWeightPenalty > 0)
-                addSkill(SkillTable.getInstance().getInfo(4270, newWeightPenalty), false);
-            else
-                removeSkill(4270, false);
 
             sendPacket(new UserInfo(this));
             sendPacket(new EtcStatusUpdate(this));
@@ -1066,26 +1060,28 @@ public final class Player extends Playable {
         armorPenalty = Math.min(armorPenalty, 4);
 
         // Found a different state than previous ; update it.
-        if (_expertiseWeaponPenalty != weaponPenalty || _expertiseArmorPenalty != armorPenalty) {
-            _expertiseWeaponPenalty = weaponPenalty;
-            _expertiseArmorPenalty = armorPenalty;
+        if (weaponGradePenalty != weaponPenalty || armorGradePenalty != armorPenalty) {
+            weaponGradePenalty = weaponPenalty;
+            armorGradePenalty = armorPenalty;
 
             // Passive skill "Grade Penalty" is either granted or dropped.
-            if (_expertiseWeaponPenalty || _expertiseArmorPenalty > 0)
+            if (weaponGradePenalty || armorGradePenalty > 0) {
                 addSkill(SkillTable.getInstance().getInfo(4267, 1), false);
-            else
+            } else {
                 removeSkill(4267, false);
+            }
 
             sendSkillList();
             sendPacket(new EtcStatusUpdate(this));
 
             // Activate / desactivate weapon effects.
-            final ItemInstance item = getActiveWeaponInstance();
+            ItemInstance item = getActiveWeaponInstance();
             if (item != null) {
-                if (_expertiseWeaponPenalty)
+                if (weaponGradePenalty) {
                     ItemPassiveSkillsListener.getInstance().onUnequip(Paperdoll.NULL, item, this);
-                else
+                } else {
                     ItemPassiveSkillsListener.getInstance().onEquip(Paperdoll.NULL, item, this);
+                }
             }
         }
     }
@@ -1644,9 +1640,8 @@ public final class Player extends Playable {
             if (item == null)
                 return null;
 
-            // Sends message to client if requested.
-            // TODO what's the point of isCastingNow here?
-            if (sendMessage && ((!getCast().isCastingNow() && item.getItemType() == EtcItemType.HERB) || item.getItemType() != EtcItemType.HERB)) {
+            // Sends message to client if requested. Since Herbs are directly assimilated, they don't send any "You have earned X" message, only "The effects of X flow through you".
+            if (sendMessage && item.getItemType() != EtcItemType.HERB) {
                 if (count > 1) {
                     if (process.equalsIgnoreCase("Sweep") || process.equalsIgnoreCase("Quest"))
                         sendPacket(SystemMessage.getSystemMessage(SystemMessageId.EARNED_S2_S1_S).addItemName(itemId).addItemNumber(count));
@@ -2320,16 +2315,23 @@ public final class Player extends Playable {
 
     @Override
     public void setTarget(WorldObject newTarget) {
-        // Check if the new target is visible.
-        if (newTarget != null && !newTarget.isVisible() && !(newTarget instanceof Player && isInParty() && _party.containsPlayer(newTarget)))
-            newTarget = null;
+        // Unset new target following specific conditions.
+        if (newTarget != null) {
+            // Check if the new target is visible.
+            if (!newTarget.isVisible() && !(newTarget instanceof Player && isInParty() && _party.containsPlayer(newTarget))) {
+                newTarget = null;
+            }
 
-        // Can't target and attack festival monsters if not participant
-        if (newTarget instanceof FestivalMonster && !isFestivalParticipant())
-            newTarget = null;
-            // Can't target and attack rift invaders if not in the same room
-        else if (newTarget != null && isInParty() && getParty().isInDimensionalRift() && !getParty().getDimensionalRift().isInCurrentRoomZone(newTarget))
-            newTarget = null;
+            // Can't target and attack festival monsters if not participant.
+            if (newTarget instanceof FestivalMonster && !isFestivalParticipant()) {
+                newTarget = null;
+            }
+
+            // Can't target and attack rift invaders if not in the same room.
+            if (isInParty() && getParty().isInDimensionalRift() && !getParty().getDimensionalRift().isInCurrentRoomZone(newTarget)) {
+                newTarget = null;
+            }
+        }
 
         // Get the current target
         final WorldObject oldTarget = getTarget();
@@ -2630,7 +2632,7 @@ public final class Player extends Playable {
 
     public void updateKarmaLoss(long exp) {
         if (!isCursedWeaponEquipped() && getKarma() > 0) {
-            final int karmaLost = Formulas.calculateKarmaLost(getStatus().getLevel(), exp);
+            final int karmaLost = Formula.calculateKarmaLost(getStatus().getLevel(), exp);
             if (karmaLost > 0)
                 setKarma(getKarma() - karmaLost);
         }
@@ -2712,7 +2714,7 @@ public final class Player extends Playable {
                 setPkKills(getPkKills() + 1);
 
             // Calculate new karma.
-            setKarma(getKarma() + Formulas.calculateKarmaGain(getPkKills(), target instanceof Summon));
+            setKarma(getKarma() + Formula.calculateKarmaGain(getPkKills(), target instanceof Summon));
 
             // Unequip adventurer items.
             checkItemRestriction();
@@ -5471,7 +5473,6 @@ public final class Player extends Playable {
                     creature.getCast().stop();
 
             store();
-            _reuseTimeStamps.clear();
 
             // clear charges
             _charges.set(0);
@@ -5503,7 +5504,10 @@ public final class Player extends Playable {
             regiveTemporarySkills();
 
             // Prevents some issues when changing between subclases that shares skills
-            getDisabledSkills().clear();
+            if (!hasSkill(L2Skill.SKILL_SUMMON_CP)) {
+                getDisabledSkills().clear();
+                _reuseTimeStamps.clear();
+            }
 
             updateEffectIcons();
             sendPacket(new EtcStatusUpdate(this));
@@ -5639,7 +5643,7 @@ public final class Player extends Playable {
 
         if ((isPet && _summon != null && _summon.isDead()) || (!isPet && isDead())) {
             _reviveRequested = 1;
-            _revivePower = (isPhoenixBlessed()) ? 100 : Formulas.calculateSkillResurrectRestorePercent(skill.getPower(), reviver);
+            _revivePower = (isPhoenixBlessed()) ? 100 : Formula.calculateSkillResurrectRestorePercent(skill.getPower(), reviver);
             _revivePet = isPet;
 
             sendPacket(new ConfirmDlg(SystemMessageId.RESSURECTION_REQUEST_BY_S1).addCharName(reviver));
@@ -5695,10 +5699,6 @@ public final class Player extends Playable {
 
         if (Config.PLAYER_SPAWN_PROTECTION > 0)
             setSpawnProtection(true);
-
-        // Stop toggles upon teleport.
-        if (!isGM())
-            stopAllToggles();
 
         // Modify the position of the tamed beast if necessary
         if (_tamedBeast != null)
@@ -6348,7 +6348,7 @@ public final class Player extends Playable {
         if (deltaZ <= getBaseTemplate().getSafeFallHeight(getAppearance().getSex()))
             return false;
 
-        final int damage = (int) Formulas.calcFallDam(this, deltaZ);
+        final int damage = (int) Formula.calcFallDam(this, deltaZ);
         if (damage > 0) {
             reduceCurrentHp(Math.min(damage, getStatus().getHp() - 1), null, false, true, null);
             sendPacket(SystemMessage.getSystemMessage(SystemMessageId.FALL_DAMAGE_S1).addNumber(damage));
@@ -6542,15 +6542,20 @@ public final class Player extends Playable {
     }
 
     public void activateGate(int answer, int type) {
-        if (_requestedGate == null)
+        if (_requestedGate == null) {
             return;
+        }
 
-        if (answer == 1 && getTarget() == _requestedGate) {
-            if (_requestedGate.getClanHall() != null && getClan() != null && getClanId() == _requestedGate.getClanHall().getOwnerId() && hasClanPrivileges(Clan.CP_CH_OPEN_DOOR)) {
-                if (type == 1)
-                    _requestedGate.openMe();
-                else if (type == 0)
-                    _requestedGate.closeMe();
+        if (answer == 1
+                && getTarget() == _requestedGate
+                && _requestedGate.getClanHall() != null
+                && getClan() != null
+                && getClanId() == _requestedGate.getClanHall().getOwnerId()
+                && hasClanPrivileges(Clan.CP_CH_OPEN_DOOR)) {
+            if (type == 1) {
+                _requestedGate.openMe();
+            } else if (type == 0) {
+                _requestedGate.closeMe();
             }
         }
 

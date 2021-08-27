@@ -10,7 +10,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q291_RevengeOfTheRedbonnet extends Quest {
-    private static final String qn = "Q291_RevengeOfTheRedbonnet";
+    private static final String QUEST_NAME = "Q291_RevengeOfTheRedbonnet";
 
     // Quest items
     private static final int BLACK_WOLF_PELT = 1482;
@@ -36,7 +36,7 @@ public class Q291_RevengeOfTheRedbonnet extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -51,7 +51,7 @@ public class Q291_RevengeOfTheRedbonnet extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;

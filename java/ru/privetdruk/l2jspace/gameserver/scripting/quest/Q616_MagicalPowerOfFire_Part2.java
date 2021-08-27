@@ -9,12 +9,13 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.BossSpawn;
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class Q616_MagicalPowerOfFire_Part2 extends Quest {
-    private static final String qn = "Q616_MagicalPowerOfFire_Part2";
+    private static final String QUEST_NAME = "Q616_MagicalPowerOfFire_Part2";
 
     // Monster
     private static final int SOUL_OF_FIRE_NASTRON = 25306;
@@ -58,7 +59,7 @@ public class Q616_MagicalPowerOfFire_Part2 extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -117,7 +118,7 @@ public class Q616_MagicalPowerOfFire_Part2 extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -177,6 +178,8 @@ public class Q616_MagicalPowerOfFire_Part2 extends Quest {
             }
         }
 
+        npc.broadcastNpcSay(NpcStringId.ID_61651);
+
         // despawn raid (reset info)
         despawnRaid(npc);
 
@@ -205,6 +208,7 @@ public class Q616_MagicalPowerOfFire_Part2 extends Quest {
 
             // teleport raid from secret place
             raid.teleportTo(142624, -82285, -6491, 100);
+            raid.broadcastNpcSay(NpcStringId.ID_61650);
 
             // set raid status
             _status = IDLE_INTERVAL;

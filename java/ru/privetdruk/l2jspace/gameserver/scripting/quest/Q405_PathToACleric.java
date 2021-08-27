@@ -10,7 +10,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q405_PathToACleric extends Quest {
-    private static final String qn = "Q405_PathToACleric";
+    private static final String QUEST_NAME = "Q405_PathToACleric";
 
     // Items
     private static final int LETTER_OF_ORDER_1 = 1191;
@@ -49,7 +49,7 @@ public class Q405_PathToACleric extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -66,7 +66,7 @@ public class Q405_PathToACleric extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

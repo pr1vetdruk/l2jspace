@@ -23,8 +23,7 @@ public abstract class ClientBasePacket {
     }
 
     public int readC() {
-        int result = _decrypt[_off++] & 0xff;
-        return result;
+        return _decrypt[_off++] & 0xff;
     }
 
     public int readH() {

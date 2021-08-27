@@ -2,37 +2,66 @@ package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
 import ru.privetdruk.l2jspace.common.random.Rnd;
 
-import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Monster;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Pet;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
+import ru.privetdruk.l2jspace.gameserver.model.itemcontainer.Inventory;
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * iCond is an internal variable, used because cond isn't developped on that quest (only 3 states) :
+ * The script uses internal iCond variable, used because cond isn't developed on that quest (only 3 states):
  * <ul>
- * <li>1-3 leads initial mimyu behavior ;</li>
- * <li>used for leaves support as mask : 4, 8, 16 or 32 = 60 overall ;</li>
- * <li>63 becomes the "marker" to get back to mimyu (60 + 3), meaning you already hit the 4 trees ;</li>
- * <li>set to 100 if mimyu check is ok.</li>
+ * <li>1-3: Initial Mimyu behavior.</li>
+ * <li>4-63: Leave acquisition (tree flags: 4, 8, 16, 32 = 60 overall).</li>
+ * <li>100: Mimyu acknowledge conditions are fulfilled.</li>
  * </ul>
  */
 public class Q421_LittleWingsBigAdventure extends Quest {
-    private static final String qn = "Q421_LittleWingsBigAdventure";
+    private static final String QUEST_NAME = "Q421_LittleWingsBigAdventure";
+
+    // Item
+    private static final int DRAGONFLUTE_OF_WIND = 3500;
+    private static final int DRAGONFLUTE_OF_STAR = 3501;
+    private static final int DRAGONFLUTE_OF_TWILIGHT = 3502;
+    private static final int FAIRY_LEAF = 4325;
 
     // NPCs
     private static final int CRONOS = 30610;
     private static final int MIMYU = 30747;
 
-    // Item
-    private static final int FAIRY_LEAF = 4325;
+    // Monsters
+    private static final int FAIRY_TREE_OF_WIND = 27185;
+    private static final int FAIRY_TREE_OF_STAR = 27186;
+    private static final int FAIRY_TREE_OF_TWILIGHT = 27187;
+    private static final int FAIRY_TREE_OF_ABYSS = 27188;
+    private static final int SOUL_OF_TREE_GUARDIAN = 27189;
+
+    // Other
+    private static final NpcStringId[] GUARDIAN_MESSAGES = new NpcStringId[]
+            {
+                    NpcStringId.ID_42118,
+                    NpcStringId.ID_42119,
+                    NpcStringId.ID_42120,
+            };
+
+    private static final Map<Integer, TreeData> TREES_DATA = new HashMap<>(4);
+
+    static {
+        TREES_DATA.put(FAIRY_TREE_OF_WIND, new TreeData(4, 270, 3, NpcStringId.ID_42112, NpcStringId.ID_42114, NpcStringId.ID_42113)); // tree_q0421_1
+        TREES_DATA.put(FAIRY_TREE_OF_STAR, new TreeData(8, 400, 2, NpcStringId.ID_42112, NpcStringId.ID_42114, NpcStringId.ID_42115)); // tree_q0421_2
+        TREES_DATA.put(FAIRY_TREE_OF_TWILIGHT, new TreeData(16, 150, 2, NpcStringId.ID_42112, NpcStringId.ID_42114, NpcStringId.ID_42116)); // tree_q0421_3
+        TREES_DATA.put(FAIRY_TREE_OF_ABYSS, new TreeData(32, 270, 2, NpcStringId.ID_42112, NpcStringId.ID_42114, NpcStringId.ID_42117)); // tree_q0421_4
+    }
 
     public Q421_LittleWingsBigAdventure() {
         super(421, "Little Wing's Big Adventure");
@@ -42,36 +71,37 @@ public class Q421_LittleWingsBigAdventure extends Quest {
         addStartNpc(CRONOS);
         addTalkId(CRONOS, MIMYU);
 
-        addAttackId(27185, 27186, 27187, 27188);
-        addKillId(27185, 27186, 27187, 27188);
+        addSpawnId(SOUL_OF_TREE_GUARDIAN);
+        addAttackId(FAIRY_TREE_OF_WIND, FAIRY_TREE_OF_STAR, FAIRY_TREE_OF_TWILIGHT, FAIRY_TREE_OF_ABYSS);
+        addKillId(FAIRY_TREE_OF_WIND, FAIRY_TREE_OF_STAR, FAIRY_TREE_OF_TWILIGHT, FAIRY_TREE_OF_ABYSS);
     }
 
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
+        // Cronos
         if (event.equalsIgnoreCase("30610-06.htm")) {
-            if (player.getInventory().getItemCount(3500) + player.getInventory().getItemCount(3501) + player.getInventory().getItemCount(3502) == 1) {
+            if (getDragonFluteCount(player) == 1) {
                 // Find the level of the flute.
-                for (int i = 3500; i < 3503; i++) {
-                    final ItemInstance item = player.getInventory().getItemByItemId(i);
+                for (int i = DRAGONFLUTE_OF_WIND; i <= DRAGONFLUTE_OF_TWILIGHT; i++) {
+                    ItemInstance item = player.getInventory().getItemByItemId(i);
+
                     if (item != null && item.getEnchantLevel() >= 55) {
                         st.setState(QuestStatus.STARTED);
                         st.setCond(1);
                         st.set("iCond", 1);
                         st.set("summonOid", item.getObjectId());
                         playSound(player, SOUND_ACCEPT);
+
                         return "30610-05.htm";
                     }
                 }
             }
-
-            // Exit quest if you got more than one flute, or the flute level doesn't meat requirements.
-            st.exitQuest(true);
-        } else if (event.equalsIgnoreCase("30747-02.htm")) {
+        } else if (event.equalsIgnoreCase("30747-02.htm")) { // Mimyu
             final Summon summon = player.getSummon();
             if (summon != null)
                 htmltext = (summon.getControlItemId() == st.getInteger("summonOid")) ? "30747-04.htm" : "30747-03.htm";
@@ -93,7 +123,7 @@ public class Q421_LittleWingsBigAdventure extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -103,11 +133,11 @@ public class Q421_LittleWingsBigAdventure extends Quest {
                 if (player.getStatus().getLevel() < 45)
                     htmltext = "30610-01.htm";
                     // Got more than one flute, or none.
-                else if (player.getInventory().getItemCount(3500) + player.getInventory().getItemCount(3501) + player.getInventory().getItemCount(3502) != 1)
+                else if (getDragonFluteCount(player) != 1)
                     htmltext = "30610-02.htm";
                 else {
                     // Find the level of the hatchling.
-                    for (int i = 3500; i < 3503; i++) {
+                    for (int i = DRAGONFLUTE_OF_WIND; i <= DRAGONFLUTE_OF_TWILIGHT; i++) {
                         final ItemInstance item = player.getInventory().getItemByItemId(i);
                         if (item != null && item.getEnchantLevel() >= 55)
                             return "30610-04.htm";
@@ -153,10 +183,11 @@ public class Q421_LittleWingsBigAdventure extends Quest {
                             if (summon != null && summon.getControlItemId() == st.getInteger("summonOid"))
                                 return "30747-15.htm";
 
-                            if (player.getInventory().getItemCount(3500) + player.getInventory().getItemCount(3501) + player.getInventory().getItemCount(3502) > 1)
+                            if (getDragonFluteCount(player) > 1) {
                                 return "30747-17.htm";
+                            }
 
-                            for (int i = 3500; i < 3503; i++) {
+                            for (int i = DRAGONFLUTE_OF_WIND; i <= DRAGONFLUTE_OF_TWILIGHT; i++) {
                                 final ItemInstance item = player.getInventory().getItemByItemId(i);
                                 if (item != null && item.getObjectId() == st.getInteger("summonOid")) {
                                     takeItems(player, i, 1);
@@ -170,9 +201,7 @@ public class Q421_LittleWingsBigAdventure extends Quest {
                             // Curse if the registered objectId is the wrong one (switch flutes).
                             htmltext = "30747-18.htm";
 
-                            final L2Skill skill = SkillTable.getInstance().getInfo(4167, 1);
-                            if (skill != null && player.getFirstEffect(skill) == null)
-                                skill.getEffects(npc, player);
+                            npc.getAI().tryToCast(player, 4167, 1);
                         }
                         break;
                 }
@@ -183,62 +212,119 @@ public class Q421_LittleWingsBigAdventure extends Quest {
     }
 
     @Override
+    public String onSpawn(Npc npc) {
+        // Regular tree minions are speaking upon spawn.
+        if (npc.getScriptValue() == 0) {
+            npc.broadcastNpcSay(Rnd.get(GUARDIAN_MESSAGES));
+        }
+
+        return null;
+    }
+
+    @Override
     public String onAttack(Npc npc, Creature attacker, int damage, L2Skill skill) {
-        // Minions scream no matter current quest state.
-        if (((Monster) npc).hasMinions()) {
-            for (Monster ghost : ((Monster) npc).getMinionList().getSpawnedMinions()) {
-                if (!ghost.isDead() && Rnd.get(100) < 1)
-                    ghost.broadcastNpcSay("We must protect the fairy tree!");
-            }
+        Player player = attacker.getActingPlayer();
+        if (player == null) {
+            return null;
         }
 
-        if (attacker instanceof Pet) {
-            final Player player = attacker.getActingPlayer();
+        QuestState st = checkPlayerCondition(player, npc, 2);
+        if (st == null) {
+            // Attacking player does not quest, check tree HP and try to curse attacker.
+            if (npc.getStatus().getHpRatio() < 0.67 && Rnd.get(100) < 30) {
+                npc.getAI().tryToCast(attacker, 4243, 1);
+            }
+        } else if (attacker instanceof Pet) {
+            // Attacker is pet of the player with quest, proceed.
+            int npcId = npc.getNpcId();
+            TreeData td = TREES_DATA.get(npcId);
+            int condition = st.getInteger("iCond");
+            int mask = td.mask;
 
-            // Condition required : 2.
-            final QuestState st = checkPlayerCondition(player, npc, 2);
-            if (st == null)
-                return null;
+            if ((mask & condition) == 0) {
+                // Leaf not consumed by this tree yet, check summoned pet.
+                if (((Pet) attacker).getControlItemId() == st.getInteger("summonOid")) {
+                    // Check attacks completed.
+                    int attack = st.getInteger("attack") + 1;
+                    if (attack > td.attacks) {
+                        // Check leaf present and chance.
+                        if (Rnd.get(100) < td.chance && player.getInventory().hasItems(FAIRY_LEAF)) {
+                            st.set("iCond", condition | mask);
+                            st.set("attack", 0);
 
-            // A pet was the attacker, and the objectId is the good one - random luck is reached and you still have some leaves ; go further.
-            if (((Pet) attacker).getControlItemId() == st.getInteger("summonOid") && Rnd.get(100) < 1 && player.getInventory().hasItems(FAIRY_LEAF)) {
-                final int idMask = (int) Math.pow(2, (npc.getNpcId() - 27182) - 1);
-                final int iCond = st.getInteger("iCond");
+                            npc.broadcastNpcSay(NpcStringId.ID_42111);
+                            takeItems(player, FAIRY_LEAF, 1);
 
-                if ((iCond | idMask) != iCond) {
-                    st.set("iCond", iCond | idMask);
+                            // Four leafs have been used, update quest state.
+                            if (st.getInteger("iCond") == 63) {
+                                st.setCond(3);
+                                playSound(player, SOUND_MIDDLE);
+                            } else {
+                                playSound(player, SOUND_ITEMGET);
+                            }
+                        }
+                    } else {
+                        st.set("attack", attack);
 
-                    npc.broadcastNpcSay("Give me a Fairy Leaf...!");
-                    takeItems(player, FAIRY_LEAF, 1);
-                    npc.broadcastNpcSay("Leave now, before you incur the wrath of the guardian ghost...");
-
-                    // Four leafs have been used ; update quest state.
-                    if (st.getInteger("iCond") == 63) {
-                        st.setCond(3);
-                        playSound(player, SOUND_MIDDLE);
-                    } else
-                        playSound(player, SOUND_ITEMGET);
+                        // Cast Dryad Root on attacker, when abyss tree.
+                        if (npcId == FAIRY_TREE_OF_ABYSS && Rnd.get(100) < 2) {
+                            npc.getAI().tryToCast(attacker, 1201, 33);
+                        }
+                    }
                 }
+            } else {
+                // Leaf consumed by this tree, say random message.
+                npc.broadcastNpcSay(Rnd.get(td.messages));
+            }
+        } else {
+            // Attacker is player with quest, try to curse him.
+            if (Rnd.get(100) < 30) {
+                npc.getAI().tryToCast(attacker, 4243, 1);
             }
         }
+
         return null;
     }
 
     @Override
     public String onKill(Npc npc, Creature killer) {
-        // Tree curses the killer.
-        if (Rnd.get(100) < 30) {
-            final L2Skill skill = SkillTable.getInstance().getInfo(4243, 1);
-            if (skill != null && killer.getFirstEffect(skill) == null)
-                skill.getEffects(npc, killer);
-        }
-
         // Spawn 20 ghosts, attacking the killer.
         for (int i = 0; i < 20; i++) {
-            final Npc ghost = addSpawn(27189, npc, true, 300000, false);
+            // Spawn minion and mark as additional wave.
+            Npc ghost = addSpawn(SOUL_OF_TREE_GUARDIAN, npc, true, 300000, false);
+            ghost.setScriptValue(1);
+
+            // First ghost casts a curse on a killer.
+            if (i == 0) {
+                ghost.getAI().tryToCast(killer, 4243, 1);
+            }
+
             ghost.forceAttack(killer, 2000);
         }
 
         return null;
+    }
+
+
+    private static int getDragonFluteCount(Player player) {
+        final Inventory i = player.getInventory();
+        return i.getItemCount(DRAGONFLUTE_OF_WIND) + i.getItemCount(DRAGONFLUTE_OF_STAR) + i.getItemCount(DRAGONFLUTE_OF_TWILIGHT);
+    }
+
+    /**
+     * Supporting class containing data of a tree.
+     */
+    private static class TreeData {
+        private final int mask;
+        private final int attacks;
+        private final int chance;
+        private final NpcStringId[] messages;
+
+        private TreeData(int mask, int attacks, int chance, NpcStringId... messages) {
+            this.mask = mask;
+            this.attacks = attacks;
+            this.chance = chance;
+            this.messages = messages;
+        }
     }
 }

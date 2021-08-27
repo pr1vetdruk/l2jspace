@@ -12,7 +12,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q165_ShilensHunt extends Quest {
-    private static final String qn = "Q165_ShilensHunt";
+    private static final String QUEST_NAME = "Q165_ShilensHunt";
 
     // Monsters
     private static final int ASHEN_WOLF = 20456;
@@ -48,7 +48,7 @@ public class Q165_ShilensHunt extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -64,7 +64,7 @@ public class Q165_ShilensHunt extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

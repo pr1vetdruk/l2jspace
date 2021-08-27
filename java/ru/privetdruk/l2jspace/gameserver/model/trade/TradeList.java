@@ -83,11 +83,9 @@ public class TradeList extends CopyOnWriteArrayList<TradeItem> {
      * @return ItemInstance : items in inventory
      */
     public List<TradeItem> getAvailableItems(PcInventory inventory) {
-        List<TradeItem> list = new ArrayList<>();
-        for (TradeItem item : this) {
-            item = new TradeItem(item, item.getCount(), item.getPrice());
-            list.add(inventory.adjustAvailableItem(item, list));
-        }
+        List<TradeItem> list = new ArrayList<>(this);
+        list.forEach(inventory::adjustAvailableItem);
+
         return list;
     }
 
@@ -197,33 +195,35 @@ public class TradeList extends CopyOnWriteArrayList<TradeItem> {
      * @param objectId : int
      * @param itemId   : int
      * @param count    : int
-     * @return
      */
-    public synchronized TradeItem removeItem(int objectId, int itemId, int count) {
-        if (isLocked())
-            return null;
+    public synchronized void removeItem(int objectId, int itemId, int count) {
+        if (isLocked()) {
+            return;
+        }
 
         for (TradeItem tradeItem : this) {
             if (tradeItem.getObjectId() == objectId || tradeItem.getItem().getItemId() == itemId) {
                 // If Partner has already confirmed this trade, invalidate the confirmation.
                 if (_partner != null) {
                     TradeList partnerList = _partner.getActiveTradeList();
-                    if (partnerList == null)
-                        return null;
+                    if (partnerList == null) {
+                        return;
+                    }
 
                     partnerList.invalidateConfirmation();
                 }
 
                 // Reduce item count or complete item.
-                if (count != -1 && tradeItem.getCount() > count)
-                    tradeItem.setCount(tradeItem.getCount() - count);
-                else
-                    remove(tradeItem);
+                tradeItem.setCount(tradeItem.getCount() - count);
+                tradeItem.setQuantity(tradeItem.getQuantity() - count);
 
-                return tradeItem;
+                if (tradeItem.getQuantity() <= 0) {
+                    remove(tradeItem);
+                }
+
+                break;
             }
         }
-        return null;
     }
 
     /**

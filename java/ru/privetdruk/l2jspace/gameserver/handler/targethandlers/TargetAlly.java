@@ -49,7 +49,7 @@ public class TargetAlly implements ITargetHandler {
                 }
 
                 // Only buff allies
-                if (player.getClanId() != targetPlayer.getClanId() && player.getAllyId() > 0 && player.getAllyId() != targetPlayer.getAllyId()) {
+                if (player.getClanId() != targetPlayer.getClanId() || (player.getAllyId() > 0 && player.getAllyId() != targetPlayer.getAllyId())) {
                     continue;
                 }
 

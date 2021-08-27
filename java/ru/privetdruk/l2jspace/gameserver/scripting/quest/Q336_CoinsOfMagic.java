@@ -14,7 +14,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q336_CoinsOfMagic extends Quest {
-    private static final String qn = "Q336_CoinsOfMagic";
+    private static final String QUEST_NAME = "Q336_CoinsOfMagic";
 
     // Npcs
     private static final int PANO = 30078;
@@ -730,7 +730,7 @@ public class Q336_CoinsOfMagic extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -1106,7 +1106,7 @@ public class Q336_CoinsOfMagic extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

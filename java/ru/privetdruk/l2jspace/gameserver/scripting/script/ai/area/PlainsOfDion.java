@@ -14,7 +14,7 @@ import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
  * TODO To fully review. AI for mobs in Plains of Dion (near Floran Village)
  */
 public final class PlainsOfDion extends AttackableAIScript {
-    private static final int MONSTERS[] =
+    private static final int[] MONSTERS =
             {
                     21104, // Delu Lizardman Supplier
                     21105, // Delu Lizardman Special Agent

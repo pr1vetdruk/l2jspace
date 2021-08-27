@@ -3,13 +3,14 @@ package ru.privetdruk.l2jspace.gameserver.skill.l2skill;
 import ru.privetdruk.l2jspace.common.data.StatSet;
 
 import ru.privetdruk.l2jspace.gameserver.enums.items.ShotType;
+import ru.privetdruk.l2jspace.gameserver.enums.skills.ShieldDefense;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
-import ru.privetdruk.l2jspace.gameserver.skill.Formulas;
+import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class L2SkillChargeDmg extends L2Skill {
@@ -24,8 +25,9 @@ public class L2SkillChargeDmg extends L2Skill {
 
         double modifier = 0;
 
-        if (caster instanceof Player)
-            modifier = 0.7 + 0.3 * (((Player) caster).getCharges() + getNumCharges());
+        if (caster instanceof Player) {
+            modifier = 0.8 + 0.2 * (((Player) caster).getCharges() + getNumCharges());
+        }
 
         final boolean ss = caster.isChargedShot(ShotType.SOULSHOT);
 
@@ -38,7 +40,7 @@ public class L2SkillChargeDmg extends L2Skill {
                 continue;
 
             // Calculate skill evasion
-            boolean skillIsEvaded = Formulas.calcPhysicalSkillEvasion(target, this);
+            boolean skillIsEvaded = Formula.calcPhysicalSkillEvasion(target, this);
             if (skillIsEvaded) {
                 if (caster instanceof Player)
                     ((Player) caster).sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_DODGES_ATTACK).addCharName(target));
@@ -46,33 +48,25 @@ public class L2SkillChargeDmg extends L2Skill {
                 if (target instanceof Player)
                     ((Player) target).sendPacket(SystemMessage.getSystemMessage(SystemMessageId.AVOIDED_S1_ATTACK).addCharName(caster));
 
-                // no futher calculations needed.
                 continue;
             }
 
-            byte shld = Formulas.calcShldUse(caster, target, this);
-            boolean crit = false;
-
-            if (getBaseCritRate() > 0)
-                crit = Formulas.calcCrit(getBaseCritRate() * 10 * Formulas.getSTRBonus(caster));
-
-            // damage calculation, crit is static 2x
-            double damage = Formulas.calcPhysDam(caster, target, this, shld, false, ss);
-            if (crit)
-                damage *= 2;
+            boolean isCrit = getBaseCritRate() > 0 && Formula.calcCrit(getBaseCritRate() * 10 * Formula.getSTRBonus(caster));
+            ShieldDefense shieldDefense = Formula.calcShieldUse(caster, target, this, isCrit);
+            double damage = Formula.calcPhysicalSkillDamage(caster, target, this, shieldDefense, isCrit, ss);
 
             if (damage > 0) {
-                byte reflect = Formulas.calcSkillReflect(target, this);
+                byte reflect = Formula.calcSkillReflect(target, this);
                 if (hasEffects()) {
-                    if ((reflect & Formulas.SKILL_REFLECT_SUCCEED) != 0) {
+                    if ((reflect & Formula.SKILL_REFLECT_SUCCEED) != 0) {
                         caster.stopSkillEffects(getId());
                         getEffects(target, caster);
                         caster.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_FEEL_S1_EFFECT).addSkillName(this));
                     } else {
                         // activate attacked effects, if any
                         target.stopSkillEffects(getId());
-                        if (Formulas.calcSkillSuccess(caster, target, this, shld, true)) {
-                            getEffects(caster, target, shld, false);
+                        if (Formula.calcSkillSuccess(caster, target, this, shieldDefense, true)) {
+                            getEffects(caster, target, shieldDefense, false);
                             target.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_FEEL_S1_EFFECT).addSkillName(this));
                         } else
                             caster.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_RESISTED_YOUR_S2).addCharName(target).addSkillName(this));
@@ -83,10 +77,10 @@ public class L2SkillChargeDmg extends L2Skill {
                 target.reduceCurrentHp(finalDamage, caster, this);
 
                 // vengeance reflected damage
-                if ((reflect & Formulas.SKILL_REFLECT_VENGEANCE) != 0)
+                if ((reflect & Formula.SKILL_REFLECT_VENGEANCE) != 0)
                     caster.reduceCurrentHp(damage, target, this);
 
-                caster.sendDamageMessage(target, (int) finalDamage, false, crit, false);
+                caster.sendDamageMessage(target, (int) finalDamage, false, isCrit, false);
             } else
                 caster.sendDamageMessage(target, 0, false, false, true);
         }

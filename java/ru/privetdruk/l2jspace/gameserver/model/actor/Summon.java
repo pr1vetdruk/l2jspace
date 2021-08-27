@@ -37,6 +37,8 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public abstract class Summon extends Playable {
+    public static final int CONTRACT_PAYMENT = 4140;
+
     private Player _owner;
     private boolean _previousFollowStatus = true;
     private int _shotsMask = 0;
@@ -208,8 +210,12 @@ public abstract class Summon extends Playable {
 
     @Override
     public void onDecay() {
-        if (_owner.getSummon() != this)
+        if (_owner.getSummon() != this) {
             return;
+        }
+
+        // Remove Contract Payment effect from owner.
+        _owner.stopSkillEffects(CONTRACT_PAYMENT);
 
         deleteMe(_owner);
     }
@@ -244,7 +250,8 @@ public abstract class Summon extends Playable {
 
             decayMe();
 
-            super.deleteMe();
+            // Remove Contract Payment effect from owner.
+            _owner.stopSkillEffects(CONTRACT_PAYMENT);
 
             // Disable beastshots
             for (int itemId : owner.getAutoSoulShot()) {
@@ -255,6 +262,8 @@ public abstract class Summon extends Playable {
                         break;
                 }
             }
+
+            super.deleteMe();
         }
     }
 

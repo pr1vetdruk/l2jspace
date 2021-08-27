@@ -139,7 +139,7 @@ public class Attackable extends Npc {
 
     @Override
     public void onActiveRegion() {
-        getStatus().startHpMpRegeneration();
+        // Override Npc random timer animation.
     }
 
     @Override

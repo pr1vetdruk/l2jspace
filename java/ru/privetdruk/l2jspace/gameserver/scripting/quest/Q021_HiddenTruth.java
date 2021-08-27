@@ -4,11 +4,12 @@ import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q021_HiddenTruth extends Quest {
-    private static final String qn = "Q021_HiddenTruth";
+    private static final String QUEST_NAME = "Q021_HiddenTruth";
 
     // NPCs
     private static final int MYSTERIOUS_WIZARD = 31522;
@@ -52,7 +53,7 @@ public class Q021_HiddenTruth extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -66,7 +67,7 @@ public class Q021_HiddenTruth extends Quest {
                     st.setCond(2);
 
                 _duke = addSpawn(VON_HELLMAN_DUKE, 51432, -54570, -3136, 0, false, 300000, true);
-                _duke.broadcastNpcSay("Who awoke me?");
+                _duke.broadcastNpcSay(NpcStringId.ID_2150);
             } else
                 htmltext = "31523-04.htm";
 
@@ -122,15 +123,11 @@ public class Q021_HiddenTruth extends Quest {
 
             startQuestTimer("4", npc, player, 18000);
         } else if (name.equalsIgnoreCase("4")) {
-            QuestState st = player.getQuestList().getQuestState(qn);
+            QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
             if (st != null)
                 st.set("end_walk", 1);
 
-            npc.broadcastNpcSay("Please check this bookcase, " + player.getName() + ".");
-
-            startQuestTimer("5", npc, player, 47000);
-        } else if (name.equalsIgnoreCase("5")) {
-            npc.broadcastNpcSay("I'm confused! Maybe it's time to go back.");
+            npc.broadcastNpcSay(NpcStringId.ID_2152, player.getName());
         }
 
         return null;
@@ -139,7 +136,7 @@ public class Q021_HiddenTruth extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -225,7 +222,9 @@ public class Q021_HiddenTruth extends Quest {
 
                             // For cond 6, make checks until cond 7 is activated.
                             if (cond == 6) {
-                                int npcId1 = 0, npcId2 = 0;
+                                int npcId1 = 0;
+                                int npcId2 = 0;
+
                                 if (npcId == AGRIPEL) {
                                     npcId1 = BENEDICT;
                                     npcId2 = DOMINIC;
@@ -281,7 +280,7 @@ public class Q021_HiddenTruth extends Quest {
     private boolean spawnThePage(Player player) {
         if (_page == null) {
             _page = addSpawn(VON_HELLMAN_PAGE, 51608, -54520, -3168, 0, false, 90000, true);
-            _page.broadcastNpcSay("My master has instructed me to be your guide, " + player.getName() + ".");
+            _page.broadcastNpcSay(NpcStringId.ID_2151, player.getName());
 
             startQuestTimer("1", _page, player, 4000);
             return true;

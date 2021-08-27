@@ -8,7 +8,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q431_WeddingMarch extends Quest {
-    private static final String qn = "Q431_WeddingMarch";
+    private static final String QUEST_NAME = "Q431_WeddingMarch";
 
     // NPC
     private static final int KANTABILON = 31042;
@@ -33,7 +33,7 @@ public class Q431_WeddingMarch extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -58,7 +58,7 @@ public class Q431_WeddingMarch extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

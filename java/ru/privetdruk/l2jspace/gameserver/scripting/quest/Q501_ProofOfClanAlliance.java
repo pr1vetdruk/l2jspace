@@ -24,7 +24,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q501_ProofOfClanAlliance extends Quest {
-    private static final String qn = "Q501_ProofOfClanAlliance";
+    private static final String QUEST_NAME = "Q501_ProofOfClanAlliance";
 
     // Items
     private static final int POTION_OF_RECOVERY = 3889;
@@ -94,7 +94,7 @@ public class Q501_ProofOfClanAlliance extends Quest {
                     new SpawnLocation(102186, 103022, -3541, 0)
             };
 
-    private Set<Npc> _boxesOfAthrea = ConcurrentHashMap.newKeySet();
+    private final Set<Npc> _boxesOfAthrea = ConcurrentHashMap.newKeySet();
 
     public Q501_ProofOfClanAlliance() {
         super(501, "Proof Of Clan Alliance");
@@ -114,7 +114,7 @@ public class Q501_ProofOfClanAlliance extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -183,7 +183,10 @@ public class Q501_ProofOfClanAlliance extends Quest {
                 lst.set("boxes", 0);
 
                 // Generate location of special boxes.
-                SpawnLocation loc1, loc2, loc3, loc4;
+                SpawnLocation loc1;
+                SpawnLocation loc2;
+                SpawnLocation loc3;
+                SpawnLocation loc4;
                 do {
                     loc1 = Rnd.get(BOXES_OF_ATHREA_SPAWNLIST);
                     loc2 = Rnd.get(BOXES_OF_ATHREA_SPAWNLIST);
@@ -349,10 +352,10 @@ public class Q501_ProofOfClanAlliance extends Quest {
                                 htmltext = "30757-06.htm";
                             } else if (player.getStatus().getLevel() < 40) { // member below 40
                                 htmltext = "30757-02.htm";
-                            } else if (!lst.getBool(String.valueOf(player.getObjectId()))) { // member has not proven yet
-                                htmltext = "30757-01.htm";
-                            } else { // member has proven already
+                            } else if (lst.getBool(String.valueOf(player.getObjectId()))) { // member has proven already
                                 htmltext = "30757-01b.htm";
+                            } else {
+                                htmltext = "30757-01.htm";
                             }
                         }
 

@@ -4,6 +4,7 @@ import ru.privetdruk.l2jspace.gameserver.enums.LootRule;
 import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.group.Party;
+import ru.privetdruk.l2jspace.gameserver.network.GameClient;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.AskJoinParty;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
@@ -50,7 +51,8 @@ public final class RequestJoinParty extends L2GameClientPacket {
             return;
         }
 
-        if (target.getClient().isDetached()) {
+        GameClient client = target.getClient();
+        if (client == null || client.isDetached()) {
             requestor.sendMessage("The player you tried to invite is in offline mode.");
             return;
         }

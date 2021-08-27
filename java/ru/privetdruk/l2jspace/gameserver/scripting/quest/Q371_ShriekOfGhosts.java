@@ -13,7 +13,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q371_ShriekOfGhosts extends Quest {
-    private static final String qn = "Q371_ShriekOfGhosts";
+    private static final String QUEST_NAME = "Q371_ShriekOfGhosts";
 
     // NPCs
     private static final int REVA = 30867;
@@ -58,7 +58,7 @@ public class Q371_ShriekOfGhosts extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -110,7 +110,7 @@ public class Q371_ShriekOfGhosts extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

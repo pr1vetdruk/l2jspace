@@ -6,32 +6,33 @@ import java.util.Map;
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q115_TheOtherSideOfTruth extends Quest {
-    private final static String qn = "Q115_TheOtherSideOfTruth";
+    private final static String QUEST_NAME = "Q115_TheOtherSideOfTruth";
 
     // Items
-    private final static int MISA_LETTER = 8079;
-    private final static int RAFFORTY_LETTER = 8080;
-    private final static int PIECE_OF_TABLET = 8081;
-    private final static int REPORT_PIECE = 8082;
+    private static final int MISA_LETTER = 8079;
+    private static final int RAFFORTY_LETTER = 8080;
+    private static final int PIECE_OF_TABLET = 8081;
+    private static final int REPORT_PIECE = 8082;
 
     // NPCs
-    private final static int RAFFORTY = 32020;
-    private final static int MISA = 32018;
-    private final static int KIERRE = 32022;
-    private final static int SCULPTURE_1 = 32021;
-    private final static int SCULPTURE_2 = 32077;
-    private final static int SCULPTURE_3 = 32078;
-    private final static int SCULPTURE_4 = 32079;
-    private final static int SUSPICIOUS_MAN = 32019;
+    private static final int RAFFORTY = 32020;
+    private static final int MISA = 32018;
+    private static final int KIERRE = 32022;
+    private static final int SCULPTURE_1 = 32021;
+    private static final int SCULPTURE_2 = 32077;
+    private static final int SCULPTURE_3 = 32078;
+    private static final int SCULPTURE_4 = 32079;
+    private static final int SUSPICIOUS_MAN = 32019;
 
     // Used to test progression through sculptures. The array consists of value to add, used modulo, tested modulo value, tested values 1/2/3/4.
-    private final static Map<Integer, int[]> NPC_VALUES = new HashMap<>();
+    private static final Map<Integer, int[]> NPC_VALUES = new HashMap<>();
 
-    {
+    static {
         NPC_VALUES.put(32021, new int[]
                 {
                         1,
@@ -86,7 +87,7 @@ public class Q115_TheOtherSideOfTruth extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -144,28 +145,26 @@ public class Q115_TheOtherSideOfTruth extends Quest {
             final int ex = st.getInteger("ex");
             final int numberToModulo = (infos[1] == 0) ? ex : ex % infos[1];
 
-            if (numberToModulo <= infos[2]) {
-                if (ex == infos[3] || ex == infos[4] || ex == infos[5]) {
-                    st.set("ex", ex + infos[0]);
-                    giveItems(player, PIECE_OF_TABLET, 1);
-                    playSound(player, SOUND_ITEMGET);
-                }
+            if (numberToModulo <= infos[2] && (ex == infos[3] || ex == infos[4] || ex == infos[5])) {
+                st.set("ex", ex + infos[0]);
+                giveItems(player, PIECE_OF_TABLET, 1);
+                playSound(player, SOUND_ITEMGET);
             }
         } else if (event.equalsIgnoreCase("sculpture-04.htm")) {
             final int[] infos = NPC_VALUES.get(npc.getNpcId());
             final int ex = st.getInteger("ex");
             final int numberToModulo = (infos[1] == 0) ? ex : ex % infos[1];
 
-            if (numberToModulo <= infos[2])
-                if (ex == infos[3] || ex == infos[4] || ex == infos[5])
-                    st.set("ex", ex + infos[0]);
+            if (numberToModulo <= infos[2] && (ex == infos[3] || ex == infos[4] || ex == infos[5])) {
+                st.set("ex", ex + infos[0]);
+            }
         } else if (event.equalsIgnoreCase("sculpture-06.htm")) {
             st.setCond(8);
             playSound(player, SOUND_MIDDLE);
 
             // Spawn a suspicious man broadcasting a message, which dissapear few seconds later broadcasting a second message.
             final Npc stranger = addSpawn(SUSPICIOUS_MAN, player.getX() + 50, player.getY() + 50, player.getZ(), 0, false, 3100, false);
-            stranger.broadcastNpcSay("This looks like the right place...");
+            stranger.broadcastNpcSay(NpcStringId.ID_11550);
 
             startQuestTimer("despawn_1", stranger, null, 3000);
         } else if (event.equalsIgnoreCase("32022-02.htm")) {
@@ -175,7 +174,7 @@ public class Q115_TheOtherSideOfTruth extends Quest {
 
             // Spawn a suspicious man broadcasting a message, which dissapear few seconds later broadcasting a second message.
             final Npc stranger = addSpawn(SUSPICIOUS_MAN, player.getX() + 50, player.getY() + 50, player.getZ(), 0, false, 5100, false);
-            stranger.broadcastNpcSay("We meet again.");
+            stranger.broadcastNpcSay(NpcStringId.ID_11552);
 
             startQuestTimer("despawn_2", stranger, null, 5000);
         }
@@ -185,9 +184,9 @@ public class Q115_TheOtherSideOfTruth extends Quest {
     @Override
     public String onTimer(String name, Npc npc, Player player) {
         if (name.equalsIgnoreCase("despawn_1")) {
-            npc.broadcastNpcSay("I see someone. Is this fate?");
+            npc.broadcastNpcSay(NpcStringId.ID_11551);
         } else if (name.equalsIgnoreCase("despawn_2")) {
-            npc.broadcastNpcSay("Don't bother trying to find out more about me. Follow your own destiny.");
+            npc.broadcastNpcSay(NpcStringId.ID_11553);
         }
 
         return null;
@@ -196,7 +195,7 @@ public class Q115_TheOtherSideOfTruth extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

@@ -7,11 +7,12 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q420_LittleWing extends Quest {
-    private static final String qn = "Q420_LittleWing";
+    private static final String QUEST_NAME = "Q420_LittleWing";
 
     // Needed items
     private static final int COAL = 1870;
@@ -84,7 +85,7 @@ public class Q420_LittleWing extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -231,7 +232,7 @@ public class Q420_LittleWing extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -442,7 +443,7 @@ public class Q420_LittleWing extends Quest {
 
             case 20580:
                 if (player.getInventory().hasItems(SCALE_OF_DRAKE_EXARION) && !dropItems(player, EGG_OF_DRAKE_EXARION, 1, 20, 500000))
-                    npc.broadcastNpcSay("If the eggs get taken, we're dead!");
+                    npc.broadcastNpcSay(NpcStringId.ID_42049);
                 break;
 
             case 20233:
@@ -452,12 +453,12 @@ public class Q420_LittleWing extends Quest {
 
             case 20551:
                 if (player.getInventory().hasItems(SCALE_OF_DRAKE_KALIBRAN) && !dropItems(player, EGG_OF_DRAKE_KALIBRAN, 1, 20, 500000))
-                    npc.broadcastNpcSay("Hey! Everybody watch the eggs!");
+                    npc.broadcastNpcSay(NpcStringId.ID_42046);
                 break;
 
             case 20270:
                 if (player.getInventory().hasItems(SCALE_OF_WYVERN_SUZET) && !dropItems(player, EGG_OF_WYVERN_SUZET, 1, 20, 500000))
-                    npc.broadcastNpcSay("I thought I'd caught one share... Whew!");
+                    npc.broadcastNpcSay(NpcStringId.ID_42047);
                 break;
 
             case 20202:
@@ -480,7 +481,7 @@ public class Q420_LittleWing extends Quest {
                     st.set("deluxestone", 2);
                     playSound(player, SOUND_MIDDLE);
                     takeItems(player, DELUXE_FAIRY_STONE, 1);
-                    npc.broadcastNpcSay("The stone... the Elven stone... broke...");
+                    npc.broadcastNpcSay(NpcStringId.ID_42048);
                 }
                 break;
         }

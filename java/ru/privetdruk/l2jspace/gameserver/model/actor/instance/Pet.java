@@ -18,6 +18,7 @@ import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
 import ru.privetdruk.l2jspace.gameserver.enums.StatusType;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
+import ru.privetdruk.l2jspace.gameserver.enums.actors.WeightPenalty;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.Stats;
 import ru.privetdruk.l2jspace.gameserver.handler.IItemHandler;
 import ru.privetdruk.l2jspace.gameserver.handler.ItemHandler;
@@ -42,7 +43,7 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.InventoryUpdate;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PetInventoryUpdate;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.StatusUpdate;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
-import ru.privetdruk.l2jspace.gameserver.skill.Formulas;
+import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.taskmanager.DecayTaskManager;
 
@@ -67,7 +68,7 @@ public class Pet extends Summon {
     private final boolean _isMountable;
 
     private int _curFed;
-    private int _curWeightPenalty = 0;
+    private WeightPenalty weightPenalty = WeightPenalty.NONE;
 
     private long _expBeforeDeath = 0;
 
@@ -81,6 +82,10 @@ public class Pet extends Summon {
         _inventory = new PetInventory(this);
         _controlItemId = control.getObjectId();
         _isMountable = template.getNpcId() == 12526 || template.getNpcId() == 12527 || template.getNpcId() == 12528 || template.getNpcId() == 12621;
+    }
+
+    public WeightPenalty getWeightPenalty() {
+        return weightPenalty;
     }
 
     @Override
@@ -331,7 +336,7 @@ public class Pet extends Summon {
      */
     @Override
     public final int getWeightLimit() {
-        return (int) getStatus().calcStat(Stats.WEIGHT_LIMIT, 34500 * Formulas.CON_BONUS[getStatus().getCON()] * Config.WEIGHT_LIMIT, this, null);
+        return (int) getStatus().calcStat(Stats.WEIGHT_LIMIT, 34500 * Formula.CON_BONUS[getStatus().getCON()] * Config.WEIGHT_LIMIT, this, null);
     }
 
     @Override
@@ -568,27 +573,21 @@ public class Pet extends Summon {
 
         final double ratio = (getCurrentWeight() - getStatus().calcStat(Stats.WEIGHT_PENALTY, 0, this, null)) / weightLimit;
 
-        int newWeightPenalty;
-        if (ratio < 0.5)
-            newWeightPenalty = 0;
-        else if (ratio < 0.666)
-            newWeightPenalty = 1;
-        else if (ratio < 0.8)
-            newWeightPenalty = 2;
-        else if (ratio < 1)
-            newWeightPenalty = 3;
-        else
-            newWeightPenalty = 4;
+        WeightPenalty newWeightPenalty;
+        if (ratio < 0.5) {
+            newWeightPenalty = WeightPenalty.NONE;
+        } else if (ratio < 0.666) {
+            newWeightPenalty = WeightPenalty.LEVEL_1;
+        } else if (ratio < 0.8) {
+            newWeightPenalty = WeightPenalty.LEVEL_2;
+        } else if (ratio < 1) {
+            newWeightPenalty = WeightPenalty.LEVEL_3;
+        } else {
+            newWeightPenalty = WeightPenalty.LEVEL_4;
+        }
 
-        if (_curWeightPenalty != newWeightPenalty) {
-            if (_curWeightPenalty > 0)
-                removeStatsByOwner(SkillTable.getInstance().getInfo(4270, _curWeightPenalty));
-
-            _curWeightPenalty = newWeightPenalty;
-
-            if (newWeightPenalty > 0)
-                addStatFuncs(SkillTable.getInstance().getInfo(4270, newWeightPenalty).getStatFuncs(this));
-
+        if (weightPenalty != newWeightPenalty) {
+            weightPenalty = newWeightPenalty;
             getStatus().broadcastStatusUpdate();
         }
     }

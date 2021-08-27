@@ -32,42 +32,40 @@ public final class RequestRefine extends AbstractRefinePacket {
 
         final ItemInstance targetItem = player.getInventory().getItemByObjectId(_targetItemObjId);
         if (targetItem == null) {
-            player.sendPacket(new ExVariationResult(0, 0, 0));
+            player.sendPacket(ExVariationResult.RESULT_FAILED);
             player.sendPacket(SystemMessageId.AUGMENTATION_FAILED_DUE_TO_INAPPROPRIATE_CONDITIONS);
             return;
         }
 
         final ItemInstance refinerItem = player.getInventory().getItemByObjectId(_refinerItemObjId);
         if (refinerItem == null) {
-            player.sendPacket(new ExVariationResult(0, 0, 0));
+            player.sendPacket(ExVariationResult.RESULT_FAILED);
             player.sendPacket(SystemMessageId.AUGMENTATION_FAILED_DUE_TO_INAPPROPRIATE_CONDITIONS);
             return;
         }
 
         final ItemInstance gemStoneItem = player.getInventory().getItemByObjectId(_gemStoneItemObjId);
         if (gemStoneItem == null) {
-            player.sendPacket(new ExVariationResult(0, 0, 0));
+            player.sendPacket(ExVariationResult.RESULT_FAILED);
             player.sendPacket(SystemMessageId.AUGMENTATION_FAILED_DUE_TO_INAPPROPRIATE_CONDITIONS);
             return;
         }
 
         if (!isValid(player, targetItem, refinerItem, gemStoneItem)) {
-            player.sendPacket(new ExVariationResult(0, 0, 0));
+            player.sendPacket(ExVariationResult.RESULT_FAILED);
             player.sendPacket(SystemMessageId.AUGMENTATION_FAILED_DUE_TO_INAPPROPRIATE_CONDITIONS);
             return;
         }
 
         final LifeStone ls = getLifeStone(refinerItem.getItemId());
         if (ls == null) {
-            player.sendPacket(new ExVariationResult(0, 0, 0));
+            player.sendPacket(ExVariationResult.RESULT_FAILED);
             player.sendPacket(SystemMessageId.AUGMENTATION_FAILED_DUE_TO_INAPPROPRIATE_CONDITIONS);
             return;
         }
 
-        final int lifeStoneLevel = ls.getLevel();
-        final int lifeStoneGrade = ls.getGrade();
         if (_gemStoneCount != getGemStoneCount(targetItem.getItem().getCrystalType())) {
-            player.sendPacket(new ExVariationResult(0, 0, 0));
+            player.sendPacket(ExVariationResult.RESULT_FAILED);
             player.sendPacket(SystemMessageId.AUGMENTATION_FAILED_DUE_TO_INAPPROPRIATE_CONDITIONS);
             return;
         }
@@ -86,23 +84,23 @@ public final class RequestRefine extends AbstractRefinePacket {
 
         // Consume the life stone
         if (!player.destroyItem("RequestRefine", refinerItem, 1, null, false)) {
-            player.sendPacket(new ExVariationResult(0, 0, 0));
+            player.sendPacket(ExVariationResult.RESULT_FAILED);
             player.sendPacket(SystemMessageId.AUGMENTATION_FAILED_DUE_TO_INAPPROPRIATE_CONDITIONS);
             return;
         }
 
         // Consume gemstones
         if (!player.destroyItem("RequestRefine", gemStoneItem, _gemStoneCount, null, false)) {
-            player.sendPacket(new ExVariationResult(0, 0, 0));
+            player.sendPacket(ExVariationResult.RESULT_FAILED);
             player.sendPacket(SystemMessageId.AUGMENTATION_FAILED_DUE_TO_INAPPROPRIATE_CONDITIONS);
             return;
         }
 
-        final Augmentation aug = AugmentationData.getInstance().generateRandomAugmentation(lifeStoneLevel, lifeStoneGrade);
-        targetItem.setAugmentation(aug);
+        Augmentation augmentation = AugmentationData.getInstance().generateRandomAugmentation(ls.getLevel(), ls.getGrade());
+        targetItem.setAugmentation(augmentation);
 
-        final int stat12 = 0x0000FFFF & aug.getId();
-        final int stat34 = aug.getId() >> 16;
+        final int stat12 = 0x0000FFFF & augmentation.getId();
+        final int stat34 = augmentation.getId() >> 16;
         player.sendPacket(new ExVariationResult(stat12, stat34, 1));
 
         InventoryUpdate iu = new InventoryUpdate();

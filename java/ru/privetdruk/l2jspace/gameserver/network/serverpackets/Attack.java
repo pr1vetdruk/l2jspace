@@ -1,5 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
+import ru.privetdruk.l2jspace.gameserver.enums.skills.ShieldDefense;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.attack.CreatureAttack.HitHolder;
 
@@ -45,8 +46,9 @@ public class Attack extends L2GameServerPacket {
             if (hit._crit)
                 hit._flags |= HITFLAG_CRIT;
 
-            if (hit._shld > 0)
+            if (hit.shieldDefense != ShieldDefense.FAILED) {
                 hit._flags |= HITFLAG_SHLD;
+            }
         }
         return isHit;
     }

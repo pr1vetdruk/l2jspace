@@ -7,7 +7,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q019_GoToThePastureland extends Quest {
-    private static final String qn = "Q019_GoToThePastureland";
+    private static final String QUEST_NAME = "Q019_GoToThePastureland";
 
     // Items
     private static final int YOUNG_WILD_BEAST_MEAT = 7547;
@@ -28,7 +28,7 @@ public class Q019_GoToThePastureland extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -53,7 +53,7 @@ public class Q019_GoToThePastureland extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

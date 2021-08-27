@@ -6,19 +6,20 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class Q022_TragedyInVonHellmannForest extends Quest {
-    private static final String qn = "Q022_TragedyInVonHellmannForest";
+    private static final String QUEST_NAME = "Q022_TragedyInVonHellmannForest";
 
     // NPCs
     private static final int WELL = 31527;
     private static final int TIFAREN = 31334;
     private static final int INNOCENTIN = 31328;
-    private static final int GHOST_OF_PRIEST = 31528;
-    private static final int GHOST_OF_ADVENTURER = 31529;
+    private static final int GHOST_OF_PRIEST = 31528; // rune_ghost2
+    private static final int GHOST_OF_ADVENTURER = 31529; // rune_ghost3
 
     // Items
     private static final int CROSS_OF_EINHASAD = 7141;
@@ -51,7 +52,7 @@ public class Q022_TragedyInVonHellmannForest extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -87,7 +88,7 @@ public class Q022_TragedyInVonHellmannForest extends Quest {
                 takeItems(player, LOST_SKULL_OF_ELF, 1);
 
                 _ghostOfPriest = addSpawn(GHOST_OF_PRIEST, 38418, -49894, -1104, 0, false, 120000, true);
-                _ghostOfPriest.broadcastNpcSay("Did you call me, " + player.getName() + "?");
+                _ghostOfPriest.broadcastNpcSay(NpcStringId.ID_2250, player.getName());
             }
         } else if (event.equalsIgnoreCase("31528-08.htm")) {
             st.setCond(8);
@@ -128,7 +129,7 @@ public class Q022_TragedyInVonHellmannForest extends Quest {
         if (event.equalsIgnoreCase("ghost_delete")) {
             _ghostOfPriest.deleteMe();
         } else if (event.equalsIgnoreCase("attack_timer")) {
-            QuestState st = player.getQuestList().getQuestState(qn);
+            QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
             if (st != null) {
                 st.setCond(11);
                 playSound(player, SOUND_MIDDLE);
@@ -143,7 +144,7 @@ public class Q022_TragedyInVonHellmannForest extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -289,7 +290,7 @@ public class Q022_TragedyInVonHellmannForest extends Quest {
     @Override
     public String onDecay(Npc npc) {
         if (npc == _ghostOfPriest) {
-            _ghostOfPriest.broadcastNpcSay("I'm confused! Maybe it's time to go back.");
+            _ghostOfPriest.broadcastNpcSay(NpcStringId.ID_2251);
 
             cancelQuestTimers(_ghostOfPriest);
             _ghostOfPriest = null;
@@ -302,7 +303,7 @@ public class Q022_TragedyInVonHellmannForest extends Quest {
     public String onAttack(Npc npc, Creature attacker, int damage, L2Skill skill) {
         final Player player = attacker.getActingPlayer();
 
-        final QuestState st = player.getQuestList().getQuestState(qn);
+        final QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null || !st.isStarted())
             return null;
 

@@ -290,8 +290,8 @@ public class Valakas extends AttackableAIScript {
 
         GrandBossManager.getInstance().setBossStatus(VALAKAS, DEAD);
 
-        long respawnTime = (long) Config.SPAWN_INTERVAL_VALAKAS + Rnd.get(-Config.RANDOM_SPAWN_TIME_VALAKAS, Config.RANDOM_SPAWN_TIME_VALAKAS);
-        respawnTime *= 3600000;
+        long respawnTime = (long) Config.SPAWN_INTERVAL_VALAKAS * 60 + Rnd.get(-60 * Config.RANDOM_SPAWN_TIME_VALAKAS, 60 * Config.RANDOM_SPAWN_TIME_VALAKAS);
+        respawnTime *= 60000;
 
         startQuestTimer("valakas_unlock", null, null, respawnTime);
 

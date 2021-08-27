@@ -307,46 +307,29 @@ public class PcInventory extends Inventory {
     /**
      * Adjust TradeItem according his status in inventory
      *
-     * @param item : ItemInstance to be adjusted
-     * @param list
-     * @return
+     * @param item : ItemInstance to be adjusten
      */
-    public TradeItem adjustAvailableItem(TradeItem item, List<TradeItem> list) {
-        for (ItemInstance adjItem : _items) {
-            if (adjItem.isStackable()) {
-                if (adjItem.getItemId() == item.getItem().getItemId() && (adjItem.getEnchantLevel() == item.getEnchant())) {
-                    item.setObjectId(adjItem.getObjectId());
-                    item.setCount(Math.min(adjItem.getCount(), item.getCount()));
+    public void adjustAvailableItem(TradeItem item) {
+        // For all ItemInstance with same item id.
+        for (ItemInstance adjItem : getItemsByItemId(item.getItem().getItemId())) {
+            // If enchant level is different, bypass.
+            if (adjItem.getEnchantLevel() != item.getEnchant()) {
+                continue;
+            }
 
-                    return item;
-                }
-            } else {
-                if (adjItem.getItemId() == item.getItem().getItemId() && (adjItem.getEnchantLevel() == item.getEnchant())) {
-                    boolean found = false;
-
-                    for (TradeItem actual : list) {
-                        if (actual.getObjectId() == adjItem.getObjectId()) {
-                            found = true;
-                            break;
-                        }
-                    }
-
-                    if (found) {
-                        continue;
-                    }
-
-                    item.setObjectId(adjItem.getObjectId());
-                    item.setCount(Math.min(adjItem.getCount(), item.getCount()));
-
-                    return item;
-                }
+            // If item isn't equipable, or equipable but not equiped it is a success.
+            if (!adjItem.isEquipable() || (adjItem.isEquipable() && !adjItem.isEquipped())) {
+                item.setObjectId(adjItem.getObjectId());
+                item.setEnchant(adjItem.getEnchantLevel());
+                item.setCount(Math.min(adjItem.getCount(), item.getQuantity()));
+                return;
             }
         }
 
+        // None item matched conditions ; return as invalid count.
         item.setCount(0);
-
-        return item;
     }
+
 
     /**
      * Adds adena to PCInventory
@@ -476,7 +459,8 @@ public class PcInventory extends Inventory {
      * @return ItemInstance corresponding to the new item or the updated item in inventory
      */
     @Override
-    public ItemInstance transferItem(String process, int objectId, int count, ItemContainer target, Player actor, WorldObject reference) {
+    public ItemInstance transferItem(String process, int objectId, int count, ItemContainer target, Player
+            actor, WorldObject reference) {
         ItemInstance item = super.transferItem(process, objectId, count, target, actor, reference);
 
         if (_adena != null && (_adena.getCount() <= 0 || _adena.getOwnerId() != getOwnerId()))
@@ -512,7 +496,8 @@ public class PcInventory extends Inventory {
      * @return ItemInstance corresponding to the destroyed item or the updated item in inventory
      */
     @Override
-    public ItemInstance destroyItem(String process, ItemInstance item, int count, Player actor, WorldObject reference) {
+    public ItemInstance destroyItem(String process, ItemInstance item, int count, Player actor, WorldObject
+            reference) {
         item = super.destroyItem(process, item, count, actor, reference);
 
         if (_adena != null && _adena.getCount() <= 0)
@@ -554,7 +539,8 @@ public class PcInventory extends Inventory {
      * @return ItemInstance corresponding to the destroyed item or the updated item in inventory
      */
     @Override
-    public ItemInstance destroyItemByItemId(String process, int itemId, int count, Player actor, WorldObject reference) {
+    public ItemInstance destroyItemByItemId(String process, int itemId, int count, Player actor, WorldObject
+            reference) {
         ItemInstance item = getItemByItemId(itemId);
         if (item == null)
             return null;

@@ -35,8 +35,7 @@ public class RequestSetSeed extends L2GameClientPacket {
                 return;
             }
 
-            if (sales > 0)
-                _items.add(new SeedProduction(itemId, sales, price, sales));
+            _items.add(new SeedProduction(itemId, sales, price, sales));
         }
     }
 

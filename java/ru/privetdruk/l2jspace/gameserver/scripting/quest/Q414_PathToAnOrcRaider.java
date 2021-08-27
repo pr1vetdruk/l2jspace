@@ -12,7 +12,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q414_PathToAnOrcRaider extends Quest {
-    private static final String qn = "Q414_PathToAnOrcRaider";
+    private static final String QUEST_NAME = "Q414_PathToAnOrcRaider";
 
     // Items
     private static final int GREEN_BLOOD = 1578;
@@ -49,7 +49,7 @@ public class Q414_PathToAnOrcRaider extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -92,7 +92,7 @@ public class Q414_PathToAnOrcRaider extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

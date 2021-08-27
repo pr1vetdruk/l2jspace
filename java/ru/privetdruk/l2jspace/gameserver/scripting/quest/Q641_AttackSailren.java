@@ -9,7 +9,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q641_AttackSailren extends Quest {
-    private static final String qn = "Q641_AttackSailren";
+    private static final String QUEST_NAME = "Q641_AttackSailren";
 
     // NPCs
     private static final int STATUE = 32109;
@@ -32,7 +32,7 @@ public class Q641_AttackSailren extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return null;
 
@@ -59,7 +59,7 @@ public class Q641_AttackSailren extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -68,7 +68,7 @@ public class Q641_AttackSailren extends Quest {
                 if (player.getStatus().getLevel() < 77)
                     htmltext = "32109-3.htm";
                 else {
-                    QuestState st2 = player.getQuestList().getQuestState(Q126_TheNameOfEvil_2.qn);
+                    QuestState st2 = player.getQuestList().getQuestState(Q126_TheNameOfEvil_2.QUEST_NAME);
                     htmltext = (st2 != null && st2.isCompleted()) ? "32109-1.htm" : "32109-2.htm";
                 }
                 break;

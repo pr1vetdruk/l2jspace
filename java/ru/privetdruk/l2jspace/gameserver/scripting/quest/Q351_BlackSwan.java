@@ -3,6 +3,7 @@ package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
+import ru.privetdruk.l2jspace.gameserver.enums.items.ItemEnum;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
@@ -10,7 +11,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q351_BlackSwan extends Quest {
-    private static final String qn = "Q351_BlackSwan";
+    private static final String QUEST_NAME = "Q351_BlackSwan";
 
     // NPCs
     private static final int GOSTA = 30916;
@@ -37,7 +38,7 @@ public class Q351_BlackSwan extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -61,6 +62,7 @@ public class Q351_BlackSwan extends Quest {
 
                 takeItems(player, BARREL_OF_LEAGUE, -1);
                 rewardItems(player, BILL_OF_IASON_HEINE, barrels);
+                rewardItems(player, ItemEnum.ADENA.getId(), barrels * 20 + ((barrels >= 10) ? 3880 : 0));
 
                 // Heine explains than player can speak with Roman in order to exchange bills for rewards.
                 if (st.getCond() == 1) {
@@ -83,7 +85,7 @@ public class Q351_BlackSwan extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

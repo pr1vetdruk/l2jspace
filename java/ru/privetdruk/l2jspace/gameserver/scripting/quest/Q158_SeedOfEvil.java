@@ -11,7 +11,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class Q158_SeedOfEvil extends Quest {
-    private static final String qn = "Q158_SeedOfEvil";
+    private static final String QUEST_NAME = "Q158_SeedOfEvil";
 
     // Item
     private static final int CLAY_TABLET = 1025;
@@ -33,7 +33,7 @@ public class Q158_SeedOfEvil extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -58,7 +58,7 @@ public class Q158_SeedOfEvil extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;

@@ -36,8 +36,7 @@ public class RequestSetCrop extends L2GameClientPacket {
                 return;
             }
 
-            if (sales > 0)
-                _items.add(new CropProcure(itemId, sales, type, sales, price));
+            _items.add(new CropProcure(itemId, sales, type, sales, price));
         }
     }
 

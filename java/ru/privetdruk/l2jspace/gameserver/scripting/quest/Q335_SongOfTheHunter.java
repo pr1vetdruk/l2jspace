@@ -21,7 +21,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q335_SongOfTheHunter extends Quest {
-    private static final String qn = "Q335_SongOfTheHunter";
+    private static final String QUEST_NAME = "Q335_SongOfTheHunter";
 
     // Npc
     private static final int GREY = 30744;
@@ -886,7 +886,7 @@ public class Q335_SongOfTheHunter extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -1089,10 +1089,13 @@ public class Q335_SongOfTheHunter extends Quest {
             if (sound)
                 playSound(player, SOUND_MIDDLE);
         } else if (event.equalsIgnoreCase("30746-06.htm")) {
-            for (int bloodCrystal : CYBELLIN_REQUEST_REWARDS.keySet()) {
+            for (Map.Entry<Integer, Integer> entry : CYBELLIN_REQUEST_REWARDS.entrySet()) {
+                int bloodCrystal = entry.getKey();
+
                 if (player.getInventory().hasItems(bloodCrystal)) {
                     takeItems(player, bloodCrystal, -1);
-                    rewardItems(player, ADENA, CYBELLIN_REQUEST_REWARDS.get(bloodCrystal));
+                    rewardItems(player, ADENA, entry.getValue());
+
                     break;
                 }
             }
@@ -1111,7 +1114,7 @@ public class Q335_SongOfTheHunter extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        final QuestState st = player.getQuestList().getQuestState(qn);
+        final QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

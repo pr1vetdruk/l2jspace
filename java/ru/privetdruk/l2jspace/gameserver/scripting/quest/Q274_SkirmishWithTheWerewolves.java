@@ -11,7 +11,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q274_SkirmishWithTheWerewolves extends Quest {
-    private static final String qn = "Q274_SkirmishWithTheWerewolves";
+    private static final String QUEST_NAME = "Q274_SkirmishWithTheWerewolves";
 
     // Needed items
     private static final int NECKLACE_OF_VALOR = 1507;
@@ -34,7 +34,7 @@ public class Q274_SkirmishWithTheWerewolves extends Quest {
 
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = event;
         if (st == null)
             return htmltext;
@@ -51,7 +51,7 @@ public class Q274_SkirmishWithTheWerewolves extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

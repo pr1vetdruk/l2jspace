@@ -12,7 +12,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q108_JumbleTumbleDiamondFuss extends Quest {
-    private static final String qn = "Q108_JumbleTumbleDiamondFuss";
+    private static final String QUEST_NAME = "Q108_JumbleTumbleDiamondFuss";
 
     // NPCs
     private static final int GOUPH = 30523;
@@ -97,7 +97,7 @@ public class Q108_JumbleTumbleDiamondFuss extends Quest {
 
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = event;
         if (st == null)
             return htmltext;
@@ -124,7 +124,7 @@ public class Q108_JumbleTumbleDiamondFuss extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;

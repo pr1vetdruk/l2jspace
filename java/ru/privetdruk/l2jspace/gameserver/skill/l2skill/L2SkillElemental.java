@@ -3,10 +3,11 @@ package ru.privetdruk.l2jspace.gameserver.skill.l2skill;
 import ru.privetdruk.l2jspace.common.data.StatSet;
 
 import ru.privetdruk.l2jspace.gameserver.enums.items.ShotType;
+import ru.privetdruk.l2jspace.gameserver.enums.skills.ShieldDefense;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
-import ru.privetdruk.l2jspace.gameserver.skill.Formulas;
+import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class L2SkillElemental extends L2Skill {
@@ -72,22 +73,22 @@ public class L2SkillElemental extends L2Skill {
                 continue;
             }
 
-            boolean mcrit = Formulas.calcMCrit(activeChar, target, this);
-            byte shld = Formulas.calcShldUse(activeChar, target, this);
+            boolean isCrit = Formula.calcMCrit(activeChar, target, this);
+            ShieldDefense shieldDefense = Formula.calcShieldUse(activeChar, target, this, false);
 
-            int damage = (int) Formulas.calcMagicDam(activeChar, target, this, shld, sps, bsps, mcrit);
+            int damage = (int) Formula.calcMagicDam(activeChar, target, this, shieldDefense, sps, bsps, isCrit);
             if (damage > 0) {
                 target.reduceCurrentHp(damage, activeChar, this);
 
                 // Manage cast break of the target (calculating rate, sending message...)
-                Formulas.calcCastBreak(target, damage);
+                Formula.calcCastBreak(target, damage);
 
                 activeChar.sendDamageMessage(target, damage, false, false, false);
             }
 
             // activate attacked effects, if any
             target.stopSkillEffects(getId());
-            getEffects(activeChar, target, shld, bsps);
+            getEffects(activeChar, target, shieldDefense, bsps);
         }
 
         activeChar.setChargedShot(bsps ? ShotType.BLESSED_SPIRITSHOT : ShotType.SPIRITSHOT, isStaticReuse());

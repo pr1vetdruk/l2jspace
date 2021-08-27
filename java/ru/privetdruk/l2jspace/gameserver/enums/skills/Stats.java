@@ -76,9 +76,6 @@ public enum Stats {
     CONFUSION("confusion", false),
     SLEEP("sleep", false),
 
-    VALAKAS("valakas", false),
-    VALAKAS_RES("valakasRes", false),
-
     // Elemental resistances/vulnerabilities
     FIRE_RES("fireRes", false),
     WATER_RES("waterRes", false),
@@ -86,6 +83,7 @@ public enum Stats {
     EARTH_RES("earthRes", false),
     HOLY_RES("holyRes", false),
     DARK_RES("darkRes", false),
+	VALAKAS_RES("valakasRes", false),
 
     // Elemental power (used for skills such as Holy blade)
     FIRE_POWER("firePower", false),
@@ -94,6 +92,7 @@ public enum Stats {
     EARTH_POWER("earthPower", false),
     HOLY_POWER("holyPower", false),
     DARK_POWER("darkPower", false),
+	VALAKAS_POWER("valakasPower", false),
 
     // Vulnerabilities
     BLEED_VULN("bleedVuln", false),

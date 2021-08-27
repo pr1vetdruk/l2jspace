@@ -10,7 +10,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q410_PathToAPalusKnight extends Quest {
-    private static final String qn = "Q410_PathToAPalusKnight";
+    private static final String QUEST_NAME = "Q410_PathToAPalusKnight";
 
     // Items
     private static final int PALUS_TALISMAN = 1237;
@@ -45,7 +45,7 @@ public class Q410_PathToAPalusKnight extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -87,7 +87,7 @@ public class Q410_PathToAPalusKnight extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

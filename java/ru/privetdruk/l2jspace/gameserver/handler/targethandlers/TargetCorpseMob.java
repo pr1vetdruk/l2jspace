@@ -37,7 +37,9 @@ public class TargetCorpseMob implements ITargetHandler {
             return false;
         }
 
-        if (skill.getSkillType() == SkillType.DRAIN && !DecayTaskManager.getInstance().isCorpseActionAllowed((Monster) target)) {
+        if (target instanceof Monster
+                && skill.getSkillType() == SkillType.DRAIN
+                && !DecayTaskManager.getInstance().isCorpseActionAllowed((Monster) target)) {
             caster.sendPacket(SystemMessageId.CORPSE_TOO_OLD_SKILL_NOT_USED);
             return false;
         }

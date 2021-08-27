@@ -80,13 +80,13 @@ public class QueenAnt extends AttackableAIScript {
                 npc.broadcastPacket(new SocialAction(npc, (Rnd.nextBoolean()) ? 3 : 4));
 
             // Teleport Royal Guards back in zone if out.
-            ((Monster) npc).getMinionList().getSpawnedMinions().stream().filter(m -> m.getNpcId() == ROYAL && !ZONE.isInsideZone(m)).forEach(m -> m.teleportToMaster());
+            ((Monster) npc).getMinionList().getSpawnedMinions().stream().filter(m -> m.getNpcId() == ROYAL && !ZONE.isInsideZone(m)).forEach(Monster::teleportToMaster);
         } else if (name.equalsIgnoreCase("chaos")) {
             // Randomize the target for Royal Guards.
             ((Monster) npc).getMinionList().getSpawnedMinions().stream().filter(m -> m.getNpcId() == ROYAL && m.isInCombat() && Rnd.get(100) < 66).forEach(m -> m.getAggroList().randomizeAttack());
 
             // Relaunch a new chaos task.
-            startQuestTimer("chaos", npc, null, 90000 + Rnd.get(240000));
+            startQuestTimer("chaos", npc, null, 90000L + Rnd.get(240000));
         } else if (name.equalsIgnoreCase("clean")) {
             // Delete the larva and the reference.
             _larva.deleteMe();
@@ -189,7 +189,7 @@ public class QueenAnt extends AttackableAIScript {
             GrandBossManager.getInstance().setBossStatus(QUEEN, DEAD);
 
             // Calculate the next respawn time.
-            final long respawnTime = (long) (Config.SPAWN_INTERVAL_AQ + Rnd.get(-Config.RANDOM_SPAWN_TIME_AQ, Config.RANDOM_SPAWN_TIME_AQ)) * 3600000;
+            long respawnTime = (Config.SPAWN_INTERVAL_AQ * 60L + Rnd.get(-60 * Config.RANDOM_SPAWN_TIME_AQ, 60 * Config.RANDOM_SPAWN_TIME_AQ)) * 60000;
 
             // Cancel tasks.
             cancelQuestTimers("action");
@@ -272,7 +272,7 @@ public class QueenAnt extends AttackableAIScript {
         GrandBossManager.getInstance().addBoss(queen);
 
         startQuestTimerAtFixedRate("action", queen, null, 10000);
-        startQuestTimer("chaos", queen, null, 90000 + Rnd.get(240000));
+        startQuestTimer("chaos", queen, null, 90000L + Rnd.get(240000));
 
         queen.broadcastPacket(new PlaySound(1, "BS01_A", queen));
 

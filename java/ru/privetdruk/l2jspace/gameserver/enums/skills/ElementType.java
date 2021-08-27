@@ -7,23 +7,24 @@ public enum ElementType {
     WATER(Stats.WATER_POWER, Stats.WATER_RES),
     EARTH(Stats.EARTH_POWER, Stats.EARTH_RES),
     HOLY(Stats.HOLY_POWER, Stats.HOLY_RES),
-    DARK(Stats.DARK_POWER, Stats.DARK_RES);
+    DARK(Stats.DARK_POWER, Stats.DARK_RES),
+	VALAKAS(Stats.VALAKAS_POWER, Stats.VALAKAS_RES);
 
     public static final ElementType[] VALUES = values();
 
-    private ElementType(Stats atkStat, Stats resStat) {
-        _atkStat = atkStat;
-        _resStat = resStat;
+    ElementType(Stats atkStat, Stats resStat) {
+        this.atkStat = atkStat;
+        this.resStat = resStat;
     }
 
-    private Stats _atkStat;
-    private Stats _resStat;
+    private final Stats atkStat;
+    private final Stats resStat;
 
     public Stats getAtkStat() {
-        return _atkStat;
+        return atkStat;
     }
 
     public Stats getResStat() {
-        return _resStat;
+        return resStat;
     }
 }

@@ -174,6 +174,6 @@ public class SummonFriend implements ISkillHandler {
 
             player.destroyItemByItemId("Consume", skill.getTargetConsumeId(), skill.getTargetConsume(), player, true);
         }
-        player.teleportTo(target.getPosition(), 20);
+        player.teleportTo(target.getPosition(), 0);
     }
 }

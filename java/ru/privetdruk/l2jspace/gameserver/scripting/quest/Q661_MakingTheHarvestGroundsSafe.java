@@ -8,7 +8,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q661_MakingTheHarvestGroundsSafe extends Quest {
-    private static final String qn = "Q661_MakingTheHarvestGroundsSafe";
+    private static final String QUEST_NAME = "Q661_MakingTheHarvestGroundsSafe";
 
     // NPC
     private static final int NORMAN = 30210;
@@ -40,7 +40,7 @@ public class Q661_MakingTheHarvestGroundsSafe extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -71,7 +71,7 @@ public class Q661_MakingTheHarvestGroundsSafe extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;

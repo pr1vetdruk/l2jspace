@@ -10,7 +10,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class DrainSoul implements ISkillHandler {
-    private static final String qn = "Q350_EnhanceYourWeapon";
+    private static final String QUEST_NAME = "Q350_EnhanceYourWeapon";
 
     private static final SkillType[] SKILL_IDS =
             {
@@ -25,7 +25,7 @@ public class DrainSoul implements ISkillHandler {
 
         // Check quest condition.
         final Player player = (Player) activeChar;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null || !st.isStarted())
             return;
 

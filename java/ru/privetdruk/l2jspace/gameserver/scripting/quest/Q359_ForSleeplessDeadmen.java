@@ -13,7 +13,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q359_ForSleeplessDeadmen extends Quest {
-    private static final String qn = "Q359_ForSleeplessDeadmen";
+    private static final String QUEST_NAME = "Q359_ForSleeplessDeadmen";
 
     // Item
     private static final int REMAINS = 5869;
@@ -24,7 +24,7 @@ public class Q359_ForSleeplessDeadmen extends Quest {
     private static final int DOOM_ARCHER = 21008;
 
     // Reward
-    private static final int REWARDS[] =
+    private static final int[] REWARDS =
             {
                     6341,
                     6342,
@@ -59,7 +59,7 @@ public class Q359_ForSleeplessDeadmen extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -79,7 +79,7 @@ public class Q359_ForSleeplessDeadmen extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

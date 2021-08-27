@@ -8,7 +8,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q002_WhatWomenWant extends Quest {
-    private static final String qn = "Q002_WhatWomenWant";
+    private static final String QUEST_NAME = "Q002_WhatWomenWant";
 
     // NPCs
     private static final int ARUJIEN = 30223;
@@ -38,7 +38,7 @@ public class Q002_WhatWomenWant extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -65,7 +65,7 @@ public class Q002_WhatWomenWant extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

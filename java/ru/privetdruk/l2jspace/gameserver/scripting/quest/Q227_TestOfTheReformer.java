@@ -9,12 +9,13 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class Q227_TestOfTheReformer extends SecondClassQuest {
-    private static final String qn = "Q227_TestOfTheReformer";
+    private static final String QUEST_NAME = "Q227_TestOfTheReformer";
 
     // Items
     private static final int BOOK_OF_REFORM = 2822;
@@ -101,7 +102,7 @@ public class Q227_TestOfTheReformer extends SecondClassQuest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -171,7 +172,7 @@ public class Q227_TestOfTheReformer extends SecondClassQuest {
         // Despawns Crimson Werewolf
         if (name.equalsIgnoreCase("werewolf_despawn")) {
             if (npc == _crimsonWerewolf) {
-                npc.broadcastNpcSay("Cowardly guy!");
+                npc.broadcastNpcSay(NpcStringId.ID_22720);
                 npc.getAttack().stop();
                 npc.deleteMe();
             }
@@ -183,7 +184,7 @@ public class Q227_TestOfTheReformer extends SecondClassQuest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -411,7 +412,7 @@ public class Q227_TestOfTheReformer extends SecondClassQuest {
                     st.setCond(3);
                     playSound(player, SOUND_MIDDLE);
                     giveItems(player, HUGE_NAIL, 1);
-                    npc.broadcastNpcSay("The concealed truth will always be revealed...!");
+                    npc.broadcastNpcSay(NpcStringId.ID_22719);
                 }
                 break;
 

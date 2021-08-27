@@ -343,7 +343,9 @@ public abstract class Playable extends Creature {
         }
 
         // No checks for players in Duel
-        if (player.isInDuel() && targetPlayer.isInDuel()
+        if (player.getDuelState() == DuelState.DUELLING
+                && player.isInDuel()
+                && targetPlayer.isInDuel()
                 && player.getDuelId() == targetPlayer.getDuelId()) {
             return true;
         }
@@ -361,9 +363,14 @@ public abstract class Playable extends Creature {
         Siege siege = CastleManager.getInstance().getActiveSiege(this);
         if (siege != null) {
             sameSiegeSide = siege.checkSides(targetPlayer.getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER)
-                    && siege.checkSides(getActingPlayer().getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER);
+                    && siege.checkSides(player.getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER);
 
             sameSiegeSide &= target.isInsideZone(ZoneId.SIEGE) && player.isInsideZone(ZoneId.SIEGE);
+        }
+
+        // Check if the Player is in an arena.
+        if (player.isInArena() && targetPlayer.isInArena() && !(sameParty || sameCommandChannel)) {
+            return true;
         }
 
         // Players in the same CC/party/alliance/clan may only damage each other with ctrlPressed.
@@ -411,10 +418,11 @@ public abstract class Playable extends Creature {
         // If the caster not from the same CC/party/alliance/clan is at war with the target, then With CTRL he may damage and debuff.
         // CTRL is still necessary for damaging. You can do anything so long as you have CTRL pressed.
         // pvpFlag / Karma do not influence these checks
-        Clan playerClan = player.getClan();
+        Clan playerClan = getActingPlayer().getClan();
         Clan targetPlayerClan = targetPlayer.getClan();
 
-        if (playerClan != null && targetPlayerClan != null
+        if (playerClan != null
+                && targetPlayerClan != null
                 && playerClan.isAtWarWith(targetPlayerClan.getClanId())
                 && targetPlayerClan.isAtWarWith(playerClan.getClanId())
                 && !(isInsideZone(ZoneId.CASTLE)
@@ -422,7 +430,8 @@ public abstract class Playable extends Creature {
                 && isInsideZone(ZoneId.PVP)
                 && targetPlayer.isInsideZone(ZoneId.PVP))) {
             return isCtrlPressed;
-        } else if (playerClan != null && targetPlayerClan != null
+        } else if (playerClan != null
+                && targetPlayerClan != null
                 && playerClan.isAtWarWith(targetPlayerClan.getClanId())
                 && targetPlayerClan.isAtWarWith(playerClan.getClanId())
                 && (isInsideZone(ZoneId.CASTLE)
@@ -509,8 +518,13 @@ public abstract class Playable extends Creature {
         boolean sameClan = (player.getClanId() > 0 && player.getClanId() == attackerPlayer.getClanId());
         boolean sameAlliance = (player.getAllyId() > 0 && player.getAllyId() == attackerPlayer.getAllyId());
 
+        // Check if the Player is in an arena.
+        if (player.isInArena() && attackerPlayer.isInArena() && !(sameParty || sameCommandChannel)) {
+            return true;
+        }
+
         // Players in the same CC/party/alliance/clan cannot attack without CTRL
-        if (sameParty || sameCommandChannel || sameClan || sameAlliance) {
+        if (sameParty || sameCommandChannel || sameClan || sameAlliance && !(attackerPlayer.isInsideZone(ZoneId.PVP))) {
             return false;
         }
 

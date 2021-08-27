@@ -10,7 +10,6 @@ import ru.privetdruk.l2jspace.common.lang.StringUtil;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 
 import ru.privetdruk.l2jspace.config.Config;
-import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.data.manager.BotsPreventionManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ZoneManager;
 import ru.privetdruk.l2jspace.gameserver.data.xml.MapRegionData;
@@ -59,21 +58,9 @@ import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
 import ru.privetdruk.l2jspace.gameserver.skill.Calculator;
 import ru.privetdruk.l2jspace.gameserver.skill.IChanceSkillTrigger;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+import ru.privetdruk.l2jspace.gameserver.skill.function.*;
 import ru.privetdruk.l2jspace.gameserver.skill.function.base.Func;
 import ru.privetdruk.l2jspace.gameserver.skill.effect.EffectChanceSkillTrigger;
-import ru.privetdruk.l2jspace.gameserver.skill.function.FuncAtkAccuracy;
-import ru.privetdruk.l2jspace.gameserver.skill.function.FuncAtkCritical;
-import ru.privetdruk.l2jspace.gameserver.skill.function.FuncAtkEvasion;
-import ru.privetdruk.l2jspace.gameserver.skill.function.FuncMAtkCritical;
-import ru.privetdruk.l2jspace.gameserver.skill.function.FuncMAtkMod;
-import ru.privetdruk.l2jspace.gameserver.skill.function.FuncMAtkSpeed;
-import ru.privetdruk.l2jspace.gameserver.skill.function.FuncMDefMod;
-import ru.privetdruk.l2jspace.gameserver.skill.function.FuncMaxHpMul;
-import ru.privetdruk.l2jspace.gameserver.skill.function.FuncMaxMpMul;
-import ru.privetdruk.l2jspace.gameserver.skill.function.FuncMoveSpeed;
-import ru.privetdruk.l2jspace.gameserver.skill.function.FuncPAtkMod;
-import ru.privetdruk.l2jspace.gameserver.skill.function.FuncPAtkSpeed;
-import ru.privetdruk.l2jspace.gameserver.skill.function.FuncPDefMod;
 import ru.privetdruk.l2jspace.gameserver.taskmanager.AttackStanceTaskManager;
 
 /**
@@ -126,7 +113,7 @@ public abstract class Creature extends WorldObject {
         _template = template;
         _calculators = new Calculator[Stats.NUM_STATS];
 
-        addFuncsToNewCharacter();
+        addFunctionsToNewCharacter();
 
         setStatus();
         setMove();
@@ -167,7 +154,7 @@ public abstract class Creature extends WorldObject {
     /**
      * Set all related {@link Func}s of this {@link Creature}.
      */
-    public void addFuncsToNewCharacter() {
+    public void addFunctionsToNewCharacter() {
         addStatFunc(FuncPAtkMod.getInstance());
         addStatFunc(FuncMAtkMod.getInstance());
         addStatFunc(FuncPDefMod.getInstance());
@@ -175,6 +162,8 @@ public abstract class Creature extends WorldObject {
 
         addStatFunc(FuncMaxHpMul.getInstance());
         addStatFunc(FuncMaxMpMul.getInstance());
+        addStatFunc(FuncRegenHpMul.getInstance());
+        addStatFunc(FuncRegenMpMul.getInstance());
 
         addStatFunc(FuncAtkAccuracy.getInstance());
         addStatFunc(FuncAtkEvasion.getInstance());

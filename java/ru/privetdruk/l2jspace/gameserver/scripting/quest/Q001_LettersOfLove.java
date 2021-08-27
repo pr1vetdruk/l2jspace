@@ -7,7 +7,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q001_LettersOfLove extends Quest {
-    private static final String qn = "Q001_LettersOfLove";
+    private static final String QUEST_NAME = "Q001_LettersOfLove";
 
     // Npcs
     private static final int DARIN = 30048;
@@ -34,25 +34,26 @@ public class Q001_LettersOfLove extends Quest {
 
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
-        String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
-        if (st == null)
-            return htmltext;
+        String htmlText = event;
+        QuestState questState = player.getQuestList().getQuestState(QUEST_NAME);
+        if (questState == null) {
+            return htmlText;
+        }
 
         if (event.equalsIgnoreCase("30048-06.htm")) {
-            st.setState(QuestStatus.STARTED);
-            st.setCond(1);
+            questState.setState(QuestStatus.STARTED);
+            questState.setCond(1);
             playSound(player, SOUND_ACCEPT);
             giveItems(player, DARIN_LETTER, 1);
         }
 
-        return htmltext;
+        return htmlText;
     }
 
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

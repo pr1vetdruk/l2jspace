@@ -11,7 +11,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q273_InvadersOfTheHolyLand extends Quest {
-    private static final String qn = "Q273_InvadersOfTheHolyLand";
+    private static final String QUEST_NAME = "Q273_InvadersOfTheHolyLand";
 
     // Items
     private static final int BLACK_SOULSTONE = 1475;
@@ -31,7 +31,7 @@ public class Q273_InvadersOfTheHolyLand extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -50,7 +50,7 @@ public class Q273_InvadersOfTheHolyLand extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

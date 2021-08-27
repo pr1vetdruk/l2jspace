@@ -7,7 +7,7 @@ import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Pet;
-import ru.privetdruk.l2jspace.gameserver.skill.Formulas;
+import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.taskmanager.DecayTaskManager;
 
@@ -26,14 +26,14 @@ public class Resurrect implements ISkillHandler {
                     ((Player) cha).reviveRequest((Player) activeChar, skill, false);
                 else if (cha instanceof Pet) {
                     if (((Pet) cha).getOwner() == activeChar)
-                        target.doRevive(Formulas.calculateSkillResurrectRestorePercent(skill.getPower(), activeChar));
+                        target.doRevive(Formula.calculateSkillResurrectRestorePercent(skill.getPower(), activeChar));
                     else
                         ((Pet) cha).getOwner().reviveRequest((Player) activeChar, skill, true);
                 } else
-                    target.doRevive(Formulas.calculateSkillResurrectRestorePercent(skill.getPower(), activeChar));
+                    target.doRevive(Formula.calculateSkillResurrectRestorePercent(skill.getPower(), activeChar));
             } else {
                 DecayTaskManager.getInstance().cancel(target);
-                target.doRevive(Formulas.calculateSkillResurrectRestorePercent(skill.getPower(), activeChar));
+                target.doRevive(Formula.calculateSkillResurrectRestorePercent(skill.getPower(), activeChar));
             }
         }
         activeChar.setChargedShot(activeChar.isChargedShot(ShotType.BLESSED_SPIRITSHOT) ? ShotType.BLESSED_SPIRITSHOT : ShotType.SPIRITSHOT, skill.isStaticReuse());

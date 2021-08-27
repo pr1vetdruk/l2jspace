@@ -12,7 +12,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q422_RepentYourSins extends Quest {
-    private static final String qn = "Q422_RepentYourSins";
+    private static final String QUEST_NAME = "Q422_RepentYourSins";
 
     // Items
     private static final int RATMAN_SCAVENGER_SKULL = 4326;
@@ -53,7 +53,7 @@ public class Q422_RepentYourSins extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -154,7 +154,7 @@ public class Q422_RepentYourSins extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getAlreadyCompletedMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

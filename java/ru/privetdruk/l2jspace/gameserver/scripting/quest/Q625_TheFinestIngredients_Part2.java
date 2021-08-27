@@ -9,12 +9,13 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.BossSpawn;
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class Q625_TheFinestIngredients_Part2 extends Quest {
-    private static final String qn = "Q625_TheFinestIngredients_Part2";
+    private static final String QUEST_NAME = "Q625_TheFinestIngredients_Part2";
 
     // Monster
     private static final int ICICLE_EMPEROR_BUMBALUMP = 25296;
@@ -27,7 +28,7 @@ public class Q625_TheFinestIngredients_Part2 extends Quest {
     private static final int SOY_SAUCE_JAR = 7205;
     private static final int FOOD_FOR_BUMBALUMP = 7209;
     private static final int SPECIAL_YETI_MEAT = 7210;
-    private static final int REWARDS[] =
+    private static final int[] REWARDS =
             {
                     4589,
                     4590,
@@ -67,7 +68,7 @@ public class Q625_TheFinestIngredients_Part2 extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -111,7 +112,7 @@ public class Q625_TheFinestIngredients_Part2 extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -183,7 +184,7 @@ public class Q625_TheFinestIngredients_Part2 extends Quest {
             }
         }
 
-        npc.broadcastNpcSay("Oooh!");
+        npc.broadcastNpcSay(NpcStringId.ID_62504);
 
         // despawn raid (reset info)
         despawnRaid(npc);
@@ -213,7 +214,7 @@ public class Q625_TheFinestIngredients_Part2 extends Quest {
 
             // teleport raid from secret place
             raid.teleportTo(157117, -121939, -2397, 100);
-            raid.broadcastNpcSay("I smell something delicious...");
+            raid.broadcastNpcSay(NpcStringId.ID_62503);
 
             // set raid status
             _status = IDLE_INTERVAL;

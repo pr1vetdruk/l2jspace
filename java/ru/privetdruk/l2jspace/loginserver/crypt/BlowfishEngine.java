@@ -1074,8 +1074,11 @@ public class BlowfishEngine {
     private static final int BLOCK_SIZE = 8; // bytes = 64 bits
     private static final int SBOX_SK = 256;
     private static final int P_SZ = ROUNDS + 2;
-    private final int[] S0, S1, S2, S3; // the s-boxes
-    private final int[] P; // the p-array
+    private final int[] S0;
+    private final int[] S1;
+    private final int[] S2;
+    private final int[] S3;
+    private final int[] P;
     private boolean encrypting = false;
     private byte[] workingKey = null;
 
@@ -1241,7 +1244,7 @@ public class BlowfishEngine {
     }
 
     private static int bytesTo32bits(byte[] b, int i) {
-        return ((b[i + 3] & 0xff) << 24) | ((b[i + 2] & 0xff) << 16) | ((b[i + 1] & 0xff) << 8) | ((b[i] & 0xff));
+        return ((b[i + 3] & 0xff) << 24) | ((b[i + 2] & 0xff) << 16) | ((b[i + 1] & 0xff) << 8) | (b[i] & 0xff);
     }
 
     private static void bits32ToBytes(int in, byte[] b, int offset) {

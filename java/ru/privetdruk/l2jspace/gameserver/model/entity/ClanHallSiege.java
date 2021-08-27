@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ScheduledFuture;
@@ -182,7 +183,7 @@ public abstract class ClanHallSiege extends Quest implements Siegable {
 
     @Override
     public List<Clan> getDefenderClans() {
-        return null;
+        return Collections.emptyList();
     }
 
     public void prepareOwner() {

@@ -17,7 +17,7 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Monster;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.StatusUpdate;
 import ru.privetdruk.l2jspace.gameserver.skill.Calculator;
-import ru.privetdruk.l2jspace.gameserver.skill.Formulas;
+import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 /**
@@ -86,7 +86,7 @@ public class CreatureStatus<T extends Creature> {
     public final synchronized void startHpMpRegeneration() {
         if (_regTask == null && !_actor.isDead()) {
             // Get the regeneration period.
-            final int period = Formulas.getRegeneratePeriod(_actor);
+            final int period = Formula.getRegeneratePeriod(_actor);
 
             // Create the HP/MP/CP regeneration task.
             _regTask = ThreadPool.scheduleAtFixedRate(this::doRegeneration, period, period);
@@ -208,9 +208,10 @@ public class CreatureStatus<T extends Creature> {
         }
 
         if (attacker != null) {
-            final Player attackerPlayer = attacker.getActingPlayer();
-            if (attackerPlayer != null && attackerPlayer.isGM() && !attackerPlayer.getAccessLevel().canGiveDamage())
+            Player attackerPlayer = attacker.getActingPlayer();
+            if (attackerPlayer != null && !attackerPlayer.getAccessLevel().canGiveDamage()) {
                 return;
+            }
         }
 
         if (!isDOT && !isHPConsumption) {
@@ -383,12 +384,14 @@ public class CreatureStatus<T extends Creature> {
 
     protected void doRegeneration() {
         // Modify the current HP of the Creature.
-        if (_hp < getMaxHp())
-            setHp(_hp + Formulas.calcHpRegen(_actor), false);
+        if (_hp < getMaxHp()) {
+            setHp(_hp + Math.max(1, getRegenHp()), false);
+        }
 
         // Modify the current MP of the Creature.
-        if (_mp < getMaxMp())
-            setMp(_mp + Formulas.calcMpRegen(_actor), false);
+        if (_mp < getMaxMp()) {
+            setMp(_mp + Math.max(1, getRegenMp()), false);
+        }
 
         // Send the StatusUpdate packet.
         broadcastStatusUpdate();
@@ -551,7 +554,7 @@ public class CreatureStatus<T extends Creature> {
     }
 
     /**
-     * @return The maximum CP of this {@link Creature}. Overriden on PlayerStat.
+     * @return The maximum CP of this {@link Creature}. Overriden in {@link PlayerStatus}.
      */
     public int getMaxCp() {
         return 0;
@@ -562,6 +565,21 @@ public class CreatureStatus<T extends Creature> {
      */
     public int getMaxMp() {
         return (int) calcStat(Stats.MAX_MP, _actor.getTemplate().getBaseMpMax(getLevel()), null, null);
+    }
+
+    /**
+     * +	 * @return The HP regeneration of this {@link Creature}.
+     * +
+     */
+    public double getRegenHp() {
+        return calcStat(Stats.REGENERATE_HP_RATE, _actor.getTemplate().getBaseHpRegen(getLevel()) * (_actor.isRaidRelated() ? Config.RAID_HP_REGEN_MULTIPLIER : Config.HP_REGEN_MULTIPLIER), null, null);
+    }
+
+    /**
+     * @return The MP regeneration of this {@link Creature}.
+     */
+    public double getRegenMp() {
+        return calcStat(Stats.REGENERATE_MP_RATE, _actor.getTemplate().getBaseMpRegen(getLevel()) * (_actor.isRaidRelated() ? Config.RAID_MP_REGEN_MULTIPLIER : Config.MP_REGEN_MULTIPLIER), null, null);
     }
 
     /**

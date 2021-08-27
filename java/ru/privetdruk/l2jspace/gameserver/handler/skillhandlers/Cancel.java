@@ -15,7 +15,7 @@ import ru.privetdruk.l2jspace.gameserver.handler.ISkillHandler;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
-import ru.privetdruk.l2jspace.gameserver.skill.Formulas;
+import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class Cancel implements ISkillHandler {
@@ -47,7 +47,7 @@ public class Cancel implements ISkillHandler {
 
             // Calculate the difference of level between skill level and victim, and retrieve the vuln/prof.
             final int diffLevel = skill.getMagicLevel() - target.getStatus().getLevel();
-            final double skillVuln = Formulas.calcSkillVulnerability(activeChar, target, skill, skill.getSkillType());
+            final double skillVuln = Formula.calcSkillVulnerability(activeChar, target, skill, skill.getSkillType());
 
             final List<AbstractEffect> list = Arrays.asList(target.getAllEffects());
             Collections.shuffle(list);

@@ -8,7 +8,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q123_TheLeaderAndTheFollower extends Quest {
-    private static final String qn = "Q123_TheLeaderAndTheFollower";
+    private static final String QUEST_NAME = "Q123_TheLeaderAndTheFollower";
     private static final String qn2 = "Q118_ToLeadAndBeLed";
 
     // NPC
@@ -49,7 +49,7 @@ public class Q123_TheLeaderAndTheFollower extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -85,7 +85,7 @@ public class Q123_TheLeaderAndTheFollower extends Quest {
         } else if (event.equalsIgnoreCase("31961-10.htm")) {
             final Player academic = getApprentice(player);
             if (academic != null) {
-                final QuestState st2 = academic.getQuestList().getQuestState(qn);
+                final QuestState st2 = academic.getQuestList().getQuestState(QUEST_NAME);
                 if (st2 != null && st2.getInteger("state") == 2) {
                     final int stateEx = st2.getInteger("stateEx");
                     if (stateEx == 1) {
@@ -115,7 +115,7 @@ public class Q123_TheLeaderAndTheFollower extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -130,7 +130,7 @@ public class Q123_TheLeaderAndTheFollower extends Quest {
                 } else if (player.getApprentice() > 0) {
                     final Player academic = getApprentice(player);
                     if (academic != null) {
-                        final QuestState st3 = academic.getQuestList().getQuestState(qn);
+                        final QuestState st3 = academic.getQuestList().getQuestState(QUEST_NAME);
                         if (st3 != null) {
                             final int state = st3.getInteger("state");
                             if (state == 2)

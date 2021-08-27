@@ -11,7 +11,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q294_CovertBusiness extends Quest {
-    private static final String qn = "Q294_CovertBusiness";
+    private static final String QUEST_NAME = "Q294_CovertBusiness";
 
     // Item
     private static final int BAT_FANG = 1491;
@@ -33,7 +33,7 @@ public class Q294_CovertBusiness extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -49,7 +49,7 @@ public class Q294_CovertBusiness extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

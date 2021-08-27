@@ -5,12 +5,17 @@ import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassId;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
+import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Q409_PathToAnElvenOracle extends Quest {
-    private static final String qn = "Q409_PathToAnElvenOracle";
+    private static final String QUEST_NAME = "Q409_PathToAnElvenOracle";
 
     // Items
     private static final int CRYSTAL_MEDALLION = 1231;
@@ -26,6 +31,14 @@ public class Q409_PathToAnElvenOracle extends Quest {
     private static final int ALLANA = 30424;
     private static final int PERRIN = 30428;
 
+    // Quest Monsters
+    private static final int LIZARDMAN_WARRIOR = 27032;
+    private static final int LIZARDMAN_SCOUT = 27033;
+    private static final int LIZARDMAN = 27034;
+    private static final int TAMIL = 27035;
+
+    private final Map<Npc, Integer> spawns = new ConcurrentHashMap<>();
+
     public Q409_PathToAnElvenOracle() {
         super(409, "Path to an Elven Oracle");
 
@@ -34,30 +47,38 @@ public class Q409_PathToAnElvenOracle extends Quest {
         addStartNpc(MANUEL);
         addTalkId(MANUEL, ALLANA, PERRIN);
 
-        addKillId(27032, 27033, 27034, 27035);
+        addAttackId(LIZARDMAN_WARRIOR, LIZARDMAN_SCOUT, LIZARDMAN, TAMIL);
+        addKillId(LIZARDMAN_WARRIOR, LIZARDMAN_SCOUT, LIZARDMAN, TAMIL);
+        addDecayId(LIZARDMAN_WARRIOR, LIZARDMAN_SCOUT, LIZARDMAN, TAMIL);
+
     }
 
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
+        // Manuel
         if (event.equalsIgnoreCase("30293-05.htm")) {
             st.setState(QuestStatus.STARTED);
             st.setCond(1);
             playSound(player, SOUND_ACCEPT);
             giveItems(player, CRYSTAL_MEDALLION, 1);
-        } else if (event.equalsIgnoreCase("spawn_lizards")) {
+        } else if (event.equalsIgnoreCase("spawn_lizards")) { // Allana
             st.setCond(2);
             playSound(player, SOUND_MIDDLE);
-            addSpawn(27032, -92319, 154235, -3284, 2000, false, 0, false);
-            addSpawn(27033, -92361, 154190, -3284, 2000, false, 0, false);
-            addSpawn(27034, -92375, 154278, -3278, 2000, false, 0, false);
+
+            int oid = player.getObjectId();
+            spawns.put(addSpawn(LIZARDMAN_WARRIOR, npc, true, 0, false), oid);
+            spawns.put(addSpawn(LIZARDMAN_SCOUT, npc, true, 0, false), oid);
+            spawns.put(addSpawn(LIZARDMAN, npc, true, 0, false), oid);
+
             return null;
-        } else if (event.equalsIgnoreCase("30428-06.htm"))
-            addSpawn(27035, -93194, 147587, -2672, 2000, false, 0, true);
+        } else if (event.equalsIgnoreCase("30428-06.htm")) { // Perrin
+            spawns.put(addSpawn(TAMIL, npc, true, 0, true), player.getObjectId());
+        }
 
         return htmltext;
     }
@@ -65,7 +86,7 @@ public class Q409_PathToAnElvenOracle extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -106,9 +127,13 @@ public class Q409_PathToAnElvenOracle extends Quest {
                         break;
 
                     case ALLANA:
-                        if (cond == 1)
+                        if (cond == 1 || cond == 2) {
+                            if (spawns.containsValue(player.getObjectId())) {
+                                return null;
+                            }
+
                             htmltext = "30424-01.htm";
-                        else if (cond == 3) {
+                        } else if (cond == 3) {
                             htmltext = "30424-02.htm";
                             st.setCond(4);
                             playSound(player, SOUND_MIDDLE);
@@ -128,16 +153,22 @@ public class Q409_PathToAnElvenOracle extends Quest {
                         break;
 
                     case PERRIN:
-                        if (cond == 4)
-                            htmltext = "30428-01.htm";
-                        else if (cond == 5) {
+                        if (cond == 4) {
+                            if (spawns.containsValue(player.getObjectId())) {
+                                htmltext = "30428-06.htm";
+                            } else {
+                                htmltext = "30428-01.htm";
+                            }
+                        } else if (cond == 5) {
                             htmltext = "30428-04.htm";
                             st.setCond(6);
                             playSound(player, SOUND_MIDDLE);
                             takeItems(player, TAMIL_NECKLACE, -1);
                             giveItems(player, SWINDLER_MONEY, 1);
-                        } else if (cond > 5)
+                        } else if (cond > 5) {
                             htmltext = "30428-05.htm";
+                        }
+
                         break;
                 }
                 break;
@@ -147,24 +178,73 @@ public class Q409_PathToAnElvenOracle extends Quest {
     }
 
     @Override
+    public String onAttack(Npc npc, Creature attacker, int damage, L2Skill skill) {
+        int condition = npc.getScriptValue();
+        if (condition < 0) {
+            return null;
+        }
+
+        // Attacker must be player with started quest.
+        Player player = attacker.getActingPlayer();
+        if (player == null || checkPlayerState(player, npc, QuestStatus.STARTED) == null) {
+            return null;
+        }
+
+        if (condition == 0) {
+            // First valid attack. Save player object ID.
+            switch (npc.getNpcId()) {
+                case LIZARDMAN -> npc.broadcastNpcSay(NpcStringId.ID_40912);
+                case LIZARDMAN_SCOUT -> npc.broadcastNpcSay(NpcStringId.ID_40911);
+                case LIZARDMAN_WARRIOR -> npc.broadcastNpcSay(NpcStringId.ID_40909);
+                case TAMIL -> npc.broadcastNpcSay(NpcStringId.ID_40913);
+            }
+            npc.setScriptValue(player.getObjectId());
+        } else {
+            // Repeated valid attack. Mark invalid attack condition, if another player also attacks the monster.
+            if (condition != player.getObjectId()) {
+                npc.setScriptValue(-1);
+            }
+        }
+
+        return null;
+    }
+
+    @Override
     public String onKill(Npc npc, Creature killer) {
         final Player player = killer.getActingPlayer();
 
         final QuestState st = checkPlayerState(player, npc, QuestStatus.STARTED);
-        if (st == null)
+        if (st == null || npc.getScriptValue() < 0)
             return null;
 
-        if (npc.getNpcId() == 27035) {
-            if (st.getCond() == 4) {
-                st.setCond(5);
-                playSound(player, SOUND_MIDDLE);
-                giveItems(player, TAMIL_NECKLACE, 1);
-            }
-        } else if (st.getCond() == 2) {
-            st.setCond(3);
-            playSound(player, SOUND_MIDDLE);
-            giveItems(player, LIZARD_CAPTAIN_ORDER, 1);
+        switch (npc.getNpcId()) {
+            case LIZARDMAN_WARRIOR:
+            case LIZARDMAN_SCOUT:
+            case LIZARDMAN:
+                if (st.getCond() == 2) {
+                    npc.broadcastNpcSay(NpcStringId.ID_40910);
+
+                    st.setCond(3);
+                    playSound(player, SOUND_MIDDLE);
+                    giveItems(player, LIZARD_CAPTAIN_ORDER, 1);
+                }
+                break;
+
+            case TAMIL:
+                if (st.getCond() == 4) {
+                    st.setCond(5);
+                    playSound(player, SOUND_MIDDLE);
+                    giveItems(player, TAMIL_NECKLACE, 1);
+                }
+                break;
         }
+
+        return null;
+    }
+
+    @Override
+    public String onDecay(Npc npc) {
+        spawns.remove(npc);
 
         return null;
     }

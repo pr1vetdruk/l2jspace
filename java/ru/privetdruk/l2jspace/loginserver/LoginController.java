@@ -81,8 +81,8 @@ public class LoginController {
         purge.start();
     }
 
-    public byte[] getBlowfishKey() {
-        return _blowfishKeys[(int) (Math.random() * BLOWFISH_KEYS)];
+    public byte[] getRandomBlowfishKey() {
+        return Rnd.get(_blowfishKeys);
     }
 
     public void removeAuthedLoginClient(String account) {
@@ -137,7 +137,7 @@ public class LoginController {
             }
 
             // Generate an Account and feed variable.
-            account = AccountTable.getInstance().createAccount(login, BCrypt.hashpw(password, BCrypt.gensalt()), currentTime);
+            account = AccountTable.getInstance().createAccount(login, BCrypt.hashPw(password), currentTime);
             if (account == null) {
                 client.close(LoginFail.REASON_ACCESS_FAILED);
                 return;
@@ -146,7 +146,7 @@ public class LoginController {
             LOGGER.info("Auto created account '{}'.", login);
         } else {
             // Check if that an unencrypted password matches one that has previously been hashed.
-            if (!BCrypt.checkpw(password, account.getPassword())) {
+            if (!BCrypt.checkPw(password, account.getPassword())) {
                 recordFailedAttempt(addr);
                 client.close(LoginFail.REASON_PASS_WRONG);
                 return;

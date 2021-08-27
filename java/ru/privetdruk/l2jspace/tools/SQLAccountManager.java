@@ -138,16 +138,17 @@ public class SQLAccountManager {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(INSERT_OR_UPDATE_ACCOUNT)) {
             // Hash the password with default (10) salt
-            final String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
+            String hashed = BCrypt.hashPw(password);
 
             ps.setString(1, account);
             ps.setString(2, hashed);
             ps.setString(3, level);
 
-            if (ps.executeUpdate() > 0)
+            if (ps.executeUpdate() > 0) {
                 System.out.println("Account " + account + " has been created or updated");
-            else
+            } else {
                 System.out.println("Account " + account + " doesn't exist");
+            }
         } catch (Exception e) {
             System.out.println("There was error while adding/updating account:");
             System.out.println(e.getMessage());

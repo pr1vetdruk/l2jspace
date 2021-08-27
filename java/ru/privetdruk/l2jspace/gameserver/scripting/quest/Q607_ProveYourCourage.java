@@ -8,7 +8,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q607_ProveYourCourage extends Quest {
-    private static final String qn = "Q607_ProveYourCourage";
+    private static final String QUEST_NAME = "Q607_ProveYourCourage";
 
     // Items
     private static final int HEAD_OF_SHADITH = 7235;
@@ -29,7 +29,7 @@ public class Q607_ProveYourCourage extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -57,7 +57,7 @@ public class Q607_ProveYourCourage extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

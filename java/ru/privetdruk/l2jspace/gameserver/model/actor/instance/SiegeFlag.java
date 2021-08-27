@@ -72,6 +72,6 @@ public class SiegeFlag extends Npc {
     }
 
     @Override
-    public void addFuncsToNewCharacter() {
+    public void addFunctionsToNewCharacter() {
     }
 }

@@ -9,7 +9,7 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q231_TestOfTheMaestro extends SecondClassQuest {
-    private static final String qn = "Q231_TestOfTheMaestro";
+    private static final String QUEST_NAME = "Q231_TestOfTheMaestro";
 
     private static final int RECOMMENDATION_OF_BALANKI = 2864;
     private static final int RECOMMENDATION_OF_FILAUR = 2865;
@@ -63,7 +63,7 @@ public class Q231_TestOfTheMaestro extends SecondClassQuest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -127,7 +127,7 @@ public class Q231_TestOfTheMaestro extends SecondClassQuest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

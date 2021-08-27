@@ -16,16 +16,9 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q343_UnderTheShadowOfTheIvoryTower extends Quest {
-    private static final String qn = "Q343_UnderTheShadowOfTheIvoryTower";
+    private static final String QUEST_NAME = "Q343_UnderTheShadowOfTheIvoryTower";
 
     private static final Map<Integer, IntIntHolder> DROPS = new HashMap<>();
-
-    {
-        DROPS.put(20563, new IntIntHolder(630000, 12)); // Manashen Gargoyle
-        DROPS.put(20564, new IntIntHolder(630000, 12)); // Enchanted Monster Eye
-        DROPS.put(20565, new IntIntHolder(650000, 12)); // Enchanted Stone Golem
-        DROPS.put(20566, new IntIntHolder(680000, 13)); // Enchanted Iron Golem
-    }
 
     // NPCs
     private static final int CEMA = 30834;
@@ -53,6 +46,11 @@ public class Q343_UnderTheShadowOfTheIvoryTower extends Quest {
     public Q343_UnderTheShadowOfTheIvoryTower() {
         super(343, "Under the Shadow of the Ivory Tower");
 
+        DROPS.put(20563, new IntIntHolder(630000, 12)); // Manashen Gargoyle
+        DROPS.put(20564, new IntIntHolder(630000, 12)); // Enchanted Monster Eye
+        DROPS.put(20565, new IntIntHolder(650000, 12)); // Enchanted Stone Golem
+        DROPS.put(20566, new IntIntHolder(680000, 13)); // Enchanted Iron Golem
+
         addStartNpc(CEMA);
         addTalkId(CEMA, ICARUS, MARSHA, TRUMPIN);
 
@@ -63,7 +61,7 @@ public class Q343_UnderTheShadowOfTheIvoryTower extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -192,9 +190,7 @@ public class Q343_UnderTheShadowOfTheIvoryTower extends Quest {
         } else if (event.equalsIgnoreCase("30934-13a.htm")) {
             if (st.getInteger("memoState") == 2) {
                 final int param1 = st.getInteger("param1");
-                if (param1 == 0) {
-                    htmltext = event;
-                } else if (param1 == 1) {
+                if (param1 == 1) {
                     giveItems(player, NEBULITE_ORB, 20);
                     st.set("param1", 4);
                     htmltext = "30934-13b.htm";
@@ -284,7 +280,6 @@ public class Q343_UnderTheShadowOfTheIvoryTower extends Quest {
                 st.set("param1", 0);
                 st.set("param2", 2);
                 giveItems(player, NEBULITE_ORB, 10);
-                htmltext = event;
             } else if (param1 == 2) {
                 st.set("param1", 0);
                 st.set("param2", 2);
@@ -310,7 +305,7 @@ public class Q343_UnderTheShadowOfTheIvoryTower extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;

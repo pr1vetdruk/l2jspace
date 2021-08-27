@@ -31,14 +31,14 @@ public class PlayableStatus<T extends Playable> extends CreatureStatus<T> {
         // get base value
         float baseValue = getBaseMoveSpeed();
 
-        // apply zone modifier before final calculation
+        // calculate swamp area malus
         if (_actor.isInsideZone(ZoneId.SWAMP)) {
-            final SwampZone zone = ZoneManager.getInstance().getZone(_actor, SwampZone.class);
-            if (zone != null)
+            SwampZone zone = ZoneManager.getInstance().getZone(_actor, SwampZone.class);
+            if (zone != null) {
                 baseValue *= (100 + zone.getMoveBonus()) / 100.0;
+            }
         }
 
-        // calculate speed
         return (float) calcStat(Stats.RUN_SPEED, baseValue, null, null);
     }
 

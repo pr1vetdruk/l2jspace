@@ -7,7 +7,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q113_StatusOfTheBeaconTower extends Quest {
-    private static final String qn = "Q113_StatusOfTheBeaconTower";
+    private static final String QUEST_NAME = "Q113_StatusOfTheBeaconTower";
 
     // NPCs
     private static final int MOIRA = 31979;
@@ -28,7 +28,7 @@ public class Q113_StatusOfTheBeaconTower extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -49,7 +49,7 @@ public class Q113_StatusOfTheBeaconTower extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;

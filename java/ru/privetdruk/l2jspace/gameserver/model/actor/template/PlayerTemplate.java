@@ -39,6 +39,10 @@ public class PlayerTemplate extends CreatureTemplate {
     private final double[] _mpTable;
     private final double[] _cpTable;
 
+    private final double[] hpRegenTable;
+    private final double[] mpRegenTable;
+    private final double[] cpRegenTable;
+
     private final List<ItemTemplateHolder> _items;
     private final List<GeneralSkillNode> _skills;
 
@@ -64,10 +68,28 @@ public class PlayerTemplate extends CreatureTemplate {
         _mpTable = set.getDoubleArray("mpTable");
         _cpTable = set.getDoubleArray("cpTable");
 
+        hpRegenTable = set.getDoubleArray("hpRegenTable");
+        mpRegenTable = set.getDoubleArray("mpRegenTable");
+        cpRegenTable = set.getDoubleArray("cpRegenTable");
+
         _items = set.getList("items");
         _skills = set.getList("skills");
 
         _fists = (Weapon) ItemData.getInstance().getTemplate(set.getInteger("fists"));
+    }
+
+    @Override
+    public final double getBaseHpRegen(int level) {
+        return hpRegenTable[level - 1];
+    }
+
+    @Override
+    public final double getBaseMpRegen(int level) {
+        return mpRegenTable[level - 1];
+    }
+
+    public final double getBaseCpRegen(int level) {
+        return cpRegenTable[level - 1];
     }
 
     public final ClassId getClassId() {

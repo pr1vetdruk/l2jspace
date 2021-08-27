@@ -152,13 +152,13 @@ public class BlockList {
      * @return true if blocked
      */
     public static boolean isInBlockList(int ownerId, int targetId) {
-        final Player player = World.getInstance().getPlayer(ownerId);
-        if (player != null)
+        Player player = World.getInstance().getPlayer(ownerId);
+        if (player != null) {
             return player.getBlockList().isInBlockList(targetId);
+        }
 
-        if (!OFFLINE_LIST.containsKey(ownerId))
-            OFFLINE_LIST.put(ownerId, loadList(ownerId));
+        List<Integer> list = OFFLINE_LIST.computeIfAbsent(ownerId, l -> loadList(ownerId));
 
-        return OFFLINE_LIST.get(ownerId).contains(targetId);
+        return list.contains(targetId);
     }
 }

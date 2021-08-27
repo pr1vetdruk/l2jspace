@@ -77,10 +77,7 @@ public class ItemInfo {
         _enchant = item.getEnchantLevel();
 
         // Get the augmentation boni
-        if (item.isAugmented())
-            _augmentation = item.getAugmentation().getId();
-        else
-            _augmentation = 0;
+        _augmentation = item.isAugmented() ? item.getAugmentation().getId() : 0;
 
         // Get the quantity of the ItemInstance
         _count = item.getCount();
@@ -113,10 +110,7 @@ public class ItemInfo {
         _enchant = item.getEnchantLevel();
 
         // Get the augmentation boni
-        if (item.isAugmented())
-            _augmentation = item.getAugmentation().getId();
-        else
-            _augmentation = 0;
+        _augmentation = item.isAugmented() ? item.getAugmentation().getId() : 0;
 
         // Get the quantity of the ItemInstance
         _count = item.getCount();

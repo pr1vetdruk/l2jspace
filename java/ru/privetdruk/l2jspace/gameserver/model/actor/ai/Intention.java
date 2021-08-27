@@ -11,7 +11,7 @@ import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
  * A datatype used as a simple "wish" of an actor, consisting of an {@link IntentionType} and all needed parameters.
  */
 public class Intention {
-    private IntentionType _intention;
+    private IntentionType type;
 
     private WorldObject _target;
     private Creature _finalTarget;
@@ -26,20 +26,16 @@ public class Intention {
     private int _itemObjectId;
 
     public Intention() {
-        _intention = IntentionType.IDLE;
+        type = IntentionType.IDLE;
     }
 
     @Override
     public String toString() {
-        return "[Intention type=" + _intention.toString() + " target=" + _target + " finalTarget=" + _finalTarget + " skill=" + _skill + " loc=" + _loc + " boat=" + _boat + " isCtrlPressed=" + _isCtrlPressed + " isShiftPressed=" + _isShiftPressed + " itemObjectId=" + _itemObjectId + "]";
+        return "[Intention type=" + type.toString() + " target=" + _target + " finalTarget=" + _finalTarget + " skill=" + _skill + " loc=" + _loc + " boat=" + _boat + " isCtrlPressed=" + _isCtrlPressed + " isShiftPressed=" + _isShiftPressed + " itemObjectId=" + _itemObjectId + "]";
     }
 
     public IntentionType getType() {
-        return _intention;
-    }
-
-    public IntentionType getIntention() {
-        return _intention;
+        return type;
     }
 
     public WorldObject getTarget() {
@@ -88,7 +84,7 @@ public class Intention {
      * @param itemObjectId   : An integer used as reference.
      */
     private synchronized void set(IntentionType type, WorldObject target, Creature finalTarget, L2Skill skill, Location loc, Boat boat, boolean isCtrlPressed, boolean isShiftPressed, int itemObjectId) {
-        _intention = type;
+        this.type = type;
 
         _target = target;
         _finalTarget = finalTarget;
@@ -164,6 +160,6 @@ public class Intention {
      * @return True if the current {@link Intention} got blank parameters.
      */
     public synchronized boolean isBlank() {
-        return _intention == IntentionType.IDLE && _target == null && _finalTarget == null && _skill == null && _loc == null && _boat == null && _itemObjectId == 0;
+        return type == IntentionType.IDLE && _target == null && _finalTarget == null && _skill == null && _loc == null && _boat == null && _itemObjectId == 0;
     }
 }

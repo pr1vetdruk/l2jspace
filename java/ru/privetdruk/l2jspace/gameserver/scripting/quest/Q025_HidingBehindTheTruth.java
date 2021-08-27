@@ -15,7 +15,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q025_HidingBehindTheTruth extends Quest {
-    private static final String qn = "Q025_HidingBehindTheTruth";
+    private static final String QUEST_NAME = "Q025_HidingBehindTheTruth";
 
     // Items
     private static final int FOREST_OF_DEADMAN_MAP = 7063;
@@ -78,7 +78,7 @@ public class Q025_HidingBehindTheTruth extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -244,7 +244,7 @@ public class Q025_HidingBehindTheTruth extends Quest {
 
     @Override
     public String onFirstTalk(Npc npc, Player player) {
-        final QuestState st = player.getQuestList().getQuestState(qn);
+        final QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st != null && st.getInteger("state") == 11) {
             playSound(player, SOUND_HORROR_1);
             return "31532-08.htm";
@@ -257,7 +257,7 @@ public class Q025_HidingBehindTheTruth extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

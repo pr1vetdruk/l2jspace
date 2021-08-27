@@ -12,7 +12,7 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q219_TestimonyOfFate extends SecondClassQuest {
-    private static final String qn = "Q219_TestimonyOfFate";
+    private static final String QUEST_NAME = "Q219_TestimonyOfFate";
 
     // NPCs
     private static final int KAIRA = 30476;
@@ -107,7 +107,7 @@ public class Q219_TestimonyOfFate extends SecondClassQuest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -161,7 +161,7 @@ public class Q219_TestimonyOfFate extends SecondClassQuest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;

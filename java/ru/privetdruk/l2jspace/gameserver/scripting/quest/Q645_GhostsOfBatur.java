@@ -10,7 +10,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q645_GhostsOfBatur extends Quest {
-    private static final String qn = "Q645_GhostsOfBatur";
+    private static final String QUEST_NAME = "Q645_GhostsOfBatur";
 
     // NPC
     private static final int KARUDA = 32017;
@@ -59,7 +59,7 @@ public class Q645_GhostsOfBatur extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -71,7 +71,7 @@ public class Q645_GhostsOfBatur extends Quest {
             htmltext = "32017-07.htm";
             takeItems(player, CURSED_GRAVE_GOODS, -1);
 
-            final int reward[] = REWARDS[Integer.parseInt(event)];
+            final int[] reward = REWARDS[Integer.parseInt(event)];
             giveItems(player, reward[0], reward[1]);
 
             playSound(player, SOUND_FINISH);
@@ -84,22 +84,19 @@ public class Q645_GhostsOfBatur extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
         switch (st.getState()) {
-            case CREATED:
-                htmltext = (player.getStatus().getLevel() < 23) ? "32017-02.htm" : "32017-01.htm";
-                break;
-
-            case STARTED:
+            case CREATED -> htmltext = (player.getStatus().getLevel() < 23) ? "32017-02.htm" : "32017-01.htm";
+            case STARTED -> {
                 final int cond = st.getCond();
                 if (cond == 1)
                     htmltext = "32017-04.htm";
                 else if (cond == 2)
                     htmltext = "32017-05.htm";
-                break;
+            }
         }
 
         return htmltext;

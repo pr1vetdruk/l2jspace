@@ -12,6 +12,7 @@ import ru.privetdruk.l2jspace.gameserver.data.manager.DuelManager;
 import ru.privetdruk.l2jspace.gameserver.enums.AiEventType;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
 import ru.privetdruk.l2jspace.gameserver.enums.items.ShotType;
+import ru.privetdruk.l2jspace.gameserver.enums.skills.ShieldDefense;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillTargetType;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillType;
 import ru.privetdruk.l2jspace.gameserver.handler.ISkillHandler;
@@ -26,7 +27,7 @@ import ru.privetdruk.l2jspace.gameserver.model.group.Party;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MagicSkillUse;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
-import ru.privetdruk.l2jspace.gameserver.skill.Formulas;
+import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.skill.l2skill.L2SkillDrain;
 import ru.privetdruk.l2jspace.gameserver.taskmanager.AttackStanceTaskManager;
@@ -413,14 +414,16 @@ public class Cubic {
     }
 
     private void useDisablerSkill(L2Skill skill, Creature target) {
-        if (target.isDead())
+        if (target.isDead()) {
             return;
+        }
 
-        final boolean bss = getOwner().isChargedShot(ShotType.BLESSED_SPIRITSHOT);
-        final byte shld = Formulas.calcShldUse(getOwner(), target, skill);
+        boolean bss = getOwner().isChargedShot(ShotType.BLESSED_SPIRITSHOT);
+        ShieldDefense shieldDefense = Formula.calcShieldUse(getOwner(), target, skill, false);
 
-        if (!Formulas.calcCubicSkillSuccess(this, target, skill, shld, bss))
+        if (!Formula.calcCubicSkillSuccess(this, target, skill, shieldDefense, bss)) {
             return;
+        }
 
         if (skill.getSkillType() == SkillType.AGGDAMAGE) {
             if (target instanceof Attackable)
@@ -441,20 +444,20 @@ public class Cubic {
         if (target.isDead())
             return;
 
-        final boolean mcrit = Formulas.calcMCrit(getOwner(), target, skill);
-        final byte shld = Formulas.calcShldUse(getOwner(), target, skill);
+        boolean isCrit = Formula.calcMCrit(getOwner(), target, skill);
+        ShieldDefense shieldDefense = Formula.calcShieldUse(getOwner(), target, skill, false);
 
-        int damage = (int) Formulas.calcMagicDam(this, target, skill, mcrit, shld);
+        int damage = (int) Formula.calcMagicDam(this, target, skill, isCrit, shieldDefense);
 
         // If target is reflecting the skill then no damage is done Ignoring vengance-like reflections
-        if ((Formulas.calcSkillReflect(target, skill) & Formulas.SKILL_REFLECT_SUCCEED) > 0)
+        if ((Formula.calcSkillReflect(target, skill) & Formula.SKILL_REFLECT_SUCCEED) > 0)
             damage = 0;
 
         if (damage > 0) {
             // Manage cast break of the target (calculating rate, sending message...)
-            Formulas.calcCastBreak(target, damage);
+            Formula.calcCastBreak(target, damage);
 
-            getOwner().sendDamageMessage(target, damage, mcrit, false, false);
+            getOwner().sendDamageMessage(target, damage, isCrit, false, false);
 
             if (skill.hasEffects()) {
                 // activate attacked effects, if any
@@ -464,7 +467,7 @@ public class Cubic {
                     target.removeEffect(target.getFirstEffect(skill));
 
                 final boolean bss = getOwner().isChargedShot(ShotType.BLESSED_SPIRITSHOT);
-                if (Formulas.calcCubicSkillSuccess(this, target, skill, shld, bss))
+                if (Formula.calcCubicSkillSuccess(this, target, skill, shieldDefense, bss))
                     skill.getEffects(this, target);
             }
 
@@ -477,9 +480,9 @@ public class Cubic {
             return;
 
         if (skill.isOffensive()) {
-            final byte shld = Formulas.calcShldUse(getOwner(), target, skill);
-            final boolean bss = getOwner().isChargedShot(ShotType.BLESSED_SPIRITSHOT);
-            final boolean acted = Formulas.calcCubicSkillSuccess(this, target, skill, shld, bss);
+            ShieldDefense shieldDefense = Formula.calcShieldUse(getOwner(), target, skill, false);
+            boolean bss = getOwner().isChargedShot(ShotType.BLESSED_SPIRITSHOT);
+            boolean acted = Formula.calcCubicSkillSuccess(this, target, skill, shieldDefense, bss);
 
             if (!acted) {
                 getOwner().sendPacket(SystemMessageId.ATTACK_FAILED);
@@ -499,9 +502,9 @@ public class Cubic {
         if (target.isAlikeDead() && skill.getTargetType() != SkillTargetType.CORPSE_MOB)
             return;
 
-        final boolean mcrit = Formulas.calcMCrit(getOwner(), target, skill);
-        final byte shld = Formulas.calcShldUse(getOwner(), target, skill);
-        final int damage = (int) Formulas.calcMagicDam(this, target, skill, mcrit, shld);
+        boolean isCrit = Formula.calcMCrit(getOwner(), target, skill);
+        ShieldDefense shieldDefense = Formula.calcShieldUse(getOwner(), target, skill, false);
+        int damage = (int) Formula.calcMagicDam(this, target, skill, isCrit, shieldDefense);
 
         // Check to see if we should damage the target
         if (damage > 0) {
@@ -514,10 +517,10 @@ public class Cubic {
                 target.reduceCurrentHp(damage, getOwner(), skill);
 
                 // Manage cast break of the target (calculating rate, sending message...)
-                Formulas.calcCastBreak(target, damage);
+                Formula.calcCastBreak(target, damage);
 
                 // Send message.
-                getOwner().sendDamageMessage(target, damage, mcrit, false, false);
+                getOwner().sendDamageMessage(target, damage, isCrit, false, false);
             }
         }
     }

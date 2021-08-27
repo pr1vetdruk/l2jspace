@@ -1,11 +1,15 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.status;
 
+import ru.privetdruk.l2jspace.gameserver.data.manager.ZoneManager;
 import ru.privetdruk.l2jspace.gameserver.data.xml.PlayerLevelData;
+import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
+import ru.privetdruk.l2jspace.gameserver.enums.actors.WeightPenalty;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.Stats;
 import ru.privetdruk.l2jspace.gameserver.model.PetDataEntry;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Pet;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
+import ru.privetdruk.l2jspace.gameserver.model.zone.type.SwampZone;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.InventoryUpdate;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
@@ -69,6 +73,54 @@ public class PetStatus extends SummonStatus<Pet> {
             iu.addModifiedItem(controlItem);
             _actor.getOwner().sendPacket(iu);
         }
+    }
+
+    @Override
+    public float getMoveSpeed() {
+        // Get base value.
+        float baseValue = getBaseMoveSpeed();
+
+        // Calculate swamp area malus.
+        if (_actor.isInsideZone(ZoneId.SWAMP)) {
+            SwampZone zone = ZoneManager.getInstance().getZone(_actor, SwampZone.class);
+            if (zone != null) {
+                baseValue *= (100 + zone.getMoveBonus()) / 100.0;
+            }
+        }
+
+        // Calculate weight penalty malus.
+        WeightPenalty wp = _actor.getWeightPenalty();
+        if (wp != WeightPenalty.NONE) {
+            baseValue *= wp.getSpeedMultiplier();
+        }
+
+        return (float) calcStat(Stats.RUN_SPEED, baseValue, null, null);
+    }
+
+    @Override
+    public double getRegenHp() {
+        double value = super.getRegenHp();
+
+        // Calculate weight penalty malus.
+        WeightPenalty wp = _actor.getWeightPenalty();
+        if (wp != WeightPenalty.NONE) {
+            value *= wp.getRegenerationMultiplier();
+        }
+
+        return value;
+    }
+
+    @Override
+    public double getRegenMp() {
+        double value = super.getRegenMp();
+
+        // Calculate weight penalty malus.
+        WeightPenalty wp = _actor.getWeightPenalty();
+        if (wp != WeightPenalty.NONE) {
+            value *= wp.getRegenerationMultiplier();
+        }
+
+        return value;
     }
 
     @Override

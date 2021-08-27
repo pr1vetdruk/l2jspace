@@ -42,7 +42,7 @@ public class ShadowItemTaskManager implements Runnable, OnEquipListener {
             final Player player = entry.getValue();
 
             // Decrease item mana.
-            int mana = item.decreaseMana(DELAY);
+            int mana = item.decreaseMana();
 
             // If not enough mana, destroy the item and inform the player.
             if (mana == -1) {

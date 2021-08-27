@@ -29,7 +29,7 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MagicSkillUse;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SetupGauge;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
-import ru.privetdruk.l2jspace.gameserver.skill.Formulas;
+import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.skill.l2skill.L2SkillSiegeFlag;
 import ru.privetdruk.l2jspace.gameserver.skill.l2skill.L2SkillSummon;
@@ -48,7 +48,7 @@ public class PlayerCast extends PlayableCast<Player> {
     public void doFusionCast(L2Skill skill, Creature target) {
         final int reuseDelay = skill.getReuseDelay();
 
-        final boolean skillMastery = Formulas.calcSkillMastery(_actor, skill);
+        final boolean skillMastery = Formula.calcSkillMastery(_actor, skill);
         if (skillMastery)
             _actor.sendPacket(SystemMessageId.SKILL_READY_TO_USE_AGAIN);
         else {

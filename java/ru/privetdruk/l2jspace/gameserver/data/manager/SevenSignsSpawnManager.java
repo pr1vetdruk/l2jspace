@@ -56,7 +56,7 @@ public class SevenSignsSpawnManager {
                         i++;
                     }
                 }
-                LOGGER.info("Loaded Removed " + i + " " + unspawnLogInfo + " creatures");
+                LOGGER.info("Removed " + i + " " + unspawnLogInfo + " creatures");
             }
 
             int i = 0;
@@ -68,26 +68,33 @@ public class SevenSignsSpawnManager {
                 i++;
             }
 
-            LOGGER.info("Loaded Spawned " + i + " " + spawnLogInfo + " creatures");
+            LOGGER.info("Spawned " + i + " " + spawnLogInfo + " creatures");
         } catch (Exception e) {
             LOGGER.warn("Error while spawning creatures: " + e.getMessage(), e);
         }
     }
 
     public void notifyChangeMode() {
-        if (_weekly.isEmpty() && _firstWeek.isEmpty() && _secondWeek.isEmpty() && _thirdWeek.isEmpty())
+        if (_firstWeek.isEmpty() && _secondWeek.isEmpty() && _thirdWeek.isEmpty()) {
             return;
+        }
 
-        if (SevenSignsManager.getInstance().getCurrentPeriod() == PeriodType.COMPETITION)
+        PeriodType currentPeriod = SevenSignsManager.getInstance().getCurrentPeriod();
+
+        if (currentPeriod == PeriodType.COMPETITION) {
             spawnFirstWeekCreatures();
-        else if (SevenSignsManager.getInstance().getCurrentPeriod() == PeriodType.RESULTS)
+        } else if (currentPeriod == PeriodType.RESULTS) {
             return;
-        else if (SevenSignsManager.getInstance().getCurrentPeriod() == PeriodType.SEAL_VALIDATION) {
-            if (SevenSignsManager.getInstance().getWinningCabal() == CabalType.DAWN)
-                spawnSecondWeekCreatures();
+        } else if (currentPeriod == PeriodType.SEAL_VALIDATION) {
+            CabalType winningCabal = SevenSignsManager.getInstance().getWinningCabal();
 
-            if (SevenSignsManager.getInstance().getWinningCabal() == CabalType.DUSK)
+            if (winningCabal == CabalType.DAWN) {
                 spawnThirdWeekCreatures();
+            }
+
+            if (winningCabal == CabalType.DUSK) {
+                spawnSecondWeekCreatures();
+            }
         }
     }
 

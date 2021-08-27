@@ -13,12 +13,7 @@ import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
 import ru.privetdruk.l2jspace.gameserver.enums.items.ArmorType;
 import ru.privetdruk.l2jspace.gameserver.enums.items.WeaponType;
-import ru.privetdruk.l2jspace.gameserver.enums.skills.ElementType;
-import ru.privetdruk.l2jspace.gameserver.enums.skills.FlyType;
-import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillOpType;
-import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillTargetType;
-import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillType;
-import ru.privetdruk.l2jspace.gameserver.enums.skills.Stats;
+import ru.privetdruk.l2jspace.gameserver.enums.skills.*;
 import ru.privetdruk.l2jspace.gameserver.geoengine.GeoEngine;
 import ru.privetdruk.l2jspace.gameserver.handler.ITargetHandler;
 import ru.privetdruk.l2jspace.gameserver.handler.TargetHandler;
@@ -53,6 +48,7 @@ public abstract class L2Skill implements IChanceSkillTrigger {
     public static final int SKILL_CREATE_COMMON = 1320;
     public static final int SKILL_CREATE_DWARVEN = 172;
     public static final int SKILL_CRYSTALLIZE = 248;
+    public static final int SKILL_SUMMON_CP = 1324;
     public static final int SKILL_DIVINE_INSPIRATION = 1405;
     public static final int SKILL_NPC_RACE = 4416;
 
@@ -1084,32 +1080,35 @@ public abstract class L2Skill implements IChanceSkillTrigger {
     }
 
     public final List<AbstractEffect> getEffects(Creature effector, Creature effected) {
-        return getEffects(effector, effected, Formulas.SHIELD_DEFENSE_FAILED, false);
+        return getEffects(effector, effected, ShieldDefense.FAILED, false);
     }
 
-    public final List<AbstractEffect> getEffects(Creature effector, Creature effected, byte shield, boolean isBlessedSpiritShot) {
+    public final List<AbstractEffect> getEffects(Creature effector, Creature effected, ShieldDefense shieldDefense, boolean isBlessedSpiritShot) {
         if (!hasEffects() || isPassive())
             return Collections.emptyList();
 
-        // doors and siege flags cannot receive any effects
-        if (effected instanceof Door || effected instanceof SiegeFlag)
+        // Doors, siege flags and dead creatures cannot receive any effects.
+        if (effected instanceof Door || effected instanceof SiegeFlag || effected.isDead()) {
             return Collections.emptyList();
+        }
 
-        if (effector != effected) {
-            if (isOffensive() || isDebuff()) {
-                if (effected.isInvul())
+        if (effector != effected && (isOffensive() || isDebuff())) {
+            if (effected.isInvul()) {
+                return Collections.emptyList();
+            }
+
+            if (effector != null) {
+                Player effectorPlayer = effector.getActingPlayer();
+                if (effectorPlayer != null && !effectorPlayer.getAccessLevel().canGiveDamage()) {
                     return Collections.emptyList();
-
-                if (effector instanceof Player && ((Player) effector).isGM()) {
-                    if (!((Player) effector).getAccessLevel().canGiveDamage())
-                        return Collections.emptyList();
                 }
             }
         }
 
         // Perfect block, don't bother going further.
-        if (shield == Formulas.SHIELD_DEFENSE_PERFECT_BLOCK)
+        if (shieldDefense == ShieldDefense.PERFECT) {
             return Collections.emptyList();
+        }
 
         final List<AbstractEffect> effects = new ArrayList<>(_effectTemplates.size());
 
@@ -1117,7 +1116,7 @@ public abstract class L2Skill implements IChanceSkillTrigger {
             boolean success = true;
 
             if (template.getEffectPower() > -1)
-                success = Formulas.calcEffectSuccess(effector, effected, template, this, isBlessedSpiritShot);
+                success = Formula.calcEffectSuccess(effector, effected, template, this, isBlessedSpiritShot);
 
             if (success) {
                 final AbstractEffect effect = template.getEffect(effector, effected, this);
@@ -1134,42 +1133,47 @@ public abstract class L2Skill implements IChanceSkillTrigger {
     }
 
     public final List<AbstractEffect> getEffects(Cubic effector, Creature effected) {
-        return getEffects(effector, effected, Formulas.SHIELD_DEFENSE_FAILED, false);
+        return getEffects(effector, effected, ShieldDefense.FAILED, false);
     }
 
-    public final List<AbstractEffect> getEffects(Cubic effector, Creature effected, byte shield, boolean isBlessedSpiritShot) {
-        if (!hasEffects() || isPassive())
+    public final List<AbstractEffect> getEffects(Cubic effector, Creature effected, ShieldDefense shieldDefense, boolean isBlessedSpiritShot) {
+        if (!hasEffects() || isPassive()) {
             return Collections.emptyList();
+        }
 
-        if (effector.getOwner() != effected) {
-            if (isDebuff() || isOffensive()) {
-                if (effected.isInvul())
+        if (effector.getOwner() != effected && (isDebuff() || isOffensive())) {
+                if (effected.isInvul()) {
                     return Collections.emptyList();
+                }
 
-                if (effector.getOwner().isGM() && !effector.getOwner().getAccessLevel().canGiveDamage())
+                if (!effector.getOwner().getAccessLevel().canGiveDamage()) {
                     return Collections.emptyList();
-            }
+                }
         }
 
         // Perfect block, don't bother going further.
-        if (shield == Formulas.SHIELD_DEFENSE_PERFECT_BLOCK)
+        if (shieldDefense == ShieldDefense.PERFECT) {
             return Collections.emptyList();
+        }
 
-        final List<AbstractEffect> effects = new ArrayList<>(_effectTemplates.size());
+        List<AbstractEffect> effects = new ArrayList<>(_effectTemplates.size());
 
         for (EffectTemplate template : _effectTemplates) {
             boolean success = true;
-            if (template.getEffectPower() > -1)
-                success = Formulas.calcEffectSuccess(effector.getOwner(), effected, template, this, isBlessedSpiritShot);
+
+            if (template.getEffectPower() > -1) {
+                success = Formula.calcEffectSuccess(effector.getOwner(), effected, template, this, isBlessedSpiritShot);
+            }
 
             if (success) {
-                final AbstractEffect effect = template.getEffect(effector.getOwner(), effected, this);
+                AbstractEffect effect = template.getEffect(effector.getOwner(), effected, this);
                 if (effect != null) {
                     effect.scheduleEffect();
                     effects.add(effect);
                 }
             }
         }
+
         return effects;
     }
 

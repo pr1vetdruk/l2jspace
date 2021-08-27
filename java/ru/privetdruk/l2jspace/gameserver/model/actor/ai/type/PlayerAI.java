@@ -235,7 +235,6 @@ public class PlayerAI extends PlayableAI {
         }
 
         if (!actor.getCast().canAttemptCast(target, skill)) {
-            doIdleIntention();
             return;
         }
 
@@ -270,11 +269,8 @@ public class PlayerAI extends PlayableAI {
             int itemObjectId = _currentIntention.getItemObjectId();
 
             if (!actor.getCast().canDoCast(target, skill, isCtrlPressed, itemObjectId)) {
-                if ((skill.nextActionIsAttack() && target.isAttackableWithoutForceBy(actor))) {
+                if (skill.nextActionIsAttack() && target.isAttackableWithoutForceBy(actor)) {
                     doAttackIntention(target, isCtrlPressed, isShiftPressed);
-                } else {
-                    actor.sendPacket(new StopMove(actor));
-                    doIdleIntention();
                 }
 
                 return;
@@ -423,10 +419,12 @@ public class PlayerAI extends PlayableAI {
             return;
         }
 
-        if (target instanceof Walker)
+        if (target instanceof Walker) {
             getActor().broadcastPacket(new StopMove(getActor()));
-        else
+        } else {
+            getActor().getPosition().setHeadingTo(target);
             getActor().broadcastPacket(new MoveToPawn(_actor, target, Npc.INTERACTION_DISTANCE));
+        }
 
         target.onInteract(getActor());
 
@@ -513,7 +511,9 @@ public class PlayerAI extends PlayableAI {
         getActor().useEquippableItem(itemToTest, false);
 
         // Resolve previous intention
-        doIntention(_previousIntention);
+        if (_previousIntention.getType() != IntentionType.CAST && _previousIntention.getType() != IntentionType.USE_ITEM) {
+            doIntention(_previousIntention);
+        }
     }
 
     @Override

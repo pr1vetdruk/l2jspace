@@ -1,19 +1,21 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q615_MagicalPowerOfFire_Part1 extends Quest {
-    private static final String qn = "Q615_MagicalPowerOfFire_Part1";
+    private static final String QUEST_NAME = "Q615_MagicalPowerOfFire_Part1";
 
     // NPCs
     private static final int NARAN = 31378;
     private static final int UDAN = 31379;
     private static final int ASEFA_BOX = 31559;
-    private static final int EYE = 31684;
+    private static final int ASEFA_EYE = 31685;
 
     // Items
     private static final int THIEF_KEY = 1661;
@@ -31,12 +33,13 @@ public class Q615_MagicalPowerOfFire_Part1 extends Quest {
 
         // IDs aggro ranges to avoid, else quest is automatically failed.
         addAggroRangeEnterId(21350, 21351, 21353, 21354, 21355, 21357, 21358, 21360, 21361, 21362, 21369, 21370, 21364, 21365, 21366, 21368, 21371, 21372, 21373, 21374, 21375);
+        addKillId(ASEFA_EYE);
     }
 
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -64,17 +67,8 @@ public class Q615_MagicalPowerOfFire_Part1 extends Quest {
     }
 
     @Override
-    public String onTimer(String name, Npc npc, Player player) {
-        if (name.equalsIgnoreCase("UdanEyeDespawn")) {
-            npc.broadcastNpcSay("I'll be waiting for your return.");
-        }
-
-        return null;
-    }
-
-    @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;
@@ -132,7 +126,7 @@ public class Q615_MagicalPowerOfFire_Part1 extends Quest {
 
     @Override
     public String onAggro(Npc npc, Player player, boolean isPet) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return null;
 
@@ -140,14 +134,27 @@ public class Q615_MagicalPowerOfFire_Part1 extends Quest {
             // Put "spawned" flag to 1 to avoid to spawn another.
             st.set("spawned", 1);
 
-            // Spawn Udan's eye.
-            Npc udanEye = addSpawn(EYE, player, true, 10000, true);
-            if (udanEye != null) {
-                startQuestTimer("UdanEyeDespawn", udanEye, player, 9000);
-                udanEye.broadcastNpcSay("You cannot escape Udan's Eye!");
+            // Spawn Asefa's eye.
+            Npc asefaEye = addSpawn(ASEFA_EYE, player, true, 10000, true);
+            if (asefaEye != null) {
+                asefaEye.broadcastNpcSay(NpcStringId.ID_61503);
                 playSound(player, SOUND_GIVEUP);
             }
         }
+
+        return null;
+    }
+
+    @Override
+    public String onKill(Npc npc, Creature killer) {
+        Player player = killer.getActingPlayer();
+
+        QuestState questState = getRandomPartyMemberState(player, npc, QuestStatus.STARTED);
+        if (questState == null) {
+            return null;
+        }
+
+        npc.broadcastNpcSay(NpcStringId.ID_61504);
 
         return null;
     }

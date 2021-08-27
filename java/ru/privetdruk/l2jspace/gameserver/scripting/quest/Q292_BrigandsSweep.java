@@ -11,7 +11,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q292_BrigandsSweep extends Quest {
-    private static final String qn = "Q292_BrigandsSweep";
+    private static final String QUEST_NAME = "Q292_BrigandsSweep";
 
     // NPCs
     private static final int SPIRON = 30532;
@@ -45,7 +45,7 @@ public class Q292_BrigandsSweep extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -63,7 +63,7 @@ public class Q292_BrigandsSweep extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;

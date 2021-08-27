@@ -404,7 +404,6 @@ public final class Auctioneer extends Folk {
         html.replace("%AGIT_LIST%", sb.toString());
         html.replace("%AGIT_LINK_BACK%", "bypass -h npc_" + getObjectId() + "_start");
         player.sendPacket(html);
-        return;
     }
 
     private void showSelectedItems(Player player) {
@@ -498,6 +497,5 @@ public final class Auctioneer extends Folk {
 
         showAuctionsList("1", player); // Force to display page 1.
         player.sendPacket(SystemMessageId.NO_OFFERINGS_OWN_OR_MADE_BID_FOR);
-        return;
     }
 }

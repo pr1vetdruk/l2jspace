@@ -5,29 +5,34 @@ import java.util.Map;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 
 import ru.privetdruk.l2jspace.config.Config;
+import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
+import ru.privetdruk.l2jspace.gameserver.data.manager.ClanHallManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.DuelManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ZoneManager;
 import ru.privetdruk.l2jspace.gameserver.data.xml.PlayerLevelData;
+import ru.privetdruk.l2jspace.gameserver.enums.SiegeSide;
 import ru.privetdruk.l2jspace.gameserver.enums.StatusType;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassRace;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.OperateType;
+import ru.privetdruk.l2jspace.gameserver.enums.actors.WeightPenalty;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectType;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.Stats;
 import ru.privetdruk.l2jspace.gameserver.model.PlayerLevel;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
+import ru.privetdruk.l2jspace.gameserver.model.actor.*;
 import ru.privetdruk.l2jspace.gameserver.model.actor.container.npc.RewardInfo;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Pet;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Servitor;
+import ru.privetdruk.l2jspace.gameserver.model.clanhall.ClanHall;
+import ru.privetdruk.l2jspace.gameserver.model.clanhall.ClanHallFunction;
 import ru.privetdruk.l2jspace.gameserver.model.entity.Duel.DuelState;
+import ru.privetdruk.l2jspace.gameserver.model.entity.Siege;
 import ru.privetdruk.l2jspace.gameserver.model.group.Party;
 import ru.privetdruk.l2jspace.gameserver.model.olympiad.OlympiadGameManager;
 import ru.privetdruk.l2jspace.gameserver.model.olympiad.OlympiadGameTask;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.ClanMember;
+import ru.privetdruk.l2jspace.gameserver.model.zone.type.MotherTreeZone;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.SwampZone;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
@@ -39,7 +44,6 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.StatusUpdate;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.UserInfo;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
-import ru.privetdruk.l2jspace.gameserver.skill.Formulas;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class PlayerStatus extends PlayableStatus<Player> {
@@ -126,10 +130,9 @@ public class PlayerStatus extends PlayableStatus<Player> {
         }
 
         if (attacker != null && attacker != _actor) {
-            final Player attackerPlayer = attacker.getActingPlayer();
-            if (attackerPlayer != null) {
-                if (attackerPlayer.isGM() && !attackerPlayer.getAccessLevel().canGiveDamage())
-                    return;
+            Player attackerPlayer = attacker.getActingPlayer();
+            if (attackerPlayer != null && !attackerPlayer.getAccessLevel().canGiveDamage()) {
+                return;
             }
 
             if (_actor.isInDuel()) {
@@ -309,8 +312,9 @@ public class PlayerStatus extends PlayableStatus<Player> {
     @Override
     protected void doRegeneration() {
         // Modify the current CP of the Creature.
-        if (_cp < getMaxCp())
-            setCp(_cp + Formulas.calcCpRegen(_actor), false);
+        if (_cp < getMaxCp()) {
+            setCp(_cp + Math.max(1, getRegenCp()), false);
+        }
 
         super.doRegeneration();
     }
@@ -681,6 +685,133 @@ public class PlayerStatus extends PlayableStatus<Player> {
     }
 
     @Override
+    public final double getRegenHp() {
+        // Get value.
+        double value = super.getRegenHp();
+
+        Clan clan = _actor.getClan();
+        if (clan != null) {
+            // Calculate siege bonus.
+            Siege siege = CastleManager.getInstance().getActiveSiege(_actor);
+            if (siege != null && siege.checkSide(clan, SiegeSide.ATTACKER)) {
+                Npc flag = clan.getFlag();
+                if (flag != null && _actor.isIn3DRadius(flag, 200)) {
+                    value *= 1.5;
+                }
+            }
+
+            // Calculate clan hall bonus.
+            if (_actor.isInsideZone(ZoneId.CLAN_HALL)) {
+                int chId = clan.getClanHallId();
+                if (chId > 0) {
+                    ClanHall ch = ClanHallManager.getInstance().getClanHall(chId);
+                    if (ch != null) {
+                        ClanHallFunction chf = ch.getFunction(ClanHall.FUNC_RESTORE_HP);
+                        if (chf != null) {
+                            value *= 1 + chf.getLvl() / 100.0;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Calculate movement bonus.
+        if (_actor.isSitting()) {
+            value *= 1.5;
+        } else if (!_actor.isMoving()) {
+            value *= 1.1;
+        } else if (_actor.isRunning()) {
+            value *= 0.7;
+        }
+
+        // Calculate weight penalty malus.
+        WeightPenalty wp = _actor.getWeightPenalty();
+        if (wp != WeightPenalty.NONE) {
+            value *= wp.getRegenerationMultiplier();
+        }
+
+        // Calculate Mother Tree bonus.
+        if (_actor.isInsideZone(ZoneId.MOTHER_TREE)) {
+            MotherTreeZone zone = ZoneManager.getInstance().getZone(_actor, MotherTreeZone.class);
+            if (zone != null) {
+                value += zone.getHpRegenBonus();
+            }
+        }
+
+        return value;
+    }
+
+    @Override
+    public final double getRegenMp() {
+        // Get value.
+        double value = super.getRegenMp();
+
+        // Calculate clan hall bonus.
+        if (_actor.isInsideZone(ZoneId.CLAN_HALL) && _actor.getClan() != null) {
+            int chId = _actor.getClan().getClanHallId();
+            if (chId > 0) {
+                ClanHall ch = ClanHallManager.getInstance().getClanHall(chId);
+                if (ch != null) {
+                    ClanHallFunction chf = ch.getFunction(ClanHall.FUNC_RESTORE_MP);
+                    if (chf != null) {
+                        value *= 1 + chf.getLvl() / 100.0;
+                    }
+                }
+            }
+        }
+
+        // Calculate movement bonus.
+        if (_actor.isSitting()) {
+            value *= 1.5;
+        } else if (!_actor.isMoving()) {
+            value *= 1.1;
+        } else if (_actor.isRunning()) {
+            value *= 0.7;
+        }
+
+        // Calculate weight penalty malus.
+        WeightPenalty wp = _actor.getWeightPenalty();
+        if (wp != WeightPenalty.NONE) {
+            value *= wp.getRegenerationMultiplier();
+        }
+
+        // Calculate Mother Tree bonus.
+        if (_actor.isInsideZone(ZoneId.MOTHER_TREE)) {
+            MotherTreeZone zone = ZoneManager.getInstance().getZone(_actor, MotherTreeZone.class);
+            if (zone != null) {
+                value += zone.getMpRegenBonus();
+            }
+        }
+
+        return value;
+    }
+
+    /**
+     * @return The CP regeneration of this {@link Creature}.
+     */
+    public final double getRegenCp() {
+        // Get value.
+        double value = calcStat(Stats.REGENERATE_CP_RATE, _actor.getTemplate().getBaseCpRegen(getLevel()) * Config.CP_REGEN_MULTIPLIER, null, null);
+
+        // Calculate movement bonus.
+        if (_actor.isSitting()) {
+            value *= 1.5;
+        } else if (!_actor.isMoving()) {
+            value *= 1.1;
+        } else if (_actor.isRunning()) {
+            value *= 0.7;
+        }
+
+        // Calculate weight penalty malus.
+        WeightPenalty wp = _actor.getWeightPenalty();
+        if (wp != WeightPenalty.NONE) {
+            value *= wp.getRegenerationMultiplier();
+        }
+
+        return value;
+    }
+
+    @Override
     public final int getSp() {
         if (_actor.isSubClassActive())
             return _actor.getSubClasses().get(_actor.getClassIndex()).getSp();
@@ -705,11 +836,13 @@ public class PlayerStatus extends PlayableStatus<Player> {
         if (_actor.isMounted()) {
             int base = (_actor.isFlying()) ? _actor.getPetDataEntry().getMountFlySpeed() : _actor.getPetDataEntry().getMountBaseSpeed();
 
-            if (getLevel() < _actor.getMountLevel())
+            if (_actor.getMountLevel() - getLevel() > 9) {
                 base /= 2;
+            }
 
-            if (_actor.checkFoodState(_actor.getPetTemplate().getHungryLimit()))
+            if (_actor.checkFoodState(_actor.getPetTemplate().getHungryLimit())) {
                 base /= 2;
+            }
 
             return base;
         }
@@ -721,11 +854,13 @@ public class PlayerStatus extends PlayableStatus<Player> {
         if (_actor.isMounted()) {
             int base = _actor.getPetDataEntry().getMountSwimSpeed();
 
-            if (getLevel() < _actor.getMountLevel())
+            if (_actor.getMountLevel() - getLevel() > 9) {
                 base /= 2;
+            }
 
-            if (_actor.checkFoodState(_actor.getPetTemplate().getHungryLimit()))
+            if (_actor.checkFoodState(_actor.getPetTemplate().getHungryLimit())) {
                 base /= 2;
+            }
 
             return base;
         }
@@ -738,19 +873,25 @@ public class PlayerStatus extends PlayableStatus<Player> {
         // get base value, use swimming speed in water
         float baseValue = (_actor.isInWater()) ? getBaseSwimSpeed() : getBaseMoveSpeed();
 
-        // apply zone modifier before final calculation
+        // Calculate swamp area malus.
         if (_actor.isInsideZone(ZoneId.SWAMP)) {
             final SwampZone zone = ZoneManager.getInstance().getZone(_actor, SwampZone.class);
             if (zone != null)
                 baseValue *= (100 + zone.getMoveBonus()) / 100.0;
         }
 
-        // apply armor grade penalty before final calculation
-        final int penalty = _actor.getExpertiseArmorPenalty();
-        if (penalty > 0)
-            baseValue *= Math.pow(0.84, penalty);
+        // Calculate weight penalty malus.
+        WeightPenalty weightPenalty = _actor.getWeightPenalty();
+        if (weightPenalty != WeightPenalty.NONE) {
+            baseValue *= weightPenalty.getSpeedMultiplier();
+        }
 
-        // calculate speed
+        // Calculate armor grade penalty malus.
+        int armorGradePenalty = _actor.getArmorGradePenalty();
+        if (armorGradePenalty > 0) {
+            baseValue *= Math.pow(0.84, armorGradePenalty);
+        }
+
         return (float) calcStat(Stats.RUN_SPEED, baseValue, null, null);
     }
 
@@ -759,19 +900,24 @@ public class PlayerStatus extends PlayableStatus<Player> {
         // get base value, use swimming speed in water
         float baseValue = (_actor.isInWater()) ? getBaseSwimSpeed() : ((isStillWalking || !_actor.isRunning()) ? getBaseWalkSpeed() : getBaseRunSpeed());
 
-        // apply zone modifier before final calculation
+        // Calculate swamp area malus.
         if (_actor.isInsideZone(ZoneId.SWAMP)) {
-            final SwampZone zone = ZoneManager.getInstance().getZone(_actor, SwampZone.class);
-            if (zone != null)
+            SwampZone zone = ZoneManager.getInstance().getZone(_actor, SwampZone.class);
+            if (zone != null) {
                 baseValue *= (100 + zone.getMoveBonus()) / 100.0;
+            }
         }
 
-        // apply armor grade penalty before final calculation
-        final int penalty = _actor.getExpertiseArmorPenalty();
-        if (penalty > 0)
-            baseValue *= Math.pow(0.84, penalty);
+        // Calculate weight penalty malus.
+        WeightPenalty weightPenalty = _actor.getWeightPenalty();
+        if (weightPenalty != WeightPenalty.NONE)
+            baseValue *= weightPenalty.getSpeedMultiplier();
 
-        // calculate speed
+        // Calculate armor grade penalty malus.
+        int armorGradePenalty = _actor.getArmorGradePenalty();
+        if (armorGradePenalty > 0)
+            baseValue *= Math.pow(0.84, armorGradePenalty);
+
         return (float) calcStat(Stats.RUN_SPEED, baseValue, null, null);
     }
 
@@ -798,9 +944,10 @@ public class PlayerStatus extends PlayableStatus<Player> {
                 base /= 2;
         }
 
-        final int penalty = _actor.getExpertiseArmorPenalty();
-        if (penalty > 0)
+        int penalty = _actor.getArmorGradePenalty();
+        if (penalty > 0) {
             base *= Math.pow(0.84, penalty);
+        }
 
         return (int) calcStat(Stats.MAGIC_ATTACK_SPEED, base, null, null);
     }
@@ -840,9 +987,10 @@ public class PlayerStatus extends PlayableStatus<Player> {
     public int getEvasionRate(Creature target) {
         int val = super.getEvasionRate(target);
 
-        final int penalty = _actor.getExpertiseArmorPenalty();
-        if (penalty > 0)
+        int penalty = _actor.getArmorGradePenalty();
+        if (penalty > 0) {
             val -= (2 * penalty);
+        }
 
         return val;
     }
@@ -851,8 +999,9 @@ public class PlayerStatus extends PlayableStatus<Player> {
     public int getAccuracy() {
         int val = super.getAccuracy();
 
-        if (_actor.getExpertiseWeaponPenalty())
+        if (_actor.getWeaponGradePenalty()) {
             val -= 20;
+        }
 
         return val;
     }

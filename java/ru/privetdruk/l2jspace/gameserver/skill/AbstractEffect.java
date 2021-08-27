@@ -14,6 +14,7 @@ import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectState;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Servitor;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.AbnormalStatusUpdate;
@@ -121,7 +122,7 @@ public abstract class AbstractEffect {
      * @param newTime : new time value in seconds.
      */
     public void setTime(int newTime) {
-        _periodStartTime = System.currentTimeMillis() - Math.min(newTime, _period) * 1000;
+        _periodStartTime = System.currentTimeMillis() - Math.min(newTime, _period) * 1000L;
     }
 
     public int getTime() {
@@ -165,7 +166,7 @@ public abstract class AbstractEffect {
         return _cantUpdateAnymore;
     }
 
-    private final synchronized void startEffectTask() {
+    private synchronized void startEffectTask() {
         if (_period > 0) {
             stopEffectTask();
 
@@ -263,7 +264,9 @@ public abstract class AbstractEffect {
             }
             case ACTING: {
                 if (_count > 0) {
-                    _count--;
+                    if (_skill.getId() != Summon.CONTRACT_PAYMENT) {
+                        _count--;
+                    }
 
                     // Effect has to be in use.
                     if (getInUse()) {

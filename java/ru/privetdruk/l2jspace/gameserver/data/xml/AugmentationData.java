@@ -295,7 +295,7 @@ public class AugmentationData implements IXmlReader {
         // the first 12 combined stats (14-26) is the stat 1 combined with stat 2-13
         // the next 11 combined stats then are stat 2 combined with stat 3-13 and so on...
         // to get the idea have a look @ optiondata_client-e.dat - thats where the data came from :)
-        int stats[] = new int[2];
+        int[] stats = new int[2];
         stats[0] = 0x0000FFFF & augmentationId;
         stats[1] = (augmentationId >> 16);
 

@@ -86,7 +86,7 @@ public class Door extends Creature implements IGeoObject {
     }
 
     @Override
-    public void addFuncsToNewCharacter() {
+    public void addFunctionsToNewCharacter() {
     }
 
     @Override

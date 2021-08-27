@@ -16,8 +16,8 @@ public class CreatureTemplate {
     private final double _baseHpMax;
     private final double _baseMpMax;
 
-    private final double _baseHpReg;
-    private final double _baseMpReg;
+    private final double _baseHpRegen;
+    private final double _baseMpRegen;
 
     private final double _basePAtk;
     private final double _baseMAtk;
@@ -45,8 +45,8 @@ public class CreatureTemplate {
         _baseHpMax = set.getDouble("hp", 0);
         _baseMpMax = set.getDouble("mp", 0);
 
-        _baseHpReg = set.getDouble("hpRegen", 1.5d);
-        _baseMpReg = set.getDouble("mpRegen", 0.9d);
+        _baseHpRegen = set.getDouble("hpRegen", 1.5d);
+        _baseMpRegen = set.getDouble("mpRegen", 0.9d);
 
         _basePAtk = set.getDouble("pAtk");
         _baseMAtk = set.getDouble("mAtk");
@@ -96,12 +96,12 @@ public class CreatureTemplate {
         return _baseMpMax;
     }
 
-    public final double getBaseHpReg() {
-        return _baseHpReg;
+    public double getBaseHpRegen(int level) {
+        return _baseHpRegen;
     }
 
-    public final double getBaseMpReg() {
-        return _baseMpReg;
+    public double getBaseMpRegen(int level) {
+        return _baseMpRegen;
     }
 
     public final double getBasePAtk() {

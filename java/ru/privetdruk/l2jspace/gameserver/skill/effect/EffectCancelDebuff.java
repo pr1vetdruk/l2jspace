@@ -7,7 +7,7 @@ import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
-import ru.privetdruk.l2jspace.gameserver.skill.Formulas;
+import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class EffectCancelDebuff extends AbstractEffect {
@@ -36,7 +36,7 @@ public class EffectCancelDebuff extends AbstractEffect {
 
         final int cancelLvl = skill.getMagicLevel();
         int count = skill.getMaxNegatedEffects();
-        double baseRate = Formulas.calcSkillVulnerability(caster, target, skill, effectType);
+        double baseRate = Formula.calcSkillVulnerability(caster, target, skill, effectType);
 
         AbstractEffect effect;
         int lastCanceledSkillId = 0;

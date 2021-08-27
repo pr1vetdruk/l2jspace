@@ -8,13 +8,14 @@ import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class Q234_FatesWhisper extends Quest {
-    private static final String qn = "Q234_FatesWhisper";
+    private static final String QUEST_NAME = "Q234_FatesWhisper";
 
     // Items
     private static final int REIRIA_SOUL_ORB = 4666;
@@ -81,7 +82,7 @@ public class Q234_FatesWhisper extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -133,7 +134,7 @@ public class Q234_FatesWhisper extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;
@@ -295,6 +296,7 @@ public class Q234_FatesWhisper extends Quest {
             playSound(player, SOUND_ITEMGET);
             takeItems(player, PIPETTE_KNIFE, 1);
             giveItems(player, RED_PIPETTE_KNIFE, 1);
+            npc.broadcastNpcSay(NpcStringId.ID_23434);
         }
 
         return null;

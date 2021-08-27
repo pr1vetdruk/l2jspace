@@ -12,12 +12,13 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class Q230_TestOfTheSummoner extends SecondClassQuest {
-    public static final String qn = "Q230_TestOfTheSummoner";
+    public static final String QUEST_NAME = "Q230_TestOfTheSummoner";
 
     // Items
     private static final int LETO_LIZARDMAN_AMULET = 3337;
@@ -166,7 +167,7 @@ public class Q230_TestOfTheSummoner extends SecondClassQuest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return null;
 
@@ -296,7 +297,7 @@ public class Q230_TestOfTheSummoner extends SecondClassQuest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -690,7 +691,7 @@ public class Q230_TestOfTheSummoner extends SecondClassQuest {
                     playSound(player, SOUND_MIDDLE);
                     takeItems(player, CRYSTAL_OF_INPROGRESS_1, -1);
                     giveItems(player, CRYSTAL_OF_VICTORY_1, 1);
-                    npc.broadcastNpcSay("I'm sorry, Lord!");
+                    npc.broadcastNpcSay(NpcStringId.ID_23065);
                     _duelsInProgress.remove(npcId);
                 }
                 break;
@@ -701,7 +702,7 @@ public class Q230_TestOfTheSummoner extends SecondClassQuest {
                     playSound(player, SOUND_MIDDLE);
                     takeItems(player, CRYSTAL_OF_INPROGRESS_2, -1);
                     giveItems(player, CRYSTAL_OF_VICTORY_2, 1);
-                    npc.broadcastNpcSay("I LOSE");
+                    npc.broadcastNpcSay(NpcStringId.ID_23062);
                     _duelsInProgress.remove(npcId);
                 }
                 break;
@@ -712,7 +713,7 @@ public class Q230_TestOfTheSummoner extends SecondClassQuest {
                     playSound(player, SOUND_MIDDLE);
                     takeItems(player, CRYSTAL_OF_INPROGRESS_3, -1);
                     giveItems(player, CRYSTAL_OF_VICTORY_3, 1);
-                    npc.broadcastNpcSay("Ugh! I lost...!");
+                    npc.broadcastNpcSay(NpcStringId.ID_23074);
                     _duelsInProgress.remove(npcId);
                 }
                 break;
@@ -723,7 +724,7 @@ public class Q230_TestOfTheSummoner extends SecondClassQuest {
                     playSound(player, SOUND_MIDDLE);
                     takeItems(player, CRYSTAL_OF_INPROGRESS_4, -1);
                     giveItems(player, CRYSTAL_OF_VICTORY_4, 1);
-                    npc.broadcastNpcSay("Lost! Sorry, Lord!");
+                    npc.broadcastNpcSay(NpcStringId.ID_23068);
                     _duelsInProgress.remove(npcId);
                 }
                 break;
@@ -734,7 +735,7 @@ public class Q230_TestOfTheSummoner extends SecondClassQuest {
                     playSound(player, SOUND_MIDDLE);
                     takeItems(player, CRYSTAL_OF_INPROGRESS_5, -1);
                     giveItems(player, CRYSTAL_OF_VICTORY_5, 1);
-                    npc.broadcastNpcSay("I LOSE");
+                    npc.broadcastNpcSay(NpcStringId.ID_23071);
                     _duelsInProgress.remove(npcId);
                 }
                 break;
@@ -745,7 +746,7 @@ public class Q230_TestOfTheSummoner extends SecondClassQuest {
                     playSound(player, SOUND_MIDDLE);
                     takeItems(player, CRYSTAL_OF_INPROGRESS_6, -1);
                     giveItems(player, CRYSTAL_OF_VICTORY_6, 1);
-                    npc.broadcastNpcSay("Ugh! Can this be happening?!");
+                    npc.broadcastNpcSay(NpcStringId.ID_23077);
                     _duelsInProgress.remove(npcId);
                 }
                 break;
@@ -772,7 +773,7 @@ public class Q230_TestOfTheSummoner extends SecondClassQuest {
                     playSound(player, SOUND_ITEMGET);
                     takeItems(player, CRYSTAL_OF_PROGRESS_1, -1);
                     giveItems(player, CRYSTAL_OF_INPROGRESS_1, 1);
-                    npc.broadcastNpcSay("Whhiisshh!");
+                    npc.broadcastNpcSay(NpcStringId.ID_23063);
                     _duelsInProgress.put(npcId, new ProgressDuelMob(player, attacker.getSummon()));
                 } else if (st.getInteger("Almors") == 3 && _duelsInProgress.containsKey(npcId)) {
                     ProgressDuelMob duel = _duelsInProgress.get(npcId);
@@ -781,13 +782,13 @@ public class Q230_TestOfTheSummoner extends SecondClassQuest {
                     {
                         Player foulPlayer = duel.getAttacker();
                         if (foulPlayer != null) {
-                            st = foulPlayer.getQuestList().getQuestState(qn);
+                            st = foulPlayer.getQuestList().getQuestState(QUEST_NAME);
                             if (st != null) {
                                 st.set("Almors", 5);
                                 takeItems(player, CRYSTAL_OF_PROGRESS_1, -1);
                                 takeItems(player, CRYSTAL_OF_INPROGRESS_1, -1);
                                 giveItems(player, CRYSTAL_OF_FOUL_1, 1);
-                                npc.broadcastNpcSay("Rule violation!");
+                                npc.broadcastNpcSay(NpcStringId.ID_23064);
                                 npc.doDie(npc);
                             }
                         }
@@ -801,20 +802,20 @@ public class Q230_TestOfTheSummoner extends SecondClassQuest {
                     playSound(player, SOUND_ITEMGET);
                     takeItems(player, CRYSTAL_OF_PROGRESS_2, -1);
                     giveItems(player, CRYSTAL_OF_INPROGRESS_2, 1);
-                    npc.broadcastNpcSay("START DUEL");
+                    npc.broadcastNpcSay(NpcStringId.ID_23060);
                     _duelsInProgress.put(npcId, new ProgressDuelMob(player, attacker.getSummon()));
                 } else if (st.getInteger("Camoniell") == 3 && _duelsInProgress.containsKey(npcId)) {
                     ProgressDuelMob duel = _duelsInProgress.get(npcId);
                     if (!isPet || attacker.getSummon() != duel.getSummon()) {
                         Player foulPlayer = duel.getAttacker();
                         if (foulPlayer != null) {
-                            st = foulPlayer.getQuestList().getQuestState(qn);
+                            st = foulPlayer.getQuestList().getQuestState(QUEST_NAME);
                             if (st != null) {
                                 st.set("Camoniell", 5);
                                 takeItems(player, CRYSTAL_OF_PROGRESS_2, -1);
                                 takeItems(player, CRYSTAL_OF_INPROGRESS_2, -1);
                                 giveItems(player, CRYSTAL_OF_FOUL_2, 1);
-                                npc.broadcastNpcSay("RULE VIOLATION");
+                                npc.broadcastNpcSay(NpcStringId.ID_23061);
                                 npc.doDie(npc);
                             }
                         }
@@ -828,20 +829,20 @@ public class Q230_TestOfTheSummoner extends SecondClassQuest {
                     playSound(player, SOUND_ITEMGET);
                     takeItems(player, CRYSTAL_OF_PROGRESS_3, -1);
                     giveItems(player, CRYSTAL_OF_INPROGRESS_3, 1);
-                    npc.broadcastNpcSay("So shall we start?!");
+                    npc.broadcastNpcSay(NpcStringId.ID_23072);
                     _duelsInProgress.put(npcId, new ProgressDuelMob(player, attacker.getSummon()));
                 } else if (st.getInteger("Belthus") == 3 && _duelsInProgress.containsKey(npcId)) {
                     ProgressDuelMob duel = _duelsInProgress.get(npcId);
                     if (!isPet || attacker.getSummon() != duel.getSummon()) {
                         Player foulPlayer = duel.getAttacker();
                         if (foulPlayer != null) {
-                            st = foulPlayer.getQuestList().getQuestState(qn);
+                            st = foulPlayer.getQuestList().getQuestState(QUEST_NAME);
                             if (st != null) {
                                 st.set("Belthus", 5);
                                 takeItems(player, CRYSTAL_OF_PROGRESS_3, -1);
                                 takeItems(player, CRYSTAL_OF_INPROGRESS_3, -1);
                                 giveItems(player, CRYSTAL_OF_FOUL_3, 1);
-                                npc.broadcastNpcSay("Rule violation!!!");
+                                npc.broadcastNpcSay(NpcStringId.ID_23073);
                                 npc.doDie(npc);
                             }
                         }
@@ -855,20 +856,20 @@ public class Q230_TestOfTheSummoner extends SecondClassQuest {
                     playSound(player, SOUND_ITEMGET);
                     takeItems(player, CRYSTAL_OF_PROGRESS_4, -1);
                     giveItems(player, CRYSTAL_OF_INPROGRESS_4, 1);
-                    npc.broadcastNpcSay("Whish! Fight!");
+                    npc.broadcastNpcSay(NpcStringId.ID_23066);
                     _duelsInProgress.put(npcId, new ProgressDuelMob(player, attacker.getSummon()));
                 } else if (st.getInteger("Basilla") == 3 && _duelsInProgress.containsKey(npcId)) {
                     ProgressDuelMob duel = _duelsInProgress.get(npcId);
                     if (!isPet || attacker.getSummon() != duel.getSummon()) {
                         Player foulPlayer = duel.getAttacker();
                         if (foulPlayer != null) {
-                            st = foulPlayer.getQuestList().getQuestState(qn);
+                            st = foulPlayer.getQuestList().getQuestState(QUEST_NAME);
                             if (st != null) {
                                 st.set("Basilla", 5);
                                 takeItems(player, CRYSTAL_OF_PROGRESS_4, -1);
                                 takeItems(player, CRYSTAL_OF_INPROGRESS_4, -1);
                                 giveItems(player, CRYSTAL_OF_FOUL_4, 1);
-                                npc.broadcastNpcSay("Rule violation!");
+                                npc.broadcastNpcSay(NpcStringId.ID_23067);
                                 npc.doDie(npc);
                             }
                         }
@@ -882,20 +883,20 @@ public class Q230_TestOfTheSummoner extends SecondClassQuest {
                     playSound(player, SOUND_ITEMGET);
                     takeItems(player, CRYSTAL_OF_PROGRESS_5, -1);
                     giveItems(player, CRYSTAL_OF_INPROGRESS_5, 1);
-                    npc.broadcastNpcSay("START DUEL");
+                    npc.broadcastNpcSay(NpcStringId.ID_23069);
                     _duelsInProgress.put(npcId, new ProgressDuelMob(player, attacker.getSummon()));
                 } else if (st.getInteger("Celestiel") == 3 && _duelsInProgress.containsKey(npcId)) {
                     ProgressDuelMob duel = _duelsInProgress.get(npcId);
                     if (!isPet || attacker.getSummon() != duel.getSummon()) {
                         Player foulPlayer = duel.getAttacker();
                         if (foulPlayer != null) {
-                            st = foulPlayer.getQuestList().getQuestState(qn);
+                            st = foulPlayer.getQuestList().getQuestState(QUEST_NAME);
                             if (st != null) {
                                 st.set("Celestiel", 5);
                                 takeItems(player, CRYSTAL_OF_PROGRESS_5, -1);
                                 takeItems(player, CRYSTAL_OF_INPROGRESS_5, -1);
                                 giveItems(player, CRYSTAL_OF_FOUL_5, 1);
-                                npc.broadcastNpcSay("RULE VIOLATION");
+                                npc.broadcastNpcSay(NpcStringId.ID_23070);
                                 npc.doDie(npc);
                             }
                         }
@@ -909,20 +910,20 @@ public class Q230_TestOfTheSummoner extends SecondClassQuest {
                     playSound(player, SOUND_ITEMGET);
                     takeItems(player, CRYSTAL_OF_PROGRESS_6, -1);
                     giveItems(player, CRYSTAL_OF_INPROGRESS_6, 1);
-                    npc.broadcastNpcSay("I'll walk all over you!");
+                    npc.broadcastNpcSay(NpcStringId.ID_23075);
                     _duelsInProgress.put(npcId, new ProgressDuelMob(player, attacker.getSummon()));
                 } else if (st.getInteger("Brynthea") == 3 && _duelsInProgress.containsKey(npcId)) {
                     ProgressDuelMob duel = _duelsInProgress.get(npcId);
                     if (!isPet || attacker.getSummon() != duel.getSummon()) {
                         Player foulPlayer = duel.getAttacker();
                         if (foulPlayer != null) {
-                            st = foulPlayer.getQuestList().getQuestState(qn);
+                            st = foulPlayer.getQuestList().getQuestState(QUEST_NAME);
                             if (st != null) {
                                 st.set("Brynthea", 5);
                                 takeItems(player, CRYSTAL_OF_PROGRESS_6, -1);
                                 takeItems(player, CRYSTAL_OF_INPROGRESS_6, -1);
                                 giveItems(player, CRYSTAL_OF_FOUL_6, 1);
-                                npc.broadcastNpcSay("Rule violation!!!");
+                                npc.broadcastNpcSay(NpcStringId.ID_23076);
                                 npc.doDie(npc);
                             }
                         }

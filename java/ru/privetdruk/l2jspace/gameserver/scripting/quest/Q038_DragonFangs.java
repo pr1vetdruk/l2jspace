@@ -13,7 +13,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q038_DragonFangs extends Quest {
-    private static final String qn = "Q038_DragonFangs";
+    private static final String QUEST_NAME = "Q038_DragonFangs";
 
     // Items
     private static final int FEATHER_ORNAMENT = 7173;
@@ -51,7 +51,7 @@ public class Q038_DragonFangs extends Quest {
     // Droplist
     private static final Map<Integer, int[]> DROPLIST = new HashMap<>();
 
-    {
+    static {
         DROPLIST.put(21100, new int[]
                 {
                         1,
@@ -97,7 +97,7 @@ public class Q038_DragonFangs extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -152,7 +152,7 @@ public class Q038_DragonFangs extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -211,10 +211,10 @@ public class Q038_DragonFangs extends Quest {
         if (st == null)
             return null;
 
-        final int droplist[] = DROPLIST.get(npc.getNpcId());
+        int[] dropList = DROPLIST.get(npc.getNpcId());
 
-        if (st.getCond() == droplist[0] && dropItems(player, droplist[1], 1, droplist[2], droplist[3]))
-            st.setCond(droplist[0] + 1);
+        if (st.getCond() == dropList[0] && dropItems(player, dropList[1], 1, dropList[2], dropList[3]))
+            st.setCond(dropList[0] + 1);
 
         return null;
     }

@@ -27,8 +27,8 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class NewbieHelper extends Quest {
-    private static final String qn = "NewbieHelper";
-    private static final String qnTutorial = "Tutorial";
+    private static final String QUEST_NAME = "NewbieHelper";
+    private static final String QUEST_NAME_TUTORIAL = "Tutorial";
 
     // Quest Items
     private static final int RECOMMENDATION_01 = 1067;
@@ -252,8 +252,8 @@ public class NewbieHelper extends Quest {
 
     @Override
     public String onTimer(String name, Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
-        QuestState qs = player.getQuestList().getQuestState(qnTutorial);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
+        QuestState qs = player.getQuestList().getQuestState(QUEST_NAME_TUTORIAL);
         if (st == null || qs == null)
             return null;
 
@@ -328,8 +328,8 @@ public class NewbieHelper extends Quest {
 
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
-        QuestState qs = player.getQuestList().getQuestState(qnTutorial);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
+        QuestState qs = player.getQuestList().getQuestState(QUEST_NAME_TUTORIAL);
         if (st == null || qs == null)
             return null;
 
@@ -488,11 +488,11 @@ public class NewbieHelper extends Quest {
 
     @Override
     public String onFirstTalk(Npc npc, Player player) {
-        final QuestState qs = player.getQuestList().getQuestState(qnTutorial);
+        final QuestState qs = player.getQuestList().getQuestState(QUEST_NAME_TUTORIAL);
         if (qs == null)
             return null;
 
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             st = newQuestState(player);
 
@@ -591,7 +591,7 @@ public class NewbieHelper extends Quest {
         if (st == null)
             return null;
 
-        final QuestState qs = player.getQuestList().getQuestState(qnTutorial);
+        final QuestState qs = player.getQuestList().getQuestState(QUEST_NAME_TUTORIAL);
         if (qs == null)
             return null;
 

@@ -19,18 +19,43 @@ public class StaticObject extends WorldObject {
         super(objectId);
     }
 
+    @Override
+    public void onInteract(Player player) {
+        if (getType() == 2) {
+            NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            html.setFile("data/html/signboard.htm");
+            player.sendPacket(html);
+        } else if (getType() == 0) {
+            player.sendPacket(getMap());
+        }
+    }
+
+    @Override
+    public void onAction(Player player, boolean isCtrlPressed, boolean isShiftPressed) {
+        if (player.getTarget() != this) {
+            player.setTarget(this);
+        } else {
+            player.getAI().tryToInteract(this, isCtrlPressed, isShiftPressed);
+        }
+    }
+
+    @Override
+    public void sendInfo(Player player) {
+        player.sendPacket(new StaticObjectInfo(this));
+    }
+
     /**
-     * @return the StaticObjectId.
+     * @return the staticObjectId.
      */
     public int getStaticObjectId() {
         return _staticObjectId;
     }
 
     /**
-     * @param StaticObjectId The StaticObjectId to set.
+     * @param staticObjectId The StaticObjectId to set.
      */
-    public void setStaticObjectId(int StaticObjectId) {
-        _staticObjectId = StaticObjectId;
+    public void setStaticObjectId(int staticObjectId) {
+        _staticObjectId = staticObjectId;
     }
 
     public int getType() {
@@ -45,8 +70,8 @@ public class StaticObject extends WorldObject {
         return _isBusy;
     }
 
-    public void setBusy(boolean busy) {
-        _isBusy = busy;
+    public void setBusy(boolean isBusy) {
+        _isBusy = isBusy;
     }
 
     public void setMap(String texture, int x, int y) {
@@ -55,28 +80,5 @@ public class StaticObject extends WorldObject {
 
     public ShowTownMap getMap() {
         return _map;
-    }
-
-    @Override
-    public void onInteract(Player player) {
-        if (getType() == 2) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
-            html.setFile("data/html/signboard.htm");
-            player.sendPacket(html);
-        } else if (getType() == 0)
-            player.sendPacket(getMap());
-    }
-
-    @Override
-    public void onAction(Player player, boolean isCtrlPressed, boolean isShiftPressed) {
-        if (player.getTarget() != this)
-            player.setTarget(this);
-        else
-            player.getAI().tryToInteract(this, isCtrlPressed, isShiftPressed);
-    }
-
-    @Override
-    public void sendInfo(Player player) {
-        player.sendPacket(new StaticObjectInfo(this));
     }
 }

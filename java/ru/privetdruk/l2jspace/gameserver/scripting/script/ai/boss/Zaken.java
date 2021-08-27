@@ -133,13 +133,8 @@ public class Zaken extends AttackableAIScript {
                         willTeleport = false;
 
                     // We're still under willTeleport possibility. Now we check each victim distance. If at least one is near Zaken, we cancel the teleport possibility.
-                    if (willTeleport) {
-                        for (Player victim : VICTIMS) {
-                            if (victim.isIn3DRadius(_zakenLocation, 1500)) {
-                                willTeleport = false;
-                                continue;
-                            }
-                        }
+                    if (willTeleport && VICTIMS.stream().anyMatch(p -> p.isIn3DRadius(_zakenLocation, 1500))) {
+                        willTeleport = false;
                     }
 
                     // All targets are far, clear victims list and Zaken teleport.
@@ -394,7 +389,7 @@ public class Zaken extends AttackableAIScript {
             GrandBossManager.getInstance().setBossStatus(ZAKEN, DEAD);
 
             // Calculate the next respawn time.
-            final long respawnTime = (long) (Config.SPAWN_INTERVAL_ZAKEN + Rnd.get(-Config.RANDOM_SPAWN_TIME_ZAKEN, Config.RANDOM_SPAWN_TIME_ZAKEN)) * 3600000;
+            long respawnTime = (Config.SPAWN_INTERVAL_ZAKEN * 60L + Rnd.get(-60 * Config.RANDOM_SPAWN_TIME_ZAKEN, 60 * Config.RANDOM_SPAWN_TIME_ZAKEN)) * 60000;
 
             // Cancel tasks.
             cancelQuestTimers("1001");

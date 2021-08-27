@@ -7,7 +7,7 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Monster;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
-import ru.privetdruk.l2jspace.gameserver.skill.Formulas;
+import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class EffectSpoil extends AbstractEffect {
@@ -37,7 +37,7 @@ public class EffectSpoil extends AbstractEffect {
             return false;
         }
 
-        if (Formulas.calcMagicSuccess(getEffector(), target, getSkill())) {
+        if (Formula.calcMagicSuccess(getEffector(), target, getSkill())) {
             target.getSpoilState().setSpoilerId(getEffector().getObjectId());
             getEffector().sendPacket(SystemMessage.getSystemMessage(SystemMessageId.SPOIL_SUCCESS));
         }

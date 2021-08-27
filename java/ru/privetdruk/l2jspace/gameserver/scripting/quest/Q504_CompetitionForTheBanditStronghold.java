@@ -15,7 +15,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q504_CompetitionForTheBanditStronghold extends Quest {
-    private static final String qn = "Q504_CompetitionForTheBanditStronghold";
+    private static final String QUEST_NAME = "Q504_CompetitionForTheBanditStronghold";
 
     // Misc
     private static final SiegableHall BANDIT_STRONGHOLD = ClanHallManager.getInstance().getSiegableHall(35);
@@ -52,7 +52,7 @@ public class Q504_CompetitionForTheBanditStronghold extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -67,7 +67,7 @@ public class Q504_CompetitionForTheBanditStronghold extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;

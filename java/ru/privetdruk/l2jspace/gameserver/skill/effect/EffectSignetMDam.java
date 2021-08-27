@@ -1,29 +1,31 @@
 package ru.privetdruk.l2jspace.gameserver.skill.effect;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
+import ru.privetdruk.l2jspace.gameserver.enums.AiEventType;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
 import ru.privetdruk.l2jspace.gameserver.enums.items.ShotType;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectType;
+import ru.privetdruk.l2jspace.gameserver.enums.skills.ShieldDefense;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillTargetType;
 import ru.privetdruk.l2jspace.gameserver.idfactory.IdFactory;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
+import ru.privetdruk.l2jspace.gameserver.model.actor.*;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Door;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.EffectPoint;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MagicSkillLaunched;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MagicSkillUse;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
-import ru.privetdruk.l2jspace.gameserver.skill.Formulas;
+import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.skill.l2skill.L2SkillSignetCasttime;
 
 public class EffectSignetMDam extends AbstractEffect {
+    private boolean _srcInArena;
+    private int _state = 0;
     private EffectPoint _actor;
 
     public EffectSignetMDam(EffectTemplate template, L2Skill skill, Creature effected, Creature effector) {
@@ -61,45 +63,91 @@ public class EffectSignetMDam extends AbstractEffect {
 
     @Override
     public boolean onActionTime() {
-        if (getCount() >= getTemplate().getCounter() - 2)
-            return true; // do nothing first 2 times
-
-        final Player caster = (Player) getEffector();
-        final int mpConsume = getSkill().getMpConsume();
-
-        if (mpConsume > caster.getStatus().getMp()) {
-            caster.sendPacket(SystemMessageId.SKILL_REMOVED_DUE_LACK_MP);
-            return false;
+        // on offi the zone get created and the first wave starts later
+        // there is also an first hit animation to the caster
+        switch (_state) {
+            case 0, 2 -> {
+                _state++;
+                return true;
+            }
+            case 1 -> {
+                getEffected().broadcastPacket(new MagicSkillLaunched(_actor, getSkill(), new Creature[]
+                        {
+                                getEffected()
+                        }));
+                _state++;
+                return true;
+            }
         }
 
-        caster.getStatus().reduceMp(mpConsume);
+        int mpConsume = getSkill().getMpConsume();
+        Player caster = (Player) getEffected();
 
-        final List<Creature> list = _actor.getKnownTypeInRadius(Creature.class, _skill.getSkillRadius(), creature -> !creature.isDead() && !(creature instanceof Door) && !creature.isInsideZone(ZoneId.PEACE));
-        if (list.isEmpty())
-            return true;
+        boolean ss = false;
+        boolean bss = false;
 
-        final Creature[] targets = list.toArray(new Creature[list.size()]);
-        for (Creature target : targets) {
-            final boolean mcrit = Formulas.calcMCrit(caster, target, getSkill());
-            final byte shld = Formulas.calcShldUse(caster, target, getSkill());
-            final boolean sps = caster.isChargedShot(ShotType.SPIRITSHOT);
-            final boolean bsps = caster.isChargedShot(ShotType.BLESSED_SPIRITSHOT);
-            final int mdam = (int) Formulas.calcMagicDam(caster, target, getSkill(), shld, sps, bsps, mcrit);
+        caster.rechargeShots(false, true);
 
-            if (target instanceof Summon)
-                target.getStatus().broadcastStatusUpdate();
+        ArrayList<Creature> targets = new ArrayList<>();
 
-            if (mdam > 0) {
-                // Manage cast break of the target (calculating rate, sending message...)
-                Formulas.calcCastBreak(target, mdam);
+        List<Creature> knownTypeInRadius = _actor.getKnownTypeInRadius(
+                Creature.class,
+                _skill.getSkillRadius(),
+                creature -> !creature.isDead() && !(creature instanceof Door) && !creature.isInsideZone(ZoneId.PEACE)
+        );
 
-                caster.sendDamageMessage(target, mdam, mcrit, false, false);
-                target.reduceCurrentHp(mdam, caster, getSkill());
+        for (Creature creature : knownTypeInRadius) {
+            if (creature == null || creature == getEffected()) {
+                continue;
             }
 
-            _actor.broadcastPacket(new MagicSkillUse(_actor, target, _skill.getId(), _skill.getLevel(), 0, 0));
+            if (creature instanceof Attackable || creature instanceof Playable) {
+                if (creature.isAlikeDead()) {
+                    continue;
+                }
+
+                // isSignetOffensiveSkill only really checks for Day of Doom, the other signets ahve different Effects
+                if (_skill.isOffensive() && !_skill.checkForAreaOffensiveSkill(_actor, creature, true, _srcInArena)) {
+                    continue;
+                }
+
+                if (mpConsume > caster.getStatus().getMp()) {
+                    caster.sendPacket(SystemMessageId.SKILL_REMOVED_DUE_LACK_MP);
+                    return false;
+                }
+
+                caster.getStatus().reduceMp(mpConsume);
+
+                targets.add(creature);
+            }
         }
-        _actor.broadcastPacket(new MagicSkillLaunched(_actor, _skill, targets));
+
+        if (targets.size() > 0) {
+            caster.broadcastPacket(new MagicSkillLaunched(caster, getSkill(), targets.toArray(new Creature[targets.size()])));
+
+            for (Creature target : targets) {
+                boolean isCrit = Formula.calcMCrit(caster, target, getSkill());
+                ShieldDefense sDef = Formula.calcShieldUse(caster, target, getSkill(), false);
+                boolean sps = caster.isChargedShot(ShotType.SPIRITSHOT);
+                boolean bsps = caster.isChargedShot(ShotType.BLESSED_SPIRITSHOT);
+                int damage = (int) Formula.calcMagicDam(caster, target, getSkill(), sDef, sps, bsps, isCrit);
+
+                if (target instanceof Summon) {
+                    target.getStatus().broadcastStatusUpdate();
+                }
+
+                if (damage > 0) {
+                    // Manage cast break of the target (calculating rate, sending message...)
+                    Formula.calcCastBreak(target, damage);
+
+                    caster.sendDamageMessage(target, damage, isCrit, false, false);
+                    target.reduceCurrentHp(damage, caster, getSkill());
+                }
+
+                target.getAI().notifyEvent(AiEventType.ATTACKED, caster, target);
+            }
+        }
+
         return true;
     }
 

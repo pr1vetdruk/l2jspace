@@ -94,11 +94,12 @@ public class BossZone extends ZoneType {
                 _allowedPlayers.remove(Integer.valueOf(id));
             }
 
+            // FIXME
             // Teleport out player, who attempt "illegal" (re-)entry.
-            if (_oustLoc[0] != 0 && _oustLoc[1] != 0 && _oustLoc[2] != 0)
-                player.teleportTo(_oustLoc[0], _oustLoc[1], _oustLoc[2], 0);
-            else
-                player.teleportTo(TeleportType.TOWN);
+//            if (_oustLoc[0] != 0 && _oustLoc[1] != 0 && _oustLoc[2] != 0)
+//                player.teleportTo(_oustLoc[0], _oustLoc[1], _oustLoc[2], 0);
+//            else
+//                player.teleportTo(TeleportType.TOWN);
         } else if (character instanceof Summon) {
             final Player player = ((Summon) character).getOwner();
             if (player != null) {

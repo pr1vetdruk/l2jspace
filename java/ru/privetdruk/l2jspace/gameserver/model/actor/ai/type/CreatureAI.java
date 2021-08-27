@@ -129,7 +129,6 @@ public class CreatureAI extends AbstractAI {
         }
 
         if (!getActor().getCast().canAttemptCast(target, skill)) {
-            doActiveIntention();
             return;
         }
 

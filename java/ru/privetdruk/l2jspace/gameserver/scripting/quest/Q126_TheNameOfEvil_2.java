@@ -7,7 +7,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q126_TheNameOfEvil_2 extends Quest {
-    public static final String qn = "Q126_TheNameOfEvil_2";
+    public static final String QUEST_NAME = "Q126_TheNameOfEvil_2";
 
     private static final int MUSHIKA = 32114;
     private static final int ASAMANAH = 32115;
@@ -30,7 +30,7 @@ public class Q126_TheNameOfEvil_2 extends Quest {
     @Override
     public final String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -169,7 +169,7 @@ public class Q126_TheNameOfEvil_2 extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;
@@ -179,7 +179,7 @@ public class Q126_TheNameOfEvil_2 extends Quest {
                 if (player.getStatus().getLevel() < 77)
                     htmltext = "32115-02.htm";
                 else {
-                    QuestState st2 = player.getQuestList().getQuestState(Q125_TheNameOfEvil_1.qn);
+                    QuestState st2 = player.getQuestList().getQuestState(Q125_TheNameOfEvil_1.QUEST_NAME);
                     if (st2 != null && st2.isCompleted())
                         htmltext = "32115-01.htm";
                     else

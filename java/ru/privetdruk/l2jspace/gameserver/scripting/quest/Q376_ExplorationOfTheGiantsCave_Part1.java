@@ -9,18 +9,22 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Q376_ExplorationOfTheGiantsCave_Part1 extends Quest {
-    private static final String qn = "Q376_ExplorationOfTheGiantsCave_Part1";
+    private static final String QUEST_NAME = "Q376_ExplorationOfTheGiantsCave_Part1";
 
     // NPCs
     private static final int SOBLING = 31147;
     private static final int CLIFF = 30182;
 
     // Items
-    private static final int PARCHMENT = 5944;
-    private static final int DICTIONARY_BASIC = 5891;
+    private static final int ANCIENT_PARCHMENT = 5944;
     private static final int MYSTERIOUS_BOOK = 5890;
-    private static final int DICTIONARY_INTERMEDIATE = 5892;
+    private static final int ANCIENT_DICTIONARY_BASIC_LEVEL = 5891;
+    private static final int ANCIENT_DICTIONARY_INTERMEDIATE_LEVEL = 5892;
+
     private static final int[][] BOOKS =
             {
                     // medical theory -> tallum tunic, tallum stockings
@@ -82,21 +86,33 @@ public class Q376_ExplorationOfTheGiantsCave_Part1 extends Quest {
                     }
             };
 
+    // Drop chances
+    private static final Map<Integer, Integer> CHANCES = new HashMap<>();
+
+    static {
+        CHANCES.put(20647, 26000);
+        CHANCES.put(20648, 28000);
+        CHANCES.put(20649, 30000);
+        CHANCES.put(20650, 32000);
+    }
+
     public Q376_ExplorationOfTheGiantsCave_Part1() {
         super(376, "Exploration of the Giants' Cave, Part 1");
 
-        setItemsIds(DICTIONARY_BASIC, MYSTERIOUS_BOOK);
+        setItemsIds(ANCIENT_DICTIONARY_BASIC_LEVEL, MYSTERIOUS_BOOK);
 
         addStartNpc(SOBLING);
         addTalkId(SOBLING, CLIFF);
 
-        addKillId(20647, 20648, 20649, 20650);
+        for (int npcId : CHANCES.keySet()) {
+            addKillId(npcId);
+        }
     }
 
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -104,9 +120,8 @@ public class Q376_ExplorationOfTheGiantsCave_Part1 extends Quest {
         if (event.equalsIgnoreCase("31147-03.htm")) {
             st.setState(QuestStatus.STARTED);
             st.setCond(1);
-            st.set("condBook", 1);
             playSound(player, SOUND_ACCEPT);
-            giveItems(player, DICTIONARY_BASIC, 1);
+            giveItems(player, ANCIENT_DICTIONARY_BASIC_LEVEL, 1);
         } else if (event.equalsIgnoreCase("31147-04.htm")) {
             htmltext = checkItems(player, st);
         } else if (event.equalsIgnoreCase("31147-09.htm")) {
@@ -118,7 +133,7 @@ public class Q376_ExplorationOfTheGiantsCave_Part1 extends Quest {
             st.setCond(3);
             playSound(player, SOUND_MIDDLE);
             takeItems(player, MYSTERIOUS_BOOK, -1);
-            giveItems(player, DICTIONARY_INTERMEDIATE, 1);
+            giveItems(player, ANCIENT_DICTIONARY_INTERMEDIATE_LEVEL, 1);
         }
 
         return htmltext;
@@ -127,7 +142,7 @@ public class Q376_ExplorationOfTheGiantsCave_Part1 extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -160,17 +175,17 @@ public class Q376_ExplorationOfTheGiantsCave_Part1 extends Quest {
     public String onKill(Npc npc, Creature killer) {
         final Player player = killer.getActingPlayer();
 
-        // Drop parchment to anyone
         QuestState st = getRandomPartyMemberState(player, npc, QuestStatus.STARTED);
         if (st == null)
             return null;
 
-        dropItems(st.getPlayer(), PARCHMENT, 1, 0, 20000);
+        // Drop Mysterious Book to people who still need it.
+        if (!st.getPlayer().getInventory().hasAtLeastOneItem(MYSTERIOUS_BOOK, ANCIENT_DICTIONARY_INTERMEDIATE_LEVEL)) {
+            dropItems(st.getPlayer(), MYSTERIOUS_BOOK, 1, 1, 2000);
+        }
 
-        // Drop Mysterious Book to a party member, who still need it.
-        st = getRandomPartyMember(player, npc, "condBook", "1");
-        if (st != null && dropItems(st.getPlayer(), MYSTERIOUS_BOOK, 1, 1, 1000))
-            st.unset("condBook");
+        // Drop parchment to anyone.
+        dropItems(st.getPlayer(), ANCIENT_PARCHMENT, 1, 0, CHANCES.get(npc.getNpcId()));
 
         return null;
     }

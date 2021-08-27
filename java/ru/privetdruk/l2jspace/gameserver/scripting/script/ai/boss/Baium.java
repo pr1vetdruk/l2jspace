@@ -2,6 +2,8 @@ package ru.privetdruk.l2jspace.gameserver.scripting.script.ai.boss;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.random.Rnd;
@@ -22,6 +24,7 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.instance.GrandBoss;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Monster;
 import ru.privetdruk.l2jspace.gameserver.model.location.SpawnLocation;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.BossZone;
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.Earthquake;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PlaySound;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
@@ -63,7 +66,7 @@ public class Baium extends AttackableAIScript {
                     new SpawnLocation(115792, 16608, 10080, 0)
             };
 
-    private final List<Npc> _minions = new ArrayList<>(5);
+    private final Set<Npc> minions = ConcurrentHashMap.newKeySet(5);
 
     private Creature _actualVictim;
     private long _timeTracker = 0;
@@ -99,7 +102,7 @@ public class Baium extends AttackableAIScript {
                 ((Monster) angel).setMinion(true);
                 angel.forceRunStance();
 
-                _minions.add(angel);
+                minions.add(angel);
             }
 
             startQuestTimerAtFixedRate("baium_despawn", baium, null, 60000);
@@ -141,8 +144,10 @@ public class Baium extends AttackableAIScript {
                 }
 
                 // 60% to die.
-                if (Rnd.get(100) < 60)
+                if (Rnd.get(100) < 60) {
+                    npc.broadcastNpcSay(NpcStringId.ID_22937);
                     player.doDie(npc);
+                }
             }
         } else if (name.equalsIgnoreCase("baium_roar")) {
             // Roar animation
@@ -154,7 +159,7 @@ public class Baium extends AttackableAIScript {
                 ((Monster) angel).setMinion(true);
                 angel.forceRunStance();
 
-                _minions.add(angel);
+                minions.add(angel);
             }
 
             startQuestTimerAtFixedRate("angels_aggro_reconsider", null, null, 5000);
@@ -179,11 +184,11 @@ public class Baium extends AttackableAIScript {
                 npc.deleteMe();
 
                 // Unspawn angels, and clear the associated List.
-                for (Npc minion : _minions) {
+                for (Npc minion : minions) {
                     minion.getSpawn().setRespawnState(false);
                     minion.deleteMe();
                 }
-                _minions.clear();
+                minions.clear();
 
                 // Spawn Stone-like Baium.
                 addSpawn(STONE_BAIUM, STONE_BAIUM_LOC, false, 0, false);
@@ -203,7 +208,7 @@ public class Baium extends AttackableAIScript {
         } else if (name.equalsIgnoreCase("angels_aggro_reconsider")) {
             boolean updateTarget = false; // Update or no the target
 
-            for (Npc minion : _minions) {
+            for (Npc minion : minions) {
                 final Attackable angel = ((Attackable) minion);
                 final AggroInfo ai = angel.getAggroList().getMostHated();
 
@@ -302,11 +307,11 @@ public class Baium extends AttackableAIScript {
         GrandBossManager.getInstance().setStatSet(LIVE_BAIUM, info);
 
         // Unspawn angels.
-        for (Npc minion : _minions) {
+        for (Npc minion : minions) {
             minion.getSpawn().setRespawnState(false);
             minion.deleteMe();
         }
-        _minions.clear();
+        minions.clear();
 
         return super.onKill(npc, killer);
     }
@@ -340,7 +345,7 @@ public class Baium extends AttackableAIScript {
 
         // If there's no players available, Baium and Angels are hitting each other.
         if (result.isEmpty() && npc.getNpcId() == LIVE_BAIUM) {
-            for (Npc minion : _minions)
+            for (Npc minion : minions)
                 result.add(minion);
         }
 

@@ -34,7 +34,7 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SetupGauge;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
-import ru.privetdruk.l2jspace.gameserver.skill.Formulas;
+import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 /**
@@ -99,10 +99,10 @@ public class CreatureCast<T extends Creature> {
         int coolTime = skill.getCoolTime();
 
         if (!skill.isStaticHitTime()) {
-            hitTime = Formulas.calcAtkSpd(_actor, skill, hitTime);
+            hitTime = Formula.calcAtkSpd(_actor, skill, hitTime);
 
             if (coolTime > 0) {
-                coolTime = Formulas.calcAtkSpd(_actor, skill, coolTime);
+                coolTime = Formula.calcAtkSpd(_actor, skill, coolTime);
             }
 
             if (skill.isMagic() && (_actor.isChargedShot(ShotType.SPIRITSHOT) || _actor.isChargedShot(ShotType.BLESSED_SPIRITSHOT))) {
@@ -117,7 +117,7 @@ public class CreatureCast<T extends Creature> {
             reuseDelay *= 333.0 / (skill.isMagic() ? _actor.getStatus().getMAtkSpd() : _actor.getStatus().getPAtkSpd());
         }
 
-        final boolean skillMastery = Formulas.calcSkillMastery(_actor, skill);
+        final boolean skillMastery = Formula.calcSkillMastery(_actor, skill);
         // Skill reuse check
         if (reuseDelay > 30000 && !skillMastery)
             _actor.addTimeStamp(skill, reuseDelay);
@@ -150,7 +150,7 @@ public class CreatureCast<T extends Creature> {
 
         setCastTask(skill, target, hitTime, coolTime, castInterruptTime);
 
-        if (_hitTime > 0) {
+        if (_hitTime > 410) {
             if (_actor instanceof Player) {
                 _actor.sendPacket(new SetupGauge(GaugeColor.BLUE, _hitTime));
             }
@@ -177,8 +177,8 @@ public class CreatureCast<T extends Creature> {
             else if (_skill.getCastRange() <= 0 && _skill.getSkillRadius() > 80)
                 escapeRange = _skill.getSkillRadius();
 
-            // If the target dies or disappears, stop the cast.
-            if ((_target.isDead() && !_skill.canTargetCorpse()) || _actor.getAI().isTargetLost(_target, _skill)) {
+            // If the target disappears, stop the cast.
+            if (_actor.getAI().isTargetLost(_target, _skill)) {
                 stop();
                 return;
             }
@@ -322,12 +322,12 @@ public class CreatureCast<T extends Creature> {
         final int initialMpConsume = _actor.getStatus().getMpInitialConsume(skill);
         final int mpConsume = _actor.getStatus().getMpConsume(skill);
 
-        if ((initialMpConsume > 0 || mpConsume > 0) && _actor.getStatus().getMp() < initialMpConsume + mpConsume) {
+        if ((initialMpConsume > 0 || mpConsume > 0) && (int) _actor.getStatus().getMp() < initialMpConsume + mpConsume) {
             _actor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.NOT_ENOUGH_MP));
             return false;
         }
 
-        if (skill.getHpConsume() > 0 && _actor.getStatus().getHp() <= skill.getHpConsume()) {
+        if (skill.getHpConsume() > 0 && (int) _actor.getStatus().getHp() <= skill.getHpConsume()) {
             _actor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.NOT_ENOUGH_HP));
             return false;
         }
@@ -342,13 +342,6 @@ public class CreatureCast<T extends Creature> {
 
         if (!skill.getWeaponDependancy(_actor)) {
             return false;
-        }
-
-        if (skill.getSkillType() == SkillType.BUFF && (_actor instanceof Player) && (target instanceof Player)) {
-            if (target.isInArena() && !isCtrlPressed && (_actor.getParty() == null || !_actor.getParty().containsPlayer(target))) {
-                _actor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.INVALID_TARGET));
-                return false;
-            }
         }
 
         return true;
@@ -441,9 +434,13 @@ public class CreatureCast<T extends Creature> {
                         }
                     }
                 } else {
-                    if (target instanceof Player) {
-                        if (!(target.equals(_actor) || target.equals(player)) && (((Player) target).getPvpFlag() > 0 || ((Player) target).getKarma() > 0))
+                    if (target instanceof Playable) {
+                        Player targetPlayer = target.getActingPlayer();
+
+                        if (!(targetPlayer.equals(_actor) || targetPlayer.equals(player))
+                                && (targetPlayer.getPvpFlag() > 0 || targetPlayer.getKarma() > 0)) {
                             player.updatePvPStatus();
+                        }
                     } else if (target instanceof Attackable && !((Attackable) target).isGuard()) {
                         switch (skill.getSkillType()) {
                             case SUMMON:

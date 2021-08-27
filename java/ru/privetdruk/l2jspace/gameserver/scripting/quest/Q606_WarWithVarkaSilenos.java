@@ -10,7 +10,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
  * The onKill section of that quest is directly written on Q605.
  */
 public class Q606_WarWithVarkaSilenos extends Quest {
-    private static final String qn = "Q606_WarWithVarkaSilenos";
+    private static final String QUEST_NAME = "Q606_WarWithVarkaSilenos";
 
     // Items
     private static final int HORN_OF_BUFFALO = 7186;
@@ -28,7 +28,7 @@ public class Q606_WarWithVarkaSilenos extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -54,7 +54,7 @@ public class Q606_WarWithVarkaSilenos extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

@@ -8,7 +8,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q152_ShardsOfGolem extends Quest {
-    private static final String qn = "Q152_ShardsOfGolem";
+    private static final String QUEST_NAME = "Q152_ShardsOfGolem";
 
     // Items
     private static final int HARRIS_RECEIPT_1 = 1008;
@@ -40,7 +40,7 @@ public class Q152_ShardsOfGolem extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -62,7 +62,7 @@ public class Q152_ShardsOfGolem extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

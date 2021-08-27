@@ -12,7 +12,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class Q223_TestOfTheChampion extends SecondClassQuest {
-    private static final String qn = "Q223_TestOfTheChampion";
+    private static final String QUEST_NAME = "Q223_TestOfTheChampion";
 
     // Items
     private static final int ASCALON_LETTER_1 = 3277;
@@ -71,7 +71,7 @@ public class Q223_TestOfTheChampion extends SecondClassQuest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -122,7 +122,7 @@ public class Q223_TestOfTheChampion extends SecondClassQuest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

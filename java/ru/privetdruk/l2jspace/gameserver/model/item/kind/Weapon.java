@@ -5,6 +5,7 @@ import ru.privetdruk.l2jspace.common.random.Rnd;
 
 import ru.privetdruk.l2jspace.gameserver.enums.ScriptEventType;
 import ru.privetdruk.l2jspace.gameserver.enums.items.WeaponType;
+import ru.privetdruk.l2jspace.gameserver.enums.skills.ShieldDefense;
 import ru.privetdruk.l2jspace.gameserver.handler.ISkillHandler;
 import ru.privetdruk.l2jspace.gameserver.handler.SkillHandler;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
@@ -15,7 +16,7 @@ import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
-import ru.privetdruk.l2jspace.gameserver.skill.Formulas;
+import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.skill.condition.Condition;
 import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionGameChance;
@@ -180,15 +181,17 @@ public final class Weapon extends Item {
         if (_skillOnCritCondition != null && !_skillOnCritCondition.test(caster, target, skillOnCrit))
             return;
 
-        final byte shld = Formulas.calcShldUse(caster, target, skillOnCrit);
-        if (!Formulas.calcSkillSuccess(caster, target, skillOnCrit, shld, false))
+        ShieldDefense shieldDefense = Formula.calcShieldUse(caster, target, skillOnCrit, false);
+        if (!Formula.calcSkillSuccess(caster, target, skillOnCrit, shieldDefense, false)) {
             return;
+        }
 
-        final AbstractEffect effect = target.getFirstEffect(skillOnCrit.getId());
-        if (effect != null)
+        AbstractEffect effect = target.getFirstEffect(skillOnCrit.getId());
+        if (effect != null) {
             effect.exit();
+        }
 
-        skillOnCrit.getEffects(caster, target, shld, false);
+        skillOnCrit.getEffects(caster, target, shieldDefense, false);
     }
 
     /**
@@ -217,9 +220,10 @@ public final class Weapon extends Item {
         if (_skillOnMagicCondition != null && !_skillOnMagicCondition.test(caster, target, skillOnMagic))
             return;
 
-        final byte shld = Formulas.calcShldUse(caster, target, skillOnMagic);
-        if (skillOnMagic.isOffensive() && !Formulas.calcSkillSuccess(caster, target, skillOnMagic, shld, false))
+        final ShieldDefense shieldDefense = Formula.calcShieldUse(caster, target, skillOnMagic, false);
+        if (skillOnMagic.isOffensive() && !Formula.calcSkillSuccess(caster, target, skillOnMagic, shieldDefense, false)) {
             return;
+        }
 
         // Send message before resist attempt.
         if (caster instanceof Player)

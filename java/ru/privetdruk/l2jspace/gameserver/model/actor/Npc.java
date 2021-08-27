@@ -876,7 +876,7 @@ public class Npc extends Creature {
 
         if (quest.isRealQuest()) {
             // Check player being overweight.
-            if (player.getWeightPenalty() > 2 || player.getStatus().isOverburden()) {
+            if (player.getWeightPenalty().ordinal() > 2 || player.getStatus().isOverburden()) {
                 player.sendPacket(SystemMessageId.INVENTORY_LESS_THAN_80_PERCENT);
                 return;
             }

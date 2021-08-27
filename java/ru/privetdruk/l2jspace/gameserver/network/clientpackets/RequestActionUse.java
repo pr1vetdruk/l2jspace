@@ -179,10 +179,15 @@ public final class RequestActionUse extends L2GameClientPacket {
                 summon.setTarget(target);
 
                 // Summon loses follow status, no matter what.
-                // summon.getAI().setFollowStatus(false);
+                // FIXME summon.getAI().setFollowStatus(false);
 
                 if (target instanceof Creature) {
-                    summon.getAI().tryToAttack((Creature) target, _isCtrlPressed, _isShiftPressed);
+                    Creature creature = (Creature) target;
+                    if (creature.isAttackableWithoutForceBy(player) || (_isCtrlPressed && creature.isAttackableBy(player))) {
+                        summon.getAI().tryToAttack(creature, _isCtrlPressed, _isShiftPressed);
+                    } else {
+                        summon.getAI().tryToFollow(creature, _isShiftPressed);
+                    }
                 } else {
                     summon.getAI().tryToInteract(target, _isCtrlPressed, _isShiftPressed);
                 }
@@ -444,6 +449,7 @@ public final class RequestActionUse extends L2GameClientPacket {
             default:
                 LOGGER.warn("Unhandled action type {} detected for {}.", _actionId, player.getName());
         }
+
     }
 
     /**

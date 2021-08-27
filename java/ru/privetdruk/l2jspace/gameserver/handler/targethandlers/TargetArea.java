@@ -3,6 +3,7 @@ package ru.privetdruk.l2jspace.gameserver.handler.targethandlers;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillTargetType;
 import ru.privetdruk.l2jspace.gameserver.geoengine.GeoEngine;
 import ru.privetdruk.l2jspace.gameserver.handler.ITargetHandler;
@@ -36,12 +37,20 @@ public class TargetArea implements ITargetHandler {
 
     @Override
     public boolean meetCastConditions(Playable caster, Creature target, L2Skill skill, boolean isCtrlPressed) {
+        boolean srcInArena = (caster.isInsideZone(ZoneId.PVP) && !caster.isInsideZone(ZoneId.SIEGE));
+
         if (skill.isOffensive()) {
+            if (!caster.isInArena() && !skill.checkForAreaOffensiveSkill(caster, target, true, srcInArena)) {
+                caster.sendPacket(SystemMessageId.INVALID_TARGET);
+                return false;
+            }
+
             if (!target.isAttackableBy(caster) || (!isCtrlPressed && !target.isAttackableWithoutForceBy(caster.getActingPlayer()))) {
                 caster.sendPacket(SystemMessageId.INVALID_TARGET);
                 return false;
             }
         }
+
         return true;
     }
 

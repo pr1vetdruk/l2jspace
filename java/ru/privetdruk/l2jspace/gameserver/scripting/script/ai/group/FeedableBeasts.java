@@ -601,7 +601,7 @@ public class FeedableBeasts extends AttackableAIScript {
             nextNpc.forceRunStance();
 
             // Support for "Bring Up With Love" (020) quest.
-            QuestState st = player.getQuestList().getQuestState(Q020_BringUpWithLove.qn);
+            QuestState st = player.getQuestList().getQuestState(Q020_BringUpWithLove.QUEST_NAME);
             if (st != null && Rnd.get(100) < 5 && !player.getInventory().hasItems(7185)) {
                 giveItems(player, 7185, 1);
                 st.setCond(2);
@@ -738,7 +738,7 @@ public class FeedableBeasts extends AttackableAIScript {
 
         // If player is the leader, retrieves directly the qS and bypass others checks
         if (player.isClanLeader())
-            st = player.getQuestList().getQuestState(Q655_AGrandPlanForTamingWildBeasts.qn);
+            st = player.getQuestList().getQuestState(Q655_AGrandPlanForTamingWildBeasts.QUEST_NAME);
         else {
             // Verify if the player got a clan
             final Clan clan = player.getClan();
@@ -752,7 +752,7 @@ public class FeedableBeasts extends AttackableAIScript {
 
             // Verify if the leader is on the radius of the npc. If true, send leader's quest state.
             if (leader.isIn3DRadius(npc, Config.PARTY_RANGE))
-                st = leader.getQuestList().getQuestState(Q655_AGrandPlanForTamingWildBeasts.qn);
+                st = leader.getQuestList().getQuestState(Q655_AGrandPlanForTamingWildBeasts.QUEST_NAME);
         }
 
         // We didn't found any valid QuestState ; stop here.

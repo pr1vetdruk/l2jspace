@@ -1,5 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
+
 public class ExShowScreenMessage extends L2GameServerPacket {
     public enum SMPOS {
         DUMMY,
@@ -24,6 +26,14 @@ public class ExShowScreenMessage extends L2GameServerPacket {
     private final boolean _showEffect;
     private final String _text;
     private final int _time;
+
+    public ExShowScreenMessage(NpcStringId message, int time) {
+        this(1, -1, SMPOS.TOP_CENTER, false, 0, 0, 0, false, time, false, message.getMessage());
+    }
+
+    public ExShowScreenMessage(NpcStringId message, int time, Object... params) {
+        this(1, -1, SMPOS.TOP_CENTER, false, 0, 0, 0, false, time, false, message.getMessage(params));
+    }
 
     public ExShowScreenMessage(String text, int time) {
         this(1, -1, SMPOS.TOP_CENTER, false, 0, 0, 0, false, time, false, text);

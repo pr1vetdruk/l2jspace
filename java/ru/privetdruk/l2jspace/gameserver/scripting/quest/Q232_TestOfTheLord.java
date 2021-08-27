@@ -10,7 +10,7 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q232_TestOfTheLord extends SecondClassQuest {
-    private static final String qn = "Q232_TestOfTheLord";
+    private static final String QUEST_NAME = "Q232_TestOfTheLord";
 
     // NPCs
     private static final int SOMAK = 30510;
@@ -74,7 +74,7 @@ public class Q232_TestOfTheLord extends SecondClassQuest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -146,7 +146,7 @@ public class Q232_TestOfTheLord extends SecondClassQuest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;

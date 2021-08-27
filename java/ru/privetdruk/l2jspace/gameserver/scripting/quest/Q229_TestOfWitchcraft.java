@@ -6,12 +6,13 @@ import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassId;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class Q229_TestOfWitchcraft extends SecondClassQuest {
-    private static final String qn = "Q229_TestOfWitchcraft";
+    private static final String QUEST_NAME = "Q229_TestOfWitchcraft";
 
     // Items
     private static final int ORIM_DIAGRAM = 3308;
@@ -96,7 +97,7 @@ public class Q229_TestOfWitchcraft extends SecondClassQuest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -229,7 +230,7 @@ public class Q229_TestOfWitchcraft extends SecondClassQuest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -434,14 +435,14 @@ public class Q229_TestOfWitchcraft extends SecondClassQuest {
             case NAMELESS_REVENANT:
                 if (player.getInventory().hasItems(LARA_MEMO) && !npc.isScriptValue(1)) {
                     npc.setScriptValue(1);
-                    npc.broadcastNpcSay("I absolutely cannot give it to you! It is my precious jewel!");
+                    npc.broadcastNpcSay(NpcStringId.ID_22933);
                 }
                 break;
 
             case SKELETAL_MERCENARY:
                 if (st.getInteger("gem456") > 2 && st.getInteger("gem456") < 6 && !npc.isScriptValue(1)) {
                     npc.setScriptValue(1);
-                    npc.broadcastNpcSay("I absolutely cannot give it to you! It is my precious jewel!");
+                    npc.broadcastNpcSay(NpcStringId.ID_22933);
                 }
                 break;
 
@@ -451,13 +452,13 @@ public class Q229_TestOfWitchcraft extends SecondClassQuest {
                     playSound(player, SOUND_MIDDLE);
 
                     npc.setScriptValue(1);
-                    npc.broadcastNpcSay("I'll take your lives later!!");
+                    npc.broadcastNpcSay(NpcStringId.ID_22934);
 
                     startQuestTimer("zeruel_despawn", npc, null, 1000);
                 } else if (npc == _drevanulPrinceZeruel_Evert && st.getCond() == 9 && npc.isScriptValue(0)) {
                     if (player.getInventory().getItemIdFrom(Paperdoll.RHAND) == SWORD_OF_BINDING) {
                         npc.setScriptValue(player.getObjectId());
-                        npc.broadcastNpcSay("That sword is really...!");
+                        npc.broadcastNpcSay(NpcStringId.ID_22935);
                     }
                 }
                 break;
@@ -562,7 +563,7 @@ public class Q229_TestOfWitchcraft extends SecondClassQuest {
                     takeItems(player, SOULTRAP_CRYSTAL, 1);
                     giveItems(player, PURGATORY_KEY, 1);
                     giveItems(player, ZERUEL_BIND_CRYSTAL, 1);
-                    npc.broadcastNpcSay("No! I haven't completely finished the command for destruction and slaughter yet!!!");
+                    npc.broadcastNpcSay(NpcStringId.ID_22936);
                 }
                 break;
         }

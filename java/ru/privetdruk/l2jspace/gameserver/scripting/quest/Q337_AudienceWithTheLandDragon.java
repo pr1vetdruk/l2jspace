@@ -12,7 +12,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class Q337_AudienceWithTheLandDragon extends Quest {
-    private static final String qn = "Q337_AudienceWithTheLandDragon";
+    private static final String QUEST_NAME = "Q337_AudienceWithTheLandDragon";
 
     // Variables
     private static boolean _jewel1 = false;
@@ -169,7 +169,7 @@ public class Q337_AudienceWithTheLandDragon extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -211,7 +211,7 @@ public class Q337_AudienceWithTheLandDragon extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

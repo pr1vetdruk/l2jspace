@@ -16,7 +16,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q325_GrimCollector extends Quest {
-    private static final String qn = "Q325_GrimCollector";
+    private static final String QUEST_NAME = "Q325_GrimCollector";
 
     // Items
     private static final int ANATOMY_DIAGRAM = 1349;
@@ -93,7 +93,7 @@ public class Q325_GrimCollector extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -140,7 +140,7 @@ public class Q325_GrimCollector extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;

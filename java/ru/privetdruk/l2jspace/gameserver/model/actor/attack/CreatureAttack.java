@@ -13,6 +13,7 @@ import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
 import ru.privetdruk.l2jspace.gameserver.enums.items.ShotType;
 import ru.privetdruk.l2jspace.gameserver.enums.items.WeaponType;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectType;
+import ru.privetdruk.l2jspace.gameserver.enums.skills.ShieldDefense;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.Stats;
 import ru.privetdruk.l2jspace.gameserver.geoengine.GeoEngine;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
@@ -27,7 +28,7 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.Attack;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SetupGauge;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
-import ru.privetdruk.l2jspace.gameserver.skill.Formulas;
+import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 
 /**
  * This class groups all attack data related to a {@link Creature}.
@@ -64,11 +65,13 @@ public class CreatureAttack<T extends Creature> {
      * @return True if the attacker doesn't have isAttackingDisabled
      */
     public boolean canDoAttack(Creature target) {
-        if (_actor.isAttackingDisabled())
+        if (_actor.isAttackingDisabled()) {
             return false;
+        }
 
-        if (!target.isAttackableBy(_actor) || !_actor.knows(target))
+        if (target.isDead() || !target.isAttackableBy(_actor) || !_actor.knows(target)) {
             return false;
+        }
 
         if (!GeoEngine.getInstance().canSeeTarget(_actor, target)) {
             _actor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CANT_SEE_TARGET));
@@ -227,7 +230,7 @@ public class CreatureAttack<T extends Creature> {
             }
 
             // Manage cast break of the target (calculating rate, sending message...)
-            Formulas.calcCastBreak(target, hitHolder._damage);
+            Formula.calcCastBreak(target, hitHolder._damage);
 
             // Maybe launch chance skills on us
             final ChanceSkillList chanceSkills = _actor.getChanceSkills();
@@ -259,7 +262,7 @@ public class CreatureAttack<T extends Creature> {
      * @return True if the hit was actually successful, false otherwise.
      */
     public boolean doAttack(Creature target) {
-        final int timeAtk = Formulas.calculateTimeBetweenAttacks(_actor);
+        final int timeAtk = Formula.calculateTimeBetweenAttacks(_actor);
         final Weapon weaponItem = _actor.getActiveWeaponItem();
         final Attack attack = new Attack(_actor, _actor.isChargedShot(ShotType.SOULSHOT), (weaponItem != null) ? weaponItem.getCrystalType().getId() : 0);
 
@@ -441,21 +444,22 @@ public class CreatureAttack<T extends Creature> {
      * @return a new {@link HitHolder} with generated damage, shield resistance, critical and miss informations.
      */
     private HitHolder getHitHolder(Attack attack, Creature target, boolean isSplit) {
-        int damage = 0;
-        byte shld = 0;
         boolean crit = false;
+        ShieldDefense shieldDefense = ShieldDefense.FAILED;
+        int damage = 0;
 
-        final boolean miss = Formulas.calcHitMiss(_actor, target);
+        boolean miss = Formula.calcHitMiss(_actor, target);
         if (!miss) {
-            shld = Formulas.calcShldUse(_actor, target, null);
-            crit = Formulas.calcCrit(_actor, target, null);
-            damage = (int) Formulas.calcPhysDam(_actor, target, null, shld, crit, attack.soulshot);
+            crit = Formula.calcCrit(_actor, target, null);
+            shieldDefense = Formula.calcShieldUse(_actor, target, null, crit);
+            damage = (int) Formula.calcPhysicalAttackDamage(_actor, target, shieldDefense, crit, attack.soulshot);
 
-            if (isSplit)
+            if (isSplit) {
                 damage /= 2;
+            }
         }
 
-        return new HitHolder(target, damage, crit, miss, shld);
+        return new HitHolder(target, damage, crit, miss, shieldDefense);
     }
 
     /**
@@ -504,15 +508,15 @@ public class CreatureAttack<T extends Creature> {
         public int _damage;
         public boolean _crit;
         public boolean _miss;
-        public byte _shld;
+        public ShieldDefense shieldDefense;
         public int _flags;
 
-        public HitHolder(Creature target, int damage, boolean crit, boolean miss, byte shld) {
+        public HitHolder(Creature target, int damage, boolean crit, boolean miss, ShieldDefense shieldDefense) {
             _target = target;
             _targetId = target.getObjectId();
             _damage = damage;
             _crit = crit;
-            _shld = shld;
+            this.shieldDefense = shieldDefense;
             _miss = miss;
         }
     }

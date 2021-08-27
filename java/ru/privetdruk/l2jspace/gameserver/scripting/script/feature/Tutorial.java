@@ -10,19 +10,19 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Tutorial extends Quest {
-    private static final String qn = "Tutorial";
-    private static final String qn101 = "Q101_SwordOfSolidarity";
-    private static final String qn102 = "Q102_SeaOfSporesFever";
-    private static final String qn103 = "Q103_SpiritOfCraftsman";
-    private static final String qn104 = "Q104_SpiritOfMirrors";
-    private static final String qn105 = "Q105_SkirmishWithTheOrcs";
-    private static final String qn106 = "Q106_ForgottenTruth";
-    private static final String qn107 = "Q107_MercilessPunishment";
-    private static final String qn108 = "Q108_JumbleTumbleDiamondFuss";
+    private static final String QUEST_NAME = "Tutorial";
+    private static final String QUEST_NAME_101 = "Q101_SwordOfSolidarity";
+    private static final String QUEST_NAME_102 = "Q102_SeaOfSporesFever";
+    private static final String QUEST_NAME_103 = "Q103_SpiritOfCraftsman";
+    private static final String QUEST_NAME_104 = "Q104_SpiritOfMirrors";
+    private static final String QUEST_NAME_105 = "Q105_SkirmishWithTheOrcs";
+    private static final String QUEST_NAME_106 = "Q106_ForgottenTruth";
+    private static final String QUEST_NAME_107 = "Q107_MercilessPunishment";
+    private static final String QUEST_NAME_108 = "Q108_JumbleTumbleDiamondFuss";
 
     private static final Map<Integer, Event> EVENTS = new HashMap<>();
 
-    {
+    static {
         EVENTS.put(0, new Event("tutorial_voice_001a", "tutorial_human_fighter001.htm", "tutorial_human_fighter007.htm", new Location(-71424, 258336, -3109), "tutorial_fighter017.htm", new Location(-83020, 242553, -3718), "tutorial_newbie003a.htm", "tutorial_21.htm", Location.DUMMY_LOC));
         EVENTS.put(10, new Event("tutorial_voice_001b", "tutorial_human_mage001.htm", "tutorial_human_mage007.htm", new Location(-91036, 248044, -3568), "tutorial_mage017.htm", Location.DUMMY_LOC, "tutorial_newbie003a.htm", "tutorial_21a.htm", new Location(-84981, 244764, -3726)));
         EVENTS.put(18, new Event("tutorial_voice_001c", "tutorial_elven_fighter001.htm", "tutorial_elf007.htm", new Location(46112, 41200, -3504), "tutorial_fighter017.htm", new Location(45061, 52468, -2796), "tutorial_newbie003b.htm", "tutorial_21b.htm", Location.DUMMY_LOC));
@@ -37,7 +37,7 @@ public class Tutorial extends Quest {
     // table for Tutorial Close Link (26) 2nd class transfer [raceId, html]
     private static final Map<Integer, String> TCLa = new HashMap<>();
 
-    {
+    static {
         TCLa.put(1, "tutorial_22w.htm");
         TCLa.put(4, "tutorial_22.htm");
         TCLa.put(7, "tutorial_22b.htm");
@@ -101,7 +101,7 @@ public class Tutorial extends Quest {
     @Override
     public String onTimer(String name, Npc npc, Player player) {
         if (name.startsWith("QT")) {
-            QuestState st = player.getQuestList().getQuestState(qn);
+            QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
             if (st == null) {
                 return null;
             }
@@ -134,7 +134,7 @@ public class Tutorial extends Quest {
 
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
-        final QuestState st = player.getQuestList().getQuestState(qn);
+        final QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return null;
 
@@ -159,14 +159,14 @@ public class Tutorial extends Quest {
                         break;
 
                     case 2:
-                        final QuestState qs101 = player.getQuestList().getQuestState(qn101);
-                        final QuestState qs102 = player.getQuestList().getQuestState(qn102);
-                        final QuestState qs103 = player.getQuestList().getQuestState(qn103);
-                        final QuestState qs104 = player.getQuestList().getQuestState(qn104);
-                        final QuestState qs105 = player.getQuestList().getQuestState(qn105);
-                        final QuestState qs106 = player.getQuestList().getQuestState(qn106);
-                        final QuestState qs107 = player.getQuestList().getQuestState(qn107);
-                        final QuestState qs108 = player.getQuestList().getQuestState(qn108);
+                        final QuestState qs101 = player.getQuestList().getQuestState(QUEST_NAME_101);
+                        final QuestState qs102 = player.getQuestList().getQuestState(QUEST_NAME_102);
+                        final QuestState qs103 = player.getQuestList().getQuestState(QUEST_NAME_103);
+                        final QuestState qs104 = player.getQuestList().getQuestState(QUEST_NAME_104);
+                        final QuestState qs105 = player.getQuestList().getQuestState(QUEST_NAME_105);
+                        final QuestState qs106 = player.getQuestList().getQuestState(QUEST_NAME_106);
+                        final QuestState qs107 = player.getQuestList().getQuestState(QUEST_NAME_107);
+                        final QuestState qs108 = player.getQuestList().getQuestState(QUEST_NAME_108);
 
                         if (qs101 != null || qs102 != null || qs103 != null || qs104 != null || qs105 != null || qs106 != null || qs107 != null || qs108 != null) {
                             st.set("ucMemo", 5);
@@ -694,7 +694,7 @@ public class Tutorial extends Quest {
         return null;
     }
 
-    private class Event {
+    private static class Event {
         public String _initialVoice;
         public String _initialHtm;
 

@@ -13,7 +13,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q327_RecoverTheFarmland extends Quest {
-    private static final String qn = "Q327_RecoverTheFarmland";
+    private static final String QUEST_NAME = "Q327_RecoverTheFarmland";
 
     // Items
     private static final int LEIKAN_LETTER = 5012;
@@ -97,7 +97,7 @@ public class Q327_RecoverTheFarmland extends Quest {
     // Exp
     private static final Map<Integer, Integer> EXP_REWARD = new HashMap<>();
 
-    {
+    static {
         EXP_REWARD.put(ANCIENT_CLAY_URN, 2766);
         EXP_REWARD.put(ANCIENT_BRASS_TIARA, 3227);
         EXP_REWARD.put(ANCIENT_BRONZE_MIRROR, 3227);
@@ -118,7 +118,7 @@ public class Q327_RecoverTheFarmland extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -184,7 +184,7 @@ public class Q327_RecoverTheFarmland extends Quest {
             else {
                 playSound(player, SOUND_ITEMGET);
                 takeItems(player, CLAY_URN_FRAGMENT, n);
-                rewardExpAndSp(player, n * 307, 0);
+                rewardExpAndSp(player, n * 307L, 0);
             }
         } else if (event.equalsIgnoreCase("30034-04.htm")) {
             final int n = player.getInventory().getItemCount(BRASS_TRINKET_PIECE);
@@ -193,7 +193,7 @@ public class Q327_RecoverTheFarmland extends Quest {
             else {
                 playSound(player, SOUND_ITEMGET);
                 takeItems(player, BRASS_TRINKET_PIECE, n);
-                rewardExpAndSp(player, n * 368, 0);
+                rewardExpAndSp(player, n * 368L, 0);
             }
         } else if (event.equalsIgnoreCase("30034-05.htm")) {
             final int n = player.getInventory().getItemCount(BRONZE_MIRROR_PIECE);
@@ -202,7 +202,7 @@ public class Q327_RecoverTheFarmland extends Quest {
             else {
                 playSound(player, SOUND_ITEMGET);
                 takeItems(player, BRONZE_MIRROR_PIECE, n);
-                rewardExpAndSp(player, n * 368, 0);
+                rewardExpAndSp(player, n * 368L, 0);
             }
         } else if (event.equalsIgnoreCase("30034-06.htm")) {
             final int n = player.getInventory().getItemCount(JADE_NECKLACE_BEAD);
@@ -211,7 +211,7 @@ public class Q327_RecoverTheFarmland extends Quest {
             else {
                 playSound(player, SOUND_ITEMGET);
                 takeItems(player, JADE_NECKLACE_BEAD, n);
-                rewardExpAndSp(player, n * 430, 0);
+                rewardExpAndSp(player, n * 430L, 0);
             }
         } else if (event.equalsIgnoreCase("30034-07.htm")) {
             boolean isRewarded = false;
@@ -220,7 +220,7 @@ public class Q327_RecoverTheFarmland extends Quest {
                 int n = player.getInventory().getItemCount(i);
                 if (n > 0) {
                     takeItems(player, i, n);
-                    rewardExpAndSp(player, n * EXP_REWARD.get(i), 0);
+                    rewardExpAndSp(player, (long) n * EXP_REWARD.get(i), 0);
                     isRewarded = true;
                 }
             }
@@ -272,7 +272,7 @@ public class Q327_RecoverTheFarmland extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

@@ -15,7 +15,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q628_HuntOfTheGoldenRamMercenaryForce extends Quest {
-    private static final String qn = "Q628_HuntOfTheGoldenRamMercenaryForce";
+    private static final String QUEST_NAME = "Q628_HuntOfTheGoldenRamMercenaryForce";
 
     private static final Map<Integer, IntIntHolder> BUFFS = new HashMap<>();
 
@@ -75,7 +75,7 @@ public class Q628_HuntOfTheGoldenRamMercenaryForce extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return null;
 
@@ -92,7 +92,7 @@ public class Q628_HuntOfTheGoldenRamMercenaryForce extends Quest {
                 else {
                     htmltext = "31556-12.htm";
 
-                    Quest.takeItems(player, GOLDEN_RAM_COIN, holder.getValue());
+                    takeItems(player, GOLDEN_RAM_COIN, holder.getValue());
                     npc.getAI().tryToCast(player, buffId, holder.getId());
                 }
             }
@@ -125,7 +125,7 @@ public class Q628_HuntOfTheGoldenRamMercenaryForce extends Quest {
 
     @Override
     public String onFirstTalk(Npc npc, Player player) {
-        final QuestState st = player.getQuestList().getQuestState(qn);
+        final QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st != null) {
             final int cond = st.getCond();
 
@@ -153,7 +153,7 @@ public class Q628_HuntOfTheGoldenRamMercenaryForce extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;

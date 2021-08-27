@@ -1,6 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.handler.skillhandlers;
 
 import ru.privetdruk.l2jspace.gameserver.enums.items.ShotType;
+import ru.privetdruk.l2jspace.gameserver.enums.skills.ShieldDefense;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillType;
 import ru.privetdruk.l2jspace.gameserver.handler.ISkillHandler;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
@@ -8,7 +9,7 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
-import ru.privetdruk.l2jspace.gameserver.skill.Formulas;
+import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class CpDamPercent implements ISkillHandler {
@@ -32,14 +33,14 @@ public class CpDamPercent implements ISkillHandler {
             if (target.isDead() || target.isInvul())
                 continue;
 
-            byte shld = Formulas.calcShldUse(activeChar, target, skill);
+            ShieldDefense shieldDefense = Formula.calcShieldUse(activeChar, target, skill, false);
 
             int damage = (int) (target.getStatus().getCp() * (skill.getPower() / 100));
 
             // Manage cast break of the target (calculating rate, sending message...)
-            Formulas.calcCastBreak(target, damage);
+            Formula.calcCastBreak(target, damage);
 
-            skill.getEffects(activeChar, target, shld, bsps);
+            skill.getEffects(activeChar, target, shieldDefense, bsps);
             activeChar.sendDamageMessage(target, damage, false, false, false);
             target.getStatus().setCp(target.getStatus().getCp() - damage);
 

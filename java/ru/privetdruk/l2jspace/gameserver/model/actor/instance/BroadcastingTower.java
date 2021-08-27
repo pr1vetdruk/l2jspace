@@ -31,10 +31,10 @@ public final class BroadcastingTower extends Folk {
             StringTokenizer st = new StringTokenizer(command);
             st.nextToken();
 
-            int cost = Integer.parseInt(st.nextToken());
             int x = Integer.parseInt(st.nextToken());
             int y = Integer.parseInt(st.nextToken());
             int z = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
 
             if (command.startsWith("observeSiege") && CastleManager.getInstance().getActiveSiege(x, y, z) == null) {
                 player.sendPacket(SystemMessageId.ONLY_VIEW_SIEGE);

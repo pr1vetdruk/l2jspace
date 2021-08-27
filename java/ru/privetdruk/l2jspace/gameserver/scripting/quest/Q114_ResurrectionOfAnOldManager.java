@@ -10,7 +10,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q114_ResurrectionOfAnOldManager extends Quest {
-    private static final String qn = "Q114_ResurrectionOfAnOldManager";
+    private static final String QUEST_NAME = "Q114_ResurrectionOfAnOldManager";
 
     // NPCs
     private static final int NEWYEAR = 31961;
@@ -46,7 +46,7 @@ public class Q114_ResurrectionOfAnOldManager extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -207,7 +207,7 @@ public class Q114_ResurrectionOfAnOldManager extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;
@@ -338,7 +338,8 @@ public class Q114_ResurrectionOfAnOldManager extends Quest {
                             playSound(player, SOUND_MIDDLE);
                             takeItems(player, DETECTOR, 1);
                             giveItems(player, DETECTOR_2, 1);
-                            player.sendPacket(new ExShowScreenMessage("The radio signal detector is responding. # A suspicious pile of stones catches your eye.", 4500));
+                            player.sendPacket(new ExShowScreenMessage(NpcStringId.ID_11453, 4500));
+
                             return null;
                         } else if (cond == 18)
                             htmltext = "32046-01.htm";
@@ -367,6 +368,10 @@ public class Q114_ResurrectionOfAnOldManager extends Quest {
     @Override
     public String onDecay(Npc npc) {
         if (npc == _golem) {
+            if (!npc.isDead()) {
+                npc.broadcastNpcSay(NpcStringId.ID_11451);
+            }
+
             _golem = null;
         }
 
@@ -383,7 +388,7 @@ public class Q114_ResurrectionOfAnOldManager extends Quest {
 
         st.setCond(11);
         playSound(player, SOUND_MIDDLE);
-        npc.broadcastNpcSay("This enemy is far too powerful for me to fight. I must withdraw!");
+        npc.broadcastNpcSay(NpcStringId.ID_11452);
 
         return null;
     }

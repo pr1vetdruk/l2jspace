@@ -10,7 +10,7 @@ import ru.privetdruk.l2jspace.common.random.Rnd;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
-import ru.privetdruk.l2jspace.gameserver.skill.Formulas;
+import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class EffectCancel extends AbstractEffect {
@@ -34,7 +34,7 @@ public class EffectCancel extends AbstractEffect {
         double rate = getTemplate().getEffectPower();
 
         // Resistance/vulnerability
-        final double res = Formulas.calcSkillVulnerability(getEffector(), getEffected(), getSkill(), getTemplate().getEffectType());
+        final double res = Formula.calcSkillVulnerability(getEffector(), getEffected(), getSkill(), getTemplate().getEffectType());
         rate *= res;
 
         final List<AbstractEffect> list = Arrays.asList(getEffected().getAllEffects());

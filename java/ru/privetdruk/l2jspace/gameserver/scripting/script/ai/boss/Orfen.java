@@ -175,8 +175,8 @@ public class Orfen extends AttackableAIScript {
         npc.broadcastPacket(new PlaySound(1, "BS02_D", npc));
         GrandBossManager.getInstance().setBossStatus(ORFEN, DEAD);
 
-        long respawnTime = (long) Config.SPAWN_INTERVAL_ORFEN + Rnd.get(-Config.RANDOM_SPAWN_TIME_ORFEN, Config.RANDOM_SPAWN_TIME_ORFEN);
-        respawnTime *= 3600000;
+        long respawnTime = (long) Config.SPAWN_INTERVAL_ORFEN * 60 + Rnd.get(-60 * Config.RANDOM_SPAWN_TIME_ORFEN, 60 * Config.RANDOM_SPAWN_TIME_ORFEN);
+        respawnTime *= 60000;
 
         startQuestTimer("orfen_unlock", null, null, respawnTime);
 

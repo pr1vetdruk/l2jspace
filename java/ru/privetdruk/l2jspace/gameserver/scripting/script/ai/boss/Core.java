@@ -1,7 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.ai.boss;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.random.Rnd;
@@ -27,7 +27,7 @@ public class Core extends AttackableAIScript {
     private static final byte ALIVE = 0; // Core is spawned.
     private static final byte DEAD = 1; // Core has been killed.
 
-    private final List<Monster> _minions = new ArrayList<>();
+    private final Set<Npc> minions = ConcurrentHashMap.newKeySet();
 
     public Core() {
         super("ai/boss");
@@ -76,21 +76,21 @@ public class Core extends AttackableAIScript {
             int x = 16800 + i * 360;
             monster = (Monster) addSpawn(DEATH_KNIGHT, x, 110000, npc.getZ(), 280 + Rnd.get(40), false, 0, false);
             monster.setMinion(true);
-            _minions.add(monster);
+            minions.add(monster);
             monster = (Monster) addSpawn(DEATH_KNIGHT, x, 109000, npc.getZ(), 280 + Rnd.get(40), false, 0, false);
             monster.setMinion(true);
-            _minions.add(monster);
+            minions.add(monster);
             int x2 = 16800 + i * 600;
             monster = (Monster) addSpawn(DOOM_WRAITH, x2, 109300, npc.getZ(), 280 + Rnd.get(40), false, 0, false);
             monster.setMinion(true);
-            _minions.add(monster);
+            minions.add(monster);
         }
 
         for (int i = 0; i < 4; i++) {
             int x = 16800 + i * 450;
             monster = (Monster) addSpawn(SUSCEPTOR, x, 110300, npc.getZ(), 280 + Rnd.get(40), false, 0, false);
             monster.setMinion(true);
-            _minions.add(monster);
+            minions.add(monster);
         }
     }
 
@@ -103,10 +103,10 @@ public class Core extends AttackableAIScript {
         } else if (name.equalsIgnoreCase("spawn_minion")) {
             final Monster monster = (Monster) addSpawn(npc.getNpcId(), npc.getX(), npc.getY(), npc.getZ(), npc.getHeading(), false, 0, false);
             monster.setMinion(true);
-            _minions.add(monster);
+            minions.add(monster);
         } else if (name.equalsIgnoreCase("despawn_minions")) {
-            _minions.forEach(Npc::deleteMe);
-            _minions.clear();
+            minions.forEach(Npc::deleteMe);
+            minions.clear();
         }
         return super.onTimer(name, npc, player);
     }
@@ -138,8 +138,8 @@ public class Core extends AttackableAIScript {
             addSpawn(31842, 18948, 110166, -6397, 0, false, 900000, false);
             GrandBossManager.getInstance().setBossStatus(CORE, DEAD);
 
-            long respawnTime = (long) Config.SPAWN_INTERVAL_CORE + Rnd.get(-Config.RANDOM_SPAWN_TIME_CORE, Config.RANDOM_SPAWN_TIME_CORE);
-            respawnTime *= 3600000;
+            long respawnTime = (long) Config.SPAWN_INTERVAL_CORE * 60 + Rnd.get(-60 * Config.RANDOM_SPAWN_TIME_CORE, 60 * Config.RANDOM_SPAWN_TIME_CORE);
+            respawnTime *= 60000;
 
             startQuestTimer("core_unlock", null, null, respawnTime);
 
@@ -148,8 +148,8 @@ public class Core extends AttackableAIScript {
             GrandBossManager.getInstance().setStatSet(CORE, info);
             startQuestTimer("despawn_minions", null, null, 20000);
             cancelQuestTimers("spawn_minion");
-        } else if (GrandBossManager.getInstance().getBossStatus(CORE) == ALIVE && _minions != null && _minions.contains(npc)) {
-            _minions.remove(npc);
+        } else if (GrandBossManager.getInstance().getBossStatus(CORE) == ALIVE && minions != null && minions.contains(npc)) {
+            minions.remove(npc);
             startQuestTimer("spawn_minion", npc, null, 60000);
         }
         return super.onKill(npc, killer);

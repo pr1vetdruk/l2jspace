@@ -12,7 +12,7 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q216_TrialOfTheGuildsman extends SecondClassQuest {
-    private static final String qn = "Q216_TrialOfTheGuildsman";
+    private static final String QUEST_NAME = "Q216_TrialOfTheGuildsman";
 
     // Items
     private static final int RECIPE_JOURNEYMAN_RING = 3024;
@@ -78,7 +78,7 @@ public class Q216_TrialOfTheGuildsman extends SecondClassQuest {
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
 
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -146,7 +146,7 @@ public class Q216_TrialOfTheGuildsman extends SecondClassQuest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

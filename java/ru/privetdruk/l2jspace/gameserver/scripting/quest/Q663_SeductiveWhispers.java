@@ -9,11 +9,12 @@ import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q663_SeductiveWhispers extends Quest {
-    private static final String qn = "Q663_SeductiveWhispers";
+    private static final String QUEST_NAME = "Q663_SeductiveWhispers";
 
     // NPC
     private static final int WILBERT = 30846;
@@ -30,7 +31,7 @@ public class Q663_SeductiveWhispers extends Quest {
     private static final int ENCHANT_WEAPON_C = 951;
     private static final int ENCHANT_WEAPON_D = 955;
 
-    private static final int RECIPES[] =
+    private static final int[] RECIPES =
             {
                     2353,
                     4963,
@@ -44,7 +45,7 @@ public class Q663_SeductiveWhispers extends Quest {
                     5007
             };
 
-    private static final int BLADES[] =
+    private static final int[] BLADES =
             {
                     2115,
                     4104,
@@ -59,26 +60,26 @@ public class Q663_SeductiveWhispers extends Quest {
             };
 
     // Text of cards
-    private static final Map<Integer, String> CARDS = new HashMap<>();
+    private static final Map<Integer, NpcStringId> CARDS = new HashMap<>();
 
-    {
-        CARDS.put(0, "No such card");
-        CARDS.put(11, "<font color=\"ff453d\"> Sun Card: 1 </font>");
-        CARDS.put(12, "<font color=\"ff453d\"> Sun Card: 2 </font>");
-        CARDS.put(13, "<font color=\"ff453d\"> Sun Card: 3 </font>");
-        CARDS.put(14, "<font color=\"ff453d\"> Sun Card: 4 </font>");
-        CARDS.put(15, "<font color=\"ff453d\"> Sun Card: 5 </font>");
-        CARDS.put(21, "<font color=\"fff802\"> Moon Card: 1 </font>");
-        CARDS.put(22, "<font color=\"fff802\"> Moon Card: 2 </font>");
-        CARDS.put(23, "<font color=\"fff802\"> Moon Card: 3 </font>");
-        CARDS.put(24, "<font color=\"fff802\"> Moon Card: 4 </font>");
-        CARDS.put(25, "<font color=\"fff802\"> Moon Card: 5 </font>");
+    static {
+        CARDS.put(0, NpcStringId.ID_66300);
+        CARDS.put(11, NpcStringId.ID_66311);
+        CARDS.put(12, NpcStringId.ID_66312);
+        CARDS.put(13, NpcStringId.ID_66313);
+        CARDS.put(14, NpcStringId.ID_66314);
+        CARDS.put(15, NpcStringId.ID_66315);
+        CARDS.put(21, NpcStringId.ID_66321);
+        CARDS.put(22, NpcStringId.ID_66322);
+        CARDS.put(23, NpcStringId.ID_66323);
+        CARDS.put(24, NpcStringId.ID_66324);
+        CARDS.put(25, NpcStringId.ID_66325);
     }
 
     // Drop chances
     private static final Map<Integer, Integer> CHANCES = new HashMap<>();
 
-    {
+    static {
         CHANCES.put(20674, 807000); // Doom Knight
         CHANCES.put(20678, 372000); // Tortured Undead
         CHANCES.put(20954, 460000); // Hungered Corpse
@@ -123,7 +124,7 @@ public class Q663_SeductiveWhispers extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -347,7 +348,7 @@ public class Q663_SeductiveWhispers extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;
@@ -407,6 +408,9 @@ public class Q663_SeductiveWhispers extends Quest {
     }
 
     private String getHTML(String html, int index, int param3, String name) {
-        return getHtmlText(html).replace("%card1pic%", CARDS.get(index)).replace("%card2pic%", CARDS.get(param3)).replace("%name%", name);
+        return getHtmlText(html)
+                .replace("%card1pic%", CARDS.get(index).getMessage())
+                .replace("%card2pic%", CARDS.get(param3).getMessage())
+                .replace("%name%", name);
     }
 }

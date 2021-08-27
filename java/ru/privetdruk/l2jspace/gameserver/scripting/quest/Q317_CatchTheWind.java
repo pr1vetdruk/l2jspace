@@ -8,7 +8,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q317_CatchTheWind extends Quest {
-    private static final String qn = "Q317_CatchTheWind";
+    private static final String QUEST_NAME = "Q317_CatchTheWind";
 
     // Item
     private static final int WIND_SHARD = 1078;
@@ -27,7 +27,7 @@ public class Q317_CatchTheWind extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -45,7 +45,7 @@ public class Q317_CatchTheWind extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;

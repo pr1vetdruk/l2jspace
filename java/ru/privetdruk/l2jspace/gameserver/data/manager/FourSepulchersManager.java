@@ -577,7 +577,7 @@ public class FourSepulchersManager {
                 return;
             }
 
-            if (member.getWeightPenalty() > 2) {
+            if (member.getWeightPenalty().ordinal() > 2) {
                 member.sendPacket(SystemMessageId.INVENTORY_LESS_THAN_80_PERCENT);
                 return;
             }

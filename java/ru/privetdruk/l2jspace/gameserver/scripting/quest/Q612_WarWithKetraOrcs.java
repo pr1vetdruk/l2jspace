@@ -10,7 +10,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
  * The onKill section of that quest is directly written on Q611.
  */
 public class Q612_WarWithKetraOrcs extends Quest {
-    private static final String qn = "Q612_WarWithKetraOrcs";
+    private static final String QUEST_NAME = "Q612_WarWithKetraOrcs";
 
     // Items
     private static final int NEPENTHES_SEED = 7187;
@@ -28,7 +28,7 @@ public class Q612_WarWithKetraOrcs extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -54,7 +54,7 @@ public class Q612_WarWithKetraOrcs extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

@@ -12,7 +12,7 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q212_TrialOfDuty extends SecondClassQuest {
-    private static final String qn = "Q212_TrialOfDuty";
+    private static final String QUEST_NAME = "Q212_TrialOfDuty";
 
     // Items
     private static final int LETTER_OF_DUSTIN = 2634;
@@ -56,7 +56,7 @@ public class Q212_TrialOfDuty extends SecondClassQuest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -79,7 +79,7 @@ public class Q212_TrialOfDuty extends SecondClassQuest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

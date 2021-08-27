@@ -9,7 +9,7 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q214_TrialOfTheScholar extends SecondClassQuest {
-    private static final String qn = "Q214_TrialOfTheScholar";
+    private static final String QUEST_NAME = "Q214_TrialOfTheScholar";
 
     // Items
     private static final int MIRIEN_SIGIL_1 = 2675;
@@ -103,7 +103,7 @@ public class Q214_TrialOfTheScholar extends SecondClassQuest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -265,7 +265,7 @@ public class Q214_TrialOfTheScholar extends SecondClassQuest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;

@@ -7,7 +7,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q023_LidiasHeart extends Quest {
-    private static final String qn = "Q023_LidiasHeart";
+    private static final String QUEST_NAME = "Q023_LidiasHeart";
 
     // NPCs
     private static final int INNOCENTIN = 31328;
@@ -39,7 +39,7 @@ public class Q023_LidiasHeart extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -102,7 +102,7 @@ public class Q023_LidiasHeart extends Quest {
     @Override
     public String onTimer(String name, Npc npc, Player player) {
         if (name.equalsIgnoreCase("tomb_digger")) {
-            QuestState st = player.getQuestList().getQuestState(qn);
+            QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
             if (st != null) {
                 st.setCond(8);
                 playSound(player, SOUND_MIDDLE);
@@ -126,7 +126,7 @@ public class Q023_LidiasHeart extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

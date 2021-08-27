@@ -7,7 +7,7 @@ import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
 public class Q020_BringUpWithLove extends Quest {
-    public static final String qn = "Q020_BringUpWithLove";
+    public static final String QUEST_NAME = "Q020_BringUpWithLove";
 
     // Item
     private static final int JEWEL_OF_INNOCENCE = 7185;
@@ -24,7 +24,7 @@ public class Q020_BringUpWithLove extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -45,7 +45,7 @@ public class Q020_BringUpWithLove extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 

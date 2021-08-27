@@ -7,16 +7,13 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class Q348_AnArrogantSearch extends Quest {
-    private static final String qn = "Q348_AnArrogantSearch";
-
-    private static final Location HOLY_ARK_1_LOC = new Location(-418, 44174, -3568);
-    private static final Location HOLY_ARK_2_LOC = new Location(181472, 7158, -2725);
-    private static final Location HOLY_ARK_3_LOC = new Location(50693, 158674, 376);
+    private static final String QUEST_NAME = "Q348_AnArrogantSearch";
 
     // Items
     private static final int TITAN_POWERSTONE = 4287;
@@ -26,12 +23,11 @@ public class Q348_AnArrogantSearch extends Quest {
     private static final int FIRST_KEY_OF_ARK = 4291;
     private static final int SECOND_KEY_OF_ARK = 4292;
     private static final int THIRD_KEY_OF_ARK = 4293;
+    private static final int WHITE_FABRIC = 4294;
+    private static final int BLOODED_FABRIC = 4295;
     private static final int BOOK_OF_SAINT = 4397;
     private static final int BLOOD_OF_SAINT = 4398;
     private static final int BOUGH_OF_SAINT = 4399;
-    private static final int WHITE_FABRIC_TRIBE = 4294;
-    private static final int WHITE_FABRIC_ANGELS = 5232;
-    private static final int BLOODED_FABRIC = 4295;
 
     private static final int ANTIDOTE = 1831;
     private static final int HEALING_POTION = 1061;
@@ -62,15 +58,22 @@ public class Q348_AnArrogantSearch extends Quest {
     private static final int ARK_GUARDIAN_ELBEROTH = 27182;
     private static final int ARK_GUARDIAN_SHADOW_FANG = 27183;
 
+    // Locations
+    private static final Location HOLY_ARK_1_LOC = new Location(-418, 44174, -3568);
+    private static final Location HOLY_ARK_2_LOC = new Location(181472, 7158, -2725);
+    private static final Location HOLY_ARK_3_LOC = new Location(50693, 158674, 376);
+    private static final Location GUARDIAN_CORPSE_LOC = new Location(-2908, 44128, -2712);
+
+
     // NPCs instances, in order to avoid infinite instances creation speaking to chests.
-    private Npc _elberoth;
-    private Npc _shadowFang;
-    private Npc _angelKiller;
+    private static Npc _elberoth;
+    private static Npc _shadowFang;
+    private static Npc _angelKiller;
 
     public Q348_AnArrogantSearch() {
         super(348, "An Arrogant Search");
 
-        setItemsIds(TITAN_POWERSTONE, HANELLIN_FIRST_LETTER, HANELLIN_SECOND_LETTER, HANELLIN_THIRD_LETTER, FIRST_KEY_OF_ARK, SECOND_KEY_OF_ARK, THIRD_KEY_OF_ARK, BOOK_OF_SAINT, BLOOD_OF_SAINT, BOUGH_OF_SAINT, WHITE_FABRIC_TRIBE, WHITE_FABRIC_ANGELS);
+        setItemsIds(TITAN_POWERSTONE, HANELLIN_FIRST_LETTER, HANELLIN_SECOND_LETTER, HANELLIN_THIRD_LETTER, FIRST_KEY_OF_ARK, SECOND_KEY_OF_ARK, THIRD_KEY_OF_ARK, BOOK_OF_SAINT, BLOOD_OF_SAINT, BOUGH_OF_SAINT, WHITE_FABRIC);
 
         addStartNpc(HANELLIN);
         addTalkId(HANELLIN, CLAUDIA_ATHEBALDT, MARTIEN, HARNE, HOLY_ARK_OF_SECRECY_1, HOLY_ARK_OF_SECRECY_2, HOLY_ARK_OF_SECRECY_3, ARK_GUARDIAN_CORPSE, GUSTAV_ATHEBALDT, HARDIN, IASON_HEINE);
@@ -79,13 +82,13 @@ public class Q348_AnArrogantSearch extends Quest {
         addAttackId(ARK_GUARDIAN_ELBEROTH, ARK_GUARDIAN_SHADOW_FANG, ANGEL_KILLER, PLATINUM_TRIBE_SHAMAN, PLATINUM_TRIBE_OVERLORD);
 
         addKillId(LESSER_GIANT_MAGE, LESSER_GIANT_ELDER, ARK_GUARDIAN_ELBEROTH, ARK_GUARDIAN_SHADOW_FANG, PLATINUM_TRIBE_SHAMAN, PLATINUM_TRIBE_OVERLORD, GUARDIAN_ANGEL, SEAL_ANGEL);
-        addDecayId(ANGEL_KILLER);
+        addDecayId(ARK_GUARDIAN_ELBEROTH, ARK_GUARDIAN_SHADOW_FANG, ANGEL_KILLER);
     }
 
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -115,7 +118,7 @@ public class Q348_AnArrogantSearch extends Quest {
         } else if (event.equalsIgnoreCase("30864-51.htm")) {
             st.setCond(26);
             playSound(player, SOUND_MIDDLE);
-            giveItems(player, WHITE_FABRIC_ANGELS, (player.getInventory().hasItems(BLOODED_FABRIC)) ? 9 : 10);
+            giveItems(player, WHITE_FABRIC, (player.getInventory().hasItems(BLOODED_FABRIC)) ? 9 : 10);
         } else if (event.equalsIgnoreCase("30864-58.htm")) {
             st.setCond(27);
             playSound(player, SOUND_MIDDLE);
@@ -128,7 +131,7 @@ public class Q348_AnArrogantSearch extends Quest {
             st.unset("hardin");
             st.unset("iason");
             playSound(player, SOUND_MIDDLE);
-            giveItems(player, WHITE_FABRIC_ANGELS, 10);
+            giveItems(player, WHITE_FABRIC, 10);
         }
 
         return htmltext;
@@ -137,7 +140,7 @@ public class Q348_AnArrogantSearch extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -171,7 +174,7 @@ public class Q348_AnArrogantSearch extends Quest {
                             takeItems(player, BOUGH_OF_SAINT, 1);
                             playSound(player, SOUND_MIDDLE);
                         } else if (cond == 22) {
-                            if (player.getInventory().hasItems(WHITE_FABRIC_TRIBE))
+                            if (player.getInventory().hasItems(WHITE_FABRIC))
                                 htmltext = "30864-31.htm";
                             else if (player.getInventory().getItemCount(ANTIDOTE) < 5 || !player.getInventory().hasItems(HEALING_POTION))
                                 htmltext = "30864-30.htm";
@@ -179,13 +182,13 @@ public class Q348_AnArrogantSearch extends Quest {
                                 htmltext = "30864-31.htm";
                                 takeItems(player, ANTIDOTE, 5);
                                 takeItems(player, HEALING_POTION, 1);
-                                giveItems(player, WHITE_FABRIC_TRIBE, 1);
+                                giveItems(player, WHITE_FABRIC, 1);
                                 playSound(player, SOUND_ITEMGET);
                             }
                         } else if (cond == 24)
                             htmltext = "30864-38.htm";
                         else if (cond == 25) {
-                            if (player.getInventory().hasItems(WHITE_FABRIC_TRIBE))
+                            if (player.getInventory().hasItems(WHITE_FABRIC))
                                 htmltext = "30864-39.htm";
                             else if (player.getInventory().hasItems(BLOODED_FABRIC))
                                 htmltext = "30864-49.htm";
@@ -197,7 +200,7 @@ public class Q348_AnArrogantSearch extends Quest {
                         } else if (cond == 26) {
                             final int count = player.getInventory().getItemCount(BLOODED_FABRIC);
 
-                            if (count + player.getInventory().getItemCount(WHITE_FABRIC_ANGELS) < 10) {
+                            if (count + player.getInventory().getItemCount(WHITE_FABRIC) < 10) {
                                 htmltext = "30864-54.htm";
                                 takeItems(player, BLOODED_FABRIC, -1);
                                 rewardItems(player, 57, (1000 * count) + 4000);
@@ -224,7 +227,7 @@ public class Q348_AnArrogantSearch extends Quest {
                         else if (cond == 29) {
                             final int count = player.getInventory().getItemCount(BLOODED_FABRIC);
 
-                            if (count + player.getInventory().getItemCount(WHITE_FABRIC_ANGELS) < 10) {
+                            if (count + player.getInventory().getItemCount(WHITE_FABRIC) < 10) {
                                 htmltext = "30864-54.htm";
                                 takeItems(player, BLOODED_FABRIC, -1);
                                 rewardItems(player, 57, 5000 * count);
@@ -290,10 +293,10 @@ public class Q348_AnArrogantSearch extends Quest {
                                     st.setCond(17);
                                     playSound(player, SOUND_MIDDLE);
                                     takeItems(player, HANELLIN_FIRST_LETTER, 1);
-                                    player.getRadarList().addMarker(HOLY_ARK_1_LOC);
+                                    player.getRadarList().addMarker(GUARDIAN_CORPSE_LOC);
                                 } else if (!player.getInventory().hasItems(FIRST_KEY_OF_ARK)) {
                                     htmltext = "30144-03.htm";
-                                    player.getRadarList().addMarker(HOLY_ARK_1_LOC);
+                                    player.getRadarList().addMarker(GUARDIAN_CORPSE_LOC);
                                 } else
                                     htmltext = "30144-04.htm";
                             } else
@@ -344,8 +347,9 @@ public class Q348_AnArrogantSearch extends Quest {
                             if (!player.getInventory().hasItems(FIRST_KEY_OF_ARK) && !player.getInventory().hasItems(BLOOD_OF_SAINT)) {
                                 if (st.getInteger("angelkiller") == 0) {
                                     htmltext = "30980-01.htm";
-                                    if (_angelKiller == null)
-                                        _angelKiller = addSpawn(ANGEL_KILLER, npc, false, 0, true);
+                                    if (_angelKiller == null) {
+                                        _angelKiller = addSpawn(ANGEL_KILLER, npc, true, 600000, true);
+                                    }
 
                                     if (st.getCond() != 18) {
                                         st.setCond(18);
@@ -355,6 +359,8 @@ public class Q348_AnArrogantSearch extends Quest {
                                     htmltext = "30980-02.htm";
                                     giveItems(player, FIRST_KEY_OF_ARK, 1);
                                     playSound(player, SOUND_ITEMGET);
+
+                                    player.getRadarList().addMarker(HOLY_ARK_1_LOC);
 
                                     st.unset("angelkiller");
                                 }
@@ -388,8 +394,9 @@ public class Q348_AnArrogantSearch extends Quest {
                             if (!player.getInventory().hasItems(BOOK_OF_SAINT)) {
                                 if (!player.getInventory().hasItems(SECOND_KEY_OF_ARK)) {
                                     htmltext = "30978-01.htm";
-                                    if (_elberoth == null)
-                                        _elberoth = addSpawn(ARK_GUARDIAN_ELBEROTH, npc, false, 0, true);
+                                    if (_elberoth == null) {
+                                        _elberoth = addSpawn(ARK_GUARDIAN_ELBEROTH, npc, true, 600000, true);
+                                    }
                                 } else {
                                     htmltext = "30978-02.htm";
                                     st.setCond(12);
@@ -411,8 +418,9 @@ public class Q348_AnArrogantSearch extends Quest {
                             if (!player.getInventory().hasItems(BOUGH_OF_SAINT)) {
                                 if (!player.getInventory().hasItems(THIRD_KEY_OF_ARK)) {
                                     htmltext = "30979-01.htm";
-                                    if (_shadowFang == null)
-                                        _shadowFang = addSpawn(ARK_GUARDIAN_SHADOW_FANG, npc, false, 0, true);
+                                    if (_shadowFang == null) {
+                                        _shadowFang = addSpawn(ARK_GUARDIAN_SHADOW_FANG, npc, true, 600000, true);
+                                    }
                                 } else {
                                     htmltext = "30979-02.htm";
                                     st.setCond(16);
@@ -439,15 +447,15 @@ public class Q348_AnArrogantSearch extends Quest {
     public String onSpawn(Npc npc) {
         switch (npc.getNpcId()) {
             case ARK_GUARDIAN_ELBEROTH:
-                npc.broadcastNpcSay("This does not belong to you. Take your hands out!");
+                npc.broadcastNpcSay(NpcStringId.ID_34837);
                 break;
 
             case ARK_GUARDIAN_SHADOW_FANG:
-                npc.broadcastNpcSay("I don't believe it! Grrr!");
+                npc.broadcastNpcSay(NpcStringId.ID_34838);
                 break;
 
             case ANGEL_KILLER:
-                npc.broadcastNpcSay("I have the key, do you wish to steal it?");
+                npc.broadcastNpcSay(NpcStringId.ID_34831);
                 break;
         }
 
@@ -465,44 +473,45 @@ public class Q348_AnArrogantSearch extends Quest {
         switch (npc.getNpcId()) {
             case ARK_GUARDIAN_ELBEROTH:
                 if (npc.getScriptValue() == 0) {
-                    npc.broadcastNpcSay("...I feel very sorry, but I have taken your life.");
+                    npc.broadcastNpcSay(NpcStringId.ID_34833);
                     npc.setScriptValue(1);
                 }
                 break;
 
             case ARK_GUARDIAN_SHADOW_FANG:
                 if (npc.getScriptValue() == 0) {
-                    npc.broadcastNpcSay("I will cover this mountain with your blood!");
+                    npc.broadcastNpcSay(NpcStringId.ID_34836);
                     npc.setScriptValue(1);
                 }
                 break;
 
             case ANGEL_KILLER:
-                if (npc.getScriptValue() == 0) {
-                    npc.broadcastNpcSay("Haha.. Really amusing! As for the key, search the corpse!");
-                    npc.setScriptValue(1);
-                }
-
-                if (npc.getStatus().getHpRatio() < 0.5) {
+                if (st.getInteger("angelkiller") == 1 || player.getInventory().hasAtLeastOneItem(FIRST_KEY_OF_ARK, BLOOD_OF_SAINT)) {
                     npc.getAttack().stop();
-                    npc.broadcastNpcSay("Can't get rid of you... Did you get the key from the corpse?");
+                    npc.broadcastNpcSay(NpcStringId.ID_34839);
+                    npc.deleteMe();
+                } else if (npc.getStatus().getHpRatio() < 0.3) {
+                    npc.getAttack().stop();
+                    npc.broadcastNpcSay(NpcStringId.ID_34830);
                     npc.deleteMe();
 
                     st.setCond(19);
                     st.set("angelkiller", 1);
                     playSound(player, SOUND_MIDDLE);
+
+                    player.getRadarList().addMarker(GUARDIAN_CORPSE_LOC);
                 }
                 break;
 
             case PLATINUM_TRIBE_OVERLORD:
             case PLATINUM_TRIBE_SHAMAN:
                 final int cond = st.getCond();
-                if ((cond == 24 || cond == 25) && player.getInventory().hasItems(WHITE_FABRIC_TRIBE)) {
+                if ((cond == 24 || cond == 25) && player.getInventory().hasItems(WHITE_FABRIC)) {
                     final int points = st.getInteger("points") + ((npc.getNpcId() == PLATINUM_TRIBE_SHAMAN) ? 60 : 70);
                     if (points > ((cond == 24) ? 80000 : 100000)) {
                         st.set("points", 0);
 
-                        takeItems(player, WHITE_FABRIC_TRIBE, 1);
+                        takeItems(player, WHITE_FABRIC, 1);
                         giveItems(player, BLOODED_FABRIC, 1);
 
                         if (cond != 24)
@@ -542,9 +551,8 @@ public class Q348_AnArrogantSearch extends Quest {
                     st.setCond(11);
                     playSound(player, SOUND_MIDDLE);
                     giveItems(player, SECOND_KEY_OF_ARK, 1);
-                    npc.broadcastNpcSay("Oh, dull-witted.. God, they...");
+                    npc.broadcastNpcSay(NpcStringId.ID_34832);
                 }
-                _elberoth = null;
                 break;
 
             case ARK_GUARDIAN_SHADOW_FANG:
@@ -552,19 +560,18 @@ public class Q348_AnArrogantSearch extends Quest {
                     st.setCond(15);
                     playSound(player, SOUND_MIDDLE);
                     giveItems(player, THIRD_KEY_OF_ARK, 1);
-                    npc.broadcastNpcSay("You do not know.. Seven seals are.. coughs");
+                    npc.broadcastNpcSay(NpcStringId.ID_34835);
                 }
-                _shadowFang = null;
                 break;
 
             case PLATINUM_TRIBE_OVERLORD:
             case PLATINUM_TRIBE_SHAMAN:
-                if ((cond == 24 || cond == 25) && player.getInventory().hasItems(WHITE_FABRIC_TRIBE)) {
+                if ((cond == 24 || cond == 25) && player.getInventory().hasItems(WHITE_FABRIC)) {
                     final int points = st.getInteger("points") + ((npc.getNpcId() == PLATINUM_TRIBE_SHAMAN) ? 600 : 700);
                     if (points > ((cond == 24) ? 80000 : 100000)) {
                         st.set("points", 0);
 
-                        takeItems(player, WHITE_FABRIC_TRIBE, 1);
+                        takeItems(player, WHITE_FABRIC, 1);
                         giveItems(player, BLOODED_FABRIC, 1);
 
                         if (cond != 24)
@@ -580,9 +587,9 @@ public class Q348_AnArrogantSearch extends Quest {
 
             case SEAL_ANGEL:
             case GUARDIAN_ANGEL:
-                if ((cond == 26 || cond == 29) && Rnd.get(4) < 1 && player.getInventory().hasItems(WHITE_FABRIC_ANGELS)) {
+                if ((cond == 26 || cond == 29) && Rnd.get(4) < 1 && player.getInventory().hasItems(WHITE_FABRIC)) {
                     playSound(player, SOUND_ITEMGET);
-                    takeItems(player, WHITE_FABRIC_ANGELS, 1);
+                    takeItems(player, WHITE_FABRIC, 1);
                     giveItems(player, BLOODED_FABRIC, 1);
                 }
                 break;
@@ -593,7 +600,11 @@ public class Q348_AnArrogantSearch extends Quest {
 
     @Override
     public String onDecay(Npc npc) {
-        if (npc == _angelKiller) {
+        if (npc == _elberoth) {
+            _elberoth = null;
+        } else if (npc == _shadowFang) {
+            _shadowFang = null;
+        } else if (npc == _angelKiller) {
             _angelKiller = null;
         }
 

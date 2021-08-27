@@ -615,14 +615,16 @@ public final class RainbowSpringsChateau extends ClanHallSiege {
                     long counter = 0;
 
                     Clan clan = null;
-                    for (int clanId : _warDecreesCount.keySet()) {
+                    for (Map.Entry<Integer, Integer> entry : _warDecreesCount.entrySet()) {
+                        int clanId = entry.getKey();
+
                         Clan actingClan = ClanTable.getInstance().getClan(clanId);
                         if (actingClan == null || actingClan.getDissolvingExpiryTime() > 0) {
                             _warDecreesCount.remove(clanId);
                             continue;
                         }
 
-                        final long count = _warDecreesCount.get(clanId);
+                        long count = entry.getValue();
                         if (count > counter) {
                             counter = count;
                             clan = actingClan;

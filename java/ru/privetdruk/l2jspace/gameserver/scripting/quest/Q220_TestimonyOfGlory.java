@@ -9,12 +9,13 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class Q220_TestimonyOfGlory extends SecondClassQuest {
-    private static final String qn = "Q220_TestimonyOfGlory";
+    private static final String QUEST_NAME = "Q220_TestimonyOfGlory";
 
     private static final Location VUKU_CHIEF_DRIKO_LOC = new Location(-2150, 124443, -3724);
     private static final Location TUREK_CHIEF_BURAI_LOC = new Location(-94294, 110818, -3563);
@@ -96,9 +97,9 @@ public class Q220_TestimonyOfGlory extends SecondClassQuest {
     private static final int REVENANT_OF_TANTOS_CHIEF = 27086;
 
     // Checks & Instances
-    private static Set<Npc> _sonsOfVoltar = ConcurrentHashMap.newKeySet(2);
-    private static Set<Npc> _enkuOrcOverlords = ConcurrentHashMap.newKeySet(4);
-    private static Set<Npc> _makumBugbearThugs = ConcurrentHashMap.newKeySet(2);
+    private static final Set<Npc> _sonsOfVoltar = ConcurrentHashMap.newKeySet(2);
+    private static final Set<Npc> _enkuOrcOverlords = ConcurrentHashMap.newKeySet(4);
+    private static final Set<Npc> _makumBugbearThugs = ConcurrentHashMap.newKeySet(2);
 
     public Q220_TestimonyOfGlory() {
         super(220, "Testimony Of Glory");
@@ -116,7 +117,7 @@ public class Q220_TestimonyOfGlory extends SecondClassQuest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -271,7 +272,7 @@ public class Q220_TestimonyOfGlory extends SecondClassQuest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         String htmltext = getNoQuestMsg();
         if (st == null)
             return htmltext;
@@ -547,7 +548,7 @@ public class Q220_TestimonyOfGlory extends SecondClassQuest {
             case RAGNA_ORC_OVERLORD:
             case RAGNA_ORC_SEER:
                 if (st.getCond() == 9 && npc.isScriptValue(0)) {
-                    npc.broadcastNpcSay("Is it a lackey of Kakai?!");
+                    npc.broadcastNpcSay(NpcStringId.ID_22051);
                     npc.setScriptValue(1);
                 }
                 break;
@@ -555,10 +556,10 @@ public class Q220_TestimonyOfGlory extends SecondClassQuest {
             case REVENANT_OF_TANTOS_CHIEF:
                 if (st.getCond() == 9) {
                     if (npc.isScriptValue(0)) {
-                        npc.broadcastNpcSay("How regretful! Unjust dishonor!");
+                        npc.broadcastNpcSay(NpcStringId.ID_22055);
                         npc.setScriptValue(1);
                     } else if (npc.isScriptValue(1) && npc.getStatus().getHpRatio() < 0.33) {
-                        npc.broadcastNpcSay("Indignant and unfair death!");
+                        npc.broadcastNpcSay(NpcStringId.ID_22057);
                         npc.setScriptValue(2);
                     }
                 }
@@ -667,7 +668,7 @@ public class Q220_TestimonyOfGlory extends SecondClassQuest {
             case RAGNA_ORC_OVERLORD:
             case RAGNA_ORC_SEER:
                 if (cond == 9) {
-                    npc.broadcastNpcSay("Too late!");
+                    npc.broadcastNpcSay(NpcStringId.ID_22052);
                     addSpawn(REVENANT_OF_TANTOS_CHIEF, npc, true, 200000, true);
                 }
                 break;
@@ -675,7 +676,7 @@ public class Q220_TestimonyOfGlory extends SecondClassQuest {
             case REVENANT_OF_TANTOS_CHIEF:
                 if (cond == 9 && dropItemsAlways(player, SCEPTER_OF_TANTOS, 1, 1)) {
                     st.setCond(10);
-                    npc.broadcastNpcSay("I'll get revenge someday!!");
+                    npc.broadcastNpcSay(NpcStringId.ID_22056);
                 }
                 break;
         }

@@ -403,7 +403,6 @@ public final class Config {
     public static int AUGMENTATION_BASESTAT_CHANCE;
 
     // Karma & PvP
-    public static boolean KARMA_PLAYER_CAN_BE_KILLED_IN_PZ;
     public static boolean KARMA_PLAYER_CAN_SHOP;
     public static boolean KARMA_PLAYER_CAN_USE_GK;
     public static boolean KARMA_PLAYER_CAN_TELEPORT;
@@ -687,10 +686,42 @@ public final class Config {
     public static boolean PVP_SAME_IP;
     public static boolean PVP_SUMMON;
 
-    // chatfilter
+    // Chat filter
     public static List<String> FILTER_LIST;
     public static boolean USE_SAY_FILTER;
     public static String CHAT_FILTER_CHARS;
+
+    // Donate manager
+    public static int NOBLE_ITEM_ID;
+	public static int NOBLE_ITEM_COUNT;
+	public static int CHANGE_NAME_ITEM_ID;
+	public static int CHANGE_NAME_ITEM_COUNT;
+	public static int GENDER_ITEM_ID;
+	public static int GENDER_ITEM_COUNT;
+	public static int NULL_PK_ITEM_ID;
+	public static int NULL_PK_ITEM_COUNT;
+	public static int CLAN_LVL_8_ITEM_ID;
+	public static int CLAN_LVL_8_ITEM_COUNT;
+	public static int CLAN_SKILL_ITEM_ID;
+	public static int CLAN_SKILL_ITEM_COUNT;
+	public static int CLAN_REP_ITEM_ID;
+	public static int CLAN_REP_ITEM_COUNT;
+	public static int CLAN_REP_COUNT;
+	public static int CHANGE_NAME_COLOR_ITEM_ID;
+	public static int CHANGE_NAME_COLOR_ITEM_COUNT;
+	public static int CHANGE_TITLE_COLOR_ITEM_ID;
+	public static int CHANGE_TITLE_COLOR_ITEM_COUNT;
+	public static int PREMIUM_ITEM_ID;
+	public static int BUY_PREMIUM_DAYS_1;
+	public static int BUY_PREMIUM_DAYS_1_PRICE;
+	public static int BUY_PREMIUM_DAYS_7;
+	public static int BUY_PREMIUM_DAYS_7_PRICE;
+	public static int BUY_PREMIUM_DAYS_14;
+	public static int BUY_PREMIUM_DAYS_14_PRICE;
+	public static int BUY_PREMIUM_DAYS_21;
+	public static int BUY_PREMIUM_DAYS_21_PRICE;
+	public static int BUY_PREMIUM_DAYS_28;
+	public static int BUY_PREMIUM_DAYS_28_PRICE;
 
 
     /**
@@ -1068,7 +1099,6 @@ public final class Config {
         AUGMENTATION_TOP_GLOW_CHANCE = players.getProperty("AugmentationTopGlowChance", 100);
         AUGMENTATION_BASESTAT_CHANCE = players.getProperty("AugmentationBaseStatChance", 1);
 
-        KARMA_PLAYER_CAN_BE_KILLED_IN_PZ = players.getProperty("KarmaPlayerCanBeKilledInPeaceZone", false);
         KARMA_PLAYER_CAN_SHOP = players.getProperty("KarmaPlayerCanShop", false);
         KARMA_PLAYER_CAN_USE_GK = players.getProperty("KarmaPlayerCanUseGK", false);
         KARMA_PLAYER_CAN_TELEPORT = players.getProperty("KarmaPlayerCanTeleport", true);
@@ -1406,6 +1436,37 @@ public final class Config {
         } catch (IOException e) {
             LOGGER.warn("Error while loading chat filter words!", e);
         }
+
+        NOBLE_ITEM_ID = addon.getProperty("NobleItemId", 4037);
+        NOBLE_ITEM_COUNT = addon.getProperty("NobleItemCount", 1);
+        CHANGE_NAME_ITEM_ID = addon.getProperty("ChangeNameItemId", 4037);
+        CHANGE_NAME_ITEM_COUNT = addon.getProperty("ChangeNameItemCount", 1);
+        GENDER_ITEM_ID = addon.getProperty("GenderItemId", 4037);
+        GENDER_ITEM_COUNT = addon.getProperty("GenderItemCount", 1);
+        NULL_PK_ITEM_ID = addon.getProperty("NullPkItemId", 4037);
+        NULL_PK_ITEM_COUNT = addon.getProperty("NullPkItemCount", 1);
+        CLAN_LVL_8_ITEM_ID = addon.getProperty("ClanLvl8ItemId", 4037);
+        CLAN_LVL_8_ITEM_COUNT = addon.getProperty("ClanLvl8ItemCount", 1);
+        CLAN_SKILL_ITEM_ID = addon.getProperty("ClanSkillItemId", 4037);
+        CLAN_SKILL_ITEM_COUNT = addon.getProperty("ClanSkillItemCount", 1);
+        CLAN_REP_ITEM_ID = addon.getProperty("ClanRepItemId", 4037);
+        CLAN_REP_ITEM_COUNT = addon.getProperty("ClanRepItemCount", 1);
+        CLAN_REP_COUNT = addon.getProperty("ClanRepCount", 10000);
+        CHANGE_NAME_COLOR_ITEM_ID = addon.getProperty("ChangeNameColorItemId", 4037);
+        CHANGE_NAME_COLOR_ITEM_COUNT = addon.getProperty("ChangeNameColorItemCount", 1);
+        CHANGE_TITLE_COLOR_ITEM_ID = addon.getProperty("ChangeTitleColorItemId", 4037);
+        CHANGE_TITLE_COLOR_ITEM_COUNT = addon.getProperty("ChangeTitleColorItemCount", 1);
+        PREMIUM_ITEM_ID = addon.getProperty("PremiumItemId", 4037);
+        BUY_PREMIUM_DAYS_1 = addon.getProperty("BuyPremiumDays1", 1);
+        BUY_PREMIUM_DAYS_1_PRICE = addon.getProperty("BuyPremiumDays1Price", 1);
+        BUY_PREMIUM_DAYS_7 = addon.getProperty("BuyPremiumDays7", 7);
+        BUY_PREMIUM_DAYS_7_PRICE = addon.getProperty("BuyPremiumDays7Price", 7);
+        BUY_PREMIUM_DAYS_14 = addon.getProperty("BuyPremiumDays14", 14);
+        BUY_PREMIUM_DAYS_14_PRICE = addon.getProperty("BuyPremiumDays14Price", 14);
+        BUY_PREMIUM_DAYS_21 = addon.getProperty("BuyPremiumDays21", 21);
+        BUY_PREMIUM_DAYS_21_PRICE = addon.getProperty("BuyPremiumDays21Price", 21);
+        BUY_PREMIUM_DAYS_28 = addon.getProperty("BuyPremiumDays28", 28);
+        BUY_PREMIUM_DAYS_28_PRICE = addon.getProperty("BuyPremiumDays28Price", 28);
     }
 
     /**

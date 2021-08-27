@@ -1,7 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.ai.boss;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.random.Rnd;
@@ -60,13 +60,15 @@ public class Antharas extends AttackableAIScript {
     public static final byte FIGHTING = 2; // Antharas is engaged in battle, annihilating his foes. Entry is locked.
     public static final byte DEAD = 3; // Antharas has been killed. Entry is locked.
 
-    private long _timeTracker = 0; // Time tracker for last attack on Antharas.
-    private Player _actualVictim; // Actual target of Antharas.
-    private final List<Npc> _monsters = new CopyOnWriteArrayList<>(); // amount of Antharas minions.
+    private final Set<Npc> minions = ConcurrentHashMap.newKeySet();
 
-    private int _antharasId; // The current Antharas, used when server shutdowns.
-    private L2Skill _skillRegen; // The regen skill used by Antharas.
-    private int _minionTimer; // The timer used by minions in order to spawn.
+    private long _timeTracker = 0;
+    private Player _actualVictim;
+
+    // Values set based on Antharas strength.
+    private int _antharasId;
+    private L2Skill _skillRegen;
+    private int _minionTimer;
 
     public Antharas() {
         super("ai/boss");
@@ -172,36 +174,30 @@ public class Antharas extends AttackableAIScript {
 
             // Set spawn.
             for (int i = 0; i < mobNumber; i++) {
-                if (_monsters.size() > 9)
+                if (minions.size() > 9) {
                     break;
+                }
 
-                final int npcId = isBehemoth ? 29069 : Rnd.get(29070, 29076);
-                final Npc dragon = addSpawn(npcId, npc.getX() + Rnd.get(-200, 200), npc.getY() + Rnd.get(-200, 200), npc.getZ(), 0, false, 0, true);
+                int npcId = isBehemoth ? 29069 : Rnd.get(29070, 29076);
+                Npc dragon = addSpawn(npcId, npc.getX() + Rnd.get(-200, 200), npc.getY() + Rnd.get(-200, 200), npc.getZ(), 0, false, 0, true);
                 ((Monster) dragon).setMinion(true);
 
-                _monsters.add(dragon);
+                minions.add(dragon);
 
-                final Player victim = getRandomPlayer(dragon);
-                if (victim != null)
+                Player victim = getRandomPlayer(dragon);
+                if (victim != null) {
                     dragon.forceAttack(victim, 200);
+                }
 
-                if (!isBehemoth)
+                if (!isBehemoth) {
                     startQuestTimer("self_destruct", dragon, null, (_minionTimer / 3));
+                }
             }
         } else if (name.equalsIgnoreCase("self_destruct")) {
-            L2Skill skill;
-            switch (npc.getNpcId()) {
-                case 29070:
-                case 29071:
-                case 29072:
-                case 29073:
-                case 29074:
-                case 29075:
-                    skill = SkillTable.getInstance().getInfo(5097, 1);
-                    break;
-                default:
-                    skill = SkillTable.getInstance().getInfo(5094, 1);
-            }
+            L2Skill skill = switch (npc.getNpcId()) {
+                case 29070, 29071, 29072, 29073, 29074, 29075 -> SkillTable.getInstance().getInfo(5097, 1);
+                default -> SkillTable.getInstance().getInfo(5094, 1);
+            };
             npc.getAI().tryToCast(npc, skill);
         }
         // Cinematic
@@ -270,8 +266,8 @@ public class Antharas extends AttackableAIScript {
 
             GrandBossManager.getInstance().setBossStatus(ANTHARAS, DEAD);
 
-            long respawnTime = (long) Config.SPAWN_INTERVAL_ANTHARAS + Rnd.get(-Config.RANDOM_SPAWN_TIME_ANTHARAS, Config.RANDOM_SPAWN_TIME_ANTHARAS);
-            respawnTime *= 3600000;
+            long respawnTime = (long) Config.SPAWN_INTERVAL_ANTHARAS * 60 + Rnd.get(-60 * Config.RANDOM_SPAWN_TIME_ANTHARAS, 60 * Config.RANDOM_SPAWN_TIME_ANTHARAS);
+            respawnTime *= 60000;
 
             startQuestTimer("antharas_unlock", null, null, respawnTime);
 
@@ -280,7 +276,7 @@ public class Antharas extends AttackableAIScript {
             GrandBossManager.getInstance().setStatSet(ANTHARAS, info);
         } else {
             cancelQuestTimers("self_destruct", npc);
-            _monsters.remove(npc);
+            minions.remove(npc);
         }
 
         return super.onKill(npc, killer);
@@ -415,7 +411,7 @@ public class Antharas extends AttackableAIScript {
 
         cancelQuestTimers("self_destruct");
 
-        _monsters.forEach(Npc::deleteMe);
-        _monsters.clear();
+        minions.forEach(Npc::deleteMe);
+        minions.clear();
     }
 }

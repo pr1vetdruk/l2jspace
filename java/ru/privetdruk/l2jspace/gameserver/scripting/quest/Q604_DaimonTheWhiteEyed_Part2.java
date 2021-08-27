@@ -9,12 +9,13 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.BossSpawn;
+import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class Q604_DaimonTheWhiteEyed_Part2 extends Quest {
-    private static final String qn = "Q604_DaimonTheWhiteEyed_Part2";
+    private static final String QUEST_NAME = "Q604_DaimonTheWhiteEyed_Part2";
 
     // Monster
     private static final int DAIMON_THE_WHITE_EYED = 25290;
@@ -27,7 +28,7 @@ public class Q604_DaimonTheWhiteEyed_Part2 extends Quest {
     private static final int UNFINISHED_SUMMON_CRYSTAL = 7192;
     private static final int SUMMON_CRYSTAL = 7193;
     private static final int ESSENCE_OF_DAIMON = 7194;
-    private static final int REWARDS[] =
+    private static final int[] REWARDS =
             {
                     4595,
                     4596,
@@ -67,7 +68,7 @@ public class Q604_DaimonTheWhiteEyed_Part2 extends Quest {
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
         String htmltext = event;
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -111,7 +112,7 @@ public class Q604_DaimonTheWhiteEyed_Part2 extends Quest {
     @Override
     public String onTalk(Npc npc, Player player) {
         String htmltext = getNoQuestMsg();
-        QuestState st = player.getQuestList().getQuestState(qn);
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
         if (st == null)
             return htmltext;
 
@@ -187,6 +188,8 @@ public class Q604_DaimonTheWhiteEyed_Part2 extends Quest {
             }
         }
 
+        npc.broadcastNpcSay(NpcStringId.ID_60404);
+
         // despawn raid (reset info)
         despawnRaid(npc);
 
@@ -215,7 +218,7 @@ public class Q604_DaimonTheWhiteEyed_Part2 extends Quest {
 
             // teleport raid from secret place
             raid.teleportTo(185900, -44000, -3160, 100);
-            raid.broadcastNpcSay("Who called me?");
+            raid.broadcastNpcSay(NpcStringId.ID_60403);
 
             // set raid status
             _status = IDLE_INTERVAL;
