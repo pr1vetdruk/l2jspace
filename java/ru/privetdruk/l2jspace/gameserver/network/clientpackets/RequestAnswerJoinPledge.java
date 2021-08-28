@@ -73,7 +73,7 @@ public final class RequestAnswerJoinPledge extends L2GameClientPacket {
 
                 clan.broadcastToOtherOnlineMembers(SystemMessage.getSystemMessage(SystemMessageId.S1_HAS_JOINED_CLAN).addCharName(player), player);
                 clan.broadcastToOtherOnlineMembers(new PledgeShowMemberListAdd(player), player);
-                clan.broadcastToOnlineMembers(new PledgeShowInfoUpdate(clan));
+                clan.broadcastToMembers(new PledgeShowInfoUpdate(clan));
 
                 // this activates the clan tab on the new member
                 player.sendPacket(new PledgeShowMemberListAll(clan, 0));

@@ -45,108 +45,108 @@
 	</crystals>
 	<npcs>
 		<!-- Mobs that level up crystals from Level 1 up to 10 -->
-		<npc id="20849" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1"/><!-- Light Worm -->
-		<npc id="20793" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1"/><!-- Nos -->
-		<npc id="20794" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1"/><!-- Blade Stakato -->
-		<npc id="20795" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1"/><!-- Blade Stakato Worker -->
-		<npc id="20796" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1"/><!-- Blade Stakato Warrior -->
-		<npc id="20583" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1"/><!-- Timak Orc -->
-		<npc id="20584" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1"/><!-- Timak Orc Archer -->
-		<npc id="20585" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1"/><!-- Timak Orc Soldier -->
-		<npc id="20586" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1"/><!-- Timak Orc Warrior -->
-		<npc id="20769" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1"/><!-- Timak Orc Troop Warrior -->
-		<npc id="20770" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1"/><!-- Timak Orc Troop Archer -->
-		<npc id="20587" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Timak Orc Shaman -->
-		<npc id="20588" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Timak Orc Overlord -->
-		<npc id="20636" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Forest of Mirrors Ghost -->
-		<npc id="20767" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Timak Orc Troop Leader -->
-		<npc id="20768" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Timak Orc Troop Shaman -->
-		<npc id="20797" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Blade Stakato Drone -->
-		<npc id="20798" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Water Giant -->
-		<npc id="20799" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Queen Undine Lad -->
-		<npc id="20839" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Unpleasant Humming -->
-		<npc id="21611" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Unpleasant Humming -->
-		<npc id="21612" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Unpleasant Humming -->
-		<npc id="20848" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Light Bringer -->
-		<npc id="20637" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Forest of Mirrors Ghost -->
-		<npc id="20638" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Forest of Mirrors Ghost -->
-		<npc id="20639" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Mirror -->
-		<npc id="20800" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Eva's Seeker -->
-		<npc id="20801" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Theeder Piker -->
-		<npc id="20802" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Theeder Mage -->
-		<npc id="20840" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Death Flyer -->
-		<npc id="20841" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Fiend Archer -->
-		<npc id="20842" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Musveren -->
-		<npc id="20995" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Garden Guard -->
-		<npc id="21614" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Death Flyer -->
-		<npc id="21615" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Death Flyer -->
-		<npc id="21617" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Fiend Archer -->
-		<npc id="21620" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Musveren -->
-		<npc id="21621" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Musveren -->
-		<npc id="20640" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Harit Lizardman -->
-		<npc id="20641" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Harit Lizardman Grunt -->
-		<npc id="20642" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Harit Lizardman Archer -->
-		<npc id="20803" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Doll Master -->
-		<npc id="20843" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Zaken's Royal Guard -->
-		<npc id="20844" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Kaim Vanul -->
-		<npc id="20845" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Pirate's Zombie Captain -->
-		<npc id="20994" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Garden Guard Leader -->
-		<npc id="21623" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Zaken's Guard -->
-		<npc id="21624" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Zaken's Guard -->
-		<npc id="21626" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Kaim Vanul -->
-		<npc id="21627" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Kaim Vanul -->
-		<npc id="21629" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Pirate Zombie Captain -->
-		<npc id="21630" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Pirate Zombie Captain -->
-		<npc id="29026" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Pirate Zombie Captain -->
-		<npc id="21632" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5"/><!-- Doll Blader -->
-		<npc id="21633" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5"/><!-- Doll Blader -->
-		<npc id="21635" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5"/><!-- Vale Master -->
-		<npc id="21636" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5"/><!-- Vale Master -->
-		<npc id="20986" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5"/><!-- Sairon -->
-		<npc id="20987" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5"/><!-- Sairon's Doll -->
-		<npc id="20988" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5"/><!-- Sairon's Puppet -->
-		<npc id="20846" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5"/><!-- Doll Blader -->
-		<npc id="20847" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5"/><!-- Vale Master -->
-		<npc id="20646" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5"/><!-- Halingka -->
-		<npc id="20647" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5"/><!-- Yintzu -->
-		<npc id="20648" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6"/><!-- Paliote -->
-		<npc id="20649" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6"/><!-- Hamrut -->
-		<npc id="20650" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7"/><!-- Kranrot -->
-		<npc id="21006" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7"/><!-- Doom Servant -->
-		<npc id="35412" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8"/><!-- Doom Guard -->
-		<npc id="35413" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8"/><!-- Doom Archer -->
-		<npc id="21007" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8"/><!-- Doom Guard -->
-		<npc id="21008" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8"/><!-- Doom Archer -->
-		<npc id="20761" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Pytan -->
-		<npc id="20762" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Pytan Knight -->
-		<npc id="20625" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Malruk Knight -->
-		<npc id="20626" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Malruk Berserker -->
-		<npc id="20627" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Malruk Lord -->
-		<npc id="20628" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Limal Karinness -->
-		<npc id="20629" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Karik -->
-		<npc id="20674" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Doom Knight -->
-		<npc id="21009" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Doom Trooper -->
-		<npc id="21010" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Doom Warrior -->
-		<npc id="20821" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Erin Ediunce -->
-		<npc id="20823" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Platinum Tribe Soldier -->
-		<npc id="20826" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Platinum Tribe Archer -->
-		<npc id="20827" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Platinum Tribe Warrior -->
-		<npc id="20828" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Platinum Tribe Shaman -->
-		<npc id="20829" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Platinum Tribe Overlord -->
-		<npc id="20830" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Guardian Angel -->
-		<npc id="20831" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Seal Angel -->
-		<npc id="20860" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Seal Angel -->
-		<npc id="21062" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Messenger Angel -->
-		<npc id="21063" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Messenger Angel -->
-		<npc id="21064" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Platinum Guardian Archer -->
-		<npc id="21065" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Platinum Guardian Warrior -->
-		<npc id="21066" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Platinum Guardian Shaman -->
-		<npc id="21072" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Platinum Guardian Chief -->
-		<npc id="21067" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Guardian Archangel -->
-		<npc id="21068" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Guardian Archangel -->
-		<npc id="21069" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Platinum Guardian Prefect -->
-		<npc id="21070" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Seal Archangel -->
-		<npc id="21071" chanceStage="10" chanceBreak="3" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Seal Archangel -->
+		<npc id="20849" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1"/><!-- Light Worm -->
+		<npc id="20793" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1"/><!-- Nos -->
+		<npc id="20794" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1"/><!-- Blade Stakato -->
+		<npc id="20795" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1"/><!-- Blade Stakato Worker -->
+		<npc id="20796" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1"/><!-- Blade Stakato Warrior -->
+		<npc id="20583" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1"/><!-- Timak Orc -->
+		<npc id="20584" chanceStage="10" chanceBreak="2" skill="true" absorbType="LAST_HIT" levelList="0;1"/><!-- Timak Orc Archer -->
+		<npc id="20585" chanceStage="10" chanceBreak="2" skill="true" absorbType="LAST_HIT" levelList="0;1"/><!-- Timak Orc Soldier -->
+		<npc id="20586" chanceStage="10" chanceBreak="2" skill="true" absorbType="LAST_HIT" levelList="0;1"/><!-- Timak Orc Warrior -->
+		<npc id="20769" chanceStage="10" chanceBreak="2" skill="true" absorbType="LAST_HIT" levelList="0;1"/><!-- Timak Orc Troop Warrior -->
+		<npc id="20770" chanceStage="10" chanceBreak="2" skill="true" absorbType="LAST_HIT" levelList="0;1"/><!-- Timak Orc Troop Archer -->
+		<npc id="20587" chanceStage="10" chanceBreak="2" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Timak Orc Shaman -->
+		<npc id="20588" chanceStage="10" chanceBreak="2" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Timak Orc Overlord -->
+		<npc id="20636" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Forest of Mirrors Ghost -->
+		<npc id="20767" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Timak Orc Troop Leader -->
+		<npc id="20768" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Timak Orc Troop Shaman -->
+		<npc id="20797" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Blade Stakato Drone -->
+		<npc id="20798" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Water Giant -->
+		<npc id="20799" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Queen Undine Lad -->
+		<npc id="20839" chanceStage="10" chanceBreak="2" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Unpleasant Humming -->
+		<npc id="21611" chanceStage="10" chanceBreak="2" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Unpleasant Humming -->
+		<npc id="21612" chanceStage="10" chanceBreak="2" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Unpleasant Humming -->
+		<npc id="20848" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2"/><!-- Light Bringer -->
+		<npc id="20637" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Forest of Mirrors Ghost -->
+		<npc id="20638" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Forest of Mirrors Ghost -->
+		<npc id="20639" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Mirror -->
+		<npc id="20800" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Eva's Seeker -->
+		<npc id="20801" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Theeder Piker -->
+		<npc id="20802" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Theeder Mage -->
+		<npc id="20840" chanceStage="10" chanceBreak="2" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Death Flyer -->
+		<npc id="20841" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Fiend Archer -->
+		<npc id="20842" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Musveren -->
+		<npc id="20995" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Garden Guard -->
+		<npc id="21614" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Death Flyer -->
+		<npc id="21615" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Death Flyer -->
+		<npc id="21617" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Fiend Archer -->
+		<npc id="21620" chanceStage="10" chanceBreak="2" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Musveren -->
+		<npc id="21621" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3"/><!-- Musveren -->
+		<npc id="20640" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Harit Lizardman -->
+		<npc id="20641" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Harit Lizardman Grunt -->
+		<npc id="20642" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Harit Lizardman Archer -->
+		<npc id="20803" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Doll Master -->
+		<npc id="20843" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Zaken's Royal Guard -->
+		<npc id="20844" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Kaim Vanul -->
+		<npc id="20845" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Pirate's Zombie Captain -->
+		<npc id="20994" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Garden Guard Leader -->
+		<npc id="21623" chanceStage="10" chanceBreak="2" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Zaken's Guard -->
+		<npc id="21624" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Zaken's Guard -->
+		<npc id="21626" chanceStage="10" chanceBreak="2" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Kaim Vanul -->
+		<npc id="21627" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Kaim Vanul -->
+		<npc id="21629" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Pirate Zombie Captain -->
+		<npc id="21630" chanceStage="10" chanceBreak="2" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Pirate Zombie Captain -->
+		<npc id="29026" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4"/><!-- Pirate Zombie Captain -->
+		<npc id="21632" chanceStage="10" chanceBreak="2" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5"/><!-- Doll Blader -->
+		<npc id="21633" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5"/><!-- Doll Blader -->
+		<npc id="21635" chanceStage="10" chanceBreak="2" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5"/><!-- Vale Master -->
+		<npc id="21636" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5"/><!-- Vale Master -->
+		<npc id="20986" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5"/><!-- Sairon -->
+		<npc id="20987" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5"/><!-- Sairon's Doll -->
+		<npc id="20988" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5"/><!-- Sairon's Puppet -->
+		<npc id="20846" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5"/><!-- Doll Blader -->
+		<npc id="20847" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5"/><!-- Vale Master -->
+		<npc id="20646" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5"/><!-- Halingka -->
+		<npc id="20647" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5"/><!-- Yintzu -->
+		<npc id="20648" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6"/><!-- Paliote -->
+		<npc id="20649" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6"/><!-- Hamrut -->
+		<npc id="20650" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7"/><!-- Kranrot -->
+		<npc id="21006" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7"/><!-- Doom Servant -->
+		<npc id="35412" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8"/><!-- Doom Guard -->
+		<npc id="35413" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8"/><!-- Doom Archer -->
+		<npc id="21007" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8"/><!-- Doom Guard -->
+		<npc id="21008" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8"/><!-- Doom Archer -->
+		<npc id="20761" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Pytan -->
+		<npc id="20762" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Pytan Knight -->
+		<npc id="20625" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Malruk Knight -->
+		<npc id="20626" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Malruk Berserker -->
+		<npc id="20627" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Malruk Lord -->
+		<npc id="20628" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Limal Karinness -->
+		<npc id="20629" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Karik -->
+		<npc id="20674" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Doom Knight -->
+		<npc id="21009" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Doom Trooper -->
+		<npc id="21010" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Doom Warrior -->
+		<npc id="20821" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Erin Ediunce -->
+		<npc id="20823" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Platinum Tribe Soldier -->
+		<npc id="20826" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Platinum Tribe Archer -->
+		<npc id="20827" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Platinum Tribe Warrior -->
+		<npc id="20828" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Platinum Tribe Shaman -->
+		<npc id="20829" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Platinum Tribe Overlord -->
+		<npc id="20830" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Guardian Angel -->
+		<npc id="20831" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Seal Angel -->
+		<npc id="20860" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Seal Angel -->
+		<npc id="21062" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Messenger Angel -->
+		<npc id="21063" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Messenger Angel -->
+		<npc id="21064" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Platinum Guardian Archer -->
+		<npc id="21065" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Platinum Guardian Warrior -->
+		<npc id="21066" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Platinum Guardian Shaman -->
+		<npc id="21072" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Platinum Guardian Chief -->
+		<npc id="21067" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Guardian Archangel -->
+		<npc id="21068" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Guardian Archangel -->
+		<npc id="21069" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Platinum Guardian Prefect -->
+		<npc id="21070" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Seal Archangel -->
+		<npc id="21071" chanceStage="10" chanceBreak="0" skill="true" absorbType="LAST_HIT" levelList="0;1;2;3;4;5;6;7;8;9"/><!-- Seal Archangel -->
 
 		<!-- RaidBosses that level up crystals from Level 10 up to 13 -->
 		<npc id="25269" chanceStage="20" chanceBreak="0" skill="false" absorbType="PARTY_ONE_RANDOM" levelList="10;11"/><!-- Beast Lord Behemoth -->

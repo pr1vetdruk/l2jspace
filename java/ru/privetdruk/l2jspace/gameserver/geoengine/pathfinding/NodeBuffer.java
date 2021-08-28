@@ -57,15 +57,16 @@ public class NodeBuffer {
     /**
      * Find path consisting of Nodes. Starts at origin coordinates, ends in target coordinates.
      *
-     * @param gox : origin point x
-     * @param goy : origin point y
-     * @param goz : origin point z
-     * @param gtx : target point x
-     * @param gty : target point y
-     * @param gtz : target point z
+     * @param gox   : origin point x
+     * @param goy   : origin point y
+     * @param goz   : origin point z
+     * @param gtx   : target point x
+     * @param gty   : target point y
+     * @param gtz   : target point z
+     * @param debug : The debug packet to add debug informations in.
      * @return The list of {@link Location} for the path. Empty, if path not found.
      */
-    public final List<Location> findPath(int gox, int goy, int goz, int gtx, int gty, int gtz) {
+    public final List<Location> findPath(int gox, int goy, int goz, int gtx, int gty, int gtz, ExServerPrimitive debug) {
         // Set start timestamp.
         _timeStamp = System.currentTimeMillis();
 
@@ -78,7 +79,7 @@ public class NodeBuffer {
         _current = _buffer[_bufferIndex++];
 
         // Set node geodata coordinates and movement cost.
-        _current.setGeo(gox, goy, goz, GeoEngine.getInstance().getNsweNearest(gox, goy, goz));
+        _current.setGeo(gox, goy, goz, GeoEngine.getInstance().getNsweNearest(gox, goy, goz), GeoStructure.CELL_EXPANSION_ALL);
         _current.setCost(null, 0, getCostH(gox, goy, goz));
 
         int count = 0;
@@ -155,6 +156,15 @@ public class NodeBuffer {
         // Add all opened node as blue points.
         for (Node n : _closed)
             debug.addPoint(String.valueOf(n.getCostF()), Color.BLUE, true, n.getX(), n.getY(), n.getZ() - 16);
+
+        // Show path so far.
+        Node parent = _current.getParent();
+        while (parent != null) {
+            debug.addLine(Color.GREEN, _current, parent);
+
+            _current = parent;
+            parent = _current.getParent();
+        }
     }
 
     public final boolean isLocked() {
@@ -184,8 +194,9 @@ public class NodeBuffer {
      */
     private void expand() {
         // Movement is blocked, skip.
-        byte nswe = _current.getNSWE();
-        if (nswe == GeoStructure.CELL_FLAG_NONE)
+        byte nswe = _current.getNswe();
+        byte expand = _current.getNsweExpand();
+        if ((nswe & expand) == GeoStructure.CELL_FLAG_NONE)
             return;
 
         // Get geo coordinates of the node to be expanded.
@@ -199,49 +210,159 @@ public class NodeBuffer {
         byte nsweW = GeoStructure.CELL_FLAG_NONE;
         byte nsweE = GeoStructure.CELL_FLAG_NONE;
 
-        // Can move north, expand.
-        if ((nswe & GeoStructure.CELL_FLAG_N) != 0)
-            nsweN = addNode(x, y - 1, z, Config.MOVE_WEIGHT);
+        switch (expand) {
+            case GeoStructure.CELL_EXPANSION_N:
+                if ((nswe & GeoStructure.CELL_FLAG_N) != 0) {
+                    nsweN = addNode(x, y - 1, z, GeoStructure.CELL_EXPANSION_N, false);
 
-        // Can move south, expand.
-        if ((nswe & GeoStructure.CELL_FLAG_S) != 0)
-            nsweS = addNode(x, y + 1, z, Config.MOVE_WEIGHT);
+                    if ((nswe & GeoStructure.CELL_FLAG_W) != 0 && (nsweN & GeoStructure.CELL_FLAG_W) != 0) {
+                        if ((getNodeNswe(x - 1, y, z) & GeoStructure.CELL_FLAG_N) != 0)
+                            addNode(x - 1, y - 1, z, GeoStructure.CELL_EXPANSION_NW, true);
+                    }
 
-        // Can move west, expand.
-        if ((nswe & GeoStructure.CELL_FLAG_W) != 0)
-            nsweW = addNode(x - 1, y, z, Config.MOVE_WEIGHT);
+                    if ((nswe & GeoStructure.CELL_FLAG_E) != 0 && (nsweN & GeoStructure.CELL_FLAG_E) != 0) {
+                        if ((getNodeNswe(x + 1, y, z) & GeoStructure.CELL_FLAG_N) != 0)
+                            addNode(x + 1, y - 1, z, GeoStructure.CELL_EXPANSION_NE, true);
+                    }
+                }
+                break;
 
-        // Can move east, expand.
-        if ((nswe & GeoStructure.CELL_FLAG_E) != 0)
-            nsweE = addNode(x + 1, y, z, Config.MOVE_WEIGHT);
+            case GeoStructure.CELL_EXPANSION_S:
+                if ((nswe & GeoStructure.CELL_FLAG_S) != 0) {
+                    nsweS = addNode(x, y + 1, z, GeoStructure.CELL_EXPANSION_S, false);
 
-        // Can move north-west, expand.
-        if ((nsweW & GeoStructure.CELL_FLAG_N) != 0 && (nsweN & GeoStructure.CELL_FLAG_W) != 0)
-            addNode(x - 1, y - 1, z, Config.MOVE_WEIGHT_DIAG);
+                    if ((nswe & GeoStructure.CELL_FLAG_W) != 0 && (nsweS & GeoStructure.CELL_FLAG_W) != 0) {
+                        if ((getNodeNswe(x - 1, y, z) & GeoStructure.CELL_FLAG_S) != 0)
+                            addNode(x - 1, y + 1, z, GeoStructure.CELL_EXPANSION_SW, true);
+                    }
 
-        // Can move north-east, expand.
-        if ((nsweE & GeoStructure.CELL_FLAG_N) != 0 && (nsweN & GeoStructure.CELL_FLAG_E) != 0)
-            addNode(x + 1, y - 1, z, Config.MOVE_WEIGHT_DIAG);
+                    if ((nswe & GeoStructure.CELL_FLAG_E) != 0 && (nsweS & GeoStructure.CELL_FLAG_E) != 0) {
+                        if ((getNodeNswe(x + 1, y, z) & GeoStructure.CELL_FLAG_S) != 0)
+                            addNode(x + 1, y + 1, z, GeoStructure.CELL_EXPANSION_SE, true);
+                    }
+                }
+                break;
 
-        // Can move south-west, expand.
-        if ((nsweW & GeoStructure.CELL_FLAG_S) != 0 && (nsweS & GeoStructure.CELL_FLAG_W) != 0)
-            addNode(x - 1, y + 1, z, Config.MOVE_WEIGHT_DIAG);
+            case GeoStructure.CELL_EXPANSION_W:
+                if ((nswe & GeoStructure.CELL_FLAG_W) != 0) {
+                    nsweW = addNode(x - 1, y, z, GeoStructure.CELL_EXPANSION_W, false);
 
-        // Can move south-east, expand.
-        if ((nsweE & GeoStructure.CELL_FLAG_S) != 0 && (nsweS & GeoStructure.CELL_FLAG_E) != 0)
-            addNode(x + 1, y + 1, z, Config.MOVE_WEIGHT_DIAG);
+                    if ((nswe & GeoStructure.CELL_FLAG_N) != 0 && (nsweW & GeoStructure.CELL_FLAG_N) != 0) {
+                        if ((getNodeNswe(x, y - 1, z) & GeoStructure.CELL_FLAG_W) != 0)
+                            addNode(x - 1, y - 1, z, GeoStructure.CELL_EXPANSION_NW, true);
+                    }
+
+                    if ((nswe & GeoStructure.CELL_FLAG_S) != 0 && (nsweW & GeoStructure.CELL_FLAG_S) != 0) {
+                        if ((getNodeNswe(x, y + 1, z) & GeoStructure.CELL_FLAG_W) != 0)
+                            addNode(x - 1, y + 1, z, GeoStructure.CELL_EXPANSION_SW, true);
+                    }
+                }
+                break;
+
+            case GeoStructure.CELL_EXPANSION_E:
+                if ((nswe & GeoStructure.CELL_FLAG_E) != 0) {
+                    nsweE = addNode(x + 1, y, z, GeoStructure.CELL_EXPANSION_E, false);
+
+                    if ((nswe & GeoStructure.CELL_FLAG_N) != 0 && (nsweE & GeoStructure.CELL_FLAG_N) != 0) {
+                        if ((getNodeNswe(x, y - 1, z) & GeoStructure.CELL_FLAG_E) != 0)
+                            addNode(x + 1, y - 1, z, GeoStructure.CELL_EXPANSION_NE, true);
+                    }
+
+                    if ((nswe & GeoStructure.CELL_FLAG_S) != 0 && (nsweE & GeoStructure.CELL_FLAG_S) != 0) {
+                        if ((getNodeNswe(x, y + 1, z) & GeoStructure.CELL_FLAG_E) != 0)
+                            addNode(x + 1, y + 1, z, GeoStructure.CELL_EXPANSION_SE, true);
+                    }
+                }
+                break;
+
+            case GeoStructure.CELL_EXPANSION_NW:
+                if ((nswe & GeoStructure.CELL_FLAG_N) != 0)
+                    nsweN = addNode(x, y - 1, z, GeoStructure.CELL_EXPANSION_N, false);
+                if ((nswe & GeoStructure.CELL_FLAG_W) != 0)
+                    nsweW = addNode(x - 1, y, z, GeoStructure.CELL_EXPANSION_W, false);
+
+                if ((nsweW & GeoStructure.CELL_FLAG_N) != 0 && (nsweN & GeoStructure.CELL_FLAG_W) != 0)
+                    addNode(x - 1, y - 1, z, GeoStructure.CELL_EXPANSION_NW, true);
+                break;
+
+            case GeoStructure.CELL_EXPANSION_NE:
+                if ((nswe & GeoStructure.CELL_FLAG_N) != 0)
+                    nsweN = addNode(x, y - 1, z, GeoStructure.CELL_EXPANSION_N, false);
+                if ((nswe & GeoStructure.CELL_FLAG_E) != 0)
+                    nsweE = addNode(x + 1, y, z, GeoStructure.CELL_EXPANSION_E, false);
+
+                if ((nsweE & GeoStructure.CELL_FLAG_N) != 0 && (nsweN & GeoStructure.CELL_FLAG_E) != 0)
+                    addNode(x + 1, y - 1, z, GeoStructure.CELL_EXPANSION_NE, true);
+                break;
+
+            case GeoStructure.CELL_EXPANSION_SW:
+                if ((nswe & GeoStructure.CELL_FLAG_S) != 0)
+                    nsweS = addNode(x, y + 1, z, GeoStructure.CELL_EXPANSION_S, false);
+                if ((nswe & GeoStructure.CELL_FLAG_W) != 0)
+                    nsweW = addNode(x - 1, y, z, GeoStructure.CELL_EXPANSION_W, false);
+
+                if ((nsweW & GeoStructure.CELL_FLAG_S) != 0 && (nsweS & GeoStructure.CELL_FLAG_W) != 0)
+                    addNode(x - 1, y + 1, z, GeoStructure.CELL_EXPANSION_SW, true);
+                break;
+
+            case GeoStructure.CELL_EXPANSION_SE:
+                if ((nswe & GeoStructure.CELL_FLAG_S) != 0)
+                    nsweS = addNode(x, y + 1, z, GeoStructure.CELL_EXPANSION_S, false);
+                if ((nswe & GeoStructure.CELL_FLAG_E) != 0)
+                    nsweE = addNode(x + 1, y, z, GeoStructure.CELL_EXPANSION_E, false);
+
+                if ((nsweE & GeoStructure.CELL_FLAG_S) != 0 && (nsweS & GeoStructure.CELL_FLAG_E) != 0)
+                    addNode(x + 1, y + 1, z, GeoStructure.CELL_EXPANSION_SE, true);
+                break;
+
+            case GeoStructure.CELL_EXPANSION_ALL:
+                if ((nswe & GeoStructure.CELL_FLAG_N) != 0)
+                    nsweN = addNode(x, y - 1, z, GeoStructure.CELL_EXPANSION_N, false);
+                if ((nswe & GeoStructure.CELL_FLAG_S) != 0)
+                    nsweS = addNode(x, y + 1, z, GeoStructure.CELL_EXPANSION_S, false);
+                if ((nswe & GeoStructure.CELL_FLAG_W) != 0)
+                    nsweW = addNode(x - 1, y, z, GeoStructure.CELL_EXPANSION_W, false);
+                if ((nswe & GeoStructure.CELL_FLAG_E) != 0)
+                    nsweE = addNode(x + 1, y, z, GeoStructure.CELL_EXPANSION_E, false);
+
+                if ((nsweW & GeoStructure.CELL_FLAG_N) != 0 && (nsweN & GeoStructure.CELL_FLAG_W) != 0)
+                    addNode(x - 1, y - 1, z, GeoStructure.CELL_EXPANSION_NW, true);
+                if ((nsweE & GeoStructure.CELL_FLAG_N) != 0 && (nsweN & GeoStructure.CELL_FLAG_E) != 0)
+                    addNode(x + 1, y - 1, z, GeoStructure.CELL_EXPANSION_NE, true);
+                if ((nsweW & GeoStructure.CELL_FLAG_S) != 0 && (nsweS & GeoStructure.CELL_FLAG_W) != 0)
+                    addNode(x - 1, y + 1, z, GeoStructure.CELL_EXPANSION_SW, true);
+                if ((nsweE & GeoStructure.CELL_FLAG_S) != 0 && (nsweS & GeoStructure.CELL_FLAG_E) != 0)
+                    addNode(x + 1, y + 1, z, GeoStructure.CELL_EXPANSION_SE, true);
+                break;
+        }
+    }
+
+    private static byte getNodeNswe(int gx, int gy, int gz) {
+        // Check new node is out of geodata grid (world coordinates).
+        if (gx < 0 || gx >= GeoStructure.GEO_CELLS_X || gy < 0 || gy >= GeoStructure.GEO_CELLS_Y)
+            return GeoStructure.CELL_FLAG_NONE;
+
+        // Get geodata block and check if there is a layer at given coordinates.
+        ABlock block = GeoEngine.getInstance().getBlock(gx, gy);
+        final int index = block.getIndexBelow(gx, gy, gz, null);
+        if (index < 0)
+            return GeoStructure.CELL_FLAG_NONE;
+
+        // Get node geodata nswe.
+        return block.getNswe(index, null);
     }
 
     /**
      * Take {@link Node} from buffer, validate it and add to opened list.
      *
-     * @param gx     : The new node X geodata coordinate.
-     * @param gy     : The new node Y geodata coordinate.
-     * @param gz     : The new node Z geodata coordinate.
-     * @param weight : The weight of movement to the new node.
+     * @param gx         : The new node X geodata coordinate.
+     * @param gy         : The new node Y geodata coordinate.
+     * @param gz         : The new node Z geodata coordinate.
+     * @param nsweExpand : The allowed directions to be expanded on the new node.
+     * @param diagonal   : The new node is being explored in diagonal direction.
      * @return The nswe of the added node. Blank, if not added.
      */
-    private byte addNode(int gx, int gy, int gz, int weight) {
+    private byte addNode(int gx, int gy, int gz, byte nsweExpand, boolean diagonal) {
         // Check new node is out of geodata grid (world coordinates).
         if (gx < 0 || gx >= GeoStructure.GEO_CELLS_X || gy < 0 || gy >= GeoStructure.GEO_CELLS_Y)
             return GeoStructure.CELL_FLAG_NONE;
@@ -263,12 +384,15 @@ public class NodeBuffer {
         // Get node from current index (don't move index yet).
         Node node = _buffer[_bufferIndex];
 
-        // Node is nearby obstacle, override weight.
-        if (nswe != GeoStructure.CELL_FLAG_ALL)
-            weight = Config.OBSTACLE_WEIGHT;
+        // Calculate node weight.
+        int weight;
+        if (nswe == GeoStructure.CELL_FLAG_ALL)
+            weight = diagonal ? Config.MOVE_WEIGHT_DIAG : Config.MOVE_WEIGHT;
+        else
+            weight = diagonal ? Config.OBSTACLE_WEIGHT_DIAG : Config.OBSTACLE_WEIGHT;
 
         // Set node geodata coordinates.
-        node.setGeo(gx, gy, gz, nswe);
+        node.setGeo(gx, gy, gz, nswe, nsweExpand);
 
         // Node is already added to opened list, return.
         if (_opened.contains(node))
@@ -296,15 +420,29 @@ public class NodeBuffer {
      */
     private int getCostH(int gx, int gy, int gz) {
         // Get differences to the target.
-        final int dx = Math.abs(gx - _gtx);
-        final int dy = Math.abs(gy - _gty);
-        final int dz = Math.abs(gz - _gtz) / GeoStructure.CELL_HEIGHT;
+        int dx = Math.abs(gx - _gtx);
+        int dy = Math.abs(gy - _gty);
+        int dz = Math.abs(gz - _gtz) / GeoStructure.CELL_HEIGHT;
 
         // Get diagonal and axial differences to the target.
-        final int dd = Math.min(dx, dy);
-        final int da = Math.max(dx, dy) - dd;
+        final int ds = Math.min(dx, Math.min(dy, dz));
+        dx -= ds;
+        dy -= ds;
+        dz -= ds;
+        int dd;
+        int d;
+        if (dx == 0) {
+            dd = Math.min(dy, dz);
+            d = Math.max(dy, dz) - dd;
+        } else if (dy == 0) {
+            dd = Math.min(dx, dz);
+            d = Math.max(dx, dz) - dd;
+        } else {
+            dd = Math.min(dx, dy);
+            d = Math.max(dx, dy) - dd;
+        }
 
         // Calculate the diagonal distance of the node to the target.
-        return dd * Config.HEURISTIC_WEIGHT_DIAG + (da + dz) * Config.HEURISTIC_WEIGHT;
+        return (int) (((int) (ds * Math.sqrt(3)) + dd * Config.HEURISTIC_WEIGHT_DIAG + d * Config.HEURISTIC_WEIGHT) * 1.2);
     }
 }

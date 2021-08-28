@@ -111,6 +111,6 @@ public final class RequestPledgeSetAcademyMaster extends L2GameClientPacket {
         if (apprentice != null)
             apprentice.sendPacket(sm);
 
-        clan.broadcastToOnlineMembers(new PledgeShowMemberListUpdate(sponsorMember), new PledgeShowMemberListUpdate(apprenticeMember));
+        clan.broadcastToMembers(new PledgeShowMemberListUpdate(sponsorMember), new PledgeShowMemberListUpdate(apprenticeMember));
     }
 }

@@ -20,8 +20,10 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.clanhall.ClanHall;
 import ru.privetdruk.l2jspace.gameserver.model.clanhall.SiegableHall;
 import ru.privetdruk.l2jspace.gameserver.model.entity.Castle;
+import ru.privetdruk.l2jspace.gameserver.model.entity.ClanHallSiege;
 import ru.privetdruk.l2jspace.gameserver.model.entity.Siege;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
+import ru.privetdruk.l2jspace.gameserver.model.zone.type.ArenaZone;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.TownZone;
 
 import org.w3c.dom.Document;
@@ -206,9 +208,12 @@ public class MapRegionData implements IXmlReader {
      * @return a {@link Location} based on {@link Creature} and {@link TeleportType} parameters.
      */
     public Location getLocationToTeleport(Creature creature, TeleportType teleportType) {
-        // The character isn't a player, bypass all checks and retrieve a random spawn location on closest town.
+        // Retrieve the TownZone associated to the Creature's position.
+        final TownZone town = getClosestTown(creature);
+
+        // If the Creature isn't a Player, retrieve a random Location from closest town. If none is found, move it to MDT (should never happen).
         if (!(creature instanceof Player))
-            return getClosestTown(creature).getRndSpawn(SpawnType.NORMAL);
+            return (town != null) ? town.getRndSpawn(SpawnType.NORMAL) : MDT_LOCATION;
 
         final Player player = ((Player) creature);
 
@@ -241,26 +246,30 @@ public class MapRegionData implements IXmlReader {
                         return flag.getPosition();
                 }
 
-                final SiegableHall sh = ClanHallManager.getInstance().getNearestSiegableHall(player);
-                if (sh != null) {
-                    final Npc flag = sh.getSiege().getFlag(player.getClan());
+                final ClanHallSiege chs = ClanHallManager.getInstance().getActiveSiege(player);
+                if (chs != null) {
+                    final Npc flag = chs.getFlag(player.getClan());
                     if (flag != null)
                         return flag.getPosition();
                 }
             }
         }
 
+        // Check if player is in arena.
+        final ArenaZone arena = ZoneManager.getInstance().getZone(player, ArenaZone.class);
+        if (arena != null)
+            return arena.getRndSpawn((player.getKarma() > 0) ? SpawnType.CHAOTIC : SpawnType.NORMAL);
+
         // Returning to Town in a Siege - Seal of Strife.
         // When owned by Dawn: Player restarts in the second nearest village.
         // When owned by Dusk / not owned: A clan that has participated in a siege restarts in the first town at the time of escape or death.
         final Castle castle = CastleManager.getInstance().getCastle(player);
-        if (castle != null && castle.getSiege().isInProgress()) {
-            if (SevenSignsManager.getInstance().isSealValidationPeriod() && SevenSignsManager.getInstance().getSealOwner(SealType.STRIFE) == CabalType.DAWN)
-                return castle.getRndSpawn((player.getKarma() > 0) ? SpawnType.CHAOTIC : SpawnType.OTHER);
+        if (castle != null && castle.getSiege().isInProgress() && SevenSignsManager.getInstance().isSealValidationPeriod() && SevenSignsManager.getInstance().getSealOwner(SealType.STRIFE) == CabalType.DAWN) {
+            return castle.getRndSpawn((player.getKarma() > 0) ? SpawnType.CHAOTIC : SpawnType.OTHER);
         }
 
         // Karma player lands out of city, otherwise retrieve a random spawn location of the nearest town.
-        return getClosestTown(player).getRndSpawn((player.getKarma() > 0) ? SpawnType.CHAOTIC : SpawnType.NORMAL);
+        return (town != null) ? (town.getRndSpawn((player.getKarma() > 0) ? SpawnType.CHAOTIC : SpawnType.NORMAL)) : MDT_LOCATION;
     }
 
     /**

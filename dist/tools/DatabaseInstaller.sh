@@ -66,6 +66,7 @@ fullInstall() {
   $MYG <./sql/game/buylists.sql &>/dev/null
   $MYG <./sql/game/castle.sql &>/dev/null
   $MYG <./sql/game/castle_doorupgrade.sql &>/dev/null
+  $MYG < ./sql/castle_functions.sql &> /dev/null
   $MYG <./sql/game/castle_manor_procure.sql &>/dev/null
   $MYG <./sql/game/castle_manor_production.sql &>/dev/null
   $MYG <./sql/game/castle_siege_guards.sql &>/dev/null

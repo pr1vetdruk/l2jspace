@@ -66,7 +66,7 @@ public class SiegeFlag extends Npc {
         if (_task == null) {
             _task = ThreadPool.schedule(() -> _task = null, 30000);
 
-            _clan.broadcastToOnlineMembers(SystemMessage.getSystemMessage(SystemMessageId.BASE_UNDER_ATTACK));
+            _clan.broadcastToMembers(SystemMessage.getSystemMessage(SystemMessageId.BASE_UNDER_ATTACK));
         }
         super.reduceCurrentHp(damage, attacker, skill);
     }

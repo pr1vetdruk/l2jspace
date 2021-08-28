@@ -243,7 +243,7 @@ public class ClanHall {
             clan.setClanHallId(0);
 
             // Refresh Clan Action panel.
-            clan.broadcastToOnlineMembers(new PledgeShowInfoUpdate(clan));
+            clan.broadcastToMembers(new PledgeShowInfoUpdate(clan));
         }
 
         _ownerId = 0;
@@ -300,7 +300,7 @@ public class ClanHall {
             owner.setClanHallId(0);
 
             // Refresh Clan Action panel.
-            owner.broadcastToOnlineMembers(new PledgeShowInfoUpdate(owner));
+            owner.broadcastToMembers(new PledgeShowInfoUpdate(owner));
         }
 
         // Remove all related functions.
@@ -319,7 +319,7 @@ public class ClanHall {
         initializeFeeTask();
 
         // Refresh Clan Action panel.
-        clan.broadcastToOnlineMembers(new PledgeShowInfoUpdate(clan));
+        clan.broadcastToMembers(new PledgeShowInfoUpdate(clan));
 
         // Teleport out all outsiders (potential previous owners).
         banishForeigners();
@@ -548,7 +548,7 @@ public class ClanHall {
                     free();
 
                     // Send message to all Clan members.
-                    clan.broadcastToOnlineMembers(SystemMessage.getSystemMessage(SystemMessageId.THE_CLAN_HALL_FEE_IS_ONE_WEEK_OVERDUE_THEREFORE_THE_CLAN_HALL_OWNERSHIP_HAS_BEEN_REVOKED));
+                    clan.broadcastToMembers(SystemMessage.getSystemMessage(SystemMessageId.THE_CLAN_HALL_FEE_IS_ONE_WEEK_OVERDUE_THEREFORE_THE_CLAN_HALL_OWNERSHIP_HAS_BEEN_REVOKED));
                 }
                 // Grace period, we will retest it one day later.
                 else {
@@ -563,7 +563,7 @@ public class ClanHall {
                     updateDb();
 
                     // Send message to all Clan members.
-                    clan.broadcastToOnlineMembers(SystemMessage.getSystemMessage(SystemMessageId.PAYMENT_FOR_YOUR_CLAN_HALL_HAS_NOT_BEEN_MADE_PLEASE_MAKE_PAYMENT_TO_YOUR_CLAN_WAREHOUSE_BY_S1_TOMORROW).addNumber(getLease()));
+                    clan.broadcastToMembers(SystemMessage.getSystemMessage(SystemMessageId.PAYMENT_FOR_YOUR_CLAN_HALL_HAS_NOT_BEEN_MADE_PLEASE_MAKE_PAYMENT_TO_YOUR_CLAN_WAREHOUSE_BY_S1_TOMORROW).addNumber(getLease()));
                 }
             }
         }

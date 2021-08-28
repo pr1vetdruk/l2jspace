@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
 
+import ru.privetdruk.l2jspace.common.util.ArraysUtil;
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.model.MinionData;
 import ru.privetdruk.l2jspace.gameserver.model.PetDataEntry;
@@ -95,6 +97,10 @@ public class NpcData implements IXmlReader {
                     forEach(categoryNode, "drop", dropNode -> {
                         final NamedNodeMap dropAttrs = dropNode.getAttributes();
                         final DropData data = new DropData(parseInteger(dropAttrs, "itemid"), parseInteger(dropAttrs, "min"), parseInteger(dropAttrs, "max"), parseInteger(dropAttrs, "chance"));
+
+                        if (ArraysUtil.contains(Config.NO_DROP_ITEMS, data.getItemId())) {
+                            return;
+                        }
 
                         if (ItemData.getInstance().getTemplate(data.getItemId()) == null) {
                             LOGGER.warn("Droplist data for undefined itemId: {}.", data.getItemId());

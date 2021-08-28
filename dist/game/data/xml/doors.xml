@@ -3693,22 +3693,22 @@
 		<function openType="SKILL" closeTime="10" />
 	</door>
 	<door id="19160017" type="DOOR" level="1" name="altar_flame_gate01">
-		<position x="-17432" y="-54840" z="-10448" />
+		<position x="-17416" y="-54840" z="-10448" />
 		<coordinates>
-			<loc x="-17421" y="-54960" z="-10448" />
-			<loc x="-17421" y="-54781" z="-10448" />
-			<loc x="-17451" y="-54781" z="-10448" />
-			<loc x="-17451" y="-54960" z="-10448" />
+			<loc x="-17406" y="-54960" z="-10448" />
+			<loc x="-17406" y="-54720" z="-10448" />
+			<loc x="-17426" y="-54720" z="-10448" />
+			<loc x="-17426" y="-54960" z="-10448" />
 		</coordinates>
 		<stats hp="126600" pDef="644" mDef="518" height="256" />
 	</door>
 	<door id="19160016" type="DOOR" level="1" name="altar_flame_gate02">
-		<position x="-15368" y="-54840" z="-10448" />
+		<position x="-15360" y="-54840" z="-10448" />
 		<coordinates>
-			<loc x="-15355" y="-54960" z="-10448" />
-			<loc x="-15355" y="-54781" z="-10448" />
-			<loc x="-15385" y="-54781" z="-10448" />
-			<loc x="-15385" y="-54960" z="-10448" />
+			<loc x="-15350" y="-54960" z="-10448" />
+			<loc x="-15350" y="-54720" z="-10448" />
+			<loc x="-15370" y="-54720" z="-10448" />
+			<loc x="-15370" y="-54960" z="-10448" />
 		</coordinates>
 		<stats hp="126600" pDef="644" mDef="518" height="256" />
 	</door>

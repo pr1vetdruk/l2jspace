@@ -22,15 +22,11 @@ public class CachedDataValue {
 
     private volatile boolean dirty = false;
 
-    // private final int charId;
-
     CachedDataValue(String valueName, String defaultValue, int charId) {
         this.valueName = valueName;
-        // this.charId = charId;
         this.valueData = defaultValue;
         compiledLoadQuery = String.format(LOAD_QUERY, valueName, charId);
         compiledUpdateQuery = String.format(UPDATE_QUERY, charId, valueName);
-        // cachedValueList.add(this);
     }
 
     public String getKey() {

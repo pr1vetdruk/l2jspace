@@ -43,7 +43,7 @@ import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 public abstract class Playable extends Creature {
     private final Map<Integer, Long> _disabledItems = new ConcurrentHashMap<>();
 
-    public Playable(int objectId, CreatureTemplate template) {
+    protected Playable(int objectId, CreatureTemplate template) {
         super(objectId, template);
     }
 
@@ -324,12 +324,12 @@ public abstract class Playable extends Creature {
     }
 
     /**
-     * Check if the requested casting is a Pc->Pc skill cast and if it's a valid pvp condition
+     * Check pvp conditions for a {@link Playable}->{@link Playable} offensive {@link L2Skill} cast.
      *
-     * @param target        WorldObject instance containing the target
-     * @param skill         L2Skill instance with the skill being casted
-     * @param isCtrlPressed Boolean signifying if the control key was used to cast
-     * @return {@code false} if the skill is a pvpSkill and target is not a valid pvp target, {@code true} otherwise.
+     * @param target        : The {@link Playable} instance used as target.
+     * @param skill         : The {@link L2Skill} being casted.
+     * @param isCtrlPressed : If true, the control key was used to cast.
+     * @return True if the {@link L2Skill} is a pvp {@link L2Skill} and target is a valid pvp target, false otherwise.
      */
     public boolean canCastOffensiveSkillOnPlayable(Playable target, L2Skill skill, boolean isCtrlPressed) {
         // No checks for players in Olympiad
@@ -354,23 +354,22 @@ public abstract class Playable extends Creature {
             return EventEngine.isCanAttack(player, targetPlayer);
         }
 
-        boolean sameParty = (isInParty() && targetPlayer.isInParty() && getParty().getLeader() == targetPlayer.getParty().getLeader());
-        boolean sameCommandChannel = (isInParty() && targetPlayer.isInParty() && getParty().getCommandChannel() != null && getParty().getCommandChannel().containsPlayer(targetPlayer));
-        boolean sameClan = (player.getClanId() > 0 && player.getClanId() == targetPlayer.getClanId());
-        boolean sameAlliance = (player.getAllyId() > 0 && player.getAllyId() == targetPlayer.getAllyId());
+        final boolean sameParty = isInParty() && targetPlayer.isInParty() && getParty().getLeader() == targetPlayer.getParty().getLeader();
+        final boolean sameCommandChannel = isInParty() && targetPlayer.isInParty() && getParty().getCommandChannel() != null && getParty().getCommandChannel().containsPlayer(targetPlayer);
+
+        // No checks for Playables in arena.
+        if (isInArena() && target.isInArena() && !(sameParty || sameCommandChannel))
+            return true;
+
+        final boolean sameClan = getActingPlayer().getClanId() > 0 && getActingPlayer().getClanId() == targetPlayer.getClanId();
+        final boolean sameAlliance = getActingPlayer().getAllyId() > 0 && getActingPlayer().getAllyId() == targetPlayer.getAllyId();
+
         boolean sameSiegeSide = false;
 
         Siege siege = CastleManager.getInstance().getActiveSiege(this);
         if (siege != null) {
-            sameSiegeSide = siege.checkSides(targetPlayer.getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER)
-                    && siege.checkSides(player.getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER);
-
-            sameSiegeSide &= target.isInsideZone(ZoneId.SIEGE) && player.isInsideZone(ZoneId.SIEGE);
-        }
-
-        // Check if the Player is in an arena.
-        if (player.isInArena() && targetPlayer.isInArena() && !(sameParty || sameCommandChannel)) {
-            return true;
+            sameSiegeSide = (siege.checkSides(targetPlayer.getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER) && siege.checkSides(getActingPlayer().getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER));
+            sameSiegeSide &= target.isInsideZone(ZoneId.SIEGE) && isInsideZone(ZoneId.SIEGE);
         }
 
         // Players in the same CC/party/alliance/clan may only damage each other with ctrlPressed.
@@ -383,7 +382,7 @@ public abstract class Playable extends Creature {
         }
 
         // If the target not from the same CC/party/alliance/clan/SiegeSide is in a PVP area, you can do anything.
-        if (isInsideZone(ZoneId.PVP) && targetPlayer.isInsideZone(ZoneId.PVP)) {
+        if (isInsideZone(ZoneId.PVP) && target.isInsideZone(ZoneId.PVP)) {
             return true;
         }
 
@@ -513,18 +512,26 @@ public abstract class Playable extends Creature {
             return EventEngine.isCanAttack(player, attackerPlayer);
         }
 
-        boolean sameParty = (isInParty() && attackerPlayer.isInParty() && getParty().getLeader() == attackerPlayer.getParty().getLeader());
-        boolean sameCommandChannel = (isInParty() && attackerPlayer.isInParty() && getParty().getCommandChannel() != null && getParty().getCommandChannel().containsPlayer(attackerPlayer));
-        boolean sameClan = (player.getClanId() > 0 && player.getClanId() == attackerPlayer.getClanId());
-        boolean sameAlliance = (player.getAllyId() > 0 && player.getAllyId() == attackerPlayer.getAllyId());
+        final boolean sameParty = isInParty() && attackerPlayer.isInParty() && getParty().getLeader() == attackerPlayer.getParty().getLeader();
+        final boolean sameCommandChannel = isInParty() && attackerPlayer.isInParty() && getParty().getCommandChannel() != null && getParty().getCommandChannel().containsPlayer(attackerPlayer);
 
-        // Check if the Player is in an arena.
-        if (player.isInArena() && attackerPlayer.isInArena() && !(sameParty || sameCommandChannel)) {
+        // No checks for Playables in arena.
+        if (isInArena() && attacker.isInArena() && !(sameParty || sameCommandChannel))
             return true;
+
+        final boolean sameClan = getActingPlayer().getClanId() > 0 && getActingPlayer().getClanId() == attackerPlayer.getClanId();
+        final boolean sameAlliance = getActingPlayer().getAllyId() > 0 && getActingPlayer().getAllyId() == attackerPlayer.getAllyId();
+        boolean sameSiegeSide = false;
+
+        final Siege siege = CastleManager.getInstance().getActiveSiege(this);
+        if (siege != null) {
+            // Attacker's clan has the castle && target's clan has the castle (both defenders)
+            sameSiegeSide = ((siege.checkSides(attackerPlayer.getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER) && siege.checkSides(getActingPlayer().getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER)));
+            sameSiegeSide &= attackerPlayer.isInsideZone(ZoneId.SIEGE) && getActingPlayer().isInsideZone(ZoneId.SIEGE);
         }
 
         // Players in the same CC/party/alliance/clan cannot attack without CTRL
-        if (sameParty || sameCommandChannel || sameClan || sameAlliance && !(attackerPlayer.isInsideZone(ZoneId.PVP))) {
+        if (sameParty || sameCommandChannel || sameClan || sameAlliance || sameSiegeSide) {
             return false;
         }
 
@@ -553,19 +560,23 @@ public abstract class Playable extends Creature {
         if (target instanceof Playable) {
             final Player targetPlayer = target.getActingPlayer();
 
-            // Playables in Olympiad continue the attack
+            // Karma players can be kept attacked.
+            if (targetPlayer.getKarma() > 0)
+                return true;
+
+            // Playables in Olympiad can be kept attacked.
             if (targetPlayer.isInOlympiadMode() && getActingPlayer().isInOlympiadMode() && getActingPlayer().isOlympiadStart() && targetPlayer.getOlympiadGameId() == getActingPlayer().getOlympiadGameId())
                 return true;
 
-            // Playables in Duel continue the attack
+            // Playables in Duel can be kept attacked.
             if (getActingPlayer().getDuelState() == DuelState.DUELLING && getActingPlayer().getDuelId() == targetPlayer.getDuelId())
                 return true;
 
-            // Playables in a PVP area continue the attack
+            // Playables in a PVP area can be kept attacked.
             if (isInsideZone(ZoneId.PVP) && target.isInsideZone(ZoneId.PVP))
                 return true;
 
-            // Betrayer Summon can continue the attack
+            // Betrayer Summon will continue the attack.
             if (this instanceof Summon && isBetrayed())
                 return true;
 

@@ -114,7 +114,7 @@ public class DimensionalRift {
 
         long jumpTime = Rnd.get(Config.RIFT_AUTO_JUMPS_TIME_MIN, Config.RIFT_AUTO_JUMPS_TIME_MAX) * 1000;
         if (_room.isBossRoom())
-            jumpTime *= Config.RIFT_BOSS_ROOM_TIME_MUTIPLY;
+            jumpTime *= Config.RIFT_BOSS_ROOM_TIME_MULTIPLY;
 
         _earthQuakeTask = ThreadPool.schedule(() ->
         {

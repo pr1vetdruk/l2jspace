@@ -562,6 +562,45 @@ public abstract class WorldObject {
     }
 
     /**
+     * Test and retrieve all {@link ZoneType}s surrounding this {@link WorldObject}.
+     *
+     * @param checkIfInside : If true, we enforce an {@link ZoneType#isInsideZone(WorldObject)} check.
+     * @return a {@link List} of {@link ZoneType}.
+     */
+    public final List<ZoneType> getZones(boolean checkIfInside) {
+        final WorldRegion region = _region;
+        if (region == null)
+            return Collections.emptyList();
+
+        final List<ZoneType> zones = new ArrayList<>();
+
+        // Test first current WorldRegion.
+        for (ZoneType zt : region.getZones()) {
+            if (zones.contains(zt))
+                continue;
+
+            if (checkIfInside && !zt.isInsideZone(this))
+                continue;
+
+            zones.add(zt);
+        }
+
+        // Then test surrounding WorldRegions.
+        for (WorldRegion wr : region.getSurroundingRegions()) {
+            for (ZoneType zt : wr.getZones()) {
+                if (zones.contains(zt))
+                    continue;
+
+                if (checkIfInside && !zt.isInsideZone(this))
+                    continue;
+
+                zones.add(zt);
+            }
+        }
+        return zones;
+    }
+
+    /**
      * @param object : The {@link WorldObject} to test.
      * @param radius : The radius to test.
      * @return True is this {@link WorldObject} is inside the given radius around the {@link WorldObject} set as parameter.

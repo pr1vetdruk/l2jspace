@@ -296,7 +296,7 @@ public class Auction {
                 returnItem(clan, bidder.getBid(), true); // 10 % tax
 
             if (newOwner != null)
-                clan.broadcastToOnlineMembers(SystemMessage.getSystemMessage(SystemMessageId.CLANHALL_AWARDED_TO_CLAN_S1).addString(newOwner.getName()));
+                clan.broadcastToMembers(SystemMessage.getSystemMessage(SystemMessageId.CLANHALL_AWARDED_TO_CLAN_S1).addString(newOwner.getName()));
         }
         _bidders.clear();
     }
@@ -322,7 +322,7 @@ public class Auction {
                 if (owner == null)
                     return;
 
-                owner.broadcastToOnlineMembers(SystemMessage.getSystemMessage(SystemMessageId.CLANHALL_NOT_SOLD));
+                owner.broadcastToMembers(SystemMessage.getSystemMessage(SystemMessageId.CLANHALL_NOT_SOLD));
             }
             return;
         }

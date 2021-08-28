@@ -259,24 +259,24 @@ public class Siege implements Siegable {
             // Defenders fail
             if (_formerOwner != owner) {
                 _formerOwner.takeReputationScore(1000);
-                _formerOwner.broadcastToOnlineMembers(SystemMessage.getSystemMessage(SystemMessageId.CLAN_WAS_DEFEATED_IN_SIEGE_AND_LOST_S1_REPUTATION_POINTS).addNumber(1000));
+                _formerOwner.broadcastToMembers(SystemMessage.getSystemMessage(SystemMessageId.CLAN_WAS_DEFEATED_IN_SIEGE_AND_LOST_S1_REPUTATION_POINTS).addNumber(1000));
 
                 // Attackers succeed over defenders
                 if (owner != null) {
                     owner.addReputationScore(1000);
-                    owner.broadcastToOnlineMembers(SystemMessage.getSystemMessage(SystemMessageId.CLAN_VICTORIOUS_IN_SIEGE_AND_GAINED_S1_REPUTATION_POINTS).addNumber(1000));
+                    owner.broadcastToMembers(SystemMessage.getSystemMessage(SystemMessageId.CLAN_VICTORIOUS_IN_SIEGE_AND_GAINED_S1_REPUTATION_POINTS).addNumber(1000));
                 }
             }
             // Draw
             else {
                 _formerOwner.addReputationScore(500);
-                _formerOwner.broadcastToOnlineMembers(SystemMessage.getSystemMessage(SystemMessageId.CLAN_VICTORIOUS_IN_SIEGE_AND_GAINED_S1_REPUTATION_POINTS).addNumber(500));
+                _formerOwner.broadcastToMembers(SystemMessage.getSystemMessage(SystemMessageId.CLAN_VICTORIOUS_IN_SIEGE_AND_GAINED_S1_REPUTATION_POINTS).addNumber(500));
             }
         }
         // Attackers win over NPCs
         else if (owner != null) {
             owner.addReputationScore(1000);
-            owner.broadcastToOnlineMembers(SystemMessage.getSystemMessage(SystemMessageId.CLAN_VICTORIOUS_IN_SIEGE_AND_GAINED_S1_REPUTATION_POINTS).addNumber(1000));
+            owner.broadcastToMembers(SystemMessage.getSystemMessage(SystemMessageId.CLAN_VICTORIOUS_IN_SIEGE_AND_GAINED_S1_REPUTATION_POINTS).addNumber(1000));
         }
     }
 
@@ -427,9 +427,9 @@ public class Siege implements Siegable {
     public void announce(SystemMessage sm, SiegeSide... sides) {
         for (SiegeSide side : sides) {
             if (side == SiegeSide.ATTACKER)
-                getAttackerClans().forEach(c -> c.broadcastToOnlineMembers(sm));
+                getAttackerClans().forEach(c -> c.broadcastToMembers(sm));
             else if (side == SiegeSide.DEFENDER)
-                getDefenderClans().forEach(c -> c.broadcastToOnlineMembers(sm));
+                getDefenderClans().forEach(c -> c.broadcastToMembers(sm));
         }
     }
 

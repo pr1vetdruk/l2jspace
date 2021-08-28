@@ -8,10 +8,8 @@ import java.io.RandomAccessFile;
 import java.nio.ByteOrder;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import ru.privetdruk.l2jspace.common.config.ExProperties;
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
@@ -143,26 +141,10 @@ public class GeoEngine {
             if (holder._size < size)
                 continue;
 
-            // Find unlocked NodeBuffer
-            for (NodeBuffer buffer : holder._buffer) {
-                if (!buffer.isLocked())
-                    continue;
-
-                holder._uses++;
-                if (playable)
-                    holder._playableUses++;
-
-                holder._elapsed += buffer.getElapsedTime();
-                return buffer;
-            }
-
-            // NodeBuffer not found, allocate temporary buffer
-            current = new NodeBuffer(holder._size);
-            current.isLocked();
-
-            holder._overflows++;
-            if (playable)
-                holder._playableOverflows++;
+            // Get NodeBuffer.
+            current = holder.getBuffer(playable);
+            if (current != null)
+                return current;
         }
 
         return current;
@@ -1694,14 +1676,20 @@ public class GeoEngine {
         int gtz = getHeightNearest(gtx, gty, tz);
 
         // Prepare buffer for pathfinding calculations
-        NodeBuffer buffer = getBuffer(300 + (10 * (Math.abs(gox - gtx) + Math.abs(goy - gty) + Math.abs(goz - gtz))), playable);
+        int dx = Math.abs(gox - gtx);
+        int dy = Math.abs(goy - gty);
+        int dz = Math.abs(goz - gtz) / 8;
+        int total = dx + dy + dz;
+        int size = 1000 + (10 * total);
+
+        NodeBuffer buffer = playable ? getBuffer(size, playable) : getBuffer(64 + (2 * Math.max(Math.abs(gox - gtx), Math.abs(goy - gty))), playable);
         if (buffer == null)
             return Collections.emptyList();
 
         // find path
         List<Location> path = null;
         try {
-            path = buffer.findPath(gox, goy, goz, gtx, gty, gtz);
+            path = buffer.findPath(gox, goy, goz, gtx, gty, gtz, debug);
 
             if (path.isEmpty()) {
                 _findFails++;
@@ -1851,7 +1839,7 @@ public class GeoEngine {
     private static final class BufferHolder {
         final int _size;
         final int _count;
-        ArrayList<NodeBuffer> _buffer;
+        final Set<NodeBuffer> _buffer;
 
         // statistics
         int _playableUses = 0;
@@ -1862,18 +1850,56 @@ public class GeoEngine {
 
         public BufferHolder(int size, int count) {
             _size = size;
-            _count = count;
-            _buffer = new ArrayList<>(count);
+            _count = count * 4;
+            _buffer = ConcurrentHashMap.newKeySet(_count);
 
             for (int i = 0; i < count; i++)
                 _buffer.add(new NodeBuffer(size));
+        }
+
+        public NodeBuffer getBuffer(boolean playable) {
+            // Get available free NodeBuffer.
+            for (NodeBuffer buffer : _buffer) {
+                if (!buffer.isLocked())
+                    continue;
+
+                _uses++;
+                if (playable)
+                    _playableUses++;
+
+                _elapsed += buffer.getElapsedTime();
+                return buffer;
+            }
+
+            // No free NodeBuffer found, try allocate new buffer.
+            if (_buffer.size() < _count) {
+                NodeBuffer buffer = new NodeBuffer(_size);
+                buffer.isLocked();
+                _buffer.add(buffer);
+
+                if (_buffer.size() == _count)
+                    LOGGER.warn("NodeBuffer holder with {} size reached max capacity.", _size);
+
+                _uses++;
+                if (playable)
+                    _playableUses++;
+
+                return buffer;
+            }
+
+            // Not possible to retrieve buffer.
+            _overflows++;
+            if (playable)
+                _playableOverflows++;
+
+            return null;
         }
 
         @Override
         public String toString() {
             final StringBuilder sb = new StringBuilder(100);
 
-            StringUtil.append(sb, "Buffer ", String.valueOf(_size), "x", String.valueOf(_size), ": count=", String.valueOf(_count), " uses=", String.valueOf(_playableUses), "/", String.valueOf(_uses));
+            StringUtil.append(sb, "Buffer ", String.valueOf(_size), "x", String.valueOf(_size), ": count=", String.valueOf(_buffer.size()), " uses=", String.valueOf(_playableUses), "/", String.valueOf(_uses));
 
             if (_uses > 0)
                 StringUtil.append(sb, " total/avg(ms)=", String.valueOf(_elapsed), "/", String.format("%1.2f", (double) _elapsed / _uses));

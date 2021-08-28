@@ -17,8 +17,10 @@ public enum EffectType {
     INCREASE_CHARGES,
 
     DMG_OVER_TIME,
+    HEAL,
     HEAL_OVER_TIME,
     MANA_DMG_OVER_TIME,
+    MANA_HEAL,
     MANA_HEAL_OVER_TIME,
 
     ABORT_CAST,

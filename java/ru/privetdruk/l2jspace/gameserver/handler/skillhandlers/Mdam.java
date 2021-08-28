@@ -61,7 +61,6 @@ public class Mdam implements ISkillHandler {
 
                         activeChar.stopSkillEffects(skill.getId());
                         skill.getEffects(target, activeChar);
-                        activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_FEEL_S1_EFFECT).addSkillName(skill));
                     } else {
                         // activate attacked effects, if any
                         target.stopSkillEffects(skill.getId());

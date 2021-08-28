@@ -6,6 +6,7 @@ import java.util.List;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
+import ru.privetdruk.l2jspace.gameserver.model.location.Point2D;
 
 /**
  * @author Hasha
@@ -35,9 +36,9 @@ public class Polygon extends AShape {
      * Constructor of the {@link Polygon}. Creates a polygon, which consists of triangles using Kong's algorithm.
      *
      * @param id     : Virtual ID of the polygon, used to separate constructor types.
-     * @param points : List of {@code int[]} points, forming a polygon.
+     * @param points : List of {@code Point2D} points, forming a polygon.
      */
-    public Polygon(int id, List<int[]> points) {
+    public Polygon(int id, List<Point2D> points) {
         List<Triangle> triangles = null;
         int size = 0;
         try {
@@ -49,7 +50,7 @@ public class Polygon extends AShape {
             final boolean isCw = getPolygonOrientation(points);
 
             // calculate non convex points
-            final List<int[]> nonConvexPoints = calculateNonConvexPoints(points, isCw);
+            final List<Point2D> nonConvexPoints = calculateNonConvexPoints(points, isCw);
 
             // polygon triangulation of points based on orientation and non-convex points
             triangles = doTriangulationAlgorithm(points, isCw, nonConvexPoints);
@@ -121,35 +122,35 @@ public class Polygon extends AShape {
      * @param points : List of all points.
      * @return {@code boolean} : True, when the polygon is clockwise orientated.
      */
-    private static final boolean getPolygonOrientation(List<int[]> points) {
+    private static boolean getPolygonOrientation(List<Point2D> points) {
         // first find point with minimum x-coord - if there are several ones take the one with maximal y-coord
 
         // get point
         final int size = points.size();
 
         int index = 0;
-        int[] point = points.get(0);
+        Point2D point = points.get(0);
 
         for (int i = 1; i < size; i++) {
-            int[] pt = points.get(i);
+            Point2D pt = points.get(i);
 
             // x lower, or x same and y higher
-            if ((pt[0] < point[0]) || pt[0] == point[0] && pt[1] > point[1]) {
+            if ((pt.getX() < point.getX()) || pt.getX() == point.getX() && pt.getY() > point.getY()) {
                 point = pt;
                 index = i;
             }
         }
 
         // get previous point
-        final int[] pointPrev = points.get(getPrevIndex(size, index));
+        final Point2D pointPrev = points.get(getPrevIndex(size, index));
 
         // get next point
-        final int[] pointNext = points.get(getNextIndex(size, index));
+        final Point2D pointNext = points.get(getNextIndex(size, index));
 
         // get orientation
-        final int vx = point[0] - pointPrev[0];
-        final int vy = point[1] - pointPrev[1];
-        final int res = pointNext[0] * vy - pointNext[1] * vx + vx * pointPrev[1] - vy * pointPrev[0];
+        final int vx = point.getX() - pointPrev.getX();
+        final int vy = point.getY() - pointPrev.getY();
+        final int res = pointNext.getX() * vy - pointNext.getY() * vx + vx * pointPrev.getY() - vy * pointPrev.getX();
 
         // return
         return res <= 0;
@@ -162,7 +163,7 @@ public class Polygon extends AShape {
      * @param index : Index to be compared.
      * @return {@code int} : Next index.
      */
-    private static final int getNextIndex(int size, int index) {
+    private static int getNextIndex(int size, int index) {
         // increase index and check for limit
         if (++index >= size)
             return 0;
@@ -177,7 +178,7 @@ public class Polygon extends AShape {
      * @param index : Index to be compared.
      * @return {@code int} : Previous index.
      */
-    private static final int getPrevIndex(int size, int index) {
+    private static int getPrevIndex(int size, int index) {
         // decrease index and check for limit
         if (--index < 0)
             return size - 1;
@@ -190,25 +191,25 @@ public class Polygon extends AShape {
      *
      * @param points : List of all points.
      * @param isCw   : Polygon orientation (clockwise/counterclockwise).
-     * @return {@code List<int[]>} : List of non-convex points.
+     * @return {@code List<Point2D>} : List of non-convex points.
      */
-    private static final List<int[]> calculateNonConvexPoints(List<int[]> points, boolean isCw) {
+    private static List<Point2D> calculateNonConvexPoints(List<Point2D> points, boolean isCw) {
         // list of non convex points
-        final List<int[]> nonConvexPoints = new ArrayList<>();
+        final List<Point2D> nonConvexPoints = new ArrayList<>();
 
         // result value of test function
         final int size = points.size();
         for (int i = 0; i < size - 1; i++) {
             // get 3 points
-            final int[] point = points.get(i);
-            final int[] pointNext = points.get(i + 1);
-            final int[] pointNextNext = points.get(getNextIndex(size, i + 2));
+            final Point2D point = points.get(i);
+            final Point2D pointNext = points.get(i + 1);
+            final Point2D pointNextNext = points.get(getNextIndex(size, i + 2));
 
-            final int vx = pointNext[0] - point[0];
-            final int vy = pointNext[1] - point[1];
+            final int vx = pointNext.getX() - point.getX();
+            final int vy = pointNext.getY() - point.getY();
 
             // note: cw means res/newres is <= 0
-            final boolean res = (pointNextNext[0] * vy - pointNextNext[1] * vx + vx * point[1] - vy * point[0]) > 0;
+            final boolean res = (pointNextNext.getX() * vy - pointNextNext.getY() * vx + vx * point.getY() - vy * point.getX()) > 0;
             if (res == isCw)
                 nonConvexPoints.add(pointNext);
         }
@@ -225,7 +226,7 @@ public class Polygon extends AShape {
      * @return {@code List<Triangle>} : List of {@link Triangle}.
      * @throws Exception : When coordinates are not aligned to form monotone polygon.
      */
-    private static final List<Triangle> doTriangulationAlgorithm(List<int[]> points, boolean isCw, List<int[]> nonConvexPoints) throws Exception {
+    private static List<Triangle> doTriangulationAlgorithm(List<Point2D> points, boolean isCw, List<Point2D> nonConvexPoints) throws Exception {
         // create the list
         final List<Triangle> triangles = new ArrayList<>();
 
@@ -238,9 +239,9 @@ public class Polygon extends AShape {
             final int indexNext = getNextIndex(size, index);
 
             // get points
-            final int[] pointPrev = points.get(indexPrev);
-            final int[] point = points.get(index);
-            final int[] pointNext = points.get(indexNext);
+            final Point2D pointPrev = points.get(indexPrev);
+            final Point2D point = points.get(index);
+            final Point2D pointNext = points.get(indexNext);
 
             // check point to create polygon ear
             if (isEar(isCw, nonConvexPoints, pointPrev, point, pointNext)) {
@@ -279,7 +280,7 @@ public class Polygon extends AShape {
      * @param coordC          : ABC triangle
      * @return {@code boolean} : True, when ABC is ear of the polygon.
      */
-    private static final boolean isEar(boolean isCw, List<int[]> nonConvexPoints, int[] coordA, int[] coordB, int[] coordC) {
+    private static boolean isEar(boolean isCw, List<Point2D> nonConvexPoints, Point2D coordA, Point2D coordB, Point2D coordC) {
         // ABC triangle
         if (!(isConvex(isCw, coordA, coordB, coordC)))
             return false;
@@ -302,13 +303,13 @@ public class Polygon extends AShape {
      * @param coordC : Point, next to B.
      * @return {@code boolean} : True, when B is convex point.
      */
-    private static final boolean isConvex(boolean isCw, int[] coordA, int[] coordB, int[] coordC) {
+    private static boolean isConvex(boolean isCw, Point2D coordA, Point2D coordB, Point2D coordC) {
         // get vector coordinates
-        final int BAx = coordB[0] - coordA[0];
-        final int BAy = coordB[1] - coordA[1];
+        final int BAx = coordB.getX() - coordA.getX();
+        final int BAy = coordB.getY() - coordA.getY();
 
         // get virtual triangle orientation
-        final boolean cw = (coordC[0] * BAy - coordC[1] * BAx + BAx * coordA[1] - BAy * coordA[0]) > 0;
+        final boolean cw = (coordC.getX() * BAy - coordC.getY() * BAx + BAx * coordA.getY() - BAy * coordA.getX()) > 0;
 
         // compare with orientation of polygon
         return cw != isCw;
@@ -323,14 +324,14 @@ public class Polygon extends AShape {
      * @param coordPoint : Point to be checked in ABC.
      * @return {@code boolean} : True, when P is inside ABC.
      */
-    private static final boolean isInside(int[] coordA, int[] coordB, int[] coordC, int[] coordPoint) {
+    private static boolean isInside(Point2D coordA, Point2D coordB, Point2D coordC, Point2D coordPoint) {
         // get vector coordinates
-        final int BAx = coordB[0] - coordA[0];
-        final int BAy = coordB[1] - coordA[1];
-        final int CAx = coordC[0] - coordA[0];
-        final int CAy = coordC[1] - coordA[1];
-        final int PAx = coordPoint[0] - coordA[0];
-        final int PAy = coordPoint[1] - coordA[1];
+        final int BAx = coordB.getX() - coordA.getX();
+        final int BAy = coordB.getY() - coordA.getY();
+        final int CAx = coordC.getX() - coordA.getX();
+        final int CAy = coordC.getY() - coordA.getY();
+        final int PAx = coordPoint.getX() - coordA.getX();
+        final int PAy = coordPoint.getY() - coordA.getY();
 
         // get determinant
         final double detXYZ = BAx * CAy - CAx * BAy;

@@ -43,8 +43,8 @@ public class PremiumStatus implements IVoicedCommandHandler {
                 preReply.setHtml(html.toString());
                 player.sendPacket(preReply);
             } else {
-                long end_prem_date = 0L;
-                end_prem_date = player.getPremServiceData();
+                long endPremDate = 0L;
+                endPremDate = player.getPremServiceData();
                 NpcHtmlMessage preReply = new NpcHtmlMessage(5);
 
                 StringBuilder html = new StringBuilder("<html><body><title>Premium Account Details</title><center>");
@@ -55,8 +55,8 @@ public class PremiumStatus implements IVoicedCommandHandler {
                 html.append("<tr><td>Rate EXP: <font color=\"LEVEL\"> x" + Config.PREMIUM_RATE_XP + " <br1></font></td></tr>");
                 html.append("<tr><td>Rate SP: <font color=\"LEVEL\"> x" + Config.PREMIUM_RATE_SP + "  <br1></font></td></tr>");
                 html.append("<tr><td>Rate Spoil: <font color=\"LEVEL\"> x" + Config.PREMIUM_RATE_DROP_SPOIL + " <br1></font></td></tr>");
-                html.append("<tr><td>Expires : <font color=\"00A5FF\"> " + String.valueOf(format.format(end_prem_date)) + " (Premium added)</font></td></tr>");
-                html.append("<tr><td>Current Date : <font color=\"70FFCA\"> :" + String.valueOf(format.format(System.currentTimeMillis())) + " <br><br></font></td></tr>");
+                html.append("<tr><td>Expires : <font color=\"00A5FF\"> " + format.format(endPremDate) + " (Premium added)</font></td></tr>");
+                html.append("<tr><td>Current Date : <font color=\"70FFCA\"> :" + format.format(System.currentTimeMillis()) + " <br><br></font></td></tr>");
                 html.append("<tr><td><font color=\"LEVEL\"><center>Premium Info & Rules<br1></font></center></td></tr>");
                 html.append("<tr><td><font color=\"70FFCA\">1.Premium Account CAN NOT BE TRANSFERED.<br1></font></td></tr>");
                 html.append("<tr><td><font color=\"70FFCA\">2.Premium Account effects ALL characters in same account.<br1></font></td></tr>");

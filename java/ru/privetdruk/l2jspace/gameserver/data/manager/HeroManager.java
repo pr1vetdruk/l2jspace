@@ -812,7 +812,7 @@ public class HeroManager {
         final Clan clan = player.getClan();
         if (clan != null && clan.getLevel() >= 5) {
             clan.addReputationScore(1000);
-            clan.broadcastToOnlineMembers(new PledgeShowInfoUpdate(clan), SystemMessage.getSystemMessage(SystemMessageId.CLAN_MEMBER_S1_BECAME_HERO_AND_GAINED_S2_REPUTATION_POINTS).addString(hero.getString("char_name")).addNumber(1000));
+            clan.broadcastToMembers(new PledgeShowInfoUpdate(clan), SystemMessage.getSystemMessage(SystemMessageId.CLAN_MEMBER_S1_BECAME_HERO_AND_GAINED_S2_REPUTATION_POINTS).addString(hero.getString("char_name")).addNumber(1000));
         }
 
         // Set Gained hero and reload data

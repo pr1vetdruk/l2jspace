@@ -39,7 +39,7 @@ public class AdminZone implements IAdminCommandHandler {
                     final String param = st.nextToken().toLowerCase();
                     switch (param) {
                         case "all":
-                            for (ZoneType zone : ZoneManager.getInstance().getZones(player))
+                            for (ZoneType zone : player.getZones(false))
                                 zone.visualizeZone(debug, player.getZ());
 
                             debug.sendTo(player);

@@ -199,7 +199,7 @@ public class AdminEditChar implements IAdminCommandHandler {
 
                         targetPlayer.refreshWeightPenalty();
                         targetPlayer.store();
-                        targetPlayer.sendPacket(new HennaInfo(targetPlayer));
+                        targetPlayer.refreshHennaList();
                         targetPlayer.broadcastUserInfo();
 
                         player.sendMessage("You successfully set " + targetPlayer.getName() + " class to " + newClass.toString() + ".");

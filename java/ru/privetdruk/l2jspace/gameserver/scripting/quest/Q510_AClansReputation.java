@@ -72,7 +72,7 @@ public class Q510_AClansReputation extends Quest {
 
                     clan.addReputationScore(count);
                     player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CLAN_QUEST_COMPLETED_AND_S1_POINTS_GAINED).addNumber(count));
-                    clan.broadcastToOnlineMembers(new PledgeShowInfoUpdate(clan));
+                    clan.broadcastToMembers(new PledgeShowInfoUpdate(clan));
                 } else
                     htmltext = "31331-4.htm";
                 break;

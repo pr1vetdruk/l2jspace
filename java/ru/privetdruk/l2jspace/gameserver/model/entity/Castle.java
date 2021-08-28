@@ -329,7 +329,7 @@ public class Castle {
             return;
 
         clan.setCastle(0);
-        clan.broadcastToOnlineMembers(new PledgeShowInfoUpdate(clan));
+        clan.broadcastToMembers(new PledgeShowInfoUpdate(clan));
 
         // Remove clan from siege registered clans (as owners are automatically added).
         getSiege().getRegisteredClans().remove(clan);
@@ -504,7 +504,7 @@ public class Castle {
             clan.setCastle(_castleId);
 
             // Announce to clan members.
-            clan.broadcastToOnlineMembers(new PledgeShowInfoUpdate(clan), new PlaySound(1, "Siege_Victory"));
+            clan.broadcastToMembers(new PledgeShowInfoUpdate(clan), new PlaySound(1, "Siege_Victory"));
         }
 
         try (Connection con = ConnectionPool.getConnection();

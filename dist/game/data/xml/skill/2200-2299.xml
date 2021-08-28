@@ -785,7 +785,7 @@
 		</cond>
 		<for>
 			<effect name="Buff" time="600" val="0" stackOrder="1" stackType="holy_attack">
-				<add stat="earthPower" val="20" />
+				<add stat="earthPower" val="1" />
 			</effect>
 		</for>
 	</skill>

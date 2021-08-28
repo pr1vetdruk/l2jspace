@@ -373,7 +373,7 @@ public class Clan {
         }
 
         broadcastClanStatus();
-        broadcastToOnlineMembers(SystemMessage.getSystemMessage(SystemMessageId.CLAN_LEADER_PRIVILEGES_HAVE_BEEN_TRANSFERRED_TO_S1).addString(member.getName()));
+        broadcastToMembers(SystemMessage.getSystemMessage(SystemMessageId.CLAN_LEADER_PRIVILEGES_HAVE_BEEN_TRANSFERRED_TO_S1).addString(member.getName()));
     }
 
     public int getNewLeaderId() {
@@ -1125,24 +1125,24 @@ public class Clan {
         return true;
     }
 
-    public void broadcastToOnlineAllyMembers(L2GameServerPacket packet) {
-        for (Clan clan : ClanTable.getInstance().getClanAllies(_allyId))
-            clan.broadcastToOnlineMembers(packet);
-    }
-
-    public void broadcastToOnlineMembers(L2GameServerPacket... packets) {
-        for (ClanMember member : _members.values()) {
-            if (member != null && member.isOnline()) {
-                for (L2GameServerPacket packet : packets)
-                    member.getPlayerInstance().sendPacket(packet);
-            }
+    public void broadcastToMembers(L2GameServerPacket... packets) {
+        for (Player member : getOnlineMembers()) {
+            for (L2GameServerPacket packet : packets)
+                member.sendPacket(packet);
         }
     }
 
-    public void broadcastToOtherOnlineMembers(L2GameServerPacket packet, Player player) {
-        for (ClanMember member : _members.values()) {
-            if (member != null && member.isOnline() && member.getPlayerInstance() != player)
-                member.getPlayerInstance().sendPacket(packet);
+    public void broadcastToAllyMembers(L2GameServerPacket... packets) {
+        for (Clan clan : ClanTable.getInstance().getClanAllies(_allyId))
+            clan.broadcastToMembers(packets);
+    }
+
+    public void broadcastToMembersExcept(Player player, L2GameServerPacket... packets) {
+        for (Player member : getOnlineMembers()) {
+            if (member != player) {
+                for (L2GameServerPacket packet : packets)
+                    member.sendPacket(packet);
+            }
         }
     }
 
@@ -1295,7 +1295,7 @@ public class Clan {
                 takeReputationScore(10000);
         }
 
-        broadcastToOnlineMembers(new PledgeShowInfoUpdate(this), new PledgeReceiveSubPledgeCreated(subPledge, this));
+        broadcastToMembers(new PledgeShowInfoUpdate(this), new PledgeReceiveSubPledgeCreated(subPledge, this));
 
         return subPledge;
     }
@@ -1738,7 +1738,7 @@ public class Clan {
             }
         }
 
-        broadcastToOnlineAllyMembers(SystemMessage.getSystemMessage(SystemMessageId.ALLIANCE_DISOLVED));
+        broadcastToAllyMembers(SystemMessage.getSystemMessage(SystemMessageId.ALLIANCE_DISOLVED));
 
         long currentTime = System.currentTimeMillis();
         for (Clan clan : ClanTable.getInstance().getClans()) {
@@ -1868,7 +1868,7 @@ public class Clan {
                 leader.sendPacket(SystemMessageId.CLAN_CAN_ACCUMULATE_CLAN_REPUTATION_POINTS);
         }
 
-        broadcastToOnlineMembers(new PledgeShowInfoUpdate(this), SystemMessage.getSystemMessage(SystemMessageId.CLAN_LEVEL_INCREASED));
+        broadcastToMembers(new PledgeShowInfoUpdate(this), SystemMessage.getSystemMessage(SystemMessageId.CLAN_LEVEL_INCREASED));
     }
 
     /**

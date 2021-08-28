@@ -18,7 +18,7 @@ public class ChatAlliance implements IChatHandler {
         if (clan == null || clan.getAllyId() == 0)
             return;
 
-        clan.broadcastToOnlineAllyMembers(new CreatureSay(player, type, text));
+        clan.broadcastToAllyMembers(new CreatureSay(player, type, text));
     }
 
     @Override

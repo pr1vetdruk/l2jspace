@@ -1,7 +1,7 @@
 package ru.privetdruk.l2jspace.common.mmocore;
 
-import java.nio.channels.SocketChannel;
+import java.net.Socket;
 
 public interface IAcceptFilter {
-    public boolean accept(SocketChannel sc);
+    public boolean accept(Socket socket);
 }

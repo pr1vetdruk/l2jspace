@@ -172,7 +172,7 @@
 		<table name="#power"> 588 700 789 804 811 817 823 828 833 838 842 845 848 </table>
 		<set name="hpConsume" val="#hpConsume" />
 		<set name="power" val="#power" />
-		<set name="target" val="PARTY_MEMBER" />
+		<set name="target" val="ONE" />
 		<set name="reuseDelay" val="3000" />
 		<set name="skillType" val="HEAL" />
 		<set name="hitTime" val="2000" />

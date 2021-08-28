@@ -68,20 +68,8 @@ public class Heal implements ISkillHandler {
                 continue;
 
             final Creature target = ((Creature) obj);
-            if (target.isDead() || target.isInvul())
+            if (!target.canBeHealed())
                 continue;
-
-            if (target instanceof Door || target instanceof SiegeFlag)
-                continue;
-
-            // Player holding a cursed weapon can't be healed and can't heal
-            if (target != activeChar) {
-                if (target instanceof Player && ((Player) target).isCursedWeaponEquipped())
-                    continue;
-
-                if (activeChar instanceof Player && ((Player) activeChar).isCursedWeaponEquipped())
-                    continue;
-            }
 
             final double amount = target.getStatus().addHp(power * target.getStatus().calcStat(Stats.HEAL_EFFECTIVNESS, 100, null, null) / 100.);
 
@@ -89,7 +77,7 @@ public class Heal implements ISkillHandler {
                 if (skill.getId() == 4051)
                     target.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.REJUVENATING_HP));
                 else {
-                    if (activeChar instanceof Player && activeChar != target)
+                    if (activeChar != target)
                         target.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S2_HP_RESTORED_BY_S1).addCharName(activeChar).addNumber((int) amount));
                     else
                         target.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_HP_RESTORED).addNumber((int) amount));

@@ -296,7 +296,7 @@ public class Service extends Npc {
 
                 player.getClan().addClanSkill(SkillTable.getInstance().getInfo(391, 1), true);
 
-                player.getClan().broadcastToOnlineMembers(new PledgeSkillList(player.getClan()));
+                player.getClan().broadcastToMembers(new PledgeSkillList(player.getClan()));
                 player.sendMessage("Вашему клану успешно выданы все клановые умения.");
                 break;
             case ("clanrep"):

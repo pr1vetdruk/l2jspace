@@ -43,10 +43,6 @@ public class ClanHallManager implements IXmlReader {
         // Build ClanHalls objects with static data.
         load();
 
-        // Generate the List of ClanHallZones.
-        final Collection<ClanHallZone> clanHallZones = ZoneManager.getInstance().getAllZones(ClanHallZone.class);
-        final Collection<SiegableHallZone> siegableHallZones = ZoneManager.getInstance().getAllZones(SiegableHallZone.class);
-
         // Add dynamic data.
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(LOAD_CLANHALLS);
@@ -59,25 +55,23 @@ public class ClanHallManager implements IXmlReader {
                 if (ch == null)
                     continue;
 
-                final ClanHallZone zone;
+                // Find the related zone, and associate it with the Clan Hall.
+                final ClanHallZone zone = ZoneManager.getInstance()
+                        .getAllZones(ClanHallZone.class).stream()
+                        .filter(z -> z.getResidenceId() == id)
+                        .findFirst()
+                        .orElse(null);
 
-                // A default bid exists, it means it's a regular Clan Hall.
+                if (zone == null)
+                    LOGGER.warn("No existing ClanHallZone for ClanHall {}.", id);
+
+                // A default bid exists, it means it's a regular Clan Hall. Generate an Auction.
                 if (ch.getDefaultBid() > 0) {
-                    // Find the related zone, and associate it with the Clan Hall.
-                    zone = clanHallZones.stream().filter(z -> z.getResidenceId() == id).findFirst().orElse(null);
-                    if (zone == null)
-                        LOGGER.warn("No existing ClanHallZone for ClanHall {}.", id);
-
                     // Generate an Auction.
                     ch.setAuction(new Auction(ch, rs.getInt("sellerBid"), rs.getString("sellerName"), rs.getString("sellerClanName"), rs.getLong("endDate")));
                 }
                 // No default bid ; it's actually a Siegable Hall.
                 else {
-                    // Find the related zone, and associate it with the Clan Hall.
-                    zone = siegableHallZones.stream().filter(z -> z.getResidenceId() == id).findFirst().orElse(null);
-                    if (zone == null)
-                        LOGGER.warn("No existing ClanHallZone for ClanHall {}.", id);
-
                     // Test siege date, registered as end date.
                     long nextSiege = rs.getLong("endDate");
                     if (nextSiege - System.currentTimeMillis() < 0)
@@ -174,12 +168,10 @@ public class ClanHallManager implements IXmlReader {
      * @return a {@link List} with all {@link SiegableHall}s.
      */
     public List<SiegableHall> getSiegableHalls() {
-        final List<SiegableHall> list = new ArrayList<>();
-        for (ClanHall ch : _clanHalls.values()) {
-            if (ch instanceof SiegableHall)
-                list.add((SiegableHall) ch);
-        }
-        return list;
+        return _clanHalls.values().stream()
+                .filter(SiegableHall.class::isInstance)
+                .map(SiegableHall.class::cast)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -219,20 +211,6 @@ public class ClanHallManager implements IXmlReader {
     }
 
     /**
-     * @param x       : The X coordinate to check.
-     * @param y       : The Y coordinate to check.
-     * @param maxDist : The radius we must search.
-     * @return the {@link ClanHall} associated to the X/Y coordinates.
-     */
-    public final ClanHall getNearestClanHall(int x, int y, int maxDist) {
-        for (ClanHall ch : _clanHalls.values()) {
-            if (ch.getZone() != null && ch.getZone().getDistanceToZone(x, y) < maxDist)
-                return ch;
-        }
-        return null;
-    }
-
-    /**
      * @param id : The ClanHall id used as reference.
      * @return the {@link Auction} associated to a {@link ClanHall}, or null if not existing.
      */
@@ -241,32 +219,16 @@ public class ClanHallManager implements IXmlReader {
         return (ch == null) ? null : ch.getAuction();
     }
 
-    /**
-     * @param creature : The Creature used for coordinates.
-     * @return the {@link SiegableHall} associated to the X/Y coordinates of the {@link Creature} set as parameter.
-     * @see #getNearestSiegableHall(int, int, int)
-     */
-    public final SiegableHall getNearestSiegableHall(Creature creature) {
-        return getNearestSiegableHall(creature.getX(), creature.getY(), 10000);
-    }
+    public final ClanHallSiege getActiveSiege(Creature creature) {
+        for (ClanHall ch : _clanHalls.values()) {
+            if (!(ch instanceof SiegableHall))
+                continue;
 
-    /**
-     * @param x       : The X coordinate to check.
-     * @param y       : The Y coordinate to check.
-     * @param maxDist : The radius we must search.
-     * @return the {@link SiegableHall} associated to the X/Y coordinates.
-     */
-    public final SiegableHall getNearestSiegableHall(int x, int y, int maxDist) {
-        for (SiegableHall ch : getSiegableHalls()) {
-            if (ch.getZone() != null && ch.getZone().getDistanceToZone(x, y) < maxDist)
-                return ch;
+            final SiegableHall sh = (SiegableHall) ch;
+            if (sh.getSiegeZone().isActive() && sh.getSiegeZone().isInsideZone(creature))
+                return sh.getSiege();
         }
         return null;
-    }
-
-    public final ClanHallSiege getSiege(Creature creature) {
-        final SiegableHall hall = getNearestSiegableHall(creature);
-        return (hall == null) ? null : hall.getSiege();
     }
 
     public final boolean isClanParticipating(Clan clan) {

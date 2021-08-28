@@ -25,11 +25,11 @@ public class Triangle3D extends Triangle {
      * @param B : Point B of the triangle.
      * @param C : Point C of the triangle.
      */
-    public Triangle3D(int[] A, int[] B, int[] C) {
+    public Triangle3D(Location A, Location B, Location C) {
         super(A, B, C);
 
-        _minZ = Math.min(A[2], Math.min(B[2], C[2]));
-        _maxZ = Math.max(A[2], Math.max(B[2], C[2]));
+        _minZ = Math.min(A.getZ(), Math.min(B.getZ(), C.getZ()));
+        _maxZ = Math.max(A.getZ(), Math.max(B.getZ(), C.getZ()));
 
         final int CBx = _CAx - _BAx;
         final int CBy = _CAy - _BAy;

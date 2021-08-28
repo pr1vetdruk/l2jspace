@@ -1791,4 +1791,11 @@ public abstract class Creature extends WorldObject {
         decayMe();
         spawnMe();
     }
+
+    /**
+     * @return True if this {@link Creature} can be healed, false otherwise.
+     */
+    public boolean canBeHealed() {
+        return !isDead() && !isInvul();
+    }
 }

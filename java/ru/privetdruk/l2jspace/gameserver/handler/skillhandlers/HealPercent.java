@@ -32,23 +32,8 @@ public class HealPercent implements ISkillHandler {
                 continue;
 
             final Creature target = ((Creature) obj);
-            if (target.isDead() || target.isInvul())
+            if (!target.canBeHealed())
                 continue;
-
-            // Doors and flags can't be healed in any way
-            if (target instanceof Door || target instanceof SiegeFlag)
-                continue;
-
-            final boolean isTargetPlayer = target instanceof Player;
-
-            // Cursed weapon owner can't heal or be healed
-            if (target != activeChar) {
-                if (activeChar instanceof Player && ((Player) activeChar).isCursedWeaponEquipped())
-                    continue;
-
-                if (isTargetPlayer && ((Player) target).isCursedWeaponEquipped())
-                    continue;
-            }
 
             double amount;
             if (isHp)
@@ -56,7 +41,7 @@ public class HealPercent implements ISkillHandler {
             else
                 amount = target.getStatus().addMp(target.getStatus().getMaxMp() * skill.getPower() / 100.);
 
-            if (isTargetPlayer) {
+            if (target instanceof Player) {
                 SystemMessage sm;
                 if (isHp) {
                     if (activeChar != target)

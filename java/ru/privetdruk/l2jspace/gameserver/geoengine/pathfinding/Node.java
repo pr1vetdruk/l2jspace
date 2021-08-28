@@ -9,6 +9,7 @@ public class Node extends Location implements Comparable<Node> {
     private int _geoX;
     private int _geoY;
     private byte _nswe;
+    private byte _nsweExpand;
 
     // The cost G (movement cost done) and cost H (estimated cost to target).
     private int _costG;
@@ -29,6 +30,7 @@ public class Node extends Location implements Comparable<Node> {
         _geoX = 0;
         _geoY = 0;
         _nswe = GeoStructure.CELL_FLAG_NONE;
+        _nsweExpand = GeoStructure.CELL_FLAG_NONE;
 
         _costG = 0;
         _costH = 0;
@@ -37,12 +39,13 @@ public class Node extends Location implements Comparable<Node> {
         _parent = null;
     }
 
-    public final void setGeo(int gx, int gy, int gz, byte nswe) {
+    public final void setGeo(int gx, int gy, int gz, byte nswe, byte nsweExpand) {
         super.set(GeoEngine.getWorldX(gx), GeoEngine.getWorldY(gy), gz);
 
         _geoX = gx;
         _geoY = gy;
         _nswe = nswe;
+        _nsweExpand = nsweExpand;
     }
 
     public final void setCost(Node parent, int weight, int costH) {
@@ -63,8 +66,12 @@ public class Node extends Location implements Comparable<Node> {
         return _geoY;
     }
 
-    public byte getNSWE() {
+    public byte getNswe() {
         return _nswe;
+    }
+
+    public byte getNsweExpand() {
+        return _nsweExpand;
     }
 
     public int getCostF() {

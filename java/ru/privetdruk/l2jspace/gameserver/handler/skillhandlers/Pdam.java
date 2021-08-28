@@ -72,22 +72,13 @@ public class Pdam implements ISkillHandler {
             byte reflect = Formula.calcSkillReflect(target, skill);
 
             if (skill.hasEffects() && target.getFirstEffect(EffectType.BLOCK_DEBUFF) == null) {
-                List<AbstractEffect> effects;
                 if ((reflect & Formula.SKILL_REFLECT_SUCCEED) != 0) {
                     activeChar.stopSkillEffects(skill.getId());
-
-                    effects = skill.getEffects(target, activeChar);
-                    if (!effects.isEmpty()) {
-                        activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_FEEL_S1_EFFECT).addSkillName(skill));
-                    }
+                    skill.getEffects(target, activeChar);
                 } else {
                     // activate attacked effects, if any
                     target.stopSkillEffects(skill.getId());
-
-                    effects = skill.getEffects(activeChar, target, shieldDefense, false);
-                    if (!effects.isEmpty()) {
-                        target.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_FEEL_S1_EFFECT).addSkillName(skill));
-                    }
+                    skill.getEffects(activeChar, target, shieldDefense, false);
                 }
             }
 

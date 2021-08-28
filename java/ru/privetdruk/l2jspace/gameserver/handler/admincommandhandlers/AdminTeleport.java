@@ -76,6 +76,7 @@ public class AdminTeleport implements IAdminCommandHandler {
                         for (Player clanMember : clan.getOnlineMembers())
                             clanMember.teleportTo(player.getPosition(), 0);
                     }
+                    player.setTarget(null);
                     break;
 
                 case "party":
@@ -97,6 +98,7 @@ public class AdminTeleport implements IAdminCommandHandler {
                         for (Player partyMember : party.getMembers())
                             partyMember.teleportTo(player.getPosition(), 0);
                     }
+                    player.setTarget(null);
                     break;
 
                 default:

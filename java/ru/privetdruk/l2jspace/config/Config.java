@@ -79,10 +79,15 @@ public final class Config {
     public static long CH_TELE_FEE_RATIO;
     public static int CH_TELE1_FEE;
     public static int CH_TELE2_FEE;
-    public static long CH_ITEM_FEE_RATIO;
-    public static int CH_ITEM1_FEE;
-    public static int CH_ITEM2_FEE;
-    public static int CH_ITEM3_FEE;
+    public static long CH_SUPPORT_FEE_RATIO;
+    public static int CH_SUPPORT1_FEE;
+    public static int CH_SUPPORT2_FEE;
+    public static int CH_SUPPORT3_FEE;
+    public static int CH_SUPPORT4_FEE;
+    public static int CH_SUPPORT5_FEE;
+    public static int CH_SUPPORT6_FEE;
+    public static int CH_SUPPORT7_FEE;
+    public static int CH_SUPPORT8_FEE;
     public static long CH_MPREG_FEE_RATIO;
     public static int CH_MPREG1_FEE;
     public static int CH_MPREG2_FEE;
@@ -111,15 +116,10 @@ public final class Config {
     public static int CH_EXPREG5_FEE;
     public static int CH_EXPREG6_FEE;
     public static int CH_EXPREG7_FEE;
-    public static long CH_SUPPORT_FEE_RATIO;
-    public static int CH_SUPPORT1_FEE;
-    public static int CH_SUPPORT2_FEE;
-    public static int CH_SUPPORT3_FEE;
-    public static int CH_SUPPORT4_FEE;
-    public static int CH_SUPPORT5_FEE;
-    public static int CH_SUPPORT6_FEE;
-    public static int CH_SUPPORT7_FEE;
-    public static int CH_SUPPORT8_FEE;
+    public static long CH_ITEM_FEE_RATIO;
+    public static int CH_ITEM1_FEE;
+    public static int CH_ITEM2_FEE;
+    public static int CH_ITEM3_FEE;
     public static long CH_CURTAIN_FEE_RATIO;
     public static int CH_CURTAIN1_FEE;
     public static int CH_CURTAIN2_FEE;
@@ -127,6 +127,33 @@ public final class Config {
     public static int CH_FRONT1_FEE;
     public static int CH_FRONT2_FEE;
 
+    /* ######################################################
+                         Castle settings
+       ###################################################### */
+    public static long CS_TELE_FEE_RATIO;
+    public static int CS_TELE1_FEE;
+    public static int CS_TELE2_FEE;
+    public static long CS_MPREG_FEE_RATIO;
+    public static int CS_MPREG1_FEE;
+    public static int CS_MPREG2_FEE;
+    public static int CS_MPREG3_FEE;
+    public static int CS_MPREG4_FEE;
+    public static long CS_HPREG_FEE_RATIO;
+    public static int CS_HPREG1_FEE;
+    public static int CS_HPREG2_FEE;
+    public static int CS_HPREG3_FEE;
+    public static int CS_HPREG4_FEE;
+    public static int CS_HPREG5_FEE;
+    public static long CS_EXPREG_FEE_RATIO;
+    public static int CS_EXPREG1_FEE;
+    public static int CS_EXPREG2_FEE;
+    public static int CS_EXPREG3_FEE;
+    public static int CS_EXPREG4_FEE;
+    public static long CS_SUPPORT_FEE_RATIO;
+    public static int CS_SUPPORT1_FEE;
+    public static int CS_SUPPORT2_FEE;
+    public static int CS_SUPPORT3_FEE;
+    public static int CS_SUPPORT4_FEE;
 
     /* ######################################################
                          Events settings
@@ -192,7 +219,7 @@ public final class Config {
     public static int RIFT_ENTER_COST_CAPTAIN;
     public static int RIFT_ENTER_COST_COMMANDER;
     public static int RIFT_ENTER_COST_HERO;
-    public static double RIFT_BOSS_ROOM_TIME_MUTIPLY;
+    public static double RIFT_BOSS_ROOM_TIME_MULTIPLY;
 
     // Wedding system
     public static boolean ALLOW_WEDDING;
@@ -235,10 +262,10 @@ public final class Config {
     public static int MOVE_WEIGHT;
     public static int MOVE_WEIGHT_DIAG;
     public static int OBSTACLE_WEIGHT;
+    public static int OBSTACLE_WEIGHT_DIAG;
     public static int HEURISTIC_WEIGHT;
     public static int HEURISTIC_WEIGHT_DIAG;
     public static int MAX_ITERATIONS;
-    public static boolean DEBUG_GEO_NODE;
 
 
     /* ######################################################
@@ -324,6 +351,8 @@ public final class Config {
     public static int WAIT_TIME_VALAKAS;
     public static int SPAWN_INTERVAL_ZAKEN;
     public static int RANDOM_SPAWN_TIME_ZAKEN;
+    public static int SPAWN_INTERVAL_DR_CHAOS;
+    public static int RANDOM_SPAWN_TIME_DR_CHAOS;
 
     // AI
     public static boolean GUARD_ATTACK_AGGRO_MOB;
@@ -381,11 +410,12 @@ public final class Config {
     public static int FREIGHT_PRICE;
 
     // Enchant
-    public static double ENCHANT_CHANCE_WEAPON_MAGIC;
-    public static double ENCHANT_CHANCE_WEAPON_MAGIC_15PLUS;
-    public static double ENCHANT_CHANCE_WEAPON_NONMAGIC;
-    public static double ENCHANT_CHANCE_WEAPON_NONMAGIC_15PLUS;
-    public static double ENCHANT_CHANCE_ARMOR;
+    public static Map<Integer, Double> ENCHANT_CHANCE_WEAPON;
+    public static Map<Integer, Double> ENCHANT_CHANCE_ARMOR;
+    public static Map<Integer, Double> BLESSED_ENCHANT_CHANCE_WEAPON;
+    public static Map<Integer, Double> BLESSED_ENCHANT_CHANCE_ARMOR;
+    public static Map<Integer, Double> CRYSTAL_ENCHANT_CHANCE_WEAPON;
+    public static Map<Integer, Double> CRYSTAL_ENCHANT_CHANCE_ARMOR;
     public static int ENCHANT_MAX_WEAPON;
     public static int ENCHANT_MAX_ARMOR;
     public static int ENCHANT_SAFE_MAX;
@@ -693,35 +723,38 @@ public final class Config {
 
     // Donate manager
     public static int NOBLE_ITEM_ID;
-	public static int NOBLE_ITEM_COUNT;
-	public static int CHANGE_NAME_ITEM_ID;
-	public static int CHANGE_NAME_ITEM_COUNT;
-	public static int GENDER_ITEM_ID;
-	public static int GENDER_ITEM_COUNT;
-	public static int NULL_PK_ITEM_ID;
-	public static int NULL_PK_ITEM_COUNT;
-	public static int CLAN_LVL_8_ITEM_ID;
-	public static int CLAN_LVL_8_ITEM_COUNT;
-	public static int CLAN_SKILL_ITEM_ID;
-	public static int CLAN_SKILL_ITEM_COUNT;
-	public static int CLAN_REP_ITEM_ID;
-	public static int CLAN_REP_ITEM_COUNT;
-	public static int CLAN_REP_COUNT;
-	public static int CHANGE_NAME_COLOR_ITEM_ID;
-	public static int CHANGE_NAME_COLOR_ITEM_COUNT;
-	public static int CHANGE_TITLE_COLOR_ITEM_ID;
-	public static int CHANGE_TITLE_COLOR_ITEM_COUNT;
-	public static int PREMIUM_ITEM_ID;
-	public static int BUY_PREMIUM_DAYS_1;
-	public static int BUY_PREMIUM_DAYS_1_PRICE;
-	public static int BUY_PREMIUM_DAYS_7;
-	public static int BUY_PREMIUM_DAYS_7_PRICE;
-	public static int BUY_PREMIUM_DAYS_14;
-	public static int BUY_PREMIUM_DAYS_14_PRICE;
-	public static int BUY_PREMIUM_DAYS_21;
-	public static int BUY_PREMIUM_DAYS_21_PRICE;
-	public static int BUY_PREMIUM_DAYS_28;
-	public static int BUY_PREMIUM_DAYS_28_PRICE;
+    public static int NOBLE_ITEM_COUNT;
+    public static int CHANGE_NAME_ITEM_ID;
+    public static int CHANGE_NAME_ITEM_COUNT;
+    public static int GENDER_ITEM_ID;
+    public static int GENDER_ITEM_COUNT;
+    public static int NULL_PK_ITEM_ID;
+    public static int NULL_PK_ITEM_COUNT;
+    public static int CLAN_LVL_8_ITEM_ID;
+    public static int CLAN_LVL_8_ITEM_COUNT;
+    public static int CLAN_SKILL_ITEM_ID;
+    public static int CLAN_SKILL_ITEM_COUNT;
+    public static int CLAN_REP_ITEM_ID;
+    public static int CLAN_REP_ITEM_COUNT;
+    public static int CLAN_REP_COUNT;
+    public static int CHANGE_NAME_COLOR_ITEM_ID;
+    public static int CHANGE_NAME_COLOR_ITEM_COUNT;
+    public static int CHANGE_TITLE_COLOR_ITEM_ID;
+    public static int CHANGE_TITLE_COLOR_ITEM_COUNT;
+    public static int PREMIUM_ITEM_ID;
+    public static int BUY_PREMIUM_DAYS_1;
+    public static int BUY_PREMIUM_DAYS_1_PRICE;
+    public static int BUY_PREMIUM_DAYS_7;
+    public static int BUY_PREMIUM_DAYS_7_PRICE;
+    public static int BUY_PREMIUM_DAYS_14;
+    public static int BUY_PREMIUM_DAYS_14_PRICE;
+    public static int BUY_PREMIUM_DAYS_21;
+    public static int BUY_PREMIUM_DAYS_21_PRICE;
+    public static int BUY_PREMIUM_DAYS_28;
+    public static int BUY_PREMIUM_DAYS_28_PRICE;
+
+    public static boolean CABAL_BUFFER;
+    public static int[] NO_DROP_ITEMS;
 
 
     /**
@@ -783,10 +816,10 @@ public final class Config {
         MANOR_MAINTENANCE_MIN = clans.getProperty("ManorMaintenanceMin", 6);
         MANOR_SAVE_PERIOD_RATE = clans.getProperty("ManorSavePeriodRate", 2) * 3600000;
 
-        CH_TELE_FEE_RATIO = clans.getProperty("ClanHallTeleportFunctionFeeRatio", 86400000);
+        CH_TELE_FEE_RATIO = clans.getProperty("ClanHallTeleportFunctionFeeRatio", 86400000L);
         CH_TELE1_FEE = clans.getProperty("ClanHallTeleportFunctionFeeLvl1", 7000);
         CH_TELE2_FEE = clans.getProperty("ClanHallTeleportFunctionFeeLvl2", 14000);
-        CH_SUPPORT_FEE_RATIO = clans.getProperty("ClanHallSupportFunctionFeeRatio", 86400000);
+        CH_SUPPORT_FEE_RATIO = clans.getProperty("ClanHallSupportFunctionFeeRatio", 86400000L);
         CH_SUPPORT1_FEE = clans.getProperty("ClanHallSupportFeeLvl1", 17500);
         CH_SUPPORT2_FEE = clans.getProperty("ClanHallSupportFeeLvl2", 35000);
         CH_SUPPORT3_FEE = clans.getProperty("ClanHallSupportFeeLvl3", 49000);
@@ -795,13 +828,13 @@ public final class Config {
         CH_SUPPORT6_FEE = clans.getProperty("ClanHallSupportFeeLvl6", 252000);
         CH_SUPPORT7_FEE = clans.getProperty("ClanHallSupportFeeLvl7", 259000);
         CH_SUPPORT8_FEE = clans.getProperty("ClanHallSupportFeeLvl8", 364000);
-        CH_MPREG_FEE_RATIO = clans.getProperty("ClanHallMpRegenerationFunctionFeeRatio", 86400000);
+        CH_MPREG_FEE_RATIO = clans.getProperty("ClanHallMpRegenerationFunctionFeeRatio", 86400000L);
         CH_MPREG1_FEE = clans.getProperty("ClanHallMpRegenerationFeeLvl1", 14000);
         CH_MPREG2_FEE = clans.getProperty("ClanHallMpRegenerationFeeLvl2", 26250);
         CH_MPREG3_FEE = clans.getProperty("ClanHallMpRegenerationFeeLvl3", 45500);
         CH_MPREG4_FEE = clans.getProperty("ClanHallMpRegenerationFeeLvl4", 96250);
         CH_MPREG5_FEE = clans.getProperty("ClanHallMpRegenerationFeeLvl5", 140000);
-        CH_HPREG_FEE_RATIO = clans.getProperty("ClanHallHpRegenerationFunctionFeeRatio", 86400000);
+        CH_HPREG_FEE_RATIO = clans.getProperty("ClanHallHpRegenerationFunctionFeeRatio", 86400000L);
         CH_HPREG1_FEE = clans.getProperty("ClanHallHpRegenerationFeeLvl1", 4900);
         CH_HPREG2_FEE = clans.getProperty("ClanHallHpRegenerationFeeLvl2", 5600);
         CH_HPREG3_FEE = clans.getProperty("ClanHallHpRegenerationFeeLvl3", 7000);
@@ -815,7 +848,7 @@ public final class Config {
         CH_HPREG11_FEE = clans.getProperty("ClanHallHpRegenerationFeeLvl11", 26250);
         CH_HPREG12_FEE = clans.getProperty("ClanHallHpRegenerationFeeLvl12", 29750);
         CH_HPREG13_FEE = clans.getProperty("ClanHallHpRegenerationFeeLvl13", 36166);
-        CH_EXPREG_FEE_RATIO = clans.getProperty("ClanHallExpRegenerationFunctionFeeRatio", 86400000);
+        CH_EXPREG_FEE_RATIO = clans.getProperty("ClanHallExpRegenerationFunctionFeeRatio", 86400000L);
         CH_EXPREG1_FEE = clans.getProperty("ClanHallExpRegenerationFeeLvl1", 21000);
         CH_EXPREG2_FEE = clans.getProperty("ClanHallExpRegenerationFeeLvl2", 42000);
         CH_EXPREG3_FEE = clans.getProperty("ClanHallExpRegenerationFeeLvl3", 63000);
@@ -823,16 +856,41 @@ public final class Config {
         CH_EXPREG5_FEE = clans.getProperty("ClanHallExpRegenerationFeeLvl5", 147000);
         CH_EXPREG6_FEE = clans.getProperty("ClanHallExpRegenerationFeeLvl6", 163331);
         CH_EXPREG7_FEE = clans.getProperty("ClanHallExpRegenerationFeeLvl7", 210000);
-        CH_ITEM_FEE_RATIO = clans.getProperty("ClanHallItemCreationFunctionFeeRatio", 86400000);
+        CH_ITEM_FEE_RATIO = clans.getProperty("ClanHallItemCreationFunctionFeeRatio", 86400000L);
         CH_ITEM1_FEE = clans.getProperty("ClanHallItemCreationFunctionFeeLvl1", 210000);
         CH_ITEM2_FEE = clans.getProperty("ClanHallItemCreationFunctionFeeLvl2", 490000);
         CH_ITEM3_FEE = clans.getProperty("ClanHallItemCreationFunctionFeeLvl3", 980000);
-        CH_CURTAIN_FEE_RATIO = clans.getProperty("ClanHallCurtainFunctionFeeRatio", 86400000);
+        CH_CURTAIN_FEE_RATIO = clans.getProperty("ClanHallCurtainFunctionFeeRatio", 86400000L);
         CH_CURTAIN1_FEE = clans.getProperty("ClanHallCurtainFunctionFeeLvl1", 2002);
         CH_CURTAIN2_FEE = clans.getProperty("ClanHallCurtainFunctionFeeLvl2", 2625);
-        CH_FRONT_FEE_RATIO = clans.getProperty("ClanHallFrontPlatformFunctionFeeRatio", 86400000);
+        CH_FRONT_FEE_RATIO = clans.getProperty("ClanHallFrontPlatformFunctionFeeRatio", 86400000L);
         CH_FRONT1_FEE = clans.getProperty("ClanHallFrontPlatformFunctionFeeLvl1", 3031);
         CH_FRONT2_FEE = clans.getProperty("ClanHallFrontPlatformFunctionFeeLvl2", 9331);
+
+        CS_TELE_FEE_RATIO = clans.getProperty("CastleTeleportFunctionFeeRatio", 604800000L);
+        CS_TELE1_FEE = clans.getProperty("CastleTeleportFunctionFeeLvl1", 7000);
+        CS_TELE2_FEE = clans.getProperty("CastleTeleportFunctionFeeLvl2", 14000);
+        CS_SUPPORT_FEE_RATIO = clans.getProperty("CastleSupportFunctionFeeRatio", 86400000L);
+        CS_SUPPORT1_FEE = clans.getProperty("CastleSupportFeeLvl1", 7000);
+        CS_SUPPORT2_FEE = clans.getProperty("CastleSupportFeeLvl2", 21000);
+        CS_SUPPORT3_FEE = clans.getProperty("CastleSupportFeeLvl3", 37000);
+        CS_SUPPORT4_FEE = clans.getProperty("CastleSupportFeeLvl4", 52000);
+        CS_MPREG_FEE_RATIO = clans.getProperty("CastleMpRegenerationFunctionFeeRatio", 86400000L);
+        CS_MPREG1_FEE = clans.getProperty("CastleMpRegenerationFeeLvl1", 2000);
+        CS_MPREG2_FEE = clans.getProperty("CastleMpRegenerationFeeLvl2", 6500);
+        CS_MPREG3_FEE = clans.getProperty("CastleMpRegenerationFeeLvl3", 13750);
+        CS_MPREG4_FEE = clans.getProperty("CastleMpRegenerationFeeLvl4", 20000);
+        CS_HPREG_FEE_RATIO = clans.getProperty("CastleHpRegenerationFunctionFeeRatio", 86400000L);
+        CS_HPREG1_FEE = clans.getProperty("CastleHpRegenerationFeeLvl1", 1000);
+        CS_HPREG2_FEE = clans.getProperty("CastleHpRegenerationFeeLvl2", 1500);
+        CS_HPREG3_FEE = clans.getProperty("CastleHpRegenerationFeeLvl3", 2250);
+        CS_HPREG4_FEE = clans.getProperty("CastleHpRegenerationFeeLvl4", 3270);
+        CS_HPREG5_FEE = clans.getProperty("CastleHpRegenerationFeeLvl5", 5166);
+        CS_EXPREG_FEE_RATIO = clans.getProperty("CastleExpRegenerationFunctionFeeRatio", 86400000L);
+        CS_EXPREG1_FEE = clans.getProperty("CastleExpRegenerationFeeLvl1", 9000);
+        CS_EXPREG2_FEE = clans.getProperty("CastleExpRegenerationFeeLvl2", 15000);
+        CS_EXPREG3_FEE = clans.getProperty("CastleExpRegenerationFeeLvl3", 21000);
+        CS_EXPREG4_FEE = clans.getProperty("CastleExpRegenerationFeeLvl4", 30000);
     }
 
     /**
@@ -844,10 +902,10 @@ public final class Config {
 
         OLY_START_TIME = events.getProperty("OlyStartTime", 18);
         OLY_MIN = events.getProperty("OlyMin", 0);
-        OLY_CPERIOD = events.getProperty("OlyCPeriod", 21600000);
-        OLY_BATTLE = events.getProperty("OlyBattle", 180000);
-        OLY_WPERIOD = events.getProperty("OlyWPeriod", 604800000);
-        OLY_VPERIOD = events.getProperty("OlyVPeriod", 86400000);
+        OLY_CPERIOD = events.getProperty("OlyCPeriod", 21600000L);
+        OLY_BATTLE = events.getProperty("OlyBattle", 180000L);
+        OLY_WPERIOD = events.getProperty("OlyWPeriod", 604800000L);
+        OLY_VPERIOD = events.getProperty("OlyVPeriod", 86400000L);
         OLY_WAIT_TIME = events.getProperty("OlyWaitTime", 30);
         OLY_WAIT_BATTLE = events.getProperty("OlyWaitBattle", 60);
         OLY_WAIT_END = events.getProperty("OlyWaitEnd", 40);
@@ -874,14 +932,14 @@ public final class Config {
         SEVEN_SIGNS_BYPASS_PREREQUISITES = events.getProperty("SevenSignsBypassPrerequisites", false);
         FESTIVAL_MIN_PLAYER = MathUtil.limit(events.getProperty("FestivalMinPlayer", 5), 2, 9);
         MAXIMUM_PLAYER_CONTRIB = events.getProperty("MaxPlayerContrib", 1000000);
-        FESTIVAL_MANAGER_START = events.getProperty("FestivalManagerStart", 120000);
-        FESTIVAL_LENGTH = events.getProperty("FestivalLength", 1080000);
-        FESTIVAL_CYCLE_LENGTH = events.getProperty("FestivalCycleLength", 2280000);
-        FESTIVAL_FIRST_SPAWN = events.getProperty("FestivalFirstSpawn", 120000);
-        FESTIVAL_FIRST_SWARM = events.getProperty("FestivalFirstSwarm", 300000);
-        FESTIVAL_SECOND_SPAWN = events.getProperty("FestivalSecondSpawn", 540000);
-        FESTIVAL_SECOND_SWARM = events.getProperty("FestivalSecondSwarm", 720000);
-        FESTIVAL_CHEST_SPAWN = events.getProperty("FestivalChestSpawn", 900000);
+        FESTIVAL_MANAGER_START = events.getProperty("FestivalManagerStart", 120000L);
+        FESTIVAL_LENGTH = events.getProperty("FestivalLength", 1080000L);
+        FESTIVAL_CYCLE_LENGTH = events.getProperty("FestivalCycleLength", 2280000L);
+        FESTIVAL_FIRST_SPAWN = events.getProperty("FestivalFirstSpawn", 120000L);
+        FESTIVAL_FIRST_SWARM = events.getProperty("FestivalFirstSwarm", 300000L);
+        FESTIVAL_SECOND_SPAWN = events.getProperty("FestivalSecondSpawn", 540000L);
+        FESTIVAL_SECOND_SWARM = events.getProperty("FestivalSecondSwarm", 720000L);
+        FESTIVAL_CHEST_SPAWN = events.getProperty("FestivalChestSpawn", 900000L);
 
         FS_TIME_ENTRY = events.getProperty("EntryTime", 55);
         FS_TIME_END = events.getProperty("EndTime", 50);
@@ -898,7 +956,7 @@ public final class Config {
         RIFT_ENTER_COST_CAPTAIN = events.getProperty("CaptainCost", 27);
         RIFT_ENTER_COST_COMMANDER = events.getProperty("CommanderCost", 30);
         RIFT_ENTER_COST_HERO = events.getProperty("HeroCost", 33);
-        RIFT_BOSS_ROOM_TIME_MUTIPLY = events.getProperty("BossRoomTimeMultiply", 1.);
+        RIFT_BOSS_ROOM_TIME_MULTIPLY = events.getProperty("BossRoomTimeMultiply", 1.);
 
         ALLOW_WEDDING = events.getProperty("AllowWedding", false);
         WEDDING_PRICE = events.getProperty("WeddingPrice", 1000000);
@@ -937,10 +995,10 @@ public final class Config {
         MOVE_WEIGHT = geoEngine.getProperty("MoveWeight", 10);
         MOVE_WEIGHT_DIAG = geoEngine.getProperty("MoveWeightDiag", 14);
         OBSTACLE_WEIGHT = geoEngine.getProperty("ObstacleWeight", 30);
+        OBSTACLE_WEIGHT_DIAG = (int) (OBSTACLE_WEIGHT * Math.sqrt(2));
         HEURISTIC_WEIGHT = geoEngine.getProperty("HeuristicWeight", 12);
         HEURISTIC_WEIGHT_DIAG = geoEngine.getProperty("HeuristicWeightDiag", 18);
         MAX_ITERATIONS = geoEngine.getProperty("MaxIterations", 3500);
-        DEBUG_GEO_NODE = geoEngine.getProperty("DebugGeoNode", false);
     }
 
     /**
@@ -1038,6 +1096,8 @@ public final class Config {
         WAIT_TIME_VALAKAS = npc.getProperty("ValakasWaitTime", 30) * 60000;
         SPAWN_INTERVAL_ZAKEN = npc.getProperty("ZakenSpawnInterval", 60);
         RANDOM_SPAWN_TIME_ZAKEN = npc.getProperty("ZakenRandomSpawn", 20);
+        SPAWN_INTERVAL_DR_CHAOS = npc.getProperty("DrChaosSpawnInterval", 36);
+        RANDOM_SPAWN_TIME_DR_CHAOS = npc.getProperty("DrChaosRandomSpawn", 24);
         GUARD_ATTACK_AGGRO_MOB = npc.getProperty("GuardAttackAggroMob", false);
         RANDOM_WALK_RATE = npc.getProperty("RandomWalkRate", 30);
         MAX_DRIFT_RANGE = npc.getProperty("MaxDriftRange", 200);
@@ -1079,11 +1139,42 @@ public final class Config {
         REGION_BASED_FREIGHT = players.getProperty("RegionBasedFreight", true);
         FREIGHT_PRICE = players.getProperty("FreightPrice", 1000);
 
-        ENCHANT_CHANCE_WEAPON_MAGIC = players.getProperty("EnchantChanceMagicWeapon", 0.4);
-        ENCHANT_CHANCE_WEAPON_MAGIC_15PLUS = players.getProperty("EnchantChanceMagicWeapon15Plus", 0.2);
-        ENCHANT_CHANCE_WEAPON_NONMAGIC = players.getProperty("EnchantChanceNonMagicWeapon", 0.7);
-        ENCHANT_CHANCE_WEAPON_NONMAGIC_15PLUS = players.getProperty("EnchantChanceNonMagicWeapon15Plus", 0.35);
-        ENCHANT_CHANCE_ARMOR = players.getProperty("EnchantChanceArmor", 0.66);
+        ENCHANT_CHANCE_WEAPON = new HashMap<>();
+        String[] property = players.getProperty("EnchantChanceWeapon", (String[]) null, ",");
+        for (String data : property) {
+            String[] enchant = data.split("-");
+            ENCHANT_CHANCE_WEAPON.put(Integer.parseInt(enchant[0]), Double.parseDouble(enchant[1]));
+        }
+        ENCHANT_CHANCE_ARMOR = new HashMap<>();
+        property = players.getProperty("EnchantChanceArmor", (String[]) null, ",");
+        for (String data : property) {
+            String[] enchant = data.split("-");
+            ENCHANT_CHANCE_ARMOR.put(Integer.parseInt(enchant[0]), Double.parseDouble(enchant[1]));
+        }
+        BLESSED_ENCHANT_CHANCE_WEAPON = new HashMap<>();
+        property = players.getProperty("BlessedEnchantChanceWeapon", (String[]) null, ",");
+        for (String data : property) {
+            String[] enchant = data.split("-");
+            BLESSED_ENCHANT_CHANCE_WEAPON.put(Integer.parseInt(enchant[0]), Double.parseDouble(enchant[1]));
+        }
+        BLESSED_ENCHANT_CHANCE_ARMOR = new HashMap<>();
+        property = players.getProperty("BlessedEnchantChanceArmor", (String[]) null, ",");
+        for (String data : property) {
+            String[] enchant = data.split("-");
+            BLESSED_ENCHANT_CHANCE_ARMOR.put(Integer.parseInt(enchant[0]), Double.parseDouble(enchant[1]));
+        }
+        CRYSTAL_ENCHANT_CHANCE_WEAPON = new HashMap<>();
+        property = players.getProperty("CrystalEnchantChanceWeapon", (String[]) null, ",");
+        for (String data : property) {
+            String[] enchant = data.split("-");
+            CRYSTAL_ENCHANT_CHANCE_WEAPON.put(Integer.parseInt(enchant[0]), Double.parseDouble(enchant[1]));
+        }
+        CRYSTAL_ENCHANT_CHANCE_ARMOR = new HashMap<>();
+        property = players.getProperty("CrystalEnchantChanceArmor", (String[]) null, ",");
+        for (String data : property) {
+            String[] enchant = data.split("-");
+            CRYSTAL_ENCHANT_CHANCE_ARMOR.put(Integer.parseInt(enchant[0]), Double.parseDouble(enchant[1]));
+        }
         ENCHANT_MAX_WEAPON = players.getProperty("EnchantMaxWeapon", 0);
         ENCHANT_MAX_ARMOR = players.getProperty("EnchantMaxArmor", 0);
         ENCHANT_SAFE_MAX = players.getProperty("EnchantSafeMax", 3);
@@ -1467,6 +1558,8 @@ public final class Config {
         BUY_PREMIUM_DAYS_21_PRICE = addon.getProperty("BuyPremiumDays21Price", 21);
         BUY_PREMIUM_DAYS_28 = addon.getProperty("BuyPremiumDays28", 28);
         BUY_PREMIUM_DAYS_28_PRICE = addon.getProperty("BuyPremiumDays28Price", 28);
+        CABAL_BUFFER = addon.getProperty("CabalBuffer", false);
+        NO_DROP_ITEMS = addon.getProperty("NoDropItems", new int[0]);
     }
 
     /**

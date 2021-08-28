@@ -26,7 +26,7 @@ public class ManaHeal implements ISkillHandler {
                 continue;
 
             final Creature target = ((Creature) obj);
-            if (target.isInvul())
+            if (!target.canBeHealed())
                 continue;
 
             double mp = skill.getPower();

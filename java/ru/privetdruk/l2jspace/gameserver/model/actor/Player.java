@@ -1183,7 +1183,7 @@ public final class Player extends Playable {
                 setLvlJoinedAcademy(0);
 
                 // Oust pledge member from the academy, because he has finished his 2nd class transfer.
-                _clan.broadcastToOnlineMembers(new PledgeShowMemberListDelete(getName()), SystemMessage.getSystemMessage(SystemMessageId.CLAN_MEMBER_S1_EXPELLED).addString(getName()));
+                _clan.broadcastToMembers(new PledgeShowMemberListDelete(getName()), SystemMessage.getSystemMessage(SystemMessageId.CLAN_MEMBER_S1_EXPELLED).addString(getName()));
                 _clan.removeClanMember(getObjectId(), 0);
                 sendPacket(SystemMessageId.ACADEMY_MEMBERSHIP_TERMINATED);
 
@@ -1207,7 +1207,7 @@ public final class Player extends Playable {
                 _party.broadcastPacket(new PartySmallWindowUpdate(this));
 
             if (_clan != null)
-                _clan.broadcastToOnlineMembers(new PledgeShowMemberListUpdate(this));
+                _clan.broadcastToMembers(new PledgeShowMemberListUpdate(this));
 
             if (Config.AUTO_LEARN_SKILLS && getStatus().getLevel() <= Config.LVL_AUTO_LEARN_SKILLS)
                 rewardSkills();

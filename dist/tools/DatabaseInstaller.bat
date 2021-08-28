@@ -46,6 +46,7 @@ echo Installing tables.
 %mysqlPath% -h %gameServerHost% -u %gameServerUser% --password=%gameServerPassword% -D %gameDatabase% < ./sql/game/buffer_schemes.sql
 %mysqlPath% -h %gameServerHost% -u %gameServerUser% --password=%gameServerPassword% -D %gameDatabase% < ./sql/game/buylists.sql
 %mysqlPath% -h %gameServerHost% -u %gameServerUser% --password=%gameServerPassword% -D %gameDatabase% < ./sql/game/castle_doorupgrade.sql
+%mysqlPath% -h %gameServerHost% -u %gameServerUser% --password=%gameServerPassword% -D %gameDatabase% < ./sql/castle_functions.sql
 %mysqlPath% -h %gameServerHost% -u %gameServerUser% --password=%gameServerPassword% -D %gameDatabase% < ./sql/game/castle_manor_procure.sql
 %mysqlPath% -h %gameServerHost% -u %gameServerUser% --password=%gameServerPassword% -D %gameDatabase% < ./sql/game/castle_manor_production.sql
 %mysqlPath% -h %gameServerHost% -u %gameServerUser% --password=%gameServerPassword% -D %gameDatabase% < ./sql/game/castle_trapupgrade.sql

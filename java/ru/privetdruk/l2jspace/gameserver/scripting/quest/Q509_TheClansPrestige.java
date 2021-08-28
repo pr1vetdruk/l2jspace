@@ -145,7 +145,7 @@ public class Q509_TheClansPrestige extends Quest {
                     takeItems(player, item, 1);
                     clan.addReputationScore(reward);
                     player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CLAN_QUEST_COMPLETED_AND_S1_POINTS_GAINED).addNumber(reward));
-                    clan.broadcastToOnlineMembers(new PledgeShowInfoUpdate(clan));
+                    clan.broadcastToMembers(new PledgeShowInfoUpdate(clan));
                 }
                 break;
         }

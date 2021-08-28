@@ -35,13 +35,13 @@ public final class RequestWithdrawPledge extends L2GameClientPacket {
         }
 
         clan.removeClanMember(player.getObjectId(), System.currentTimeMillis() + Config.CLAN_JOIN_DAYS * 86400000L);
-        clan.broadcastToOnlineMembers(SystemMessage.getSystemMessage(SystemMessageId.S1_HAS_WITHDRAWN_FROM_THE_CLAN).addCharName(player));
+        clan.broadcastToMembers(SystemMessage.getSystemMessage(SystemMessageId.S1_HAS_WITHDRAWN_FROM_THE_CLAN).addCharName(player));
 
         // Remove the player from the members list.
         if (clan.isSubPledgeLeader(player.getObjectId()))
             clan.broadcastClanStatus(); // refresh list
         else
-            clan.broadcastToOnlineMembers(new PledgeShowMemberListDelete(player.getName()));
+            clan.broadcastToMembers(new PledgeShowMemberListDelete(player.getName()));
 
         player.sendPacket(SystemMessageId.YOU_HAVE_WITHDRAWN_FROM_CLAN);
         player.sendPacket(SystemMessageId.YOU_MUST_WAIT_BEFORE_JOINING_ANOTHER_CLAN);

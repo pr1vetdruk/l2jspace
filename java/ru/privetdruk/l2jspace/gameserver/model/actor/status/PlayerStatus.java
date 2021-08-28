@@ -587,7 +587,7 @@ public class PlayerStatus extends PlayableStatus<Player> {
             if (member != null)
                 member.refreshLevel();
 
-            clan.broadcastToOnlineMembers(new PledgeShowMemberListUpdate(_actor));
+            clan.broadcastToMembers(new PledgeShowMemberListUpdate(_actor));
         }
 
         // Recalculate the party level

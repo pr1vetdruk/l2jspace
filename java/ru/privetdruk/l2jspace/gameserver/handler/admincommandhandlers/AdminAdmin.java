@@ -19,6 +19,7 @@ import ru.privetdruk.l2jspace.gameserver.model.AdminCommand;
 import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Door;
 import ru.privetdruk.l2jspace.gameserver.model.buylist.NpcBuyList;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.model.location.WalkerLocation;
@@ -129,11 +130,22 @@ public class AdminAdmin implements IAdminCommandHandler {
             } else if (command.startsWith("admin_show")) {
                 final Creature targetCreature = getTargetCreature(player, true);
 
+                ExServerPrimitive debug;
+
                 try {
                     switch (st.nextToken().toLowerCase()) {
                         case "clear":
                             if (targetCreature instanceof Player)
                                 ((Player) targetCreature).clearDebugPackets();
+                            break;
+                        case "door":
+                            debug = player.getDebugPacket("DOOR");
+                            debug.reset();
+
+                            for (Door door : player.getKnownType(Door.class))
+                                door.getTemplate().visualizeDoor(debug);
+
+                            debug.sendTo(player);
                             break;
 
                         case "html":
@@ -159,16 +171,16 @@ public class AdminAdmin implements IAdminCommandHandler {
                                 // Clear debug move packet to all GMs.
                                 World.getInstance().getPlayers().stream().filter(Player::isGM).forEach(p ->
                                 {
-                                    final ExServerPrimitive debug = p.getDebugPacket("MOVE" + targetCreature.getObjectId());
-                                    debug.reset();
-                                    debug.sendTo(p);
+                                    final ExServerPrimitive debugMove = p.getDebugPacket("MOVE" + targetCreature.getObjectId());
+                                    debugMove.reset();
+                                    debugMove.sendTo(p);
                                 });
 
                                 // Clear debug move packet to self.
                                 if (targetCreature instanceof Player) {
-                                    final ExServerPrimitive debug = ((Player) targetCreature).getDebugPacket("MOVE" + targetCreature.getObjectId());
-                                    debug.reset();
-                                    debug.sendTo((Player) targetCreature);
+                                    final ExServerPrimitive debugMove = ((Player) targetCreature).getDebugPacket("MOVE" + targetCreature.getObjectId());
+                                    debugMove.reset();
+                                    debugMove.sendTo((Player) targetCreature);
                                 }
                             }
                             break;
@@ -190,18 +202,17 @@ public class AdminAdmin implements IAdminCommandHandler {
                                     targetCreature.sendMessage("Debug path was disabled.");
 
                                 // Clear debug move packet to all GMs.
-                                World.getInstance().getPlayers().stream().filter(Player::isGM).forEach(p ->
-                                {
-                                    final ExServerPrimitive debug = p.getDebugPacket("PATH" + targetCreature.getObjectId());
-                                    debug.reset();
-                                    debug.sendTo(p);
+                                World.getInstance().getPlayers().stream().filter(Player::isGM).forEach(p -> {
+                                    final ExServerPrimitive debugPath = p.getDebugPacket("PATH" + targetCreature.getObjectId());
+                                    debugPath.reset();
+                                    debugPath.sendTo(p);
                                 });
 
                                 // Clear debug move packet to self.
                                 if (targetCreature instanceof Player) {
-                                    final ExServerPrimitive debug = ((Player) targetCreature).getDebugPacket("PATH" + targetCreature.getObjectId());
-                                    debug.reset();
-                                    debug.sendTo((Player) targetCreature);
+                                    final ExServerPrimitive debugPath = ((Player) targetCreature).getDebugPacket("PATH" + targetCreature.getObjectId());
+                                    debugPath.reset();
+                                    debugPath.sendTo((Player) targetCreature);
                                 }
                             }
                             break;
@@ -219,7 +230,7 @@ public class AdminAdmin implements IAdminCommandHandler {
                                 return;
                             }
 
-                            final ExServerPrimitive debug = player.getDebugPacket("WALKER");
+                            debug = player.getDebugPacket("WALKER");
                             debug.reset();
 
                             // Draw the path.
@@ -234,11 +245,11 @@ public class AdminAdmin implements IAdminCommandHandler {
                             break;
 
                         default:
-                            player.sendMessage("Usage : //show <clear|html|move|path|walker>");
+                            player.sendMessage("Usage : //show <clear|door|html|move|path|walker>");
                             break;
                     }
                 } catch (Exception e) {
-                    player.sendMessage("Usage : //show <clear|html|move|path|walker>");
+                    player.sendMessage("Usage : //show <clear|door|html|move|path|walker>");
                 }
             }
         }

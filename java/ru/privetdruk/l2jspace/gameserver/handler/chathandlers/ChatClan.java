@@ -18,7 +18,7 @@ public class ChatClan implements IChatHandler {
         if (clan == null)
             return;
 
-        clan.broadcastToOnlineMembers(new CreatureSay(player, type, text));
+        clan.broadcastToMembers(new CreatureSay(player, type, text));
     }
 
     @Override

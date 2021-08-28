@@ -3,6 +3,7 @@ package ru.privetdruk.l2jspace.common.mmocore;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.channels.SelectionKey;
@@ -197,14 +198,18 @@ public final class SelectorThread<T extends MMOClient<?>> extends Thread {
 
         try {
             while ((sc = ssc.accept()) != null) {
-                if (_acceptFilter == null || _acceptFilter.accept(sc)) {
+                final Socket socket = sc.socket();
+                if (_acceptFilter == null || _acceptFilter.accept(socket)) {
                     sc.configureBlocking(false);
-                    SelectionKey clientKey = sc.register(_selector, SelectionKey.OP_READ);
+
+                    final SelectionKey clientKey = sc.register(_selector, SelectionKey.OP_READ);
+
                     con = new MMOConnection<>(this, sc.socket(), clientKey, TCP_NODELAY);
                     con.setClient(_clientFactory.create(con));
+
                     clientKey.attach(con);
                 } else
-                    sc.socket().close();
+                    socket.close();
             }
         } catch (IOException e) {
             e.printStackTrace();

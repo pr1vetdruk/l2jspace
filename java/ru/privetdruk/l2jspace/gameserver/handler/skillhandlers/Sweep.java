@@ -32,27 +32,24 @@ public class Sweep implements ISkillHandler {
 
             Monster monster = ((Monster) target);
 
-            if (monster.getSpoilState().getSpoilerId() == player.getObjectId()) {
-                List<IntIntHolder> items = monster.getSpoilState();
-                if (items.isEmpty()) {
-                    continue;
-                }
+            final List<IntIntHolder> items = monster.getSpoilState();
+            if (items.isEmpty())
+                continue;
 
-                // Reward spoiler, based on sweep items retained on List.
-                for (IntIntHolder item : items) {
-                    if (player.isInParty()) {
-                        player.getParty().distributeItem(player, item, true, monster);
-                    } else {
-                        player.addItem("Sweep", item.getId(), item.getValue(), player, true);
-                    }
-                }
-
-                // Reset variables.
-                monster.getSpoilState().clear();
+            // Reward spoiler, based on sweep items retained on List.
+            for (IntIntHolder item : items) {
+                if (player.isInParty())
+                    player.getParty().distributeItem(player, item, true, monster);
+                else
+                    player.addItem("Sweep", item.getId(), item.getValue(), player, true);
             }
 
-            monster.endDecayTask();
+            // Reset variables.
+            monster.getSpoilState().clear();
         }
+
+        if (skill.hasSelfEffects())
+            skill.getEffectsSelf(activeChar);
     }
 
     @Override

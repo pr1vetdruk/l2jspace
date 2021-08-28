@@ -105,7 +105,7 @@ public class VillageMaster extends Folk {
 
             subPledge.setName(cmdParams2);
             clan.updateSubPledgeInDB(subPledge);
-            clan.broadcastToOnlineMembers(new PledgeShowMemberListAll(clan, subPledge.getId()));
+            clan.broadcastToMembers(new PledgeShowMemberListAll(clan, subPledge.getId()));
             player.sendMessage("Pledge name have been changed to: " + cmdParams2);
         } else if (actualCommand.equalsIgnoreCase("create_royal")) {
             if (cmdParams.isEmpty())
@@ -724,7 +724,7 @@ public class VillageMaster extends Folk {
             leaderPlayer.sendPacket(new UserInfo(leaderPlayer));
         }
 
-        clan.broadcastToOnlineMembers(new PledgeShowMemberListAll(clan, subPledge.getId()), SystemMessage.getSystemMessage(SystemMessageId.S1_HAS_BEEN_SELECTED_AS_CAPTAIN_OF_S2).addString(leaderName).addString(clanName));
+        clan.broadcastToMembers(new PledgeShowMemberListAll(clan, subPledge.getId()), SystemMessage.getSystemMessage(SystemMessageId.S1_HAS_BEEN_SELECTED_AS_CAPTAIN_OF_S2).addString(leaderName).addString(clanName));
     }
 
     public static final void showPledgeSkillList(Player player) {

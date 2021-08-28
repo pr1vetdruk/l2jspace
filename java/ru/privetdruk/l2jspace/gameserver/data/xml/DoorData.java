@@ -24,6 +24,7 @@ import ru.privetdruk.l2jspace.gameserver.model.entity.Castle;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
+import ru.privetdruk.l2jspace.gameserver.model.location.Point2D;
 
 /**
  * This class loads and stores {@link Door}s.<br>
@@ -59,26 +60,22 @@ public class DoorData implements IXmlReader {
                 set.set("posZ", parseInteger(attrs, "z"));
             });
 
-            final List<int[]> coords = new ArrayList<>();
+            final List<Point2D> coords = new ArrayList<>();
             forEach(doorNode, "coordinates", coordinatesNode -> forEach(coordinatesNode, "loc", locNode ->
             {
                 final NamedNodeMap attrs = locNode.getAttributes();
-                coords.add(new int[]
-                        {
-                                parseInteger(attrs, "x"),
-                                parseInteger(attrs, "y")
-                        });
+                coords.add(new Point2D(parseInteger(attrs, "x"), parseInteger(attrs, "y")));
             }));
 
             int minX = Integer.MAX_VALUE;
             int maxX = Integer.MIN_VALUE;
             int minY = Integer.MAX_VALUE;
             int maxY = Integer.MIN_VALUE;
-            for (final int[] coord : coords) {
-                minX = Math.min(minX, coord[0]);
-                maxX = Math.max(maxX, coord[0]);
-                minY = Math.min(minY, coord[1]);
-                maxY = Math.max(maxY, coord[1]);
+            for (final Point2D coord : coords) {
+                minX = Math.min(minX, coord.getX());
+                maxX = Math.max(maxX, coord.getX());
+                minY = Math.min(minY, coord.getY());
+                maxY = Math.max(maxY, coord.getY());
             }
 
             if (World.isOutOfWorld(minX, maxX, minY, maxY)) {
@@ -135,6 +132,7 @@ public class DoorData implements IXmlReader {
             set.set("geoY", y);
             set.set("geoZ", geoZ);
             set.set("geoData", GeoEngine.calculateGeoObject(inside));
+            set.set("coords", coords.toArray(Point2D[]::new));
             set.set("pAtk", 0);
             set.set("mAtk", 0);
             set.set("runSpd", 0);

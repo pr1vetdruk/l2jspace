@@ -37,7 +37,7 @@ public class Attackable extends Npc {
 
     private final Set<Creature> _attackedBy = ConcurrentHashMap.newKeySet();
 
-    private boolean _isReturningToSpawnPoint;
+    private final ReturnHomeAI _returnHomeData = new ReturnHomeAI(this);
     private boolean _seeThroughSilentMove;
     private boolean _isNoRndWalk;
 
@@ -190,7 +190,6 @@ public class Attackable extends Npc {
             return false;
         }
 
-        // FIXME Minions are simply squeezed if they lose activity.
         if (isMinion() && !isRaidRelated()) {
             if (getAggroList().isEmpty()) {
                 ThreadPool.schedule(this::deleteMe, 10000);
@@ -204,8 +203,6 @@ public class Attackable extends Npc {
             _aggroList.cleanAllHate();
 
             setIsReturningToSpawnPoint(true);
-            forceWalkStance();
-            getAI().tryToMoveTo(getSpawn().getLoc(), null);
 
             return true;
         }
@@ -226,11 +223,14 @@ public class Attackable extends Npc {
     }
 
     public final boolean isReturningToSpawnPoint() {
-        return _isReturningToSpawnPoint;
+        return _returnHomeData.isReturningHome();
     }
 
     public final void setIsReturningToSpawnPoint(boolean value) {
-        _isReturningToSpawnPoint = value;
+        if (value)
+            _returnHomeData.startReturningHome();
+        else
+            _returnHomeData.stopReturningHome();
     }
 
     public boolean canSeeThroughSilentMove() {

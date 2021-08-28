@@ -152,6 +152,12 @@ public class Shutdown extends Thread {
             ItemsOnGroundTaskManager.getInstance().save();
 
             try {
+                Thread.sleep(5000);
+            } catch (Exception e) {
+                // Silent catch.
+            }
+
+            try {
                 GameServer.getInstance().getSelectorThread().shutdown();
             } catch (Exception e) {
                 // Silent catch.

@@ -56,9 +56,9 @@ public final class RequestOustPledgeMember extends L2GameClientPacket {
         if (clan.isSubPledgeLeader(member.getObjectId()))
             clan.broadcastClanStatus(); // refresh clan tab
         else
-            clan.broadcastToOnlineMembers(new PledgeShowMemberListDelete(_targetName));
+            clan.broadcastToMembers(new PledgeShowMemberListDelete(_targetName));
 
-        clan.broadcastToOnlineMembers(SystemMessage.getSystemMessage(SystemMessageId.CLAN_MEMBER_S1_EXPELLED).addString(member.getName()));
+        clan.broadcastToMembers(SystemMessage.getSystemMessage(SystemMessageId.CLAN_MEMBER_S1_EXPELLED).addString(member.getName()));
         player.sendPacket(SystemMessageId.YOU_HAVE_SUCCEEDED_IN_EXPELLING_CLAN_MEMBER);
         player.sendPacket(SystemMessageId.YOU_MUST_WAIT_BEFORE_ACCEPTING_A_NEW_MEMBER);
 

@@ -3231,7 +3231,7 @@ public class FestivalOfDarknessManager {
                     _festivalCycle = rs.getInt("festival_cycle");
 
                     for (int i = 0; i < FESTIVAL_COUNT; i++)
-                        _accumulatedBonuses.add(i, rs.getInt("accumulated_bonus" + String.valueOf(i)));
+                        _accumulatedBonuses.add(i, rs.getInt("accumulated_bonus" + i));
                 }
             }
         } catch (Exception e) {
@@ -3302,7 +3302,11 @@ public class FestivalOfDarknessManager {
         if (player != null) {
             if (player.getClan() != null) {
                 player.getClan().addReputationScore(100);
-                player.getClan().broadcastToOnlineMembers(SystemMessage.getSystemMessage(SystemMessageId.CLAN_MEMBER_S1_WAS_IN_HIGHEST_RANKED_PARTY_IN_FESTIVAL_OF_DARKNESS_AND_GAINED_S2_REPUTATION).addString(playerName).addNumber(100));
+                player.getClan().broadcastToMembers(
+                        SystemMessage.getSystemMessage(SystemMessageId.CLAN_MEMBER_S1_WAS_IN_HIGHEST_RANKED_PARTY_IN_FESTIVAL_OF_DARKNESS_AND_GAINED_S2_REPUTATION)
+                                .addString(playerName)
+                                .addNumber(100)
+                );
             }
         } else {
             try (Connection con = ConnectionPool.getConnection();
@@ -3316,7 +3320,11 @@ public class FestivalOfDarknessManager {
                             final Clan clan = ClanTable.getInstance().getClanByName(clanName);
                             if (clan != null) {
                                 clan.addReputationScore(100);
-                                clan.broadcastToOnlineMembers(SystemMessage.getSystemMessage(SystemMessageId.CLAN_MEMBER_S1_WAS_IN_HIGHEST_RANKED_PARTY_IN_FESTIVAL_OF_DARKNESS_AND_GAINED_S2_REPUTATION).addString(playerName).addNumber(100));
+                                clan.broadcastToMembers(
+                                        SystemMessage.getSystemMessage(SystemMessageId.CLAN_MEMBER_S1_WAS_IN_HIGHEST_RANKED_PARTY_IN_FESTIVAL_OF_DARKNESS_AND_GAINED_S2_REPUTATION)
+                                                .addString(playerName)
+                                                .addNumber(100)
+                                );
                             }
                         }
                     }
@@ -3652,9 +3660,8 @@ public class FestivalOfDarknessManager {
             set.set("score", offeringScore);
             set.set("members", String.join(",", partyMembers));
 
-            // Only add the score to the cabal's overall if it's higher than the other cabal's score. Give this cabal the festival points, while deducting them from the other.
-            if (offeringScore > otherCabalHighScore)
-                SevenSignsManager.getInstance().addFestivalScore(oracle, festival.getMaxScore());
+            // Add the festival score to the cabal' score.
+            SevenSignsManager.getInstance().addFestivalScore(oracle, festival.getMaxScore());
 
             saveFestivalData(true);
 
@@ -4129,42 +4136,45 @@ public class FestivalOfDarknessManager {
          * @param spawnType
          */
         protected void spawnFestivalMonsters(int respawnDelay, int spawnType) {
-            int[][] _npcSpawns = switch (spawnType) {
-                case 0, 1 -> _npcSpawns = (_cabal == CabalType.DAWN) ? FESTIVAL_DAWN_PRIMARY_SPAWNS[_levelRange] : FESTIVAL_DUSK_PRIMARY_SPAWNS[_levelRange];
-                case 2 -> _npcSpawns = (_cabal == CabalType.DAWN) ? FESTIVAL_DAWN_SECONDARY_SPAWNS[_levelRange] : FESTIVAL_DUSK_SECONDARY_SPAWNS[_levelRange];
-                case 3 -> _npcSpawns = (_cabal == CabalType.DAWN) ? FESTIVAL_DAWN_CHEST_SPAWNS[_levelRange] : FESTIVAL_DUSK_CHEST_SPAWNS[_levelRange];
+            int[][] npcSpawns = switch (spawnType) {
+                case 0, 1 -> (_cabal == CabalType.DAWN) ? FESTIVAL_DAWN_PRIMARY_SPAWNS[_levelRange] : FESTIVAL_DUSK_PRIMARY_SPAWNS[_levelRange];
+                case 2 -> (_cabal == CabalType.DAWN) ? FESTIVAL_DAWN_SECONDARY_SPAWNS[_levelRange] : FESTIVAL_DUSK_SECONDARY_SPAWNS[_levelRange];
+                case 3 -> (_cabal == CabalType.DAWN) ? FESTIVAL_DAWN_CHEST_SPAWNS[_levelRange] : FESTIVAL_DUSK_CHEST_SPAWNS[_levelRange];
                 default -> new int[0][0];
             };
 
-            if (_npcSpawns != null) {
-                for (int[] _npcSpawn : _npcSpawns) {
-                    FestivalSpawn currSpawn = new FestivalSpawn(_npcSpawn);
+            if (npcSpawns == null) {
+                return;
+            }
 
-                    // Only spawn archers/marksmen if specified to do so.
-                    if (spawnType == 1 && isFestivalArcher(currSpawn._npcId))
-                        continue;
+            for (int[] npcSpawn : npcSpawns) {
+                FestivalSpawn currSpawn = new FestivalSpawn(npcSpawn);
 
-                    try {
-                        final Spawn spawn = new Spawn(currSpawn._npcId);
-                        spawn.setLoc(currSpawn._x, currSpawn._y, currSpawn._z, Rnd.get(65536));
-                        spawn.setRespawnDelay(respawnDelay);
-                        spawn.setRespawnState(true);
+                // Only spawn archers/marksmen if specified to do so.
+                if (spawnType == 1 && isFestivalArcher(currSpawn._npcId))
+                    continue;
 
-                        SpawnTable.getInstance().addSpawn(spawn, false);
-                        FestivalMonster festivalMob = (FestivalMonster) spawn.doSpawn(false);
+                try {
+                    final Spawn spawn = new Spawn(currSpawn._npcId);
+                    spawn.setLoc(currSpawn._x, currSpawn._y, currSpawn._z, Rnd.get(65536));
+                    spawn.setRespawnDelay(respawnDelay);
+                    spawn.setRespawnState(true);
 
-                        // Set the offering bonus to 2x or 5x the amount per kill, if this spawn is part of an increased challenge or is a festival chest.
-                        if (spawnType == 1)
-                            festivalMob.setOfferingBonus(2);
-                        else if (spawnType == 3)
-                            festivalMob.setOfferingBonus(5);
+                    SpawnTable.getInstance().addSpawn(spawn, false);
+                    FestivalMonster festivalMob = (FestivalMonster) spawn.doSpawn(false);
 
-                        _npcInsts.add(festivalMob);
-                    } catch (Exception e) {
-                        LOGGER.error("Couldn't properly spawn Npc {}.", e, currSpawn._npcId);
-                    }
+                    // Set the offering bonus to 2x or 5x the amount per kill, if this spawn is part of an increased challenge or is a festival chest.
+                    if (spawnType == 1)
+                        festivalMob.setOfferingBonus(2);
+                    else if (spawnType == 3)
+                        festivalMob.setOfferingBonus(5);
+
+                    _npcInsts.add(festivalMob);
+                } catch (Exception e) {
+                    LOGGER.error("Couldn't properly spawn Npc {}.", e, currSpawn._npcId);
                 }
             }
+
         }
 
         protected boolean increaseChallenge() {
