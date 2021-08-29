@@ -54,7 +54,8 @@ public class AttackableAIScript extends Quest {
         // register all mobs here...
         for (final NpcTemplate template : NpcData.getInstance().getAllNpcs()) {
             try {
-                if (Attackable.class.isAssignableFrom(Class.forName(ACTOR_INSTANCE_PACKAGE + template.getType()))) {
+                Class<?> aClass = Class.forName(NpcData.getNpcInstancePackage(template.getNpcId()) + template.getType());
+                if (Attackable.class.isAssignableFrom(aClass)) {
                     template.addQuestEvent(ScriptEventType.ON_ATTACK, this);
                     template.addQuestEvent(ScriptEventType.ON_KILL, this);
                     template.addQuestEvent(ScriptEventType.ON_SPAWN, this);

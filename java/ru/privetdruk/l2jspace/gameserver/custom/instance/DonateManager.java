@@ -1,4 +1,4 @@
-package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
+package ru.privetdruk.l2jspace.gameserver.custom.instance;
 
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 import ru.privetdruk.l2jspace.config.Config;
@@ -7,6 +7,7 @@ import ru.privetdruk.l2jspace.gameserver.data.sql.PlayerInfoTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.MultisellData;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.Sex;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Merchant;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PledgeSkillList;
@@ -21,10 +22,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-public class Service extends Merchant {
+public class DonateManager extends Merchant {
     private static final String UPDATE_PREMIUMSERVICE = "REPLACE INTO account_premium (premium_service,enddate,account_name) values(?,?,?)";
 
-    public Service(int objectId, NpcTemplate template) {
+    public DonateManager(int objectId, NpcTemplate template) {
         super(objectId, template);
     }
 
