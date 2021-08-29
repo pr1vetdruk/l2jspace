@@ -33,4 +33,15 @@ public class EventConfig {
         public static int DELAY_BEFORE_REVIVE;
         public static boolean ANNOUNCE_TEAM_STATS;
     }
+
+    public static class LastEmperor {
+        public static final String PROPERTIES = "./config/custom/event/last-emperor.properties";
+        public static boolean ENABLED;
+        public static String[] LAUNCH_TIMES;
+        public static EventTeamType TEAM_MODE;
+        public static boolean UNSUMMON_PET;
+        public static boolean REMOVE_ALL_EFFECTS;
+        public static boolean JOIN_CURSED_WEAPON;
+        public static boolean REMOVE_BUFFS_ON_DIE;
+    }
 }

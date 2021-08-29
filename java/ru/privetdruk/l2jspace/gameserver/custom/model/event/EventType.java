@@ -5,6 +5,7 @@ import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 public enum EventType {
     NONE(false, null),
     CTF(true, ru.privetdruk.l2jspace.gameserver.custom.event.CTF.class),
+    LAST_EMPEROR(false, ru.privetdruk.l2jspace.gameserver.custom.event.LastEmperor.class),
     TVT(true, null),
     DM(false, null);
 

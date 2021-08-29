@@ -37,4 +37,6 @@ INSERT INTO event (id, type, loading_order, name, description, registration_loca
 VALUES (1, 'CTF', 1, 'CTF 1', 'Battle for Shutgartt', 'Giran', 1, 80, 50009, 82580, 148552, -3468, 16972,
         8752, 1, 2, 5, 5, 2, 50, 300000),
        (2, 'CTF', 2, 'CTF 2', 'Battle for Giran', 'Giran', 1, 80, 50009, 82580, 148552, -3468, 16972, 8752,
-        1, 2, 5, 5, 2, 50, 300000);
+        1, 2, 5, 5, 2, 50, 300000),
+       (3, 'LAST_EMPEROR', 1, 'Last Emperor', 'Последний император', 'Giran', 1, 80, 50009, 82580, 148552, -3468, 16972, 8752,
+        1, 1, 5, 5, 2, 50, 300000);

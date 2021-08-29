@@ -1444,6 +1444,16 @@ public final class Config {
         EventConfig.CTF.REMOVE_BUFFS_ON_DIE = ctf.getProperty("RemoveBuffsOnDie", false);
         EventConfig.CTF.DELAY_BEFORE_REVIVE = ctf.getProperty("DelayBeforeRevive", 20);
         EventConfig.CTF.ANNOUNCE_TEAM_STATS = ctf.getProperty("AnnounceTeamStats", true);
+
+        ExProperties lastEmperor = initProperties(EventConfig.LastEmperor.PROPERTIES);
+
+        EventConfig.LastEmperor.ENABLED = lastEmperor.getProperty("Enabled", false);
+        EventConfig.LastEmperor.LAUNCH_TIMES = lastEmperor.getProperty("LaunchTimes", "").split(";");
+        EventConfig.LastEmperor.TEAM_MODE = EventTeamType.valueOf(lastEmperor.getProperty("TeamMode", EventTeamType.SHUFFLE.name()));
+        EventConfig.LastEmperor.UNSUMMON_PET = lastEmperor.getProperty("UnsummonPet", true);
+        EventConfig.LastEmperor.REMOVE_ALL_EFFECTS = lastEmperor.getProperty("RemoveAllEffects", false);
+        EventConfig.LastEmperor.JOIN_CURSED_WEAPON = lastEmperor.getProperty("JoinCursedWeapon", false);
+        EventConfig.LastEmperor.REMOVE_BUFFS_ON_DIE = lastEmperor.getProperty("RemoveBuffsOnDie", false);
     }
 
     private static void loadAddon() {

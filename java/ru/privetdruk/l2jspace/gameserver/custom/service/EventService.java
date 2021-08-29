@@ -28,6 +28,10 @@ public class EventService {
         if (EventConfig.CTF.ENABLED) {
             load(EventType.CTF, EventConfig.CTF.LAUNCH_TIMES);
         }
+
+        if (EventConfig.LastEmperor.ENABLED) {
+            load(EventType.LAST_EMPEROR, EventConfig.LastEmperor.LAUNCH_TIMES);
+        }
     }
 
     private void load(EventType eventType, String[] times) {
