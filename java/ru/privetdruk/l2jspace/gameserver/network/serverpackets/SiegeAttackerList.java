@@ -1,10 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.model.clanhall.SiegableHall;
 import ru.privetdruk.l2jspace.gameserver.model.entity.Castle;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
+
+import java.util.List;
 
 public class SiegeAttackerList extends L2GameServerPacket {
     private final int _id;

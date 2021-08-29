@@ -1,10 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Superclass for all second class quests.<br>

@@ -1,9 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.status;
 
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ClanHallManager;
@@ -35,16 +32,11 @@ import ru.privetdruk.l2jspace.gameserver.model.pledge.ClanMember;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.MotherTreeZone;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.SwampZone;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExDuelUpdateUserInfo;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PartySmallWindowUpdate;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PledgeShowMemberListUpdate;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.StatusUpdate;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.UserInfo;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.Map;
 
 public class PlayerStatus extends PlayableStatus<Player> {
     private double _cp = .0;
@@ -114,11 +106,8 @@ public class PlayerStatus extends PlayableStatus<Player> {
             _actor.stopEffects(EffectType.SLEEP);
             _actor.stopEffects(EffectType.IMMOBILE_UNTIL_ATTACKED);
 
-            if (!_actor.isInWater()) {
-                if (_actor.isCrafting() || _actor.isInStoreMode())
-                    return;
-                else if (_actor.isSitting())
-                    _actor.standUp();
+            if (_actor.isSitting() && !_actor.isInStoreMode()) {
+                _actor.standUp();
             }
 
             if (!isDOT && _actor.isStunned() && Rnd.get(10) == 0) {

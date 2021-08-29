@@ -1,9 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
-import java.util.concurrent.Future;
-
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
@@ -12,6 +9,8 @@ import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.concurrent.Future;
 
 public class SiegeFlag extends Npc {
     private final Clan _clan;
@@ -73,5 +72,10 @@ public class SiegeFlag extends Npc {
 
     @Override
     public void addFunctionsToNewCharacter() {
+    }
+
+    @Override
+    public boolean canBeHealed() {
+        return false;
     }
 }

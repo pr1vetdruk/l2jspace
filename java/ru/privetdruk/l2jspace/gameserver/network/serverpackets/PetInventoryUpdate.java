@@ -1,12 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.enums.items.ItemState;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInfo;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PetInventoryUpdate extends L2GameServerPacket {
     private final List<ItemInfo> _items;

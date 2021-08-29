@@ -1,9 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.Set;
-
 import ru.privetdruk.l2jspace.gameserver.data.sql.ClanTable;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
+
+import java.util.Set;
 
 public class PledgeReceiveWarList extends L2GameServerPacket {
     private final Set<Integer> _clanList;

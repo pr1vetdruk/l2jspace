@@ -1,11 +1,11 @@
 package ru.privetdruk.l2jspace.loginserver;
 
+import ru.privetdruk.l2jspace.config.Config;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-
-import ru.privetdruk.l2jspace.config.Config;
 
 public class GameServerListener extends FloodProtectedListener {
     private static List<GameServerThread> _gameServers = new ArrayList<>();

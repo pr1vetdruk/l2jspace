@@ -1,14 +1,13 @@
 package ru.privetdruk.l2jspace.gameserver.data.manager;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
-
 import ru.privetdruk.l2jspace.gameserver.enums.CabalType;
 import ru.privetdruk.l2jspace.gameserver.enums.PeriodType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SevenSignsSpawnManager {
     private static final CLogger LOGGER = new CLogger(SevenSignsSpawnManager.class.getName());

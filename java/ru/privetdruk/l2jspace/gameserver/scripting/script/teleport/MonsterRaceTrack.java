@@ -1,12 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.teleport;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MonsterRaceTrack extends Quest {
     private static final int RACE_MANAGER = 30995;

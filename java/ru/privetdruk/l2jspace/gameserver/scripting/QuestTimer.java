@@ -1,12 +1,11 @@
 package ru.privetdruk.l2jspace.gameserver.scripting;
 
-import java.util.Objects;
-import java.util.concurrent.ScheduledFuture;
-
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+
+import java.util.Objects;
+import java.util.concurrent.ScheduledFuture;
 
 public class QuestTimer {
     private final Quest _quest;

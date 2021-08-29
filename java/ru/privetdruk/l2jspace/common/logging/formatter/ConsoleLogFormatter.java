@@ -1,10 +1,10 @@
 package ru.privetdruk.l2jspace.common.logging.formatter;
 
+import ru.privetdruk.l2jspace.common.logging.MasterFormatter;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.logging.LogRecord;
-
-import ru.privetdruk.l2jspace.common.logging.MasterFormatter;
 
 public class ConsoleLogFormatter extends MasterFormatter {
     @Override

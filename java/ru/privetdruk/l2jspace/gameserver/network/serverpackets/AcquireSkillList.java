@@ -1,13 +1,13 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.enums.skills.AcquireSkillType;
 import ru.privetdruk.l2jspace.gameserver.model.holder.skillnode.ClanSkillNode;
 import ru.privetdruk.l2jspace.gameserver.model.holder.skillnode.FishingSkillNode;
 import ru.privetdruk.l2jspace.gameserver.model.holder.skillnode.GeneralSkillNode;
 import ru.privetdruk.l2jspace.gameserver.model.holder.skillnode.SkillNode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class AcquireSkillList extends L2GameServerPacket {
     private List<? extends SkillNode> _skills;

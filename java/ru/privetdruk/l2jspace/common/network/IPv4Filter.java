@@ -1,10 +1,10 @@
 package ru.privetdruk.l2jspace.common.network;
 
-import java.nio.channels.SocketChannel;
+import ru.privetdruk.l2jspace.common.mmocore.IAcceptFilter;
+
+import java.net.Socket;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import ru.privetdruk.l2jspace.common.mmocore.IAcceptFilter;
 
 public class IPv4Filter implements IAcceptFilter, Runnable {
     private static final long SLEEP_TIME = 5000;
@@ -19,8 +19,8 @@ public class IPv4Filter implements IAcceptFilter, Runnable {
     }
 
     @Override
-    public boolean accept(SocketChannel sc) {
-        final int hash = hash(sc.socket().getInetAddress().getAddress());
+    public boolean accept(Socket socket) {
+        final int hash = hash(socket.getInetAddress().getAddress());
 
         final FloodHolder flood = _floods.get(hash);
         if (flood != null) {

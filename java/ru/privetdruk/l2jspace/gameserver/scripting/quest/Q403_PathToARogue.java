@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassId;
@@ -75,7 +74,9 @@ public class Q403_PathToARogue extends Quest {
             st.setCond(1);
             playSound(player, SOUND_ACCEPT);
             giveItems(player, BEZIQUE_LETTER, 1);
-        } else if (event.equalsIgnoreCase("30425-05.htm")) { // Neti
+        }
+        // Neti
+        else if (event.equalsIgnoreCase("30425-05.htm")) {
             st.setCond(2);
             playSound(player, SOUND_MIDDLE);
             takeItems(player, BEZIQUE_LETTER, 1);
@@ -154,19 +155,17 @@ public class Q403_PathToARogue extends Quest {
     @Override
     public String onAttack(Npc npc, Creature attacker, int damage, L2Skill skill) {
         // Attack condition already failed, skip other checks.
-        int condition = npc.getScriptValue();
-        if (condition < 0) {
+        final int condition = npc.getScriptValue();
+        if (condition < 0)
             return null;
-        }
 
         // Attacker must be player with started quest.
-        Player player = attacker.getActingPlayer();
-        if (player == null || checkPlayerState(player, npc, QuestStatus.STARTED) == null) {
+        final Player player = attacker.getActingPlayer();
+        if (player == null || checkPlayerState(player, npc, QuestStatus.STARTED) == null)
             return null;
-        }
 
         // Player must use Neti's Bow or Neti's Dagger, otherwise mark invalid attack condition.
-        int equippedItemId = player.getInventory().getItemIdFrom(Paperdoll.RHAND);
+        final int equippedItemId = player.getInventory().getItemIdFrom(Paperdoll.RHAND);
         if (equippedItemId != NETI_BOW && equippedItemId != NETI_DAGGER) {
             npc.setScriptValue(-1);
             return null;
@@ -195,9 +194,10 @@ public class Q403_PathToARogue extends Quest {
         if (st == null || npc.getScriptValue() < 0)
             return null;
 
-
         switch (npc.getNpcId()) {
-            case TRACKER_SKELETON, SCOUT_SKELETON, SNIPER_SKELETON:
+            case TRACKER_SKELETON:
+            case SCOUT_SKELETON:
+            case SNIPER_SKELETON:
                 if (st.getCond() == 2 && dropItems(player, SPARTOI_BONES, 1, 10, 200000))
                     st.setCond(3);
                 break;
@@ -207,7 +207,8 @@ public class Q403_PathToARogue extends Quest {
                     st.setCond(3);
                 break;
 
-            case RUIN_SPARTOI, RAGING_SPARTOI:
+            case RUIN_SPARTOI:
+            case RAGING_SPARTOI:
                 if (st.getCond() == 2 && dropItems(player, SPARTOI_BONES, 1, 10, 800000))
                     st.setCond(3);
                 break;

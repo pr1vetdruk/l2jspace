@@ -1,16 +1,15 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
 import ru.privetdruk.l2jspace.gameserver.data.sql.PlayerInfoTable;
 import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.L2Friend;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 public final class RequestFriendDel extends L2GameClientPacket {
     private static final String DELETE_FRIEND = "DELETE FROM character_friends WHERE (char_id = ? AND friend_id = ?) OR (char_id = ? AND friend_id = ?)";

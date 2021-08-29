@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.handler.skillhandlers;
 
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.manager.DuelManager;
 import ru.privetdruk.l2jspace.gameserver.enums.AiEventType;

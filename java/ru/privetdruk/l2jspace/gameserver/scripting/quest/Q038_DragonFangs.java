@@ -1,16 +1,15 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Q038_DragonFangs extends Quest {
     private static final String QUEST_NAME = "Q038_DragonFangs";
@@ -211,10 +210,10 @@ public class Q038_DragonFangs extends Quest {
         if (st == null)
             return null;
 
-        int[] dropList = DROPLIST.get(npc.getNpcId());
+        final int[] droplist = DROPLIST.get(npc.getNpcId());
 
-        if (st.getCond() == dropList[0] && dropItems(player, dropList[1], 1, dropList[2], dropList[3]))
-            st.setCond(dropList[0] + 1);
+        if (st.getCond() == droplist[0] && dropItems(player, droplist[1], 1, droplist[2], droplist[3]))
+            st.setCond(droplist[0] + 1);
 
         return null;
     }

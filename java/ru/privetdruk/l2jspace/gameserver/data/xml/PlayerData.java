@@ -1,21 +1,19 @@
 package ru.privetdruk.l2jspace.gameserver.data.xml;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import org.w3c.dom.Document;
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
-
 import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassId;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.PlayerTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.holder.ItemTemplateHolder;
 import ru.privetdruk.l2jspace.gameserver.model.holder.skillnode.GeneralSkillNode;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 
-import org.w3c.dom.Document;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This class loads and stores {@link PlayerTemplate}s. It also feed their skill trees.

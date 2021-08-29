@@ -1,8 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
+
+import java.util.List;
 
 public class ShowBoard extends L2GameServerPacket {
     public static final ShowBoard STATIC_SHOWBOARD_102 = new ShowBoard(null, "102");

@@ -1,10 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.geoengine.geodata;
 
+import ru.privetdruk.l2jspace.gameserver.enums.GeoType;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
-
-import ru.privetdruk.l2jspace.gameserver.enums.GeoType;
 
 public class BlockMultilayer extends ABlock {
     private static final int MAX_LAYERS = Byte.MAX_VALUE;

@@ -1,9 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.siegablehall;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import ru.privetdruk.l2jspace.gameserver.data.sql.ClanTable;
 import ru.privetdruk.l2jspace.gameserver.enums.IntentionType;
 import ru.privetdruk.l2jspace.gameserver.enums.SayType;
@@ -13,6 +9,10 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;
 import ru.privetdruk.l2jspace.gameserver.model.entity.ClanHallSiege;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.Collections;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The Devastated Castle is an occupied clan hall for which ownership can be acquired by siege battle with NPCs. The siege is set up to take place with the NPCs every week, which is different from other sieges. The clan hall battle for the Devastated Castle is always defended by an NPC clan and the

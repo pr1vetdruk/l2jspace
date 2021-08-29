@@ -6,8 +6,8 @@ import java.util.Objects;
  * A datatype used to retain a 2D (x/y) point. It got the capability to be set and cleaned.
  */
 public class Point2D {
-    protected volatile int _x;
-    protected volatile int _y;
+    protected int _x;
+    protected int _y;
 
     public Point2D(int x, int y) {
         _x = x;

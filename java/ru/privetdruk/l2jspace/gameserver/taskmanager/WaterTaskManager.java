@@ -1,16 +1,15 @@
 package ru.privetdruk.l2jspace.gameserver.taskmanager;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.gameserver.enums.GaugeColor;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.Stats;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SetupGauge;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Updates {@link Player} drown timer and reduces {@link Player} HP, when drowning.

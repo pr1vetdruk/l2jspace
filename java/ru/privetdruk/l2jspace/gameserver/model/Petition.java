@@ -1,12 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
-
 import ru.privetdruk.l2jspace.gameserver.data.sql.PlayerInfoTable;
 import ru.privetdruk.l2jspace.gameserver.enums.SayType;
 import ru.privetdruk.l2jspace.gameserver.enums.petitions.PetitionRate;
@@ -19,6 +13,11 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.CreatureSay;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.L2GameServerPacket;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PetitionVote;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A Petition is a report, generally made by a {@link Player} to a Game Master. The categories of report are multiple.

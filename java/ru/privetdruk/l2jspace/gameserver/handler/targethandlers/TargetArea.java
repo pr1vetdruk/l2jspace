@@ -1,8 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.handler.targethandlers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillTargetType;
 import ru.privetdruk.l2jspace.gameserver.geoengine.GeoEngine;
@@ -10,6 +7,9 @@ import ru.privetdruk.l2jspace.gameserver.handler.ITargetHandler;
 import ru.privetdruk.l2jspace.gameserver.model.actor.*;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TargetArea implements ITargetHandler {
     @Override

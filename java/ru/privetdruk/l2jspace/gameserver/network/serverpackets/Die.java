@@ -1,10 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
+import ru.privetdruk.l2jspace.gameserver.data.manager.ClanHallManager;
 import ru.privetdruk.l2jspace.gameserver.enums.SiegeSide;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Monster;
+import ru.privetdruk.l2jspace.gameserver.model.entity.ClanHallSiege;
 import ru.privetdruk.l2jspace.gameserver.model.entity.Siege;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 
@@ -44,17 +46,29 @@ public class Die extends L2GameServerPacket {
         writeD(isTeleportToVillage ? 0x01 : 0); // to nearest village
 
         if (isTeleportToVillage && clan != null) {
-            SiegeSide side = null;
+            final Siege siege = CastleManager.getInstance().getActiveSiege(creature);
+            final ClanHallSiege chs = ClanHallManager.getInstance().getActiveSiege(creature);
 
-            Siege siege = CastleManager.getInstance().getActiveSiege(creature);
-
+            // Check first if an active Siege is under process.
             if (siege != null) {
-                side = siege.getSide(clan);
-            }
+                final SiegeSide side = siege.getSide(clan);
 
-            writeD((clan.hasClanHall()) ? 0x01 : 0x00); // to clanhall
-            writeD((clan.hasCastle() || side == SiegeSide.OWNER || side == SiegeSide.DEFENDER) ? 0x01 : 0x00); // to castle
-            writeD((side == SiegeSide.ATTACKER && clan.getFlag() != null) ? 0x01 : 0x00); // to siege HQ
+                writeD((clan.hasClanHall()) ? 0x01 : 0x00); // to clanhall
+                writeD((clan.hasCastle() || side == SiegeSide.OWNER || side == SiegeSide.DEFENDER) ? 0x01 : 0x00); // to castle
+                writeD((side == SiegeSide.ATTACKER && clan.getFlag() != null) ? 0x01 : 0x00); // to siege HQ
+            }
+            // If no Siege, check ClanHallSiege.
+            else if (chs != null) {
+                writeD((clan.hasClanHall()) ? 0x01 : 0x00); // to clanhall
+                writeD((clan.hasCastle()) ? 0x01 : 0x00); // to castle
+                writeD((chs.checkSide(clan, SiegeSide.ATTACKER) && clan.getFlag() != null) ? 0x01 : 0x00); // to siege HQ
+            }
+            // We're in peace mode, activate generic teleports.
+            else {
+                writeD((clan.hasClanHall()) ? 0x01 : 0x00); // to clanhall
+                writeD((clan.hasCastle()) ? 0x01 : 0x00); // to castle
+                writeD(0x00); // to siege HQ
+            }
         } else {
             writeD(0x00); // to clanhall
             writeD(0x00); // to castle

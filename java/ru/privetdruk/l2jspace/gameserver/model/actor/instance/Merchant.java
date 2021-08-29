@@ -1,8 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
-import java.util.List;
-import java.util.StringTokenizer;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.cache.HtmCache;
 import ru.privetdruk.l2jspace.gameserver.data.manager.BuyListManager;
@@ -16,6 +13,9 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SellList;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ShopPreviewList;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * An instance type extending {@link Folk}, used for merchant (regular and multisell). It got buy/sell methods.<br>

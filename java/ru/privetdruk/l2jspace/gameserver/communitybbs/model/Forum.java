@@ -1,18 +1,17 @@
 package ru.privetdruk.l2jspace.gameserver.communitybbs.model;
 
+import ru.privetdruk.l2jspace.common.logging.CLogger;
+import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
+import ru.privetdruk.l2jspace.gameserver.communitybbs.CommunityBoard;
+import ru.privetdruk.l2jspace.gameserver.enums.bbs.ForumAccess;
+import ru.privetdruk.l2jspace.gameserver.enums.bbs.ForumType;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import ru.privetdruk.l2jspace.common.logging.CLogger;
-import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
-import ru.privetdruk.l2jspace.gameserver.communitybbs.CommunityBoard;
-import ru.privetdruk.l2jspace.gameserver.enums.bbs.ForumAccess;
-import ru.privetdruk.l2jspace.gameserver.enums.bbs.ForumType;
 
 public class Forum {
     private static final CLogger LOGGER = new CLogger(Forum.class.getName());

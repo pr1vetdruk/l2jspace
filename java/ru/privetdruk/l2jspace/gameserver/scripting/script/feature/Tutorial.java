@@ -1,13 +1,13 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.feature;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Tutorial extends Quest {
     private static final String QUEST_NAME = "Tutorial";
@@ -22,7 +22,7 @@ public class Tutorial extends Quest {
 
     private static final Map<Integer, Event> EVENTS = new HashMap<>();
 
-    static {
+    {
         EVENTS.put(0, new Event("tutorial_voice_001a", "tutorial_human_fighter001.htm", "tutorial_human_fighter007.htm", new Location(-71424, 258336, -3109), "tutorial_fighter017.htm", new Location(-83020, 242553, -3718), "tutorial_newbie003a.htm", "tutorial_21.htm", Location.DUMMY_LOC));
         EVENTS.put(10, new Event("tutorial_voice_001b", "tutorial_human_mage001.htm", "tutorial_human_mage007.htm", new Location(-91036, 248044, -3568), "tutorial_mage017.htm", Location.DUMMY_LOC, "tutorial_newbie003a.htm", "tutorial_21a.htm", new Location(-84981, 244764, -3726)));
         EVENTS.put(18, new Event("tutorial_voice_001c", "tutorial_elven_fighter001.htm", "tutorial_elf007.htm", new Location(46112, 41200, -3504), "tutorial_fighter017.htm", new Location(45061, 52468, -2796), "tutorial_newbie003b.htm", "tutorial_21b.htm", Location.DUMMY_LOC));
@@ -37,7 +37,7 @@ public class Tutorial extends Quest {
     // table for Tutorial Close Link (26) 2nd class transfer [raceId, html]
     private static final Map<Integer, String> TCLa = new HashMap<>();
 
-    static {
+    {
         TCLa.put(1, "tutorial_22w.htm");
         TCLa.put(4, "tutorial_22.htm");
         TCLa.put(7, "tutorial_22b.htm");
@@ -101,17 +101,15 @@ public class Tutorial extends Quest {
     @Override
     public String onTimer(String name, Npc npc, Player player) {
         if (name.startsWith("QT")) {
-            QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
-            if (st == null) {
+            final QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
+            if (st == null)
                 return null;
-            }
 
-            int Ex = st.getInteger("Ex");
+            final int Ex = st.getInteger("Ex");
             if (Ex == -2) {
-                Event evt = EVENTS.get(player.getClassId().getId());
-                if (evt == null) {
+                final Event evt = EVENTS.get(player.getClassId().getId());
+                if (evt == null)
                     return null;
-                }
 
                 st.set("Ex", -3);
                 playTutorialVoice(player, evt._initialVoice);
@@ -128,7 +126,6 @@ public class Tutorial extends Quest {
                 playTutorialVoice(player, "tutorial_voice_008");
             }
         }
-
         return null;
     }
 
@@ -694,7 +691,7 @@ public class Tutorial extends Quest {
         return null;
     }
 
-    private static class Event {
+    private class Event {
         public String _initialVoice;
         public String _initialHtm;
 

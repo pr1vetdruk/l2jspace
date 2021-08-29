@@ -1,8 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.handler.targethandlers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillTargetType;
 import ru.privetdruk.l2jspace.gameserver.handler.ITargetHandler;
@@ -12,6 +9,9 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
 import ru.privetdruk.l2jspace.gameserver.model.group.Party;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TargetParty implements ITargetHandler {
     @Override

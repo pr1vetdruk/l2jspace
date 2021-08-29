@@ -2,17 +2,12 @@ package ru.privetdruk.l2jspace.gameserver.scripting.script.ai.boss;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable.FrequentSkill;
 import ru.privetdruk.l2jspace.gameserver.data.manager.GrandBossManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ZoneManager;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.ElementType;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Attackable;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.actor.*;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.GrandBoss;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Monster;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
@@ -23,6 +18,8 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PlaySound;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 import ru.privetdruk.l2jspace.gameserver.scripting.script.ai.AttackableAIScript;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.concurrent.TimeUnit;
 
 public class QueenAnt extends AttackableAIScript {
     private static final BossZone ZONE = ZoneManager.getInstance().getZoneById(110017, BossZone.class);
@@ -189,7 +186,7 @@ public class QueenAnt extends AttackableAIScript {
             GrandBossManager.getInstance().setBossStatus(QUEEN, DEAD);
 
             // Calculate the next respawn time.
-            long respawnTime = (Config.SPAWN_INTERVAL_AQ * 60L + Rnd.get(-60 * Config.RANDOM_SPAWN_TIME_AQ, 60 * Config.RANDOM_SPAWN_TIME_AQ)) * 60000;
+            final long respawnTime = TimeUnit.HOURS.toMillis(Config.SPAWN_INTERVAL_AQ) + Rnd.get(TimeUnit.HOURS.toMillis(Config.RANDOM_SPAWN_TIME_AQ));
 
             // Cancel tasks.
             cancelQuestTimers("action");

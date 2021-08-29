@@ -1,21 +1,16 @@
 package ru.privetdruk.l2jspace.gameserver.model.group;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.PartyMatchRoomManager;
 import ru.privetdruk.l2jspace.gameserver.data.xml.MapRegionData;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.CreatureSay;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExClosePartyRoom;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExManagePartyRoomMember;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExShowScreenMessage;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.L2GameServerPacket;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class PartyMatchRoom extends AbstractGroup {
     private final List<Player> _members = new CopyOnWriteArrayList<>();

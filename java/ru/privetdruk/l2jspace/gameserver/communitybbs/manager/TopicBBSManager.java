@@ -1,17 +1,16 @@
 package ru.privetdruk.l2jspace.gameserver.communitybbs.manager;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.StringTokenizer;
-
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
-
 import ru.privetdruk.l2jspace.gameserver.communitybbs.CommunityBoard;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.model.Forum;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.model.Topic;
 import ru.privetdruk.l2jspace.gameserver.data.sql.ClanTable;
 import ru.privetdruk.l2jspace.gameserver.enums.bbs.ForumType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.StringTokenizer;
 
 public class TopicBBSManager extends BaseBBSManager {
     protected TopicBBSManager() {

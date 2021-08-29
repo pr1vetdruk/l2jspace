@@ -1,9 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.model.location;
 
-import java.util.Objects;
-
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.random.Rnd;
+
+import java.util.Objects;
 
 /**
  * A datatype used to retain a 3D (x/y/z) point. It got the capability to be set and cleaned.
@@ -11,7 +11,7 @@ import ru.privetdruk.l2jspace.common.random.Rnd;
 public class Location extends Point2D {
     public static final Location DUMMY_LOC = new Location(0, 0, 0);
 
-    protected volatile int _z;
+    protected int _z;
 
     public Location(int x, int y, int z) {
         super(x, y);

@@ -1,8 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 import ru.privetdruk.l2jspace.gameserver.data.cache.HtmCache;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ClanHallManager;
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
@@ -13,6 +10,9 @@ import ru.privetdruk.l2jspace.gameserver.model.entity.ClanHallSiege;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class Q655_AGrandPlanForTamingWildBeasts extends Quest {
     public static final String QUEST_NAME = "Q655_AGrandPlanForTamingWildBeasts";

@@ -1,11 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.model.item;
 
-import java.util.Arrays;
-
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
 import ru.privetdruk.l2jspace.gameserver.enums.CabalType;
 import ru.privetdruk.l2jspace.gameserver.enums.items.TicketType;
+
+import java.util.Arrays;
 
 public final class MercenaryTicket {
     private final int _itemId;

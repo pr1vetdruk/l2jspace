@@ -1,14 +1,13 @@
 package ru.privetdruk.l2jspace.tools;
 
+import ru.privetdruk.l2jspace.common.crypt.BCrypt;
+import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
+import ru.privetdruk.l2jspace.config.Config;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Scanner;
-
-import ru.privetdruk.l2jspace.common.crypt.BCrypt;
-import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
-import ru.privetdruk.l2jspace.config.Config;
 
 public class SQLAccountManager {
     private static final String INSERT_OR_UPDATE_ACCOUNT = "INSERT INTO accounts(login, password, access_level) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE password = VALUES(password), access_level = VALUES(access_level)";

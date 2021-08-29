@@ -1,24 +1,14 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.ai.boss;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.manager.GrandBossManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ZoneManager;
 import ru.privetdruk.l2jspace.gameserver.enums.ScriptEventType;
 import ru.privetdruk.l2jspace.gameserver.geoengine.GeoEngine;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Attackable;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.actor.*;
 import ru.privetdruk.l2jspace.gameserver.model.actor.container.npc.AggroInfo;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.GrandBoss;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Monster;
@@ -30,6 +20,12 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PlaySound;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 import ru.privetdruk.l2jspace.gameserver.scripting.script.ai.AttackableAIScript;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Baium is the last famous Emperor of Elmoreden, the creator of the Tower of Insolence, and the bringer of the Golden Age. He is also the father of Frintezza, the last Emperor, and of Saint Solina.<br>
@@ -66,7 +62,7 @@ public class Baium extends AttackableAIScript {
                     new SpawnLocation(115792, 16608, 10080, 0)
             };
 
-    private final Set<Npc> minions = ConcurrentHashMap.newKeySet(5);
+    private final Set<Npc> _minions = ConcurrentHashMap.newKeySet(5);
 
     private Creature _actualVictim;
     private long _timeTracker = 0;
@@ -102,7 +98,7 @@ public class Baium extends AttackableAIScript {
                 ((Monster) angel).setMinion(true);
                 angel.forceRunStance();
 
-                minions.add(angel);
+                _minions.add(angel);
             }
 
             startQuestTimerAtFixedRate("baium_despawn", baium, null, 60000);
@@ -159,7 +155,7 @@ public class Baium extends AttackableAIScript {
                 ((Monster) angel).setMinion(true);
                 angel.forceRunStance();
 
-                minions.add(angel);
+                _minions.add(angel);
             }
 
             startQuestTimerAtFixedRate("angels_aggro_reconsider", null, null, 5000);
@@ -184,11 +180,11 @@ public class Baium extends AttackableAIScript {
                 npc.deleteMe();
 
                 // Unspawn angels, and clear the associated List.
-                for (Npc minion : minions) {
+                for (Npc minion : _minions) {
                     minion.getSpawn().setRespawnState(false);
                     minion.deleteMe();
                 }
-                minions.clear();
+                _minions.clear();
 
                 // Spawn Stone-like Baium.
                 addSpawn(STONE_BAIUM, STONE_BAIUM_LOC, false, 0, false);
@@ -208,7 +204,7 @@ public class Baium extends AttackableAIScript {
         } else if (name.equalsIgnoreCase("angels_aggro_reconsider")) {
             boolean updateTarget = false; // Update or no the target
 
-            for (Npc minion : minions) {
+            for (Npc minion : _minions) {
                 final Attackable angel = ((Attackable) minion);
                 final AggroInfo ai = angel.getAggroList().getMostHated();
 
@@ -296,8 +292,7 @@ public class Baium extends AttackableAIScript {
         // spawn the "Teleportation Cubic" for 15 minutes (to allow players to exit the lair)
         addSpawn(TELEPORTATION_CUBIC, TELEPORTATION_CUBIC_LOC, false, 900000, false);
 
-        long respawnTime = (long) Config.SPAWN_INTERVAL_BAIUM + Rnd.get(-Config.RANDOM_SPAWN_TIME_BAIUM, Config.RANDOM_SPAWN_TIME_BAIUM);
-        respawnTime *= 3600000;
+        long respawnTime = TimeUnit.HOURS.toMillis(Config.SPAWN_INTERVAL_BAIUM) + Rnd.get(TimeUnit.HOURS.toMillis(Config.RANDOM_SPAWN_TIME_BAIUM));
 
         GrandBossManager.getInstance().setBossStatus(LIVE_BAIUM, DEAD);
         startQuestTimer("baium_unlock", null, null, respawnTime);
@@ -307,11 +302,11 @@ public class Baium extends AttackableAIScript {
         GrandBossManager.getInstance().setStatSet(LIVE_BAIUM, info);
 
         // Unspawn angels.
-        for (Npc minion : minions) {
+        for (Npc minion : _minions) {
             minion.getSpawn().setRespawnState(false);
             minion.deleteMe();
         }
-        minions.clear();
+        _minions.clear();
 
         return super.onKill(npc, killer);
     }
@@ -345,7 +340,7 @@ public class Baium extends AttackableAIScript {
 
         // If there's no players available, Baium and Angels are hitting each other.
         if (result.isEmpty() && npc.getNpcId() == LIVE_BAIUM) {
-            for (Npc minion : minions)
+            for (Npc minion : _minions)
                 result.add(minion);
         }
 

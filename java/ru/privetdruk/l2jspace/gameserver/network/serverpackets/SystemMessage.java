@@ -1,7 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.Arrays;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
@@ -10,6 +8,8 @@ import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.Arrays;
 
 public final class SystemMessage extends L2GameServerPacket {
     private static final SMParam[] EMPTY_PARAM_ARRAY = new SMParam[0];

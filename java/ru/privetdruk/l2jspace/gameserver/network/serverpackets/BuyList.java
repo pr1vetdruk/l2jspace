@@ -1,10 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.Collection;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.model.buylist.NpcBuyList;
 import ru.privetdruk.l2jspace.gameserver.model.buylist.Product;
+
+import java.util.Collection;
 
 public final class BuyList extends L2GameServerPacket {
     private final int _money;

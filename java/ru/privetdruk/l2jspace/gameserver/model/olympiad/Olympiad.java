@@ -1,35 +1,28 @@
 package ru.privetdruk.l2jspace.gameserver.model.olympiad;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ScheduledFuture;
-
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.HeroManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ZoneManager;
 import ru.privetdruk.l2jspace.gameserver.enums.OlympiadState;
 import ru.privetdruk.l2jspace.gameserver.enums.OlympiadType;
-import ru.privetdruk.l2jspace.gameserver.enums.SayType;
 import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.OlympiadManagerNpc;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.OlympiadStadiumZone;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcSay;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ScheduledFuture;
 
 public class Olympiad {
     protected static final CLogger LOGGER = new CLogger(Olympiad.class.getName());
@@ -316,8 +309,9 @@ public class Olympiad {
                         else
                             announcement = "Olympiad class individual match is going to begin in Arena " + (game.getStadiumId() + 1) + " in a moment.";
 
-                        for (OlympiadManagerNpc manager : OlympiadManagerNpc.getInstances())
-                            manager.broadcastPacket(new NpcSay(manager, SayType.SHOUT, announcement));
+                        for (OlympiadManagerNpc manager : OlympiadManagerNpc.getInstances()) {
+                            manager.broadcastNpcShout(announcement);
+                        }
                     }
                 }, 30000, 500);
             }

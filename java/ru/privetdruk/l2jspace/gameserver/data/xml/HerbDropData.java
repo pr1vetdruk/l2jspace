@@ -1,18 +1,16 @@
 package ru.privetdruk.l2jspace.gameserver.data.xml;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
+import ru.privetdruk.l2jspace.gameserver.model.item.DropCategory;
+import ru.privetdruk.l2jspace.gameserver.model.item.DropData;
+
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
-
-import ru.privetdruk.l2jspace.gameserver.model.item.DropCategory;
-import ru.privetdruk.l2jspace.gameserver.model.item.DropData;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
 
 /**
  * This class loads herbs drop rules.<br>

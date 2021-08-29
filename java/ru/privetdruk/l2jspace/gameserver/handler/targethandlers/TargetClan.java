@@ -1,16 +1,15 @@
 package ru.privetdruk.l2jspace.gameserver.handler.targethandlers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillTargetType;
 import ru.privetdruk.l2jspace.gameserver.handler.ITargetHandler;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Attackable;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TargetClan implements ITargetHandler {
     @Override

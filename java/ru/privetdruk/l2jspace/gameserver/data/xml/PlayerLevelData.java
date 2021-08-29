@@ -1,15 +1,13 @@
 package ru.privetdruk.l2jspace.gameserver.data.xml;
 
+import org.w3c.dom.Document;
+import ru.privetdruk.l2jspace.common.data.StatSet;
+import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
+import ru.privetdruk.l2jspace.gameserver.model.PlayerLevel;
+
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
-
-import ru.privetdruk.l2jspace.common.data.StatSet;
-import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
-
-import ru.privetdruk.l2jspace.gameserver.model.PlayerLevel;
-
-import org.w3c.dom.Document;
 
 /**
  * This class loads and stores Player level related variables.

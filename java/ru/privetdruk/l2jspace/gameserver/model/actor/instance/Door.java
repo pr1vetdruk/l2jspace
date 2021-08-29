@@ -2,7 +2,6 @@ package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ClanHallManager;
 import ru.privetdruk.l2jspace.gameserver.data.xml.DoorData;
@@ -337,5 +336,10 @@ public class Door extends Creature implements IGeoObject {
 
     public final ClanHall getClanHall() {
         return _clanHall;
+    }
+
+    @Override
+    public boolean canBeHealed() {
+        return false;
     }
 }

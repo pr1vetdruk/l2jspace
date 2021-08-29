@@ -1,10 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.container.creature;
 
-import java.util.concurrent.Future;
-
 import ru.privetdruk.l2jspace.common.math.MathUtil;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.enums.AiEventType;
 import ru.privetdruk.l2jspace.gameserver.geoengine.GeoEngine;
@@ -12,6 +9,8 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.skill.effect.EffectFusion;
+
+import java.util.concurrent.Future;
 
 public final class FusionSkill {
     protected Creature _caster;

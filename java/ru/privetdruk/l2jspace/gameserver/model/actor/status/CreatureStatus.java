@@ -1,12 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.status;
 
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Future;
-
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.StatusType;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectType;
@@ -19,6 +14,10 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.StatusUpdate;
 import ru.privetdruk.l2jspace.gameserver.skill.Calculator;
 import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
 
 /**
  * This class groups all data related to HP/MP tracking of a {@link Creature}, aswell as {@link Stats} calculation.<br>

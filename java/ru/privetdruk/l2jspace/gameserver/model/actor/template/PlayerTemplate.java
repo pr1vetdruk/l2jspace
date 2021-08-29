@@ -1,10 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.template;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassId;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassRace;
@@ -13,6 +10,8 @@ import ru.privetdruk.l2jspace.gameserver.model.holder.ItemTemplateHolder;
 import ru.privetdruk.l2jspace.gameserver.model.holder.skillnode.GeneralSkillNode;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Weapon;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
+
+import java.util.List;
 
 /**
  * A datatype extending {@link CreatureTemplate}, used to retain Player template informations such as classId, specific collision values for female, hp/mp/cp tables, etc.<br>

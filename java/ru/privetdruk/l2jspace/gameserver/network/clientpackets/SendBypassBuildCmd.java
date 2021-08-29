@@ -1,12 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
-import java.util.logging.Logger;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.xml.AdminData;
 import ru.privetdruk.l2jspace.gameserver.handler.AdminCommandHandler;
 import ru.privetdruk.l2jspace.gameserver.handler.IAdminCommandHandler;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+
+import java.util.logging.Logger;
 
 public final class SendBypassBuildCmd extends L2GameClientPacket {
     private static final Logger GMAUDIT_LOG = Logger.getLogger("gmaudit");

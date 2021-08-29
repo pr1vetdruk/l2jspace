@@ -1,10 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
@@ -13,6 +9,9 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Q662_AGameOfCards extends Quest {
     private static final String QUEST_NAME = "Q662_AGameOfCards";
@@ -274,7 +273,7 @@ public class Q662_AGameOfCards extends Quest {
                         }
                     } else if (i6 % 10 == 0) {
                         if (i8 % 16 < 8) {
-                            if (i8 % 4 < 2 && i2 == i3) {
+                            if (i8 % 8 < 4 && i2 == i3) {
                                 i6 += 1;
                                 i8 += 4;
                             }
@@ -318,17 +317,11 @@ public class Q662_AGameOfCards extends Quest {
                     }
 
                     if (i6 % 100 < 10) {
-                        if (i8 % 4 < 2) {
-                            if (i8 % 2 < 1 && i4 == i5) {
-                                i6 += 10;
-                            }
-                        }
+                        if (i8 % 4 < 2 && i8 % 2 < 1 && i4 == i5)
+                            i6 += 10;
                     } else if (i6 % 10 == 0) {
-                        if (i8 % 4 < 2) {
-                            if (i8 % 2 < 1 && i4 == i5) {
-                                i6 += 1;
-                            }
-                        }
+                        if (i8 % 4 < 2 && i8 % 2 < 1 && i4 == i5)
+                            i6 += 1;
                     }
                 }
 
@@ -384,14 +377,17 @@ public class Q662_AGameOfCards extends Quest {
             return htmltext;
 
         switch (st.getState()) {
-            case CREATED -> htmltext = (player.getStatus().getLevel() < 61) ? "30845-02.htm" : "30845-01.htm";
-            case STARTED -> {
+            case CREATED:
+                htmltext = (player.getStatus().getLevel() < 61) ? "30845-02.htm" : "30845-01.htm";
+                break;
+
+            case STARTED:
                 int i0 = st.getInteger("state");
                 int i1 = st.getInteger("stateEx");
 
-                if (i0 == 0 && i1 == 0) {
+                if (i0 == 0 && i1 == 0)
                     htmltext = (player.getInventory().getItemCount(RED_GEM) < 50) ? "30845-04.htm" : "30845-05.htm";
-                } else if (i0 != 0 && i1 != 0) {
+                else if (i0 != 0 && i1 != 0) {
                     int i5 = i1 % 100;
                     int i9 = i1 / 100;
 
@@ -407,7 +403,7 @@ public class Q662_AGameOfCards extends Quest {
                     htmltext = htmltext.replace("%FontColor4%", (i9 % 16 < 8) ? "ffff00" : "ff6f6f").replace("%Cell4%", (i9 % 16 < 8) ? CARDS.get(0) : CARDS.get(i4));
                     htmltext = htmltext.replace("%FontColor5%", (i9 % 32 < 16) ? "ffff00" : "ff6f6f").replace("%Cell5%", (i9 % 32 < 16) ? CARDS.get(0) : CARDS.get(i5));
                 }
-            }
+                break;
         }
 
         return htmltext;

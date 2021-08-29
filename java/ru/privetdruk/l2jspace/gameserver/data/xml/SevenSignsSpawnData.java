@@ -1,17 +1,15 @@
 package ru.privetdruk.l2jspace.gameserver.data.xml;
 
-import java.nio.file.Path;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
+import org.w3c.dom.Document;
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.SevenSignsSpawnManager;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
 
-import org.w3c.dom.Document;
+import java.nio.file.Path;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class SevenSignsSpawnData implements IXmlReader {
     private final Set<Spawn> _spawns = ConcurrentHashMap.newKeySet();

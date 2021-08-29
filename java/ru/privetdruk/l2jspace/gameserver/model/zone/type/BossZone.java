@@ -1,5 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.model.zone.type;
 
+import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
+import ru.privetdruk.l2jspace.config.Config;
+import ru.privetdruk.l2jspace.gameserver.data.xml.MapRegionData.TeleportType;
+import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
+import ru.privetdruk.l2jspace.gameserver.model.actor.*;
+import ru.privetdruk.l2jspace.gameserver.model.zone.type.subtype.ZoneType;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,18 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
-import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
-import ru.privetdruk.l2jspace.config.Config;
-import ru.privetdruk.l2jspace.gameserver.data.xml.MapRegionData.TeleportType;
-import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Attackable;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
-import ru.privetdruk.l2jspace.gameserver.model.zone.type.subtype.ZoneType;
 
 /**
  * A Boss zone, extending {@link ZoneType}. It holds a {@link List} and a {@link Map} of allowed {@link Player}s.<br>

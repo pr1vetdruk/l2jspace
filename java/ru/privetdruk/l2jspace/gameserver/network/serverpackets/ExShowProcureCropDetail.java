@@ -1,12 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManorManager;
 import ru.privetdruk.l2jspace.gameserver.model.entity.Castle;
 import ru.privetdruk.l2jspace.gameserver.model.manor.CropProcure;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ExShowProcureCropDetail extends L2GameServerPacket {
     private final int _cropId;

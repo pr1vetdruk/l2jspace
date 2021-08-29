@@ -1,10 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.data.manager;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
 import ru.privetdruk.l2jspace.gameserver.idfactory.IdFactory;
 import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Boat;
@@ -12,6 +8,9 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.CreatureTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.location.BoatLocation;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.L2GameServerPacket;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class BoatManager {
     public static final int TALKING_ISLAND = 0;

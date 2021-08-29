@@ -1,12 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.task;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.RaidPointManager;
 import ru.privetdruk.l2jspace.gameserver.data.sql.ClanTable;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.scripting.ScheduledQuest;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Each month players hunt Raid Bosses and get raid points. At the end of the month top 100 players from the list get clan reputation points.<br>

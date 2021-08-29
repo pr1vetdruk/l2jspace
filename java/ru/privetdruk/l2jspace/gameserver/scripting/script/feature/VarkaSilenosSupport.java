@@ -1,16 +1,11 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.feature;
 
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
-
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable.FrequentSkill;
 import ru.privetdruk.l2jspace.gameserver.data.xml.TeleportData;
 import ru.privetdruk.l2jspace.gameserver.enums.TeleportType;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Attackable;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.actor.*;
 import ru.privetdruk.l2jspace.gameserver.model.group.Party;
 import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;

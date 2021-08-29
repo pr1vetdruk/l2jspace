@@ -1,16 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.data.xml;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
-
+import org.w3c.dom.Document;
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.Stats;
 import ru.privetdruk.l2jspace.gameserver.model.Augmentation;
@@ -18,7 +11,8 @@ import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
 import ru.privetdruk.l2jspace.gameserver.network.clientpackets.AbstractRefinePacket;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
-import org.w3c.dom.Document;
+import java.nio.file.Path;
+import java.util.*;
 
 /**
  * This class loads and stores :

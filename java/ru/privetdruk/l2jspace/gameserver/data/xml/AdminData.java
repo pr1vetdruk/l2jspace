@@ -1,16 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.data.xml;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.TreeMap;
-import java.util.concurrent.ConcurrentHashMap;
-
+import org.w3c.dom.Document;
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
-
 import ru.privetdruk.l2jspace.gameserver.model.AccessLevel;
 import ru.privetdruk.l2jspace.gameserver.model.AdminCommand;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
@@ -19,7 +11,13 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.L2GameServerPacke
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PlaySound;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 
-import org.w3c.dom.Document;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * This class loads and handles following concepts :

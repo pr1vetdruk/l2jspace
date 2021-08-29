@@ -1,9 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
-import java.util.concurrent.Future;
-
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.gameserver.enums.actors.NpcRace;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
@@ -17,6 +14,8 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.skill.l2skill.L2SkillSummon;
 import ru.privetdruk.l2jspace.gameserver.taskmanager.DecayTaskManager;
+
+import java.util.concurrent.Future;
 
 public class Servitor extends Summon {
     private float _expPenalty = 0;

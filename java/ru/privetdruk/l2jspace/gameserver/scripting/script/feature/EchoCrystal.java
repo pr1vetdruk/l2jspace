@@ -1,13 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.feature;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class EchoCrystal extends Quest {
     private static final int ADENA = 57;

@@ -1,11 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.taskmanager;
 
+import ru.privetdruk.l2jspace.common.pool.ThreadPool;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
-import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 
 /**
  * Update and clear PvP flag of {@link Player}s after specified time.

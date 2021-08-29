@@ -2,7 +2,7 @@ package ru.privetdruk.l2jspace.gameserver.scripting.script.feature;
 
 import ru.privetdruk.l2jspace.common.random.Rnd;
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.SevenSignsManager;
 import ru.privetdruk.l2jspace.gameserver.enums.CabalType;
 import ru.privetdruk.l2jspace.gameserver.enums.ScriptEventType;
@@ -202,9 +202,8 @@ public class CabalBuffer extends Quest {
 
     @Override
     public String onTimer(String name, Npc npc, Player player) {
-        if (name.equalsIgnoreCase("5097")) {
+        if (name.equalsIgnoreCase("5097") && Config.CABAL_BUFFER)
             npc.broadcastNpcSay(Rnd.get((isPreacher(npc)) ? PREACHER_OF_DOOM_RANDOM_CHAT : ORATOR_OF_REVELATIONS_RANDOM_CHAT));
-        }
         return super.onTimer(name, npc, player);
     }
 

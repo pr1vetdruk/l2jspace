@@ -1,12 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.awt.Color;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.location.Location;
+
+import java.awt.*;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
-import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
-import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 
 /**
  * A packet used to draw points and lines on client.<br>

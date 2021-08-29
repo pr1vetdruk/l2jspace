@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.item.kind;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
 import ru.privetdruk.l2jspace.gameserver.enums.items.ArmorType;
 
 /**

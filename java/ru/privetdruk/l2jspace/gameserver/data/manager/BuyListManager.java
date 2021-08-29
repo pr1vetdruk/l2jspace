@@ -1,5 +1,13 @@
 package ru.privetdruk.l2jspace.gameserver.data.manager;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
+import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
+import ru.privetdruk.l2jspace.gameserver.model.buylist.NpcBuyList;
+import ru.privetdruk.l2jspace.gameserver.model.buylist.Product;
+import ru.privetdruk.l2jspace.gameserver.taskmanager.BuyListTaskManager;
+
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,16 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
-import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
-import ru.privetdruk.l2jspace.gameserver.model.buylist.NpcBuyList;
-import ru.privetdruk.l2jspace.gameserver.model.buylist.Product;
-import ru.privetdruk.l2jspace.gameserver.taskmanager.BuyListTaskManager;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
 
 /**
  * Loads and stores {@link NpcBuyList}, which is the most common way to show/sell items, with multisell.<br>

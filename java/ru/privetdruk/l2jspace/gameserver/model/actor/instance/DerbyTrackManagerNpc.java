@@ -1,9 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
-import java.util.Locale;
-
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.DerbyTrackManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.DerbyTrackManager.RaceState;
 import ru.privetdruk.l2jspace.gameserver.idfactory.IdFactory;
@@ -18,6 +15,8 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.DeleteObject;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+
+import java.util.Locale;
 
 public class DerbyTrackManagerNpc extends Folk {
     protected static final int[] TICKET_PRICES =

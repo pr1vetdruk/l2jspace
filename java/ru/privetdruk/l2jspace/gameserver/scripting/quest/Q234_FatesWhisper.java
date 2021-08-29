@@ -1,8 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
@@ -13,6 +10,9 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Q234_FatesWhisper extends Quest {
     private static final String QUEST_NAME = "Q234_FatesWhisper";

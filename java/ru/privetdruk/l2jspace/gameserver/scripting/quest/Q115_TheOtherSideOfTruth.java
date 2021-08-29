@@ -1,8 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
@@ -10,8 +7,11 @@ import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Q115_TheOtherSideOfTruth extends Quest {
-    private final static String QUEST_NAME = "Q115_TheOtherSideOfTruth";
+    private static final String QUEST_NAME = "Q115_TheOtherSideOfTruth";
 
     // Items
     private static final int MISA_LETTER = 8079;
@@ -155,9 +155,8 @@ public class Q115_TheOtherSideOfTruth extends Quest {
             final int ex = st.getInteger("ex");
             final int numberToModulo = (infos[1] == 0) ? ex : ex % infos[1];
 
-            if (numberToModulo <= infos[2] && (ex == infos[3] || ex == infos[4] || ex == infos[5])) {
+            if (numberToModulo <= infos[2] && (ex == infos[3] || ex == infos[4] || ex == infos[5]))
                 st.set("ex", ex + infos[0]);
-            }
         } else if (event.equalsIgnoreCase("sculpture-06.htm")) {
             st.setCond(8);
             playSound(player, SOUND_MIDDLE);
@@ -183,11 +182,10 @@ public class Q115_TheOtherSideOfTruth extends Quest {
 
     @Override
     public String onTimer(String name, Npc npc, Player player) {
-        if (name.equalsIgnoreCase("despawn_1")) {
+        if (name.equalsIgnoreCase("despawn_1"))
             npc.broadcastNpcSay(NpcStringId.ID_11551);
-        } else if (name.equalsIgnoreCase("despawn_2")) {
+        else if (name.equalsIgnoreCase("despawn_2"))
             npc.broadcastNpcSay(NpcStringId.ID_11553);
-        }
 
         return null;
     }

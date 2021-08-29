@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.olympiad.Olympiad;
 import ru.privetdruk.l2jspace.gameserver.model.olympiad.OlympiadGameManager;

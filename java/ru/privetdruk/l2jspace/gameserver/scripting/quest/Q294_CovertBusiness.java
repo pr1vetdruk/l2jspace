@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassRace;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
@@ -67,9 +66,15 @@ public class Q294_CovertBusiness extends Quest {
                 if (st.getCond() == 1)
                     htmltext = "30534-04.htm";
                 else {
-                    htmltext = "30534-05.htm";
-                    takeItems(player, BAT_FANG, -1);
-                    giveItems(player, RING_OF_RACCOON, 1);
+                    if (!player.getInventory().hasItems(RING_OF_RACCOON)) {
+                        htmltext = "30534-05.htm";
+                        takeItems(player, BAT_FANG, -1);
+                        giveItems(player, RING_OF_RACCOON, 1);
+                    } else {
+                        htmltext = "30534-06.htm";
+                        takeItems(player, BAT_FANG, -1);
+                        rewardItems(player, 57, 2400);
+                    }
                     rewardExpAndSp(player, 0, 600);
                     playSound(player, SOUND_FINISH);
                     st.exitQuest(true);

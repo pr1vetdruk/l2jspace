@@ -1,10 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.enums.SiegeSide;
 import ru.privetdruk.l2jspace.gameserver.model.entity.Castle;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
+
+import java.util.List;
 
 public class SiegeDefenderList extends L2GameServerPacket {
     private final Castle _castle;

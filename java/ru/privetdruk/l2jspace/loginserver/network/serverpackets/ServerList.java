@@ -1,16 +1,15 @@
 package ru.privetdruk.l2jspace.loginserver.network.serverpackets;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.network.ServerType;
-
 import ru.privetdruk.l2jspace.loginserver.data.manager.GameServerManager;
 import ru.privetdruk.l2jspace.loginserver.model.Account;
 import ru.privetdruk.l2jspace.loginserver.model.GameServerInfo;
 import ru.privetdruk.l2jspace.loginserver.model.ServerData;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class ServerList extends L2LoginServerPacket {
     private final List<ServerData> _servers = new ArrayList<>();

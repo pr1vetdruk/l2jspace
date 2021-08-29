@@ -1,11 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.siegablehall;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.gameserver.data.sql.ClanTable;
 import ru.privetdruk.l2jspace.gameserver.enums.SayType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
@@ -15,6 +10,10 @@ import ru.privetdruk.l2jspace.gameserver.model.entity.ClanHallSiege;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.taskmanager.GameTimeTaskManager;
+
+import java.util.Collections;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The Fortress of the Dead is located southeast of the Rune Township and is a contested hideout similar to the siege style of the Devastated Castle clan hall. It is of the highest grade among all contested clan halls.<br>

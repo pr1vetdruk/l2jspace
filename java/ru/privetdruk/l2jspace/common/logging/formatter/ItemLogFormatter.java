@@ -1,11 +1,10 @@
 package ru.privetdruk.l2jspace.common.logging.formatter;
 
-import java.util.logging.LogRecord;
-
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
 import ru.privetdruk.l2jspace.common.logging.MasterFormatter;
-
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
+
+import java.util.logging.LogRecord;
 
 public class ItemLogFormatter extends MasterFormatter {
     @Override

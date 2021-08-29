@@ -1,12 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.model.zone.type;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Future;
-
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
@@ -14,6 +9,10 @@ import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.subtype.ZoneType;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.EtcStatusUpdate;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Future;
 
 /**
  * A zone extending {@link ZoneType}, which fires a task on the first character entrance.<br>

@@ -1,13 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.communitybbs.manager;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
-
 import ru.privetdruk.l2jspace.gameserver.data.cache.HtmCache;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ShowBoard;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class BaseBBSManager {
     protected static final CLogger LOGGER = new CLogger(BaseBBSManager.class.getName());

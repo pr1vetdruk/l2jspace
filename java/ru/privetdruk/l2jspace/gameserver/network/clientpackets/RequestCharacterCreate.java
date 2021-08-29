@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.sql.PlayerInfoTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;

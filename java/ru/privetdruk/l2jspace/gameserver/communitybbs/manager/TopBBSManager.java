@@ -1,8 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.communitybbs.manager;
 
-import java.util.StringTokenizer;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+
+import java.util.StringTokenizer;
 
 public class TopBBSManager extends BaseBBSManager {
     protected TopBBSManager() {

@@ -1,20 +1,15 @@
 package ru.privetdruk.l2jspace.loginserver;
 
-import java.nio.channels.SocketChannel;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
-import ru.privetdruk.l2jspace.common.mmocore.IAcceptFilter;
-import ru.privetdruk.l2jspace.common.mmocore.IClientFactory;
-import ru.privetdruk.l2jspace.common.mmocore.IMMOExecutor;
-import ru.privetdruk.l2jspace.common.mmocore.MMOConnection;
-import ru.privetdruk.l2jspace.common.mmocore.ReceivablePacket;
-
+import ru.privetdruk.l2jspace.common.mmocore.*;
+import ru.privetdruk.l2jspace.common.network.IPv4Filter;
 import ru.privetdruk.l2jspace.loginserver.data.manager.IpBanManager;
 import ru.privetdruk.l2jspace.loginserver.network.LoginClient;
 import ru.privetdruk.l2jspace.loginserver.network.serverpackets.Init;
-import ru.privetdruk.l2jspace.common.network.IPv4Filter;
+
+import java.net.Socket;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class SelectorHelper implements IMMOExecutor<LoginClient>, IClientFactory<LoginClient>, IAcceptFilter {
     private final ThreadPoolExecutor _generalPacketsThreadPool;
@@ -39,7 +34,7 @@ public class SelectorHelper implements IMMOExecutor<LoginClient>, IClientFactory
     }
 
     @Override
-    public boolean accept(SocketChannel sc) {
-        return _ipv4filter.accept(sc) && !IpBanManager.getInstance().isBannedAddress(sc.socket().getInetAddress());
+    public boolean accept(Socket socket) {
+        return _ipv4filter.accept(socket) && !IpBanManager.getInstance().isBannedAddress(socket.getInetAddress());
     }
 }

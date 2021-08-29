@@ -1,11 +1,11 @@
 package ru.privetdruk.l2jspace.gameserver.data.manager;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
 import ru.privetdruk.l2jspace.gameserver.taskmanager.GameTimeTaskManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DayNightManager {
     private final List<Spawn> _dayCreatures = new ArrayList<>();

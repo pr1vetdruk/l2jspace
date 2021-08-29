@@ -1,12 +1,11 @@
 package ru.privetdruk.l2jspace.gameserver.network;
 
+import ru.privetdruk.l2jspace.common.logging.CLogger;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-
-import ru.privetdruk.l2jspace.common.logging.CLogger;
-
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 
 public final class SystemMessageId {
     private static final CLogger LOGGER = new CLogger(SystemMessageId.class.getName());

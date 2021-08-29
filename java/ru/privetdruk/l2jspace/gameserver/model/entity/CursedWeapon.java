@@ -1,17 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.model.entity;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.concurrent.ScheduledFuture;
-
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
-import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.enums.MessageType;
@@ -23,13 +16,13 @@ import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.Earthquake;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExRedSky;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ItemList;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.UserInfo;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.concurrent.ScheduledFuture;
 
 /**
  * One of these swords can drop from any mob. But only one instance of each sword can exist in the world. When a cursed sword drops, the world becomes red for several seconds, the ground shakes, and there's also an announcement as a system message that a cursed sword is found.<br>

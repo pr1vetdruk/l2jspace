@@ -1,17 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.StringTokenizer;
-import java.util.stream.Collectors;
-
 import ru.privetdruk.l2jspace.common.data.Pagination;
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
-
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.handler.IAdminCommandHandler;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
@@ -20,6 +10,9 @@ import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class AdminSkill implements IAdminCommandHandler {
     private static final Comparator<L2Skill> COMPARE_SKILLS_BY_ID = Comparator.comparing(L2Skill::getId);

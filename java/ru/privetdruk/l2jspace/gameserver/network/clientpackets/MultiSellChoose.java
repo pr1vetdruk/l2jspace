@@ -1,8 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.FloodProtector;
 import ru.privetdruk.l2jspace.gameserver.enums.StatusType;
@@ -18,6 +15,9 @@ import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ItemList;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.StatusUpdate;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MultiSellChoose extends L2GameClientPacket {
     // Special IDs.

@@ -1,17 +1,15 @@
 package ru.privetdruk.l2jspace.gameserver.data.xml;
 
+import org.w3c.dom.Document;
+import ru.privetdruk.l2jspace.common.data.StatSet;
+import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
+import ru.privetdruk.l2jspace.gameserver.idfactory.IdFactory;
+import ru.privetdruk.l2jspace.gameserver.model.actor.instance.StaticObject;
+
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
-import ru.privetdruk.l2jspace.common.data.StatSet;
-import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
-
-import ru.privetdruk.l2jspace.gameserver.idfactory.IdFactory;
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.StaticObject;
-
-import org.w3c.dom.Document;
 
 /**
  * This class loads, stores and spawns {@link StaticObject}s.

@@ -1,8 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassRace;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
@@ -13,6 +10,9 @@ import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Q220_TestimonyOfGlory extends SecondClassQuest {
     private static final String QUEST_NAME = "Q220_TestimonyOfGlory";
@@ -97,9 +97,9 @@ public class Q220_TestimonyOfGlory extends SecondClassQuest {
     private static final int REVENANT_OF_TANTOS_CHIEF = 27086;
 
     // Checks & Instances
-    private static final Set<Npc> _sonsOfVoltar = ConcurrentHashMap.newKeySet(2);
-    private static final Set<Npc> _enkuOrcOverlords = ConcurrentHashMap.newKeySet(4);
-    private static final Set<Npc> _makumBugbearThugs = ConcurrentHashMap.newKeySet(2);
+    private final Set<Npc> _sonsOfVoltar = ConcurrentHashMap.newKeySet(2);
+    private final Set<Npc> _enkuOrcOverlords = ConcurrentHashMap.newKeySet(4);
+    private final Set<Npc> _makumBugbearThugs = ConcurrentHashMap.newKeySet(2);
 
     public Q220_TestimonyOfGlory() {
         super(220, "Testimony Of Glory");

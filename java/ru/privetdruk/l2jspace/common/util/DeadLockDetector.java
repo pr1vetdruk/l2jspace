@@ -1,16 +1,11 @@
 package ru.privetdruk.l2jspace.common.util;
 
-import java.lang.management.LockInfo;
-import java.lang.management.ManagementFactory;
-import java.lang.management.MonitorInfo;
-import java.lang.management.ThreadInfo;
-import java.lang.management.ThreadMXBean;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.Shutdown;
 import ru.privetdruk.l2jspace.gameserver.model.World;
+
+import java.lang.management.*;
 
 /**
  * Thread to check for deadlocked threads.

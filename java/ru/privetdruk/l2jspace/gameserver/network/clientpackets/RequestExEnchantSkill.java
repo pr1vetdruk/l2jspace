@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.SkillTreeData;
@@ -70,17 +69,12 @@ public final class RequestExEnchantSkill extends L2GameClientPacket {
         // All conditions fulfilled, consume exp and sp.
         player.removeExpAndSp(esn.getExp(), esn.getSp());
 
-        // The skill level used for shortcuts.
-        int skillLevel = _skillLevel;
-
         // Try to enchant skill.
         if (Rnd.get(100) <= esn.getEnchantRate(player.getStatus().getLevel())) {
             player.addSkill(skill, true, true);
             player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_SUCCEEDED_IN_ENCHANTING_THE_SKILL_S1).addSkillName(_skillId, _skillLevel));
         } else {
-            skillLevel = SkillTable.getInstance().getMaxLevel(_skillId);
-
-            player.addSkill(SkillTable.getInstance().getInfo(_skillId, skillLevel), true, true);
+            player.addSkill(SkillTable.getInstance().getInfo(_skillId, SkillTable.getInstance().getMaxLevel(_skillId)), true, true);
             player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_FAILED_TO_ENCHANT_THE_SKILL_S1).addSkillName(_skillId, _skillLevel));
         }
 

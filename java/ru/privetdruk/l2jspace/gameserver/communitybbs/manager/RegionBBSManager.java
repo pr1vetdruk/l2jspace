@@ -1,11 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.communitybbs.manager;
 
-import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.StringTokenizer;
-
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
-
 import ru.privetdruk.l2jspace.gameserver.data.cache.HtmCache;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ClanHallManager;
@@ -14,6 +9,10 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.clanhall.ClanHall;
 import ru.privetdruk.l2jspace.gameserver.model.entity.Castle;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
+
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public class RegionBBSManager extends BaseBBSManager {
     protected RegionBBSManager() {

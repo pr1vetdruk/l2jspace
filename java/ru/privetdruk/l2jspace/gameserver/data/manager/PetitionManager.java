@@ -1,5 +1,15 @@
 package ru.privetdruk.l2jspace.gameserver.data.manager;
 
+import ru.privetdruk.l2jspace.common.logging.CLogger;
+import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
+import ru.privetdruk.l2jspace.gameserver.data.xml.AdminData;
+import ru.privetdruk.l2jspace.gameserver.enums.SayType;
+import ru.privetdruk.l2jspace.gameserver.enums.petitions.PetitionState;
+import ru.privetdruk.l2jspace.gameserver.enums.petitions.PetitionType;
+import ru.privetdruk.l2jspace.gameserver.model.Petition;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.CreatureSay;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,17 +18,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
-import ru.privetdruk.l2jspace.common.logging.CLogger;
-import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
-import ru.privetdruk.l2jspace.gameserver.data.xml.AdminData;
-import ru.privetdruk.l2jspace.gameserver.enums.SayType;
-import ru.privetdruk.l2jspace.gameserver.enums.petitions.PetitionState;
-import ru.privetdruk.l2jspace.gameserver.enums.petitions.PetitionType;
-import ru.privetdruk.l2jspace.gameserver.model.Petition;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.CreatureSay;
 
 /**
  * Store all existing {@link Petition}s.<br>

@@ -1,11 +1,11 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
-import java.util.StringTokenizer;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.clanhall.SiegableHall;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
+
+import java.util.StringTokenizer;
 
 /**
  * An instance type extending {@link Doorman}, used by castle doorman.<br>

@@ -1,13 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.model.olympiad;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.math.MathUtil;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.OlympiadType;
 import ru.privetdruk.l2jspace.gameserver.model.World;
@@ -19,6 +14,10 @@ import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExOlympiadUserInfo;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.L2GameServerPacket;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.List;
 
 abstract public class OlympiadGameNormal extends AbstractOlympiadGame {
     private static final String INSERT_RESULT = "INSERT INTO olympiad_fights (charOneId, charTwoId, charOneClass, charTwoClass, winner, start, time, classed) values(?,?,?,?,?,?,?,?)";
@@ -107,6 +106,21 @@ abstract public class OlympiadGameNormal extends AbstractOlympiadGame {
         result &= portPlayerToArena(_playerTwo, spawns.get(1), _stadiumId);
 
         return result;
+    }
+
+    @Override
+    protected boolean checkDualbox() {
+        if (!Config.ALLOW_DUALBOX_OLY) {
+            String ip1 = _playerOne.getPlayer().getClient().getConnection().getInetAddress().getHostAddress();
+            String ip2 = _playerTwo.getPlayer().getClient().getConnection().getInetAddress().getHostAddress();
+
+            if (ip1.equals(ip2)) {
+                _playerOne.getPlayer().sendMessage("Game ended, your opponent has the same ip has you.");
+                _playerTwo.getPlayer().sendMessage("Game ended, your opponent has the same ip has you.");
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

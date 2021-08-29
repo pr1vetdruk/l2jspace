@@ -3,7 +3,6 @@ package ru.privetdruk.l2jspace.gameserver.skill.effect;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Door;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExRegenMax;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
@@ -29,11 +28,12 @@ public class EffectHealOverTime extends AbstractEffect {
 
     @Override
     public boolean onActionTime() {
-        // Doesn't affect doors and dead characters.
-        if (getEffected().isDead() || getEffected() instanceof Door)
+        if (!getEffected().canBeHealed()) {
             return false;
+        }
 
         getEffected().getStatus().addHp(getTemplate().getValue());
+
         return true;
     }
 }

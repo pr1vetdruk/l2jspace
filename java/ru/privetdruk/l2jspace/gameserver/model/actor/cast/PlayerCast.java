@@ -1,15 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.cast;
 
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.SevenSignsManager;
-import ru.privetdruk.l2jspace.gameserver.enums.AiEventType;
-import ru.privetdruk.l2jspace.gameserver.enums.CabalType;
-import ru.privetdruk.l2jspace.gameserver.enums.GaugeColor;
-import ru.privetdruk.l2jspace.gameserver.enums.SealType;
-import ru.privetdruk.l2jspace.gameserver.enums.SiegeSide;
-import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
+import ru.privetdruk.l2jspace.gameserver.enums.*;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillTargetType;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillType;
 import ru.privetdruk.l2jspace.gameserver.handler.ISkillHandler;
@@ -79,9 +73,9 @@ public class PlayerCast extends PlayableCast<Player> {
 
         if (skill.getSkillType() == SkillType.FUSION) {
             _actor.startFusionSkill(target, skill);
-            target.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_FEEL_S1_EFFECT).addSkillName(skill));
-        } else
+        } else {
             callSkill(skill, _targets);
+        }
 
         _actor.broadcastPacket(new MagicSkillUse(_actor, target, skill.getId(), skill.getLevel(), hitTime, reuseDelay, false));
         _actor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.USE_S1).addSkillName(skill));
@@ -112,12 +106,7 @@ public class PlayerCast extends PlayableCast<Player> {
                 _actor.decreaseCharges(skill.getNumCharges());
         }
 
-        callSkill(skill, new Creature[]
-                {
-                        _actor
-                });
-
-        _actor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_FEEL_S1_EFFECT).addSkillName(skill));
+        callSkill(skill, new Creature[]{_actor});
     }
 
     @Override

@@ -1,9 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.model.zone.form;
 
-import java.awt.Color;
-
 import ru.privetdruk.l2jspace.gameserver.model.zone.ZoneForm;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExServerPrimitive;
+
+import java.awt.*;
 
 public class ZoneCuboid extends ZoneForm {
     private int _x1;
@@ -105,25 +105,6 @@ public class ZoneCuboid extends ZoneForm {
             return true;
 
         return false;
-    }
-
-    @Override
-    public double getDistanceToZone(int x, int y) {
-        double test, shortestDist = Math.pow(_x1 - x, 2) + Math.pow(_y1 - y, 2);
-
-        test = Math.pow(_x1 - x, 2) + Math.pow(_y2 - y, 2);
-        if (test < shortestDist)
-            shortestDist = test;
-
-        test = Math.pow(_x2 - x, 2) + Math.pow(_y1 - y, 2);
-        if (test < shortestDist)
-            shortestDist = test;
-
-        test = Math.pow(_x2 - x, 2) + Math.pow(_y2 - y, 2);
-        if (test < shortestDist)
-            shortestDist = test;
-
-        return Math.sqrt(shortestDist);
     }
 
     @Override

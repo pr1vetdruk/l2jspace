@@ -1,12 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.model.memo;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
 import ru.privetdruk.l2jspace.common.data.MemoSet;
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * An implementation of {@link MemoSet} used for Player. There is a restore/save system.

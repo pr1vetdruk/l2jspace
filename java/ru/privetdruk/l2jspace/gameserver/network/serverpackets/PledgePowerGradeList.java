@@ -1,9 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
+import ru.privetdruk.l2jspace.gameserver.model.pledge.ClanMember;
+
 import java.util.Collection;
 import java.util.Set;
-
-import ru.privetdruk.l2jspace.gameserver.model.pledge.ClanMember;
 
 public class PledgePowerGradeList extends L2GameServerPacket {
     private final Set<Integer> _ranks;

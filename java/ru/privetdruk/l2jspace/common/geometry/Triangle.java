@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.common.geometry;
 
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.model.location.Point2D;
 

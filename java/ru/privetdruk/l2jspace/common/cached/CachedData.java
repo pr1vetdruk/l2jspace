@@ -1,10 +1,10 @@
 package ru.privetdruk.l2jspace.common.cached;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CachedData {
     private final int charId;

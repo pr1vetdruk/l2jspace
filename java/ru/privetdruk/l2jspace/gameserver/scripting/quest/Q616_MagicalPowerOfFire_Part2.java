@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.RaidBossManager;
 import ru.privetdruk.l2jspace.gameserver.enums.BossStatus;
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;

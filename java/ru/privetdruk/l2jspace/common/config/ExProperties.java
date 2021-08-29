@@ -1,14 +1,13 @@
 package ru.privetdruk.l2jspace.common.config;
 
+import ru.privetdruk.l2jspace.common.logging.CLogger;
+import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
-import ru.privetdruk.l2jspace.common.logging.CLogger;
-
-import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
 
 public class ExProperties extends Properties {
     private static final CLogger LOGGER = new CLogger(ExProperties.class.getName());

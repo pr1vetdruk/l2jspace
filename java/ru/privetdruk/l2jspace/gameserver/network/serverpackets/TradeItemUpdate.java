@@ -1,12 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.List;
-import java.util.Set;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.model.trade.TradeItem;
 import ru.privetdruk.l2jspace.gameserver.model.trade.TradeList;
+
+import java.util.List;
+import java.util.Set;
 
 public class TradeItemUpdate extends L2GameServerPacket {
     private final Set<ItemInstance> _items;

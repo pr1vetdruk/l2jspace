@@ -1,8 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
-import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
-import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventPlayer;
-import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState;
 import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;

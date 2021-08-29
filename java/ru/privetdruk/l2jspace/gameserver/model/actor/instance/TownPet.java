@@ -1,11 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
-import java.util.concurrent.ScheduledFuture;
-
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
+
+import java.util.concurrent.ScheduledFuture;
 
 public class TownPet extends Folk {
     private ScheduledFuture<?> _aiTask;

@@ -3,7 +3,6 @@ package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.FourSepulchersManager;
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;

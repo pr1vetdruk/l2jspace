@@ -1,13 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
@@ -16,6 +8,14 @@ import ru.privetdruk.l2jspace.gameserver.model.zone.type.PeaceZone;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.TownZone;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.subtype.ZoneType;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public final class WorldRegion {
     private final Map<Integer, WorldObject> _objects = new ConcurrentHashMap<>();

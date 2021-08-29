@@ -1,14 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.container.creature;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectFlag;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectType;
@@ -28,6 +19,11 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.skill.effect.EffectTemplate;
+
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class EffectList {
     private static final AbstractEffect[] EMPTY_EFFECTS = new AbstractEffect[0];
@@ -489,12 +485,10 @@ public class EffectList {
 
                     // Check if there's another effect in the Stack Group
                     if (!stackQueue.isEmpty()) {
+                        // Set the effect to In Use and add its Funcs to the Calculator set of the Creature.
                         AbstractEffect newStackedEffect = listsContains(stackQueue.get(0));
-                        if (newStackedEffect != null) {
-                            // Set the effect to In Use
-                            if (newStackedEffect.setInUse(true))
-                                // Add its list of Funcs to the Calculator set of the Creature
-                                _owner.addStatFuncs(newStackedEffect.getStatFuncs());
+                        if (newStackedEffect != null && newStackedEffect.setInUse(true)) {
+                            _owner.addStatFuncs(newStackedEffect.getStatFuncs());
                         }
                     }
                 }
@@ -510,10 +504,14 @@ public class EffectList {
         // Remove the active skill L2effect from _effects of the Creature
         if (effectList.remove(effect) && _owner instanceof Player && effect.getTemplate().showIcon()) {
             SystemMessage sm;
-            if (effect.getSkill().isToggle())
+
+            if (effect.getSkill().isToggle()) {
                 sm = SystemMessage.getSystemMessage(SystemMessageId.S1_HAS_BEEN_ABORTED);
-            else
+            } else if (effect.getCount() == 0) {
+                sm = SystemMessage.getSystemMessage(SystemMessageId.S1_HAS_WORN_OFF);
+            } else {
                 sm = SystemMessage.getSystemMessage(SystemMessageId.EFFECT_S1_DISAPPEARED);
+            }
 
             sm.addSkillName(effect);
             _owner.sendPacket(sm);
@@ -677,11 +675,18 @@ public class EffectList {
                 _owner.removeStatsByOwner(effectToRemove);
 
                 effectToRemove.setInUse(false);
-            }
 
-            if (effectToAdd != null) {
-                if (effectToAdd.setInUse(true))
-                    _owner.addStatFuncs(effectToAdd.getStatFuncs());
+                if (_owner instanceof Player && effectToRemove.getTemplate().showIcon()) {
+                    _owner.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.EFFECT_S1_DISAPPEARED).addSkillName(effectToRemove.getSkill()));
+                }
+            }
+        }
+
+        if (effectToAdd != null && effectToAdd.setInUse(true)) {
+            _owner.addStatFuncs(effectToAdd.getStatFuncs());
+
+            if (_owner instanceof Player && effectToAdd.getTemplate().showIcon()) {
+                _owner.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_FEEL_S1_EFFECT).addSkillName(effectToAdd.getSkill()));
             }
         }
     }

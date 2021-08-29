@@ -1,6 +1,5 @@
 package ru.privetdruk.l2jspace.common.crypt;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 

@@ -1,14 +1,14 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Q627_HeartInSearchOfPower extends Quest {
     private static final String QUEST_NAME = "Q627_HeartInSearchOfPower";
@@ -46,20 +46,44 @@ public class Q627_HeartInSearchOfPower extends Quest {
         CHANCES.put(21540, 762000);
         CHANCES.put(21658, 690000);
 
-        REWARDS.put("adena", new int[]{0, 0, 100000});
-        REWARDS.put("asofe", new int[]{4043, 13, 6400});
-        REWARDS.put("thon", new int[]{4044, 13, 6400});
-        REWARDS.put("enria", new int[]{4042, 6, 13600});
-        REWARDS.put("mold", new int[]{4041, 3, 17200});
+        REWARDS.put("adena", new int[]
+                {
+                        0,
+                        0,
+                        100000
+                });
+        REWARDS.put("asofe", new int[]
+                {
+                        4043,
+                        13,
+                        6400
+                });
+        REWARDS.put("thon", new int[]
+                {
+                        4044,
+                        13,
+                        6400
+                });
+        REWARDS.put("enria", new int[]
+                {
+                        4042,
+                        6,
+                        13600
+                });
+        REWARDS.put("mold", new int[]
+                {
+                        4041,
+                        3,
+                        17200
+                });
 
         setItemsIds(BEAD_OF_OBEDIENCE);
 
         addStartNpc(NECROMANCER);
         addTalkId(NECROMANCER, ENFEUX);
 
-        for (int npcId : CHANCES.keySet()) {
+        for (int npcId : CHANCES.keySet())
             addKillId(npcId);
-        }
     }
 
     @Override
@@ -96,10 +120,9 @@ public class Q627_HeartInSearchOfPower extends Quest {
                 htmltext = "31518-07.htm";
                 takeItems(player, GEM_OF_SAINTS, 1);
 
-                int[] reward = REWARDS.get(event);
-                if (reward[0] > 0) {
+                final int[] reward = REWARDS.get(event);
+                if (reward[0] > 0)
                     giveItems(player, reward[0], reward[1]);
-                }
 
                 rewardItems(player, 57, reward[2]);
 
@@ -154,16 +177,14 @@ public class Q627_HeartInSearchOfPower extends Quest {
 
     @Override
     public String onKill(Npc npc, Creature killer) {
-        Player player = killer.getActingPlayer();
+        final Player player = killer.getActingPlayer();
 
-        QuestState questState = checkPlayerCondition(player, npc, 1);
-        if (questState == null) {
+        final QuestState st = getRandomPartyMember(player, npc, 1);
+        if (st == null)
             return null;
-        }
 
-        if (dropItems(questState.getPlayer(), BEAD_OF_OBEDIENCE, 1, 300, CHANCES.get(npc.getNpcId()))) {
-            questState.setCond(2);
-        }
+        if (dropItems(st.getPlayer(), BEAD_OF_OBEDIENCE, 1, 300, CHANCES.get(npc.getNpcId())))
+            st.setCond(2);
 
         return null;
     }

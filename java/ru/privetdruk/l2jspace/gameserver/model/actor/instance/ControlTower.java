@@ -1,8 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.enums.SiegeSide;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
@@ -12,6 +9,9 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.entity.Siege;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ControlTower extends Npc {
     private final List<Spawn> _spawns = new ArrayList<>();

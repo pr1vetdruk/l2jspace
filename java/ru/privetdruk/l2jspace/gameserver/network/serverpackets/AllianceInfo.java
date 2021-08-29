@@ -1,10 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.Collection;
-
 import ru.privetdruk.l2jspace.gameserver.data.sql.ClanTable;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.ClanInfo;
+
+import java.util.Collection;
 
 public class AllianceInfo extends L2GameServerPacket {
     private final String _name;

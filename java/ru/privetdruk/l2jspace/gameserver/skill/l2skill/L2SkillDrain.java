@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.skill.l2skill;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
 import ru.privetdruk.l2jspace.gameserver.enums.items.ShotType;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.ShieldDefense;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillTargetType;
@@ -82,7 +81,6 @@ public class L2SkillDrain extends L2Skill {
                         if ((Formula.calcSkillReflect(target, this) & Formula.SKILL_REFLECT_SUCCEED) > 0) {
                             activeChar.stopSkillEffects(getId());
                             getEffects(target, activeChar);
-                            activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_FEEL_S1_EFFECT).addSkillName(getId()));
                         } else {
                             // activate attacked effects, if any
                             target.stopSkillEffects(getId());

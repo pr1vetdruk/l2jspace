@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.handler.usercommandhandlers;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
 import ru.privetdruk.l2jspace.gameserver.handler.IUserCommandHandler;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.olympiad.Olympiad;

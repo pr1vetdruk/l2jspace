@@ -1,14 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.BotsPreventionManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ZoneManager;
@@ -20,11 +13,7 @@ import ru.privetdruk.l2jspace.gameserver.enums.StatusType;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.MoveType;
 import ru.privetdruk.l2jspace.gameserver.enums.items.WeaponType;
-import ru.privetdruk.l2jspace.gameserver.enums.skills.AbnormalEffect;
-import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectFlag;
-import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectType;
-import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillType;
-import ru.privetdruk.l2jspace.gameserver.enums.skills.Stats;
+import ru.privetdruk.l2jspace.gameserver.enums.skills.*;
 import ru.privetdruk.l2jspace.gameserver.geoengine.GeoEngine;
 import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
@@ -48,20 +37,21 @@ import ru.privetdruk.l2jspace.gameserver.model.itemcontainer.Inventory;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.WaterZone;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.AbstractNpcInfo.NpcInfo;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ChangeMoveType;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.L2GameServerPacket;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.Revive;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ServerObjectInfo;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.StatusUpdate;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.TeleportToLocation;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
 import ru.privetdruk.l2jspace.gameserver.skill.Calculator;
 import ru.privetdruk.l2jspace.gameserver.skill.IChanceSkillTrigger;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+import ru.privetdruk.l2jspace.gameserver.skill.effect.EffectChanceSkillTrigger;
 import ru.privetdruk.l2jspace.gameserver.skill.function.*;
 import ru.privetdruk.l2jspace.gameserver.skill.function.base.Func;
-import ru.privetdruk.l2jspace.gameserver.skill.effect.EffectChanceSkillTrigger;
 import ru.privetdruk.l2jspace.gameserver.taskmanager.AttackStanceTaskManager;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * An instance type extending {@link WorldObject} which represents the mother class of all character objects of the world such as players, NPCs and monsters.

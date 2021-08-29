@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.feature;
 
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;

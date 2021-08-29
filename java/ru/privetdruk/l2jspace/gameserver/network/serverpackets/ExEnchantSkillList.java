@@ -1,8 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.model.holder.skillnode.EnchantSkillNode;
+
+import java.util.List;
 
 public class ExEnchantSkillList extends L2GameServerPacket {
     private final List<EnchantSkillNode> _skills;

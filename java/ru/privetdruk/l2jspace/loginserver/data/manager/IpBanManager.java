@@ -1,5 +1,7 @@
 package ru.privetdruk.l2jspace.loginserver.data.manager;
 
+import ru.privetdruk.l2jspace.common.logging.CLogger;
+
 import java.net.InetAddress;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -7,8 +9,6 @@ import java.nio.file.Paths;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
-
-import ru.privetdruk.l2jspace.common.logging.CLogger;
 
 public class IpBanManager {
     private static final CLogger LOGGER = new CLogger(GameServerManager.class.getName());

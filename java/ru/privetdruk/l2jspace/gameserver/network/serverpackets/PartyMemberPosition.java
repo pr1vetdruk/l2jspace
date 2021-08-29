@@ -1,11 +1,11 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.group.Party;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PartyMemberPosition extends L2GameServerPacket {
     Map<Integer, Location> _locations = new HashMap<>();

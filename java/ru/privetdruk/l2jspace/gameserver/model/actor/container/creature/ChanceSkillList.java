@@ -1,8 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.container.creature;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillTargetType;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillType;
@@ -15,6 +12,9 @@ import ru.privetdruk.l2jspace.gameserver.skill.ChanceCondition;
 import ru.privetdruk.l2jspace.gameserver.skill.IChanceSkillTrigger;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.skill.effect.EffectChanceSkillTrigger;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ChanceSkillList extends ConcurrentHashMap<IChanceSkillTrigger, ChanceCondition> {
     private static final long serialVersionUID = 1L;

@@ -1,20 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.model.entity;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListSet;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
+import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManorManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.SevenSignsManager;
@@ -33,6 +22,7 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.instance.HolyThing;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.item.MercenaryTicket;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
+import ru.privetdruk.l2jspace.gameserver.model.itemcontainer.PcInventory;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.model.location.TowerSpawnLocation;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
@@ -45,6 +35,12 @@ import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PlaySound;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PledgeShowInfoUpdate;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.*;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 public class Castle {
     protected static final CLogger LOGGER = new CLogger(Castle.class.getName());
@@ -68,11 +64,17 @@ public class Castle {
 
     private static final String UPDATE_ITEMS_LOC = "UPDATE items SET loc='INVENTORY' WHERE item_id IN (?, 6841) AND owner_id=? AND loc='PAPERDOLL'";
 
+    private static final String LOAD_FUNCTIONS = "SELECT * FROM castle_functions WHERE castle_id = ?";
+    private static final String UPDATE_FUNCTIONS = "REPLACE INTO castle_functions (castle_id, type, lvl, lease, rate, endTime) VALUES (?,?,?,?,?,?)";
+    private static final String DELETE_FUNCTIONS = "DELETE FROM castle_functions WHERE castle_id=? AND type=?";
+
     private final int _castleId;
     private final String _name;
 
     private int _circletId;
     private int _ownerId;
+
+    private final Map<Integer, CastleFunction> _function = new HashMap<>();
 
     private final List<Door> _doors = new ArrayList<>();
     private final List<MercenaryTicket> _tickets = new ArrayList<>(60);
@@ -101,6 +103,12 @@ public class Castle {
 
     private int _leftCertificates;
 
+    public static final int FUNC_TELEPORT = 1;
+    public static final int FUNC_RESTORE_HP = 2;
+    public static final int FUNC_RESTORE_MP = 3;
+    public static final int FUNC_RESTORE_EXP = 4;
+    public static final int FUNC_SUPPORT = 5;
+
     public Castle(int id, String name) {
         _castleId = id;
         _name = name;
@@ -128,6 +136,17 @@ public class Castle {
                 break;
             }
         }
+
+        if (getOwnerId() != 0) {
+            loadFunctions();
+        }
+    }
+
+    public CastleFunction getFunction(int type) {
+        if (_function.containsKey(type))
+            return _function.get(type);
+
+        return null;
     }
 
     public synchronized void engrave(Clan clan, WorldObject target) {
@@ -255,16 +274,6 @@ public class Castle {
         }
     }
 
-    /**
-     * Get the object distance to this castle zone.
-     *
-     * @param obj The WorldObject to make tests on.
-     * @return the distance between the WorldObject and the zone.
-     */
-    public double getDistance(WorldObject obj) {
-        return getSiegeZone().getDistanceToZone(obj);
-    }
-
     public void closeDoor(Player player, int doorId) {
         openCloseDoor(player, doorId, false);
     }
@@ -299,9 +308,8 @@ public class Castle {
             if (oldOwner != null) {
                 // Dismount the old leader if he was riding a wyvern.
                 Player oldLeader = oldOwner.getLeader().getPlayerInstance();
-                if (oldLeader != null) {
-                    if (oldLeader.getMountType() == 2)
-                        oldLeader.dismount();
+                if (oldLeader != null && oldLeader.getMountType() == 2) {
+                    oldLeader.dismount();
                 }
 
                 // Unset castle flag for old owner clan.
@@ -562,15 +570,8 @@ public class Castle {
     }
 
     public boolean isTooCloseFromDroppedTicket(int x, int y, int z) {
-        for (ItemInstance item : _droppedTickets) {
-            double dx = x - item.getX();
-            double dy = y - item.getY();
-            double dz = z - item.getZ();
-
-            if ((dx * dx + dy * dy + dz * dz) < 25 * 25)
-                return true;
-        }
-        return false;
+        return _droppedTickets.stream()
+                .anyMatch(i -> i.isIn3DRadius(x, y, z, 25));
     }
 
     /**
@@ -887,6 +888,170 @@ public class Castle {
             ps.executeBatch();
         } catch (Exception e) {
             LOGGER.error("Couldn't update items for clan.", e);
+        }
+    }
+
+    private void loadFunctions() {
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement statement = con.prepareStatement(LOAD_FUNCTIONS)) {
+            statement.setInt(1, getOwnerId());
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    _function.put(rs.getInt("type"), new CastleFunction(rs.getInt("type"), rs.getInt("lvl"), rs.getInt("lease"), 0, rs.getLong("rate"), rs.getLong("endTime"), true));
+                }
+            }
+        } catch (Exception e) {
+            LOGGER.error("Exception: Castle.loadFunctions(): " + e.getMessage(), e);
+        }
+    }
+
+    public void removeFunction(int functionType) {
+        _function.remove(functionType);
+        try (Connection con = ConnectionPool.getConnection();
+             PreparedStatement statement = con.prepareStatement(DELETE_FUNCTIONS)) {
+            statement.setInt(1, getOwnerId());
+            statement.setInt(2, functionType);
+            statement.execute();
+        } catch (Exception e) {
+            LOGGER.error("Exception: Castle.removeFunctions(int functionType): " + e.getMessage(), e);
+        }
+    }
+
+    public boolean updateFunctions(Player player, int type, int lvl, int lease, long rate, boolean addNew) {
+        if (player == null)
+            return false;
+
+        if (lease > 0) {
+            if (!player.destroyItemByItemId("Consume", PcInventory.ADENA_ID, lease, null, true))
+                return false;
+        }
+
+        if (addNew)
+            _function.put(type, new CastleFunction(type, lvl, lease, 0, rate, 0, false));
+        else {
+            if ((lvl == 0) && (lease == 0))
+                removeFunction(type);
+            else {
+                int diffLease = lease - _function.get(type).getLease();
+                if (diffLease > 0) {
+                    _function.remove(type);
+                    _function.put(type, new CastleFunction(type, lvl, lease, 0, rate, -1, false));
+                } else {
+                    _function.get(type).setLease(lease);
+                    _function.get(type).setLvl(lvl);
+                    _function.get(type).dbSave();
+                }
+            }
+        }
+        return true;
+    }
+
+    public class CastleFunction {
+        private final int _type;
+        private int _lvl;
+        protected int _fee;
+        protected int _tempFee;
+        private final long _rate;
+        private long _endDate;
+        protected boolean _inDebt;
+        public boolean _cwh;
+
+        public CastleFunction(int type, int lvl, int lease, int tempLease, long rate, long time, boolean cwh) {
+            _type = type;
+            _lvl = lvl;
+            _fee = lease;
+            _tempFee = tempLease;
+            _rate = rate;
+            _endDate = time;
+            initializeTask(cwh);
+        }
+
+        public int getType() {
+            return _type;
+        }
+
+        public int getLvl() {
+            return _lvl;
+        }
+
+        public int getLease() {
+            return _fee;
+        }
+
+        public long getRate() {
+            return _rate;
+        }
+
+        public long getEndTime() {
+            return _endDate;
+        }
+
+        public void setLvl(int lvl) {
+            _lvl = lvl;
+        }
+
+        public void setLease(int lease) {
+            _fee = lease;
+        }
+
+        public void setEndTime(long time) {
+            _endDate = time;
+        }
+
+        private void initializeTask(boolean cwh) {
+            if (getOwnerId() <= 0)
+                return;
+
+            long currentTime = System.currentTimeMillis();
+            if (_endDate > currentTime)
+                ThreadPool.schedule(new FunctionTask(cwh), _endDate - currentTime);
+            else
+                ThreadPool.schedule(new FunctionTask(cwh), 0);
+        }
+
+        private class FunctionTask implements Runnable {
+            public FunctionTask(boolean cwh) {
+                _cwh = cwh;
+            }
+
+            @Override
+            public void run() {
+                try {
+                    if (getOwnerId() <= 0)
+                        return;
+
+                    if ((ClanTable.getInstance().getClan(getOwnerId()).getWarehouse().getAdena() >= _fee) || !_cwh) {
+                        int fee = _fee;
+                        if (getEndTime() == -1)
+                            fee = _tempFee;
+
+                        setEndTime(System.currentTimeMillis() + getRate());
+                        dbSave();
+                        if (_cwh)
+                            ClanTable.getInstance().getClan(getOwnerId()).getWarehouse().destroyItemByItemId("CS_function_fee", PcInventory.ADENA_ID, fee, null, null);
+
+                        ThreadPool.schedule(new FunctionTask(true), getRate());
+                    } else
+                        removeFunction(getType());
+                } catch (Exception e) {
+                    LOGGER.error("", e);
+                }
+            }
+        }
+
+        public void dbSave() {
+            try (Connection con = ConnectionPool.getConnection();
+                 PreparedStatement statement = con.prepareStatement(UPDATE_FUNCTIONS)) {
+                statement.setInt(1, getOwnerId());
+                statement.setInt(2, getType());
+                statement.setInt(3, getLvl());
+                statement.setInt(4, getLease());
+                statement.setLong(5, getRate());
+                statement.setLong(6, getEndTime());
+                statement.execute();
+            } catch (Exception e) {
+                LOGGER.error("Exception: Castle.updateFunctions(int type, int lvl, int lease, long rate, long time, boolean addNew): " + e.getMessage(), e);
+            }
         }
     }
 }

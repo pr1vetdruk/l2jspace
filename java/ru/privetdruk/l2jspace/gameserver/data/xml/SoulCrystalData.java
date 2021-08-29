@@ -1,16 +1,14 @@
 package ru.privetdruk.l2jspace.gameserver.data.xml;
 
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
-
+import org.w3c.dom.Document;
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
-
 import ru.privetdruk.l2jspace.gameserver.model.soulcrystal.LevelingInfo;
 import ru.privetdruk.l2jspace.gameserver.model.soulcrystal.SoulCrystal;
 
-import org.w3c.dom.Document;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class loads and stores following Soul Crystal infos :

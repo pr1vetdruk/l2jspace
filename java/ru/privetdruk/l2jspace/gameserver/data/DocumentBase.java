@@ -1,19 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.data;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassRace;
 import ru.privetdruk.l2jspace.gameserver.enums.items.ArmorType;
@@ -25,42 +15,16 @@ import ru.privetdruk.l2jspace.gameserver.enums.skills.Stats;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
 import ru.privetdruk.l2jspace.gameserver.skill.ChanceCondition;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
-import ru.privetdruk.l2jspace.gameserver.skill.function.base.FuncTemplate;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.Condition;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionElementSeed;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionForceBuff;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionGameTime;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionLogicAnd;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionLogicNot;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionLogicOr;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionPlayerActiveEffectId;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionPlayerActiveSkillId;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionPlayerCharges;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionPlayerHasCastle;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionPlayerHasClanHall;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionPlayerHp;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionPlayerInvSize;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionPlayerIsHero;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionPlayerLevel;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionPlayerMp;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionPlayerPkCount;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionPlayerPledgeClass;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionPlayerRace;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionPlayerSex;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionPlayerState;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionPlayerWeight;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionSkillStats;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionTargetActiveSkillId;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionTargetHpMinMax;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionTargetNpcId;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionTargetRaceId;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.ConditionUsingItemType;
+import ru.privetdruk.l2jspace.gameserver.skill.condition.*;
 import ru.privetdruk.l2jspace.gameserver.skill.effect.EffectChanceSkillTrigger;
 import ru.privetdruk.l2jspace.gameserver.skill.effect.EffectTemplate;
+import ru.privetdruk.l2jspace.gameserver.skill.function.base.FuncTemplate;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 abstract class DocumentBase {
     static Logger _log = Logger.getLogger(DocumentBase.class.getName());

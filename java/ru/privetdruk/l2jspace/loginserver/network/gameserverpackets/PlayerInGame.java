@@ -1,9 +1,9 @@
 package ru.privetdruk.l2jspace.loginserver.network.gameserverpackets;
 
+import ru.privetdruk.l2jspace.loginserver.network.clientpackets.ClientBasePacket;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import ru.privetdruk.l2jspace.loginserver.network.clientpackets.ClientBasePacket;
 
 public class PlayerInGame extends ClientBasePacket {
     private final List<String> _accounts = new ArrayList<>();

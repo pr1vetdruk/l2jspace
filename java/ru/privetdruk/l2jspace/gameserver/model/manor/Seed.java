@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.manor;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;

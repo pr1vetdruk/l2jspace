@@ -1,7 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.skill.l2skill;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
+import ru.privetdruk.l2jspace.common.math.MathUtil;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
 import ru.privetdruk.l2jspace.gameserver.enums.items.ShotType;
@@ -145,7 +145,7 @@ public class L2SkillSummon extends L2Skill {
 
             if (getId() == SUMMON_SOULLESS) {
                 SkillTable.getInstance()
-                        .getInfo(Summon.CONTRACT_PAYMENT, Math.max(1, getLevel() - 2))
+                        .getInfo(Summon.CONTRACT_PAYMENT, MathUtil.limit(getLevel() - 2, 1, 12))
                         .getEffects(activeChar, activeChar);
             }
         }

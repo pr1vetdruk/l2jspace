@@ -1,12 +1,11 @@
 package ru.privetdruk.l2jspace.gameserver.model.olympiad;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.OlympiadType;
 import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
+
+import java.util.List;
 
 public class OlympiadGameClassed extends OlympiadGameNormal {
     private OlympiadGameClassed(int id, Participant[] opponents) {

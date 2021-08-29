@@ -1,17 +1,17 @@
 package ru.privetdruk.l2jspace.gameserver.model.spawn;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.text.SimpleDateFormat;
-import java.util.concurrent.ScheduledFuture;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.enums.BossStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.text.SimpleDateFormat;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A data holder keeping informations related to the {@link Spawn} of a RaidBoss.
@@ -110,8 +110,8 @@ public class BossSpawn {
      */
     public void onDeath() {
         // getRespawnMinDelay() is used as fixed timer, while getRespawnMaxDelay() is used as random timer.
-        int respawnDelay = (_spawn.getRespawnMinDelay() * 60) + Rnd.get(-60 * _spawn.getRespawnMaxDelay(), 60 * _spawn.getRespawnMaxDelay());
-        long respawnTime = System.currentTimeMillis() + (respawnDelay * 60000L);
+        final long respawnDelay = TimeUnit.HOURS.toMillis(_spawn.getRespawnMinDelay()) + Rnd.get(TimeUnit.HOURS.toMillis(_spawn.getRespawnMaxDelay()));
+        final long respawnTime = System.currentTimeMillis() + respawnDelay;
 
         // Refresh data.
         _status = BossStatus.DEAD;
@@ -123,12 +123,12 @@ public class BossSpawn {
         cancelTask();
 
         // Register the task.
-        _task = ThreadPool.schedule(this::onSpawn, respawnDelay * 3600000L);
+        _task = ThreadPool.schedule(this::onSpawn, respawnDelay);
 
         // Refresh the database for this particular boss entry.
         updateOnDb();
 
-        LOGGER.info("Raid boss: {} - {} ({}h).", _spawn.getNpc().getName(), new SimpleDateFormat("dd-MM-yyyy HH:mm").format(respawnTime), respawnDelay);
+        LOGGER.info("Raid boss: {} - {} ({}h).", _spawn.getNpc().getName(), new SimpleDateFormat("dd-MM-yyyy HH:mm").format(respawnTime), TimeUnit.MILLISECONDS.toHours(respawnDelay));
     }
 
     /**

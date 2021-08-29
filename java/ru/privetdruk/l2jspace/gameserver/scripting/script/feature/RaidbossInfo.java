@@ -1,16 +1,15 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.feature;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
-
 import ru.privetdruk.l2jspace.gameserver.data.sql.SpawnTable;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RaidbossInfo extends Quest {
     private static final String BOSS_CLASS_TYPE = "RaidBoss";

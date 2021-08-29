@@ -1,13 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.feature;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassRace;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.HennaInfo;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class FirstClassChange extends Quest {
     // Quest Items Dark Elf
@@ -337,7 +336,7 @@ public class FirstClassChange extends Quest {
 
                         player.setClassId(array[0]);
                         player.setBaseClass(array[0]);
-                        player.sendPacket(new HennaInfo(player));
+                        player.refreshHennaList();
                         player.broadcastUserInfo();
                     } else
                         suffix = "-" + array[5];

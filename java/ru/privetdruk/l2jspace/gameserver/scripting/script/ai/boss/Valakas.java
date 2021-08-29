@@ -2,7 +2,6 @@ package ru.privetdruk.l2jspace.gameserver.scripting.script.ai.boss;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.manager.GrandBossManager;
@@ -20,6 +19,8 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SpecialCamera;
 import ru.privetdruk.l2jspace.gameserver.scripting.script.ai.AttackableAIScript;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.concurrent.TimeUnit;
 
 public class Valakas extends AttackableAIScript {
     private static final BossZone VALAKAS_LAIR = ZoneManager.getInstance().getZoneById(110010, BossZone.class);
@@ -290,8 +291,7 @@ public class Valakas extends AttackableAIScript {
 
         GrandBossManager.getInstance().setBossStatus(VALAKAS, DEAD);
 
-        long respawnTime = (long) Config.SPAWN_INTERVAL_VALAKAS * 60 + Rnd.get(-60 * Config.RANDOM_SPAWN_TIME_VALAKAS, 60 * Config.RANDOM_SPAWN_TIME_VALAKAS);
-        respawnTime *= 60000;
+        long respawnTime = TimeUnit.HOURS.toMillis(Config.SPAWN_INTERVAL_VALAKAS) + Rnd.get(TimeUnit.HOURS.toMillis(Config.RANDOM_SPAWN_TIME_VALAKAS));
 
         startQuestTimer("valakas_unlock", null, null, respawnTime);
 

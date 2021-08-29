@@ -1,15 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
 import ru.privetdruk.l2jspace.common.random.Rnd;
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
@@ -22,6 +14,9 @@ import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Q501_ProofOfClanAlliance extends Quest {
     private static final String QUEST_NAME = "Q501_ProofOfClanAlliance";
@@ -67,7 +62,7 @@ public class Q501_ProofOfClanAlliance extends Quest {
     // Drops
     private static final Map<Integer, Integer> HERB_DROPLIST = new HashMap<>();
 
-    {
+    static {
         HERB_DROPLIST.put(VANOR_SILENOS_SHAMAN, HERB_OF_VANOR);
         HERB_DROPLIST.put(HARIT_LIZARDMAN_SHAMAN, HERB_OF_HARIT);
         HERB_DROPLIST.put(OEL_MAHUM_WITCH_DOCTOR, HERB_OF_OEL_MAHUM);
@@ -187,6 +182,7 @@ public class Q501_ProofOfClanAlliance extends Quest {
                 SpawnLocation loc2;
                 SpawnLocation loc3;
                 SpawnLocation loc4;
+
                 do {
                     loc1 = Rnd.get(BOXES_OF_ATHREA_SPAWNLIST);
                     loc2 = Rnd.get(BOXES_OF_ATHREA_SPAWNLIST);
@@ -348,17 +344,18 @@ public class Q501_ProofOfClanAlliance extends Quest {
                         // Clan member talks.
                         else {
                             // Clan leader does not have cond 2
-                            if (cond != 2) {
+                            if (cond != 2)
                                 htmltext = "30757-06.htm";
-                            } else if (player.getStatus().getLevel() < 40) { // member below 40
+                                // member below 40
+                            else if (player.getStatus().getLevel() < 40)
                                 htmltext = "30757-02.htm";
-                            } else if (lst.getBool(String.valueOf(player.getObjectId()))) { // member has proven already
+                                // member has proven already
+                            else if (lst.getBool(String.valueOf(player.getObjectId())))
                                 htmltext = "30757-01b.htm";
-                            } else {
+                                // member has not proven yet
+                            else
                                 htmltext = "30757-01.htm";
-                            }
                         }
-
                         break;
 
                     case ATHREA:

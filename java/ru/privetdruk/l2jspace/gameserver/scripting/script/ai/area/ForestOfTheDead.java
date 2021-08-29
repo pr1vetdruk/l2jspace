@@ -1,10 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.ai.area;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.RaidBossManager;
 import ru.privetdruk.l2jspace.gameserver.enums.BossStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
@@ -16,6 +11,9 @@ import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.scripting.script.ai.AttackableAIScript;
 import ru.privetdruk.l2jspace.gameserver.taskmanager.GameTimeTaskManager;
+
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ForestOfTheDead extends AttackableAIScript {
     public static final SpawnLocation HELLMANN_DAY_LOC = new SpawnLocation(-104100, -252700, -15542, 0);
@@ -35,7 +33,7 @@ public class ForestOfTheDead extends AttackableAIScript {
     private static final int SILVER_CROSS = 7153;
     private static final int BROKEN_SILVER_CROSS = 7154;
 
-    private final Set<Npc> npcs = ConcurrentHashMap.newKeySet(4);
+    private final Set<Npc> _npcs = ConcurrentHashMap.newKeySet(4);
 
     private Npc _lidiaMaid;
 
@@ -102,10 +100,10 @@ public class ForestOfTheDead extends AttackableAIScript {
         }
 
         // Spawn Day NPCs in Cursed Village.
-        npcs.add(addSpawn(DAY_VIOLET, 59618, -42774, -3000, 5636, false, 0, false));
-        npcs.add(addSpawn(DAY_KURSTIN, 58790, -42646, -3000, 240, false, 0, false));
-        npcs.add(addSpawn(DAY_MINA, 59626, -41684, -3000, 48457, false, 0, false));
-        npcs.add(addSpawn(DAY_DORIAN, 60161, -42086, -3000, 30212, false, 0, false));
+        _npcs.add(addSpawn(DAY_VIOLET, 59618, -42774, -3000, 5636, false, 0, false));
+        _npcs.add(addSpawn(DAY_KURSTIN, 58790, -42646, -3000, 240, false, 0, false));
+        _npcs.add(addSpawn(DAY_MINA, 59626, -41684, -3000, 48457, false, 0, false));
+        _npcs.add(addSpawn(DAY_DORIAN, 60161, -42086, -3000, 30212, false, 0, false));
     }
 
     private void handleNight() {
@@ -122,7 +120,7 @@ public class ForestOfTheDead extends AttackableAIScript {
         _lidiaMaid = addSpawn(LIDIA_MAID, 47108, -36189, -1624, -22192, false, 0, false);
 
         // Despawn Day NPCs in Cursed Village.
-        npcs.forEach(Npc::deleteMe);
-        npcs.clear();
+        _npcs.forEach(Npc::deleteMe);
+        _npcs.clear();
     }
 }

@@ -1,15 +1,14 @@
 package ru.privetdruk.l2jspace.gameserver.model.clanhall;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.util.concurrent.ScheduledFuture;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.gameserver.data.sql.ClanTable;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.concurrent.ScheduledFuture;
 
 /**
  * Players can add a variety of decorations and functions to their {@link ClanHall}.

@@ -2,7 +2,6 @@ package ru.privetdruk.l2jspace.gameserver.model.olympiad;
 
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.SpawnType;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.OlympiadStadiumZone;
@@ -134,88 +133,84 @@ public final class OlympiadGameTask implements Runnable {
             int delay = 1; // schedule next call after 1s
             switch (_state) {
                 // Game created
-                case BEGIN:
+                case BEGIN -> {
                     _state = GameState.TELE_TO_ARENA;
                     _countDown = Config.OLY_WAIT_TIME;
-                    break;
+                }
 
                 // Teleport to arena countdown
-                case TELE_TO_ARENA:
+                case TELE_TO_ARENA -> {
                     _game.broadcastPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_WILL_ENTER_THE_OLYMPIAD_STADIUM_IN_S1_SECOND_S).addNumber(_countDown));
-
                     delay = getDelay(TELEPORT_TO_ARENA);
                     if (_countDown <= 0)
                         _state = GameState.GAME_STARTED;
-                    break;
+                }
 
                 // Game start, port players to arena
-                case GAME_STARTED:
+                case GAME_STARTED -> {
+                    if (_game.checkDualbox()) {
+                        _state = GameState.CLEANUP;
+                        break;
+                    }
+
                     if (!startGame()) {
                         _state = GameState.GAME_STOPPED;
                         break;
                     }
-
                     _state = GameState.BATTLE_COUNTDOWN;
                     _countDown = Config.OLY_WAIT_BATTLE;
                     delay = getDelay(BATTLE_START_TIME);
-                    break;
+                }
 
                 // Battle start countdown, first part (60-10)
-                case BATTLE_COUNTDOWN:
+                case BATTLE_COUNTDOWN -> {
                     _zone.broadcastPacket(SystemMessage.getSystemMessage(SystemMessageId.THE_GAME_WILL_START_IN_S1_SECOND_S).addNumber(_countDown));
-
                     delay = getDelay(BATTLE_START_TIME);
                     if (_countDown <= 0)
                         _state = GameState.BATTLE_STARTED;
-
-                    break;
+                }
 
                 // Beginning of the battle
-                case BATTLE_STARTED:
+                case BATTLE_STARTED -> {
                     _countDown = 0;
-
                     _game.buffPlayers();
                     _game.healPlayers();
                     _game.resetDamage();
-
                     _state = GameState.BATTLE_IN_PROGRESS; // set state first, used in zone update
                     if (!startBattle())
                         _state = GameState.GAME_STOPPED;
-
-                    break;
+                }
 
                 // Checks during battle
-                case BATTLE_IN_PROGRESS:
+                case BATTLE_IN_PROGRESS -> {
                     _countDown += 1000;
                     if (checkBattle() || _countDown > Config.OLY_BATTLE)
                         _state = GameState.GAME_STOPPED;
-
-                    break;
+                }
 
                 // End of the battle
-                case GAME_STOPPED:
+                case GAME_STOPPED -> {
                     _state = GameState.TELE_TO_TOWN;
                     _countDown = Config.OLY_WAIT_END;
                     stopGame();
                     delay = getDelay(TELEPORT_TO_TOWN);
-                    break;
+                }
 
                 // Teleport to town countdown
-                case TELE_TO_TOWN:
+                case TELE_TO_TOWN -> {
                     _game.broadcastPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_WILL_BE_MOVED_TO_TOWN_IN_S1_SECONDS).addNumber(_countDown));
-
                     delay = getDelay(TELEPORT_TO_TOWN);
                     if (_countDown <= 0)
                         _state = GameState.CLEANUP;
-
-                    break;
+                }
 
                 // Removals
-                case CLEANUP:
+                case CLEANUP -> {
                     cleanupGame();
                     _state = GameState.IDLE;
                     _game = null;
                     return;
+                }
             }
             ThreadPool.schedule(this, delay * 1000L);
         } catch (Exception e) {

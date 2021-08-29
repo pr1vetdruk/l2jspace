@@ -1,7 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.data.xml.SkillTreeData;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.AcquireSkillType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
@@ -10,15 +8,12 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.holder.skillnode.EnchantSkillNode;
 import ru.privetdruk.l2jspace.gameserver.model.holder.skillnode.GeneralSkillNode;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.AcquireSkillDone;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.AcquireSkillList;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExEnchantSkillList;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
 import ru.privetdruk.l2jspace.gameserver.skill.effect.EffectBuff;
 import ru.privetdruk.l2jspace.gameserver.skill.effect.EffectDebuff;
+
+import java.util.List;
 
 public class Folk extends Npc {
     public Folk(int objectId, NpcTemplate template) {

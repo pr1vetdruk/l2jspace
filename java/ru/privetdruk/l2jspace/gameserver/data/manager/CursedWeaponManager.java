@@ -1,27 +1,21 @@
 package ru.privetdruk.l2jspace.gameserver.data.manager;
 
+import org.w3c.dom.Document;
+import ru.privetdruk.l2jspace.common.data.StatSet;
+import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
+import ru.privetdruk.l2jspace.config.Config;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Attackable;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.actor.instance.*;
+import ru.privetdruk.l2jspace.gameserver.model.entity.CursedWeapon;
+import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
+
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
-import ru.privetdruk.l2jspace.common.data.StatSet;
-import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
-
-import ru.privetdruk.l2jspace.config.Config;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Attackable;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.FeedableBeast;
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.FestivalMonster;
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.GrandBoss;
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.RiftInvader;
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.SiegeGuard;
-import ru.privetdruk.l2jspace.gameserver.model.entity.CursedWeapon;
-import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
-
-import org.w3c.dom.Document;
 
 /**
  * Load and store {@link CursedWeapon}s. A cursed weapon is a feature involving the drop of a powerful weapon, which stages on player kills and give powerful stats.

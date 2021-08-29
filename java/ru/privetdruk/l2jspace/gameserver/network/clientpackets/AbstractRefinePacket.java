@@ -1,14 +1,14 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.gameserver.enums.items.CrystalType;
 import ru.privetdruk.l2jspace.gameserver.enums.items.ItemLocation;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Weapon;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class AbstractRefinePacket extends L2GameClientPacket {
     public static final int GRADE_NONE = 0;

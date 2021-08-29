@@ -1,11 +1,11 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.container.player;
 
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Cubic;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * An ordered, concurrent queue container holding {@link Cubic}s of a {@link Player}.

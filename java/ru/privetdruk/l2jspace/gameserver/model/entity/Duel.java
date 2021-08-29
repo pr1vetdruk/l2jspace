@@ -1,28 +1,19 @@
 package ru.privetdruk.l2jspace.gameserver.model.entity;
 
-import java.util.Calendar;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.Future;
-
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.DuelManager;
 import ru.privetdruk.l2jspace.gameserver.enums.AuraTeamType;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExDuelEnd;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExDuelReady;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExDuelStart;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExDuelUpdateUserInfo;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.L2GameServerPacket;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PlaySound;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
+
+import java.util.Calendar;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.Future;
 
 public class Duel {
     public enum DuelState {

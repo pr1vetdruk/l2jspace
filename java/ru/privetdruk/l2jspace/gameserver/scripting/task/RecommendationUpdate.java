@@ -1,15 +1,14 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.task;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
 import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.UserInfo;
 import ru.privetdruk.l2jspace.gameserver.scripting.ScheduledQuest;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public final class RecommendationUpdate extends ScheduledQuest {
     private static final String DELETE_CHAR_RECOMS = "TRUNCATE TABLE character_recommends";

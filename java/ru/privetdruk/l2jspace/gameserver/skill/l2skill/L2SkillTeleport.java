@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.skill.l2skill;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
 import ru.privetdruk.l2jspace.gameserver.data.xml.MapRegionData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.MapRegionData.TeleportType;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
@@ -33,7 +32,7 @@ public class L2SkillTeleport extends L2Skill {
     public void useSkill(Creature activeChar, WorldObject[] targets) {
         if (activeChar instanceof Player) {
             // Check invalid states.
-            if (activeChar.isAfraid() || ((Player) activeChar).isInOlympiadMode()) // || activeChar.isInsideZone(ZoneId.BOSS))
+            if (activeChar.isAfraid() || ((Player) activeChar).isInOlympiadMode())
                 return;
         }
 

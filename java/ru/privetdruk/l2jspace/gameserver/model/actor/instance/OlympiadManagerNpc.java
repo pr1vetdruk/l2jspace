@@ -1,10 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.HeroManager;
 import ru.privetdruk.l2jspace.gameserver.data.xml.MultisellData;
 import ru.privetdruk.l2jspace.gameserver.enums.OlympiadType;
@@ -17,6 +13,9 @@ import ru.privetdruk.l2jspace.gameserver.model.olympiad.OlympiadManager;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExHeroList;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class OlympiadManagerNpc extends Folk {
     private static final List<OlympiadManagerNpc> _managers = new CopyOnWriteArrayList<>();
@@ -114,8 +113,8 @@ public class OlympiadManagerNpc extends Folk {
                     break;
 
                 case 2: // Show waiting list
-                    final int nonClassed = OlympiadManager.getInstance().getRegisteredNonClassBased().size();
-                    final int classed = OlympiadManager.getInstance().getRegisteredClassBased().size();
+                    int nonClassed = OlympiadManager.getInstance().getNonClassBasedParticipants().size();
+                    int classed = OlympiadManager.getInstance().getClassBasedParticipants().size();
 
                     html.setFile(Olympiad.OLYMPIAD_HTML_PATH + "noble_registered.htm");
                     html.replace("%listClassed%", classed);

@@ -1,14 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Future;
-
 import ru.privetdruk.l2jspace.common.math.MathUtil;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.gameserver.data.xml.MapRegionData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.MapRegionData.TeleportType;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
@@ -27,6 +20,12 @@ import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.L2GameServerPacket;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.VehicleInfo;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
 
 public class Boat extends Creature {
     private final Set<Player> _passengers = ConcurrentHashMap.newKeySet();

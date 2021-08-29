@@ -1,12 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.skill;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.enums.skills.Stats;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.skill.function.base.Func;
 import ru.privetdruk.l2jspace.gameserver.skill.function.base.FuncSet;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A {@link Calculator} is created to manage and dynamically calculate the effect of a property. It is a table of {@link Func}s in which each {@link Func} represents a mathematic function.<br>

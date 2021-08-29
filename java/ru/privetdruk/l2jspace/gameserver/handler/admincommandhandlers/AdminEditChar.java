@@ -1,12 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.util.StringTokenizer;
-
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
 import ru.privetdruk.l2jspace.gameserver.data.sql.PlayerInfoTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.PlayerData;
@@ -22,9 +17,12 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.group.Party;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.AbstractNpcInfo.NpcInfo;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.HennaInfo;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SkillCoolTime;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.StringTokenizer;
 
 public class AdminEditChar implements IAdminCommandHandler {
     private static final String[] ADMIN_COMMANDS =

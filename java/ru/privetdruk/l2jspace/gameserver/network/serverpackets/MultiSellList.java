@@ -1,10 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import static ru.privetdruk.l2jspace.gameserver.data.xml.MultisellData.PAGE_SIZE;
-
 import ru.privetdruk.l2jspace.gameserver.model.multisell.Entry;
 import ru.privetdruk.l2jspace.gameserver.model.multisell.Ingredient;
 import ru.privetdruk.l2jspace.gameserver.model.multisell.ListContainer;
+
+import static ru.privetdruk.l2jspace.gameserver.data.xml.MultisellData.PAGE_SIZE;
 
 public class MultiSellList extends L2GameServerPacket {
     private final ListContainer _list;

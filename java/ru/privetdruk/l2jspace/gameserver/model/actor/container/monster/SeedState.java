@@ -1,7 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.container.monster;
 
-import java.util.ArrayList;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.NpcSkillType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
@@ -9,6 +7,8 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Monster;
 import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
 import ru.privetdruk.l2jspace.gameserver.model.manor.Seed;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.ArrayList;
 
 /**
  * A container holding all related informations of a {@link Monster} seed state.<br>

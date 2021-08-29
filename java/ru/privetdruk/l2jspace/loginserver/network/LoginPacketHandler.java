@@ -1,16 +1,15 @@
 package ru.privetdruk.l2jspace.loginserver.network;
 
-import java.nio.ByteBuffer;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.mmocore.IPacketHandler;
 import ru.privetdruk.l2jspace.common.mmocore.ReceivablePacket;
-
 import ru.privetdruk.l2jspace.loginserver.enums.LoginClientState;
 import ru.privetdruk.l2jspace.loginserver.network.clientpackets.AuthGameGuard;
 import ru.privetdruk.l2jspace.loginserver.network.clientpackets.RequestAuthLogin;
 import ru.privetdruk.l2jspace.loginserver.network.clientpackets.RequestServerList;
 import ru.privetdruk.l2jspace.loginserver.network.clientpackets.RequestServerLogin;
+
+import java.nio.ByteBuffer;
 
 /**
  * Handler for packets received by Login Server

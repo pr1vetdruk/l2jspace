@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
@@ -24,7 +23,6 @@ public class Q376_ExplorationOfTheGiantsCave_Part1 extends Quest {
     private static final int MYSTERIOUS_BOOK = 5890;
     private static final int ANCIENT_DICTIONARY_BASIC_LEVEL = 5891;
     private static final int ANCIENT_DICTIONARY_INTERMEDIATE_LEVEL = 5892;
-
     private static final int[][] BOOKS =
             {
                     // medical theory -> tallum tunic, tallum stockings
@@ -104,9 +102,8 @@ public class Q376_ExplorationOfTheGiantsCave_Part1 extends Quest {
         addStartNpc(SOBLING);
         addTalkId(SOBLING, CLIFF);
 
-        for (int npcId : CHANCES.keySet()) {
+        for (int npcId : CHANCES.keySet())
             addKillId(npcId);
-        }
     }
 
     @Override
@@ -180,9 +177,8 @@ public class Q376_ExplorationOfTheGiantsCave_Part1 extends Quest {
             return null;
 
         // Drop Mysterious Book to people who still need it.
-        if (!st.getPlayer().getInventory().hasAtLeastOneItem(MYSTERIOUS_BOOK, ANCIENT_DICTIONARY_INTERMEDIATE_LEVEL)) {
+        if (!st.getPlayer().getInventory().hasAtLeastOneItem(MYSTERIOUS_BOOK, ANCIENT_DICTIONARY_INTERMEDIATE_LEVEL))
             dropItems(st.getPlayer(), MYSTERIOUS_BOOK, 1, 1, 2000);
-        }
 
         // Drop parchment to anyone.
         dropItems(st.getPlayer(), ANCIENT_PARCHMENT, 1, 0, CHANCES.get(npc.getNpcId()));

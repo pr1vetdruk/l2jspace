@@ -1,5 +1,17 @@
 package ru.privetdruk.l2jspace.loginserver;
 
+import ru.privetdruk.l2jspace.common.logging.CLogger;
+import ru.privetdruk.l2jspace.config.Config;
+import ru.privetdruk.l2jspace.loginserver.crypt.NewCrypt;
+import ru.privetdruk.l2jspace.loginserver.data.manager.GameServerManager;
+import ru.privetdruk.l2jspace.loginserver.data.manager.IpBanManager;
+import ru.privetdruk.l2jspace.loginserver.data.sql.AccountTable;
+import ru.privetdruk.l2jspace.loginserver.model.GameServerInfo;
+import ru.privetdruk.l2jspace.loginserver.network.SessionKey;
+import ru.privetdruk.l2jspace.loginserver.network.gameserverpackets.*;
+import ru.privetdruk.l2jspace.loginserver.network.loginserverpackets.*;
+import ru.privetdruk.l2jspace.loginserver.network.serverpackets.ServerBasePacket;
+
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,29 +25,6 @@ import java.security.interfaces.RSAPublicKey;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
-import ru.privetdruk.l2jspace.common.logging.CLogger;
-
-import ru.privetdruk.l2jspace.config.Config;
-import ru.privetdruk.l2jspace.loginserver.crypt.NewCrypt;
-import ru.privetdruk.l2jspace.loginserver.data.manager.GameServerManager;
-import ru.privetdruk.l2jspace.loginserver.data.manager.IpBanManager;
-import ru.privetdruk.l2jspace.loginserver.data.sql.AccountTable;
-import ru.privetdruk.l2jspace.loginserver.model.GameServerInfo;
-import ru.privetdruk.l2jspace.loginserver.network.SessionKey;
-import ru.privetdruk.l2jspace.loginserver.network.gameserverpackets.BlowFishKey;
-import ru.privetdruk.l2jspace.loginserver.network.gameserverpackets.ChangeAccessLevel;
-import ru.privetdruk.l2jspace.loginserver.network.gameserverpackets.GameServerAuth;
-import ru.privetdruk.l2jspace.loginserver.network.gameserverpackets.PlayerAuthRequest;
-import ru.privetdruk.l2jspace.loginserver.network.gameserverpackets.PlayerInGame;
-import ru.privetdruk.l2jspace.loginserver.network.gameserverpackets.PlayerLogout;
-import ru.privetdruk.l2jspace.loginserver.network.gameserverpackets.ServerStatus;
-import ru.privetdruk.l2jspace.loginserver.network.loginserverpackets.AuthResponse;
-import ru.privetdruk.l2jspace.loginserver.network.loginserverpackets.InitLS;
-import ru.privetdruk.l2jspace.loginserver.network.loginserverpackets.KickPlayer;
-import ru.privetdruk.l2jspace.loginserver.network.loginserverpackets.LoginServerFail;
-import ru.privetdruk.l2jspace.loginserver.network.loginserverpackets.PlayerAuthResponse;
-import ru.privetdruk.l2jspace.loginserver.network.serverpackets.ServerBasePacket;
 
 public class GameServerThread extends Thread {
     protected static final CLogger LOGGER = new CLogger(GameServerThread.class.getName());

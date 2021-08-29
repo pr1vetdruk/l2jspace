@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.multisell;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
 import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Armor;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;

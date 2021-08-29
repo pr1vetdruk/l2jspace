@@ -1,9 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
-import ru.privetdruk.l2jspace.gameserver.enums.items.ItemEnum;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
@@ -62,7 +60,7 @@ public class Q351_BlackSwan extends Quest {
 
                 takeItems(player, BARREL_OF_LEAGUE, -1);
                 rewardItems(player, BILL_OF_IASON_HEINE, barrels);
-                rewardItems(player, ItemEnum.ADENA.getId(), barrels * 20 + ((barrels >= 10) ? 3880 : 0));
+                rewardItems(player, 57, barrels * 20 + ((barrels >= 10) ? 3880 : 0));
 
                 // Heine explains than player can speak with Roman in order to exchange bills for rewards.
                 if (st.getCond() == 1) {

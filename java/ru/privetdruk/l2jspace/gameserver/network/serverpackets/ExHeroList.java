@@ -1,11 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.Collection;
-
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.HeroManager;
 import ru.privetdruk.l2jspace.gameserver.model.olympiad.Olympiad;
+
+import java.util.Collection;
 
 public class ExHeroList extends L2GameServerPacket {
     private final Collection<StatSet> _sets;

@@ -1,5 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
+import ru.privetdruk.l2jspace.gameserver.enums.ShortcutType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
@@ -95,6 +96,9 @@ public final class RequestRefineCancel extends L2GameClientPacket {
         InventoryUpdate iu = new InventoryUpdate();
         iu.addModifiedItem(item);
         player.sendPacket(iu);
+
+        // Refresh shortcuts.
+        player.getShortcutList().refreshShortcuts(s -> item.getObjectId() == s.getId() && s.getType() == ShortcutType.ITEM);
 
         // send system message
         player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.AUGMENTATION_HAS_BEEN_SUCCESSFULLY_REMOVED_FROM_YOUR_S1).addItemName(item));

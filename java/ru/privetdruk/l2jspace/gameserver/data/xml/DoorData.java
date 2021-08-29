@@ -1,16 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.data.xml;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
 import ru.privetdruk.l2jspace.common.geometry.Polygon;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.enums.DoorType;
 import ru.privetdruk.l2jspace.gameserver.geoengine.GeoEngine;
@@ -21,10 +15,10 @@ import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Door;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.DoorTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.entity.Castle;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
 import ru.privetdruk.l2jspace.gameserver.model.location.Point2D;
+
+import java.nio.file.Path;
+import java.util.*;
 
 /**
  * This class loads and stores {@link Door}s.<br>

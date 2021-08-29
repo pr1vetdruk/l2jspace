@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.handler.itemhandlers;
 
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.enums.FloodProtector;
 import ru.privetdruk.l2jspace.gameserver.handler.IItemHandler;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;

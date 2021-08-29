@@ -1,8 +1,8 @@
 package ru.privetdruk.l2jspace.loginserver.crypt;
 
-import java.io.IOException;
-
 import ru.privetdruk.l2jspace.common.random.Rnd;
+
+import java.io.IOException;
 
 public class LoginCrypt {
     private static final byte[] STATIC_BLOWFISH_KEY =

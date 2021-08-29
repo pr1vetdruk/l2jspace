@@ -1,14 +1,13 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.enums.ScriptEventType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Attackable;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
+
+import java.util.List;
 
 /**
  * This class extends {@link Attackable} and manages all {@link Guard}s.<br>

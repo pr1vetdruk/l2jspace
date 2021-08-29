@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassId;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
@@ -73,12 +72,12 @@ public class Q414_PathToAnOrcRaider extends Quest {
             takeItems(player, GOBLIN_DWELLING_MAP, 1);
             takeItems(player, KURUKA_RATMAN_TOOTH, -1);
             giveItems(player, BETRAYER_REPORT_1, 1);
-            giveItems(player, BETRAYER_REPORT_2, 1);
         } else if (event.equalsIgnoreCase("30570-07b.htm")) {
             st.setCond(5);
             playSound(player, SOUND_MIDDLE);
             takeItems(player, GOBLIN_DWELLING_MAP, 1);
             takeItems(player, KURUKA_RATMAN_TOOTH, -1);
+            giveItems(player, BETRAYER_REPORT_2, 1);
         }
         // TAZEER
         else if (event.equalsIgnoreCase("31978-03.htm")) {
@@ -109,29 +108,22 @@ public class Q414_PathToAnOrcRaider extends Quest {
                             htmltext = "30570-06.htm";
                         else if (cond == 2)
                             htmltext = "30570-07.htm";
-                        else if (cond == 3 || cond == 4)
+                        else if (cond > 2)
                             htmltext = "30570-08.htm";
-                        else if (cond == 5)
-                            htmltext = "30570-07b.htm";
                         break;
 
                     case KASMAN:
                         if (cond == 3)
-                            htmltext = "30501-01.htm";
+                            htmltext = player.getInventory().hasItems(HEAD_OF_BETRAYER) ? "30501-02.htm" : "30501-01.htm";
                         else if (cond == 4) {
-                            if (player.getInventory().getItemCount(HEAD_OF_BETRAYER) == 1)
-                                htmltext = "30501-02.htm";
-                            else {
-                                htmltext = "30501-03.htm";
-                                takeItems(player, BETRAYER_REPORT_1, 1);
-                                takeItems(player, BETRAYER_REPORT_2, 1);
-                                takeItems(player, HEAD_OF_BETRAYER, -1);
-                                giveItems(player, MARK_OF_RAIDER, 1);
-                                rewardExpAndSp(player, 3200, 2360);
-                                player.broadcastPacket(new SocialAction(player, 3));
-                                playSound(player, SOUND_FINISH);
-                                st.exitQuest(true);
-                            }
+                            htmltext = "30501-03.htm";
+                            takeItems(player, BETRAYER_REPORT_1, 1);
+                            takeItems(player, HEAD_OF_BETRAYER, -1);
+                            giveItems(player, MARK_OF_RAIDER, 1);
+                            rewardExpAndSp(player, 3200, 2360);
+                            player.broadcastPacket(new SocialAction(player, 3));
+                            playSound(player, SOUND_FINISH);
+                            st.exitQuest(true);
                         }
                         break;
 
@@ -142,6 +134,7 @@ public class Q414_PathToAnOrcRaider extends Quest {
                             htmltext = "31978-04.htm";
                         else if (cond == 7) {
                             htmltext = "31978-05.htm";
+                            takeItems(player, BETRAYER_REPORT_2, 1);
                             takeItems(player, TIMORA_ORC_HEAD, 1);
                             giveItems(player, MARK_OF_RAIDER, 1);
                             rewardExpAndSp(player, 3200, 2360);
@@ -186,13 +179,8 @@ public class Q414_PathToAnOrcRaider extends Quest {
                 break;
 
             case UMBAR_ORC:
-                if ((cond == 3 || cond == 4) && player.getInventory().getItemCount(HEAD_OF_BETRAYER) < 2 && Rnd.get(10) < 2) {
-                    if (cond == 3)
-                        st.setCond(4);
-
-                    playSound(player, SOUND_MIDDLE);
-                    giveItems(player, HEAD_OF_BETRAYER, 1);
-                }
+                if (cond == 3 && dropItems(player, HEAD_OF_BETRAYER, 1, 2, 200000))
+                    st.setCond(4);
                 break;
 
             case TIMORA_ORC:

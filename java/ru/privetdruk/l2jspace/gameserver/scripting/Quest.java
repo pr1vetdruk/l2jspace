@@ -1,17 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.scripting;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.DocumentSkill.Skill;
 import ru.privetdruk.l2jspace.gameserver.data.cache.HtmCache;
@@ -28,11 +20,7 @@ import ru.privetdruk.l2jspace.gameserver.geoengine.GeoEngine;
 import ru.privetdruk.l2jspace.gameserver.handler.ISkillHandler;
 import ru.privetdruk.l2jspace.gameserver.handler.SkillHandler;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Attackable;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
+import ru.privetdruk.l2jspace.gameserver.model.actor.*;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.GrandBoss;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.entity.Castle;
@@ -48,20 +36,13 @@ import ru.privetdruk.l2jspace.gameserver.model.pledge.ClanMember;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.subtype.ZoneType;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.InventoryUpdate;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MagicSkillUse;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PlaySound;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.StatusUpdate;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.TutorialCloseHtml;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.TutorialEnableClientEvent;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.TutorialShowHtml;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.TutorialShowQuestionMark;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
 import ru.privetdruk.l2jspace.gameserver.scripting.script.ai.AttackableAIScript;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.taskmanager.GameTimeTaskManager;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Quest {
     protected static final CLogger LOGGER = new CLogger(Quest.class.getName());
@@ -1249,9 +1230,6 @@ public class Quest {
             handler.useSkill(caster, skill, targets);
         else
             skill.useSkill(caster, targets);
-
-        // Send message to the target.
-        target.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_FEEL_S1_EFFECT).addSkillName(skill));
     }
 
     /**

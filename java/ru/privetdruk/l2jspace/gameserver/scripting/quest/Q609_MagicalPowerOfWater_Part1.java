@@ -134,7 +134,7 @@ public class Q609_MagicalPowerOfWater_Part1 extends Quest {
             // Put "spawned" flag to 1 to avoid to spawn another.
             st.set("spawned", 1);
 
-            // Spawn Udan's eye.
+            // Spawn Udan's Eye.
             Npc udanEye = addSpawn(UDAN_EYE, player, true, 10000, true);
             if (udanEye != null) {
                 udanEye.broadcastNpcSay(NpcStringId.ID_60903);
@@ -147,12 +147,11 @@ public class Q609_MagicalPowerOfWater_Part1 extends Quest {
 
     @Override
     public String onKill(Npc npc, Creature killer) {
-        Player player = killer.getActingPlayer();
+        final Player player = killer.getActingPlayer();
 
-        QuestState questState = getRandomPartyMemberState(player, npc, QuestStatus.STARTED);
-        if (questState == null) {
+        final QuestState st = getRandomPartyMemberState(player, npc, QuestStatus.STARTED);
+        if (st == null)
             return null;
-        }
 
         npc.broadcastNpcSay(NpcStringId.ID_60904);
 

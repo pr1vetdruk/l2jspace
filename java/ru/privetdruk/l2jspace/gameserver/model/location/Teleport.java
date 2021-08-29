@@ -1,14 +1,13 @@
 package ru.privetdruk.l2jspace.gameserver.model.location;
 
-import java.util.Calendar;
-
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.SevenSignsManager;
 import ru.privetdruk.l2jspace.gameserver.enums.SealType;
 import ru.privetdruk.l2jspace.gameserver.enums.TeleportType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.itemcontainer.PcInventory;
+
+import java.util.Calendar;
 
 /**
  * A datatype extending {@link Location}, used to retain a single Gatekeeper teleport location.

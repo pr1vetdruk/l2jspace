@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
-
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
@@ -97,7 +96,7 @@ public class Q640_TheZeroHour extends Quest {
             playSound(player, SOUND_FINISH);
             st.exitQuest(true);
         } else if (StringUtil.isDigit(event)) {
-            int reward[] = REWARDS[Integer.parseInt(event)];
+            final int[] reward = REWARDS[Integer.parseInt(event)];
 
             if (player.getInventory().getItemCount(FANG_OF_STAKATO) >= reward[0]) {
                 htmltext = "31554-09.htm";

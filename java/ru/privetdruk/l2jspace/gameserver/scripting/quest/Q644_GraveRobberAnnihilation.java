@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
-
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
@@ -73,8 +72,7 @@ public class Q644_GraveRobberAnnihilation extends Quest {
             htmltext = "32017-04.htm";
             takeItems(player, ORC_GRAVE_GOODS, -1);
 
-            final int[] reward;
-            reward = REWARDS[Integer.parseInt(event)];
+            final int[] reward = REWARDS[Integer.parseInt(event)];
             rewardItems(player, reward[0], reward[1]);
 
             playSound(player, SOUND_FINISH);
@@ -92,14 +90,17 @@ public class Q644_GraveRobberAnnihilation extends Quest {
             return htmltext;
 
         switch (st.getState()) {
-            case CREATED -> htmltext = (player.getStatus().getLevel() < 20) ? "32017-06.htm" : "32017-01.htm";
-            case STARTED -> {
+            case CREATED:
+                htmltext = (player.getStatus().getLevel() < 20) ? "32017-06.htm" : "32017-01.htm";
+                break;
+
+            case STARTED:
                 final int cond = st.getCond();
                 if (cond == 1)
                     htmltext = "32017-05.htm";
                 else if (cond == 2)
                     htmltext = "32017-07.htm";
-            }
+                break;
         }
 
         return htmltext;

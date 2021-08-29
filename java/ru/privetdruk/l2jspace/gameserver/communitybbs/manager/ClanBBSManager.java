@@ -1,15 +1,14 @@
 package ru.privetdruk.l2jspace.gameserver.communitybbs.manager;
 
-import java.util.StringTokenizer;
-
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
-
 import ru.privetdruk.l2jspace.gameserver.data.cache.HtmCache;
 import ru.privetdruk.l2jspace.gameserver.data.sql.ClanTable;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.ClanMember;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
+
+import java.util.StringTokenizer;
 
 public class ClanBBSManager extends BaseBBSManager {
     protected ClanBBSManager() {

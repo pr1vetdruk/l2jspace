@@ -1,8 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.container.attackable;
 
-import java.util.Comparator;
-import java.util.concurrent.ConcurrentHashMap;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.IntentionType;
 import ru.privetdruk.l2jspace.gameserver.enums.ScriptEventType;
@@ -14,6 +11,9 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.ai.type.AttackableAI;
 import ru.privetdruk.l2jspace.gameserver.model.actor.container.npc.AggroInfo;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.SiegeGuard;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
+
+import java.util.Comparator;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class AggroList extends ConcurrentHashMap<Creature, AggroInfo> {
     private static final long serialVersionUID = 1L;

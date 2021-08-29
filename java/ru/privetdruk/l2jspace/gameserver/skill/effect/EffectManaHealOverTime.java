@@ -17,10 +17,12 @@ public class EffectManaHealOverTime extends AbstractEffect {
 
     @Override
     public boolean onActionTime() {
-        if (getEffected().isDead())
+        if (!getEffected().canBeHealed()) {
             return false;
+        }
 
         getEffected().getStatus().addMp(getTemplate().getValue());
+
         return true;
     }
 }

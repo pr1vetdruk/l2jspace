@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.handler;
 
 import ru.privetdruk.l2jspace.common.logging.CLogger;
-
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillType;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;

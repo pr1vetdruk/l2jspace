@@ -1,17 +1,16 @@
 package ru.privetdruk.l2jspace.tools;
 
+import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
+import ru.privetdruk.l2jspace.config.Config;
+import ru.privetdruk.l2jspace.gameserver.LoginServerThread;
+import ru.privetdruk.l2jspace.loginserver.data.manager.GameServerManager;
+import ru.privetdruk.l2jspace.loginserver.model.GameServerInfo;
+
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.Map;
 import java.util.Scanner;
-
-import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
-import ru.privetdruk.l2jspace.config.Config;
-import ru.privetdruk.l2jspace.gameserver.LoginServerThread;
-import ru.privetdruk.l2jspace.loginserver.data.manager.GameServerManager;
-import ru.privetdruk.l2jspace.loginserver.model.GameServerInfo;
 
 public class GameServerRegister {
     private static final String DELETE_SERVER = "DELETE FROM gameservers WHERE server_id=?";

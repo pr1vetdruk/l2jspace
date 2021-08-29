@@ -1,5 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.network;
 
+import ru.privetdruk.l2jspace.common.logging.CLogger;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -8,8 +10,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
-
-import ru.privetdruk.l2jspace.common.logging.CLogger;
 
 /**
  * NpcStringId implementation
@@ -10389,8 +10389,35 @@ public final class NpcStringId {
     @NpcString(id = 1010622, message = "Wastelands, Western Region")
     public static NpcStringId ID_1010622;
 
+    @NpcString(id = 1010623, message = "Who dares to covet the throne of our castle! Leave immediately or you will pay the price of your audacity with your very own blood!")
+	public static NpcStringId ID_1010623;
+
+	@NpcString(id = 1010624, message = "Hmm, those who are not of the bloodline are coming this way to take over the castle?! Humph! The bitter grudges of the dead. You must not make light of their power!")
+	public static NpcStringId ID_1010624;
+
+	@NpcString(id = 1010625, message = "Aargh...! If I die, then the magic force field of blood will...!")
+	public static NpcStringId ID_1010625;
+
+	@NpcString(id = 1010626, message = "It's not over yet... It won't be... over... like this... Never...")
+	public static NpcStringId ID_1010626;
+
+	@NpcString(id = 1010627, message = "Oooh! Who poured nectar on my head while I was sleeping?")
+	public static NpcStringId ID_1010627;
+
     @NpcString(id = 1010628, message = "Please wait a moment.")
     public static NpcStringId ID_1010628;
+
+    @NpcString(id = 1010629, message = "The word you need this time is %s.")
+	public static NpcStringId ID_1010629;
+
+	@NpcString(id = 1010630, message = "Intruders! Sound the alarm!")
+	public static NpcStringId ID_1010630;
+
+	@NpcString(id = 1010631, message = "De-activate the alarm.")
+	public static NpcStringId ID_1010631;
+
+	@NpcString(id = 1010632, message = "Oh no! The defenses have failed. It is too dangerous to remain inside the castle. Flee! Every man for himself!")
+	public static NpcStringId ID_1010632;
 
     @NpcString(id = 1010633, message = "The game has begun. Participants, prepare to learn an important word.")
     public static NpcStringId ID_1010633;

@@ -1,13 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor;
 
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.IntentionType;
 import ru.privetdruk.l2jspace.gameserver.enums.ScriptEventType;
@@ -16,18 +11,19 @@ import ru.privetdruk.l2jspace.gameserver.geoengine.GeoEngine;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.ai.type.AttackableAI;
 import ru.privetdruk.l2jspace.gameserver.model.actor.ai.type.CreatureAI;
+import ru.privetdruk.l2jspace.gameserver.model.actor.ai.type.ReturnHomeAI;
 import ru.privetdruk.l2jspace.gameserver.model.actor.attack.AttackableAttack;
 import ru.privetdruk.l2jspace.gameserver.model.actor.container.attackable.AggroList;
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Door;
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.FriendlyMonster;
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Guard;
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Monster;
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.RiftInvader;
+import ru.privetdruk.l2jspace.gameserver.model.actor.instance.*;
 import ru.privetdruk.l2jspace.gameserver.model.actor.status.AttackableStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * This class manages all {@link Npc}s which can hold an {@link AggroList}.
@@ -37,7 +33,7 @@ public class Attackable extends Npc {
 
     private final Set<Creature> _attackedBy = ConcurrentHashMap.newKeySet();
 
-    private final ReturnHomeAI _returnHomeData = new ReturnHomeAI(this);
+    private final ReturnHomeAI returnHomeData = new ReturnHomeAI(this);
     private boolean _seeThroughSilentMove;
     private boolean _isNoRndWalk;
 
@@ -223,14 +219,14 @@ public class Attackable extends Npc {
     }
 
     public final boolean isReturningToSpawnPoint() {
-        return _returnHomeData.isReturningHome();
+        return returnHomeData.isReturningHome();
     }
 
     public final void setIsReturningToSpawnPoint(boolean value) {
         if (value)
-            _returnHomeData.startReturningHome();
+            returnHomeData.startReturningHome();
         else
-            _returnHomeData.stopReturningHome();
+            returnHomeData.stopReturningHome();
     }
 
     public boolean canSeeThroughSilentMove() {

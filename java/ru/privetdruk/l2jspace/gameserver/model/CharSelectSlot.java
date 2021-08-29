@@ -1,13 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.model;
 
+import ru.privetdruk.l2jspace.common.logging.CLogger;
+import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
+import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-import ru.privetdruk.l2jspace.common.logging.CLogger;
-import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
-import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
 
 /**
  * A datatype used to store character selection screen informations.

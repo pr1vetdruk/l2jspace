@@ -1,14 +1,13 @@
 package ru.privetdruk.l2jspace.gameserver.skill.function.base;
 
-import java.lang.reflect.Constructor;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
-
 import ru.privetdruk.l2jspace.gameserver.enums.skills.Stats;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.skill.condition.Condition;
+
+import java.lang.reflect.Constructor;
 
 public final class FuncTemplate {
     private static final CLogger LOGGER = new CLogger(FuncTemplate.class.getName());

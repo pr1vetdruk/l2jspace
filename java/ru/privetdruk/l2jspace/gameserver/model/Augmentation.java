@@ -1,7 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.model;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.AugmentationData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.AugmentationData.AugStat;
@@ -11,6 +9,8 @@ import ru.privetdruk.l2jspace.gameserver.model.holder.Timestamp;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SkillCoolTime;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.skill.function.base.FuncAdd;
+
+import java.util.List;
 
 /**
  * A container used to store an Augmentation.<br>

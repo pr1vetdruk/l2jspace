@@ -1,22 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.custom.service;
 
-import java.nio.file.Path;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.concurrent.ConcurrentHashMap;
-
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
@@ -24,8 +12,12 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.holder.BuffSkillHolder;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
+import java.nio.file.Path;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Loads and stores available {@link BuffSkillHolder}s for the integrated scheme buffer.<br>

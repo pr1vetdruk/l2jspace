@@ -1,12 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.ai.group;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.gameserver.enums.ScriptEventType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.scripting.script.ai.AttackableAIScript;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Angel spawns... When one of the angels in the keys dies, the other angel will spawn.

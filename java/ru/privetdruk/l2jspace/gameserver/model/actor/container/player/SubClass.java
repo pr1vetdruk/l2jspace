@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.container.player;
 
 import ru.privetdruk.l2jspace.common.math.MathUtil;
-
 import ru.privetdruk.l2jspace.gameserver.data.xml.PlayerLevelData;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassId;
 

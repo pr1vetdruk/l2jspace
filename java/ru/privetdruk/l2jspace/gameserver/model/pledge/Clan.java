@@ -1,22 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.model.pledge;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.math.MathUtil;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.CommunityBoard;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.model.Forum;
@@ -35,18 +22,15 @@ import ru.privetdruk.l2jspace.gameserver.model.entity.Siege;
 import ru.privetdruk.l2jspace.gameserver.model.itemcontainer.ClanWarehouse;
 import ru.privetdruk.l2jspace.gameserver.model.itemcontainer.ItemContainer;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ItemList;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.L2GameServerPacket;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PledgeReceiveSubPledgeCreated;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PledgeShowInfoUpdate;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PledgeShowMemberListAll;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PledgeShowMemberListDeleteAll;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PledgeShowMemberListUpdate;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PledgeSkillList;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PledgeSkillListAdd;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.UserInfo;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * Clan system is one of the major features of the game. Clans unite players and let them influence the world of Lineage 2.<br>
@@ -1127,21 +1111,24 @@ public class Clan {
 
     public void broadcastToMembers(L2GameServerPacket... packets) {
         for (Player member : getOnlineMembers()) {
-            for (L2GameServerPacket packet : packets)
+            for (L2GameServerPacket packet : packets) {
                 member.sendPacket(packet);
+            }
         }
     }
 
     public void broadcastToAllyMembers(L2GameServerPacket... packets) {
-        for (Clan clan : ClanTable.getInstance().getClanAllies(_allyId))
+        for (Clan clan : ClanTable.getInstance().getClanAllies(_allyId)) {
             clan.broadcastToMembers(packets);
+        }
     }
 
     public void broadcastToMembersExcept(Player player, L2GameServerPacket... packets) {
         for (Player member : getOnlineMembers()) {
             if (member != player) {
-                for (L2GameServerPacket packet : packets)
+                for (L2GameServerPacket packet : packets) {
                     member.sendPacket(packet);
+                }
             }
         }
     }

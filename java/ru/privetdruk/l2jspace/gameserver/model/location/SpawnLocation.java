@@ -1,10 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.model.location;
 
-import java.util.Objects;
-
 import ru.privetdruk.l2jspace.common.math.MathUtil;
-
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
+
+import java.util.Objects;
 
 /**
  * A datatype extending {@link Location}, wildly used as character position, since it also stores heading of the character.

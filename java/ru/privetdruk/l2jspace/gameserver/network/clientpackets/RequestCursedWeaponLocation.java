@@ -1,14 +1,14 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.CursedWeaponManager;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.entity.CursedWeapon;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExCursedWeaponLocation;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExCursedWeaponLocation.CursedWeaponInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class RequestCursedWeaponLocation extends L2GameClientPacket {
     @Override

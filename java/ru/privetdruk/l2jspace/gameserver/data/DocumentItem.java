@@ -1,19 +1,17 @@
 package ru.privetdruk.l2jspace.gameserver.data;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import ru.privetdruk.l2jspace.common.data.StatSet;
+import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
+import ru.privetdruk.l2jspace.gameserver.skill.condition.Condition;
+
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-
-import ru.privetdruk.l2jspace.common.data.StatSet;
-
-import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.Condition;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 
 public final class DocumentItem extends DocumentBase {
     public class NewItem {

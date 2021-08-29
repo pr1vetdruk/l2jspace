@@ -1,17 +1,15 @@
 package ru.privetdruk.l2jspace.gameserver.data.xml;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
+import ru.privetdruk.l2jspace.gameserver.model.location.WalkerLocation;
+
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
-
-import ru.privetdruk.l2jspace.gameserver.model.location.WalkerLocation;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
 
 /**
  * This class loads and stores routes for Walker NPCs, under a List of {@link WalkerLocation} ; the key being the npcId.

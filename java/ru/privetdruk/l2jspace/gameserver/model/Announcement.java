@@ -1,8 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.model;
 
-import java.util.concurrent.ScheduledFuture;
-
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
+
+import java.util.concurrent.ScheduledFuture;
 
 /**
  * A datatype used to retain informations for announcements. It notably holds a {@link ScheduledFuture}.

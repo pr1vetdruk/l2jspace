@@ -1,36 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.handler;
 
+import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.*;
+import ru.privetdruk.l2jspace.gameserver.model.item.kind.EtcItem;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.BeastSoulShots;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.BeastSpices;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.BeastSpiritShots;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.BlessedSpiritShots;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.Books;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.BreakingArrow;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.Calculators;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.Elixirs;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.EnchantScrolls;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.FishShots;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.Harvesters;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.ItemSkills;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.Keys;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.Maps;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.MercenaryTickets;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.PaganKeys;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.PetFoods;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.Recipes;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.RollingDices;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.ScrollsOfResurrection;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.Seeds;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.SevenSignsRecords;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.SoulCrystals;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.SoulShots;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.SpecialXMas;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.SpiritShots;
-import ru.privetdruk.l2jspace.gameserver.handler.itemhandlers.SummonItems;
-import ru.privetdruk.l2jspace.gameserver.model.item.kind.EtcItem;
 
 public class ItemHandler {
     private final Map<Integer, IItemHandler> _entries = new HashMap<>();

@@ -4,11 +4,7 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.SubPledge;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.JoinPledge;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PledgeShowInfoUpdate;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PledgeShowMemberListAdd;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PledgeShowMemberListAll;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
 
 public final class RequestAnswerJoinPledge extends L2GameClientPacket {
     private int _answer;
@@ -71,8 +67,7 @@ public final class RequestAnswerJoinPledge extends L2GameClientPacket {
 
                 player.sendPacket(SystemMessageId.ENTERED_THE_CLAN);
 
-                clan.broadcastToOtherOnlineMembers(SystemMessage.getSystemMessage(SystemMessageId.S1_HAS_JOINED_CLAN).addCharName(player), player);
-                clan.broadcastToOtherOnlineMembers(new PledgeShowMemberListAdd(player), player);
+                clan.broadcastToMembersExcept(player, SystemMessage.getSystemMessage(SystemMessageId.S1_HAS_JOINED_CLAN).addCharName(player), new PledgeShowMemberListAdd(player));
                 clan.broadcastToMembers(new PledgeShowInfoUpdate(clan));
 
                 // this activates the clan tab on the new member

@@ -1,19 +1,18 @@
 package ru.privetdruk.l2jspace.gameserver.custom.service;
 
+import ru.privetdruk.l2jspace.common.logging.CLogger;
+import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
+import ru.privetdruk.l2jspace.gameserver.idfactory.IdFactory;
+import ru.privetdruk.l2jspace.gameserver.model.World;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
-
-import ru.privetdruk.l2jspace.common.logging.CLogger;
-import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
-import ru.privetdruk.l2jspace.gameserver.idfactory.IdFactory;
-import ru.privetdruk.l2jspace.gameserver.model.World;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
-import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
 
 /**
  * Custom wedding system implementation.<br>

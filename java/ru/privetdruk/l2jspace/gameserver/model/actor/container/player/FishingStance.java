@@ -1,11 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.container.player;
 
-import java.util.concurrent.Future;
-
 import ru.privetdruk.l2jspace.common.math.MathUtil;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.FishingChampionshipManager;
 import ru.privetdruk.l2jspace.gameserver.data.xml.FishData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
@@ -18,13 +15,10 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExFishingEnd;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExFishingHpRegen;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExFishingStart;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExFishingStartCombat;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PlaySound;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
+
+import java.util.concurrent.Future;
 
 /**
  * This class handles all fishing aspects and variables.<br>

@@ -1,21 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.handler;
 
+import ru.privetdruk.l2jspace.gameserver.handler.usercommandhandlers.*;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import ru.privetdruk.l2jspace.gameserver.handler.usercommandhandlers.ChannelDelete;
-import ru.privetdruk.l2jspace.gameserver.handler.usercommandhandlers.ChannelLeave;
-import ru.privetdruk.l2jspace.gameserver.handler.usercommandhandlers.ChannelListUpdate;
-import ru.privetdruk.l2jspace.gameserver.handler.usercommandhandlers.ClanPenalty;
-import ru.privetdruk.l2jspace.gameserver.handler.usercommandhandlers.ClanWarsList;
-import ru.privetdruk.l2jspace.gameserver.handler.usercommandhandlers.Dismount;
-import ru.privetdruk.l2jspace.gameserver.handler.usercommandhandlers.Escape;
-import ru.privetdruk.l2jspace.gameserver.handler.usercommandhandlers.Loc;
-import ru.privetdruk.l2jspace.gameserver.handler.usercommandhandlers.Mount;
-import ru.privetdruk.l2jspace.gameserver.handler.usercommandhandlers.OlympiadStat;
-import ru.privetdruk.l2jspace.gameserver.handler.usercommandhandlers.PartyInfo;
-import ru.privetdruk.l2jspace.gameserver.handler.usercommandhandlers.SiegeStatus;
-import ru.privetdruk.l2jspace.gameserver.handler.usercommandhandlers.Time;
 
 public class UserCommandHandler {
     private final Map<Integer, IUserCommandHandler> _entries = new HashMap<>();

@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.skill.l2skill;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillTargetType;
 import ru.privetdruk.l2jspace.gameserver.idfactory.IdFactory;

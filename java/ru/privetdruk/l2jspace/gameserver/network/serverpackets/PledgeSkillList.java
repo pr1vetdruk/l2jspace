@@ -1,9 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.Collection;
-
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.Collection;
 
 public class PledgeSkillList extends L2GameServerPacket {
     private final Collection<L2Skill> _skills;

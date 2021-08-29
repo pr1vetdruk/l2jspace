@@ -1,18 +1,17 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
 import ru.privetdruk.l2jspace.gameserver.data.sql.ClanTable;
 import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
 import ru.privetdruk.l2jspace.gameserver.model.CharSelectSlot;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.network.GameClient;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CharSelectInfo extends L2GameServerPacket {
     private static final String SELECT_INFOS = "SELECT obj_Id, char_name, level, maxHp, curHp, maxMp, curMp, face, hairStyle, hairColor, sex, heading, x, y, z, exp, sp, karma, pvpkills, pkkills, clanid, race, classid, deletetime, cancraft, title, accesslevel, online, lastAccess, base_class FROM characters WHERE account_name=?";
@@ -167,15 +166,15 @@ public class CharSelectInfo extends L2GameServerPacket {
 
                     // See if the char must be deleted
                     final long deleteTime = rs.getLong("deletetime");
-                    if (deleteTime > 0) {
-                        if (System.currentTimeMillis() > deleteTime) {
-                            final Clan clan = ClanTable.getInstance().getClan(rs.getInt("clanid"));
-                            if (clan != null)
-                                clan.removeClanMember(objectId, 0);
-
-                            GameClient.deleteCharByObjId(objectId);
-                            continue;
+                    if (deleteTime > 0 && System.currentTimeMillis() > deleteTime) {
+                        Clan clan = ClanTable.getInstance().getClan(rs.getInt("clanid"));
+                        if (clan != null) {
+                            clan.removeClanMember(objectId, 0);
                         }
+
+                        GameClient.deleteCharByObjId(objectId);
+
+                        continue;
                     }
 
                     final CharSelectSlot slot = new CharSelectSlot(objectId, name);

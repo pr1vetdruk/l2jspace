@@ -1,7 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.skill.effect;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
@@ -12,6 +10,8 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MagicSkillUse;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.skill.l2skill.L2SkillSignet;
+
+import java.util.List;
 
 public class EffectSignetAntiSummon extends AbstractEffect {
     private EffectPoint _actor;

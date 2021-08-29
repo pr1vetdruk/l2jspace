@@ -1,19 +1,11 @@
 package ru.privetdruk.l2jspace.gameserver.data.manager;
 
-import java.lang.reflect.Constructor;
-import java.nio.file.Path;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
 import ru.privetdruk.l2jspace.gameserver.enums.SpawnType;
 import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
@@ -29,9 +21,11 @@ import ru.privetdruk.l2jspace.gameserver.model.zone.type.subtype.SpawnZoneType;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.subtype.ZoneType;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.L2GameServerPacket;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
+import java.lang.reflect.Constructor;
+import java.nio.file.Path;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.*;
 
 /**
  * Loads and stores zones, based on their {@link ZoneType}.

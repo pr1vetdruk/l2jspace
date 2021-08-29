@@ -1,15 +1,14 @@
 package ru.privetdruk.l2jspace.loginserver;
 
+import ru.privetdruk.l2jspace.common.logging.CLogger;
+import ru.privetdruk.l2jspace.config.Config;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import ru.privetdruk.l2jspace.common.logging.CLogger;
-
-import ru.privetdruk.l2jspace.config.Config;
 
 public abstract class FloodProtectedListener extends Thread {
     private static final CLogger LOGGER = new CLogger(FloodProtectedListener.class.getName());

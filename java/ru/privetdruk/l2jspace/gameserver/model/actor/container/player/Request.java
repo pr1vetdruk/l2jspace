@@ -1,13 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.container.player;
 
-import java.util.concurrent.ScheduledFuture;
-
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.clientpackets.L2GameClientPacket;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+
+import java.util.concurrent.ScheduledFuture;
 
 /**
  * A request between two {@link Player}s. It is associated to a 15 seconds timer, where both partner and packet references are destroyed.<br>

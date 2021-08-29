@@ -1,8 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
+
+import java.util.List;
 
 public class ExCursedWeaponLocation extends L2GameServerPacket {
     private final List<CursedWeaponInfo> _cursedWeaponInfo;

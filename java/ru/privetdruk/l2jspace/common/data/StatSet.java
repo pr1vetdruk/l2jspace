@@ -1,14 +1,9 @@
 package ru.privetdruk.l2jspace.common.data;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
-
 import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
+
+import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * This class, extending {@link HashMap}, is used to store pairs :

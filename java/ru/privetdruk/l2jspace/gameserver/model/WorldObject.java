@@ -1,13 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Predicate;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.math.MathUtil;
-
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
 import ru.privetdruk.l2jspace.gameserver.enums.items.ShotType;
 import ru.privetdruk.l2jspace.gameserver.idfactory.IdFactory;
@@ -18,6 +12,11 @@ import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.model.location.SpawnLocation;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.subtype.ZoneType;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Mother class of all interactive objects in the world (PC, NPC, Item...)

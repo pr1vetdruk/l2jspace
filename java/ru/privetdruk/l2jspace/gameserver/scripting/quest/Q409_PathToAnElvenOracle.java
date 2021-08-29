@@ -37,7 +37,7 @@ public class Q409_PathToAnElvenOracle extends Quest {
     private static final int LIZARDMAN = 27034;
     private static final int TAMIL = 27035;
 
-    private final Map<Npc, Integer> spawns = new ConcurrentHashMap<>();
+    private final Map<Npc, Integer> _spawns = new ConcurrentHashMap<>();
 
     public Q409_PathToAnElvenOracle() {
         super(409, "Path to an Elven Oracle");
@@ -50,7 +50,6 @@ public class Q409_PathToAnElvenOracle extends Quest {
         addAttackId(LIZARDMAN_WARRIOR, LIZARDMAN_SCOUT, LIZARDMAN, TAMIL);
         addKillId(LIZARDMAN_WARRIOR, LIZARDMAN_SCOUT, LIZARDMAN, TAMIL);
         addDecayId(LIZARDMAN_WARRIOR, LIZARDMAN_SCOUT, LIZARDMAN, TAMIL);
-
     }
 
     @Override
@@ -66,18 +65,21 @@ public class Q409_PathToAnElvenOracle extends Quest {
             st.setCond(1);
             playSound(player, SOUND_ACCEPT);
             giveItems(player, CRYSTAL_MEDALLION, 1);
-        } else if (event.equalsIgnoreCase("spawn_lizards")) { // Allana
+        }
+        // Allana
+        else if (event.equalsIgnoreCase("spawn_lizards")) {
             st.setCond(2);
             playSound(player, SOUND_MIDDLE);
 
-            int oid = player.getObjectId();
-            spawns.put(addSpawn(LIZARDMAN_WARRIOR, npc, true, 0, false), oid);
-            spawns.put(addSpawn(LIZARDMAN_SCOUT, npc, true, 0, false), oid);
-            spawns.put(addSpawn(LIZARDMAN, npc, true, 0, false), oid);
-
+            final int oid = player.getObjectId();
+            _spawns.put(addSpawn(LIZARDMAN_WARRIOR, npc, true, 0, false), oid);
+            _spawns.put(addSpawn(LIZARDMAN_SCOUT, npc, true, 0, false), oid);
+            _spawns.put(addSpawn(LIZARDMAN, npc, true, 0, false), oid);
             return null;
-        } else if (event.equalsIgnoreCase("30428-06.htm")) { // Perrin
-            spawns.put(addSpawn(TAMIL, npc, true, 0, true), player.getObjectId());
+        }
+        // Perrin
+        else if (event.equalsIgnoreCase("30428-06.htm")) {
+            _spawns.put(addSpawn(TAMIL, npc, true, 0, true), player.getObjectId());
         }
 
         return htmltext;
@@ -128,9 +130,8 @@ public class Q409_PathToAnElvenOracle extends Quest {
 
                     case ALLANA:
                         if (cond == 1 || cond == 2) {
-                            if (spawns.containsValue(player.getObjectId())) {
+                            if (_spawns.containsValue(player.getObjectId()))
                                 return null;
-                            }
 
                             htmltext = "30424-01.htm";
                         } else if (cond == 3) {
@@ -154,21 +155,18 @@ public class Q409_PathToAnElvenOracle extends Quest {
 
                     case PERRIN:
                         if (cond == 4) {
-                            if (spawns.containsValue(player.getObjectId())) {
+                            if (_spawns.containsValue(player.getObjectId()))
                                 htmltext = "30428-06.htm";
-                            } else {
+                            else
                                 htmltext = "30428-01.htm";
-                            }
                         } else if (cond == 5) {
                             htmltext = "30428-04.htm";
                             st.setCond(6);
                             playSound(player, SOUND_MIDDLE);
                             takeItems(player, TAMIL_NECKLACE, -1);
                             giveItems(player, SWINDLER_MONEY, 1);
-                        } else if (cond > 5) {
+                        } else if (cond > 5)
                             htmltext = "30428-05.htm";
-                        }
-
                         break;
                 }
                 break;
@@ -179,31 +177,37 @@ public class Q409_PathToAnElvenOracle extends Quest {
 
     @Override
     public String onAttack(Npc npc, Creature attacker, int damage, L2Skill skill) {
-        int condition = npc.getScriptValue();
-        if (condition < 0) {
+        final int condition = npc.getScriptValue();
+        if (condition < 0)
             return null;
-        }
 
         // Attacker must be player with started quest.
-        Player player = attacker.getActingPlayer();
-        if (player == null || checkPlayerState(player, npc, QuestStatus.STARTED) == null) {
+        final Player player = attacker.getActingPlayer();
+        if (player == null || checkPlayerState(player, npc, QuestStatus.STARTED) == null)
             return null;
-        }
 
         if (condition == 0) {
             // First valid attack. Save player object ID.
             switch (npc.getNpcId()) {
-                case LIZARDMAN -> npc.broadcastNpcSay(NpcStringId.ID_40912);
-                case LIZARDMAN_SCOUT -> npc.broadcastNpcSay(NpcStringId.ID_40911);
-                case LIZARDMAN_WARRIOR -> npc.broadcastNpcSay(NpcStringId.ID_40909);
-                case TAMIL -> npc.broadcastNpcSay(NpcStringId.ID_40913);
+                case LIZARDMAN:
+                    npc.broadcastNpcSay(NpcStringId.ID_40912);
+                    break;
+                case LIZARDMAN_SCOUT:
+                    npc.broadcastNpcSay(NpcStringId.ID_40911);
+                    break;
+                case LIZARDMAN_WARRIOR:
+                    npc.broadcastNpcSay(NpcStringId.ID_40909);
+                    break;
+                case TAMIL:
+                    npc.broadcastNpcSay(NpcStringId.ID_40913);
+                    break;
             }
+
             npc.setScriptValue(player.getObjectId());
         } else {
             // Repeated valid attack. Mark invalid attack condition, if another player also attacks the monster.
-            if (condition != player.getObjectId()) {
+            if (condition != player.getObjectId())
                 npc.setScriptValue(-1);
-            }
         }
 
         return null;
@@ -244,7 +248,7 @@ public class Q409_PathToAnElvenOracle extends Quest {
 
     @Override
     public String onDecay(Npc npc) {
-        spawns.remove(npc);
+        _spawns.remove(npc);
 
         return null;
     }

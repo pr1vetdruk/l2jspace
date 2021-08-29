@@ -2,7 +2,7 @@ package ru.privetdruk.l2jspace.gameserver.scripting.script.ai.boss;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
+import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.GrandBossManager;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
@@ -13,6 +13,8 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PlaySound;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SpecialCamera;
 import ru.privetdruk.l2jspace.gameserver.scripting.script.ai.AttackableAIScript;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Dr. Chaos is a boss at Pavel's Ruins. Some things to know :
@@ -204,7 +206,7 @@ public class DrChaos extends AttackableAIScript {
         npc.broadcastNpcSay("Urggh! You will pay dearly for this insult.");
 
         // "lock" Dr. Chaos for regular RB time (36H fixed +- 24H random)
-        long respawnTime = (36 + Rnd.get(-24, 24)) * 3600000;
+        long respawnTime = TimeUnit.HOURS.toMillis(Config.SPAWN_INTERVAL_DR_CHAOS) + Rnd.get(TimeUnit.HOURS.toMillis(Config.RANDOM_SPAWN_TIME_DR_CHAOS));
 
         GrandBossManager.getInstance().setBossStatus(CHAOS_GOLEM, DEAD);
         startQuestTimer("reset_drchaos", null, null, respawnTime);

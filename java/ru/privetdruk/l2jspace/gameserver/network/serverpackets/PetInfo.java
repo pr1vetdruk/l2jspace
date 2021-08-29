@@ -58,7 +58,7 @@ public class PetInfo extends L2GameServerPacket {
         writeD(walkSpd);
 
         writeF(_summon.getStatus().getMovementSpeedMultiplier());
-        writeF(1);
+        writeF(_summon.getStatus().getAttackSpeedMultiplier());
         writeF(_summon.getCollisionRadius());
         writeF(_summon.getCollisionHeight());
         writeD(_summon.getWeapon());

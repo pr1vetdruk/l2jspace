@@ -2,7 +2,6 @@ package ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf;
 
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventPlayer;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.TeamSetting;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 
 public class CtfEventPlayer extends EventPlayer {

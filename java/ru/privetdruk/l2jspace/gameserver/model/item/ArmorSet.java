@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.item;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
 import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;

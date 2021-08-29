@@ -1,11 +1,11 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.data.sql.PlayerInfoTable;
 import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FriendList extends L2GameServerPacket {
     private final List<FriendInfo> _info;

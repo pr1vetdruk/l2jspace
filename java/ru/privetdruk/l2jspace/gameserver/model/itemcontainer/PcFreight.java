@@ -1,13 +1,13 @@
 package ru.privetdruk.l2jspace.gameserver.model.itemcontainer;
 
-import java.util.Collections;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.items.ItemLocation;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
+
+import java.util.Collections;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PcFreight extends ItemContainer {
     private final Player _owner;

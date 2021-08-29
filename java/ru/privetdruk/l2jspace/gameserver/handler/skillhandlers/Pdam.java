@@ -1,9 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.handler.skillhandlers;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.gameserver.enums.items.ShotType;
 import ru.privetdruk.l2jspace.gameserver.enums.items.WeaponType;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectType;

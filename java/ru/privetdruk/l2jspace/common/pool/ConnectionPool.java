@@ -1,13 +1,11 @@
 package ru.privetdruk.l2jspace.common.pool;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
+import org.mariadb.jdbc.MariaDbPoolDataSource;
 import ru.privetdruk.l2jspace.common.logging.CLogger;
-
 import ru.privetdruk.l2jspace.config.Config;
 
-import org.mariadb.jdbc.MariaDbPoolDataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public final class ConnectionPool {
     private static final CLogger LOGGER = new CLogger(ConnectionPool.class.getName());

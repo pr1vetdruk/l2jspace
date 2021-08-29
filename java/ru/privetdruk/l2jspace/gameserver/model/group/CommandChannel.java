@@ -1,20 +1,15 @@
 package ru.privetdruk.l2jspace.gameserver.model.group;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.CreatureSay;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExCloseMPCC;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExMPCCPartyInfoUpdate;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExOpenMPCC;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExShowScreenMessage;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.L2GameServerPacket;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Mass events, like sieges or raids require joining several {@link Party}. That's what {@link CommandChannel}s are for in the world of Lineage.<br>

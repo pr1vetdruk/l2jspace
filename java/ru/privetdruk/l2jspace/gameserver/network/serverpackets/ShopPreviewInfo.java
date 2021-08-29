@@ -1,8 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
+
+import java.util.Map;
 
 public class ShopPreviewInfo extends L2GameServerPacket {
     private final Map<Paperdoll, Integer> _items;

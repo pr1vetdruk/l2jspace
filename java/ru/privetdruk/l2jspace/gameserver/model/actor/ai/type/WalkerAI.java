@@ -1,13 +1,13 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.ai.type;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.data.xml.WalkerRouteData;
 import ru.privetdruk.l2jspace.gameserver.enums.IntentionType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Walker;
 import ru.privetdruk.l2jspace.gameserver.model.location.WalkerLocation;
 import ru.privetdruk.l2jspace.gameserver.taskmanager.WalkerTaskManager;
+
+import java.util.List;
 
 /**
  * This AI is used by {@link Walker}s.<br>

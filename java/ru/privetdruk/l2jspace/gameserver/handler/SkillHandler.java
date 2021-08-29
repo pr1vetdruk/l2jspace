@@ -1,41 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.handler;
 
+import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillType;
+import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.*;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillType;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.BalanceLife;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.Blow;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.Cancel;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.CombatPointHeal;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.Continuous;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.CpDamPercent;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.Craft;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.Disablers;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.DrainSoul;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.Dummy;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.Extractable;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.Fishing;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.FishingSkill;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.GetPlayer;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.GiveSp;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.Harvest;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.Heal;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.HealPercent;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.InstantJump;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.ManaHeal;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.Manadam;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.Mdam;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.Pdam;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.Resurrect;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.Sow;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.Spoil;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.StriderSiegeAssault;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.SummonCreature;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.SummonFriend;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.Sweep;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.TakeCastle;
-import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.Unlock;
 
 public class SkillHandler {
     private final Map<Integer, ISkillHandler> _entries = new HashMap<>();

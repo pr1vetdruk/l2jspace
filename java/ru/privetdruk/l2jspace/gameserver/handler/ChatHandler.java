@@ -1,21 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.handler;
 
+import ru.privetdruk.l2jspace.gameserver.enums.SayType;
+import ru.privetdruk.l2jspace.gameserver.handler.chathandlers.*;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import ru.privetdruk.l2jspace.gameserver.enums.SayType;
-import ru.privetdruk.l2jspace.gameserver.handler.chathandlers.ChatAll;
-import ru.privetdruk.l2jspace.gameserver.handler.chathandlers.ChatAlliance;
-import ru.privetdruk.l2jspace.gameserver.handler.chathandlers.ChatClan;
-import ru.privetdruk.l2jspace.gameserver.handler.chathandlers.ChatHeroVoice;
-import ru.privetdruk.l2jspace.gameserver.handler.chathandlers.ChatParty;
-import ru.privetdruk.l2jspace.gameserver.handler.chathandlers.ChatPartyMatchRoom;
-import ru.privetdruk.l2jspace.gameserver.handler.chathandlers.ChatPartyRoomAll;
-import ru.privetdruk.l2jspace.gameserver.handler.chathandlers.ChatPartyRoomCommander;
-import ru.privetdruk.l2jspace.gameserver.handler.chathandlers.ChatPetition;
-import ru.privetdruk.l2jspace.gameserver.handler.chathandlers.ChatShout;
-import ru.privetdruk.l2jspace.gameserver.handler.chathandlers.ChatTell;
-import ru.privetdruk.l2jspace.gameserver.handler.chathandlers.ChatTrade;
 
 public class ChatHandler {
     private final Map<SayType, IChatHandler> _entries = new HashMap<>();

@@ -1,9 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers;
 
-import java.util.StringTokenizer;
-
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.handler.IAdminCommandHandler;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
@@ -12,6 +9,8 @@ import ru.privetdruk.l2jspace.gameserver.model.location.TowerSpawnLocation;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SiegeInfo;
+
+import java.util.StringTokenizer;
 
 public class AdminSiege implements IAdminCommandHandler {
     private static final String[] ADMIN_COMMANDS =

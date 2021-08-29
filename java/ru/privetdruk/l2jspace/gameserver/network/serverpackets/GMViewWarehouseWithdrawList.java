@@ -1,12 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.Set;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Weapon;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
+
+import java.util.Set;
 
 public class GMViewWarehouseWithdrawList extends L2GameServerPacket {
     private final Set<ItemInstance> _items;

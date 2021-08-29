@@ -1,22 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.enums.skills;
 
-import java.lang.reflect.Constructor;
-
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
-import ru.privetdruk.l2jspace.gameserver.skill.l2skill.L2SkillAppearance;
-import ru.privetdruk.l2jspace.gameserver.skill.l2skill.L2SkillChargeDmg;
-import ru.privetdruk.l2jspace.gameserver.skill.l2skill.L2SkillCreateItem;
-import ru.privetdruk.l2jspace.gameserver.skill.l2skill.L2SkillDefault;
-import ru.privetdruk.l2jspace.gameserver.skill.l2skill.L2SkillDrain;
-import ru.privetdruk.l2jspace.gameserver.skill.l2skill.L2SkillSeed;
-import ru.privetdruk.l2jspace.gameserver.skill.l2skill.L2SkillSiegeFlag;
-import ru.privetdruk.l2jspace.gameserver.skill.l2skill.L2SkillSignet;
-import ru.privetdruk.l2jspace.gameserver.skill.l2skill.L2SkillSignetCasttime;
-import ru.privetdruk.l2jspace.gameserver.skill.l2skill.L2SkillSpawn;
-import ru.privetdruk.l2jspace.gameserver.skill.l2skill.L2SkillSummon;
-import ru.privetdruk.l2jspace.gameserver.skill.l2skill.L2SkillTeleport;
+import ru.privetdruk.l2jspace.gameserver.skill.l2skill.*;
+
+import java.lang.reflect.Constructor;
 
 public enum SkillType {
     // Damage

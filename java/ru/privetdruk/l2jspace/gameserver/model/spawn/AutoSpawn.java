@@ -1,10 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.model.spawn;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.location.SpawnLocation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Stores information about a registered auto spawn.

@@ -1,10 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RequestBuyProcure extends L2GameClientPacket {
     private static final int BATCH_LENGTH = 8;

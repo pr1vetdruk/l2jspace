@@ -49,7 +49,7 @@ public class DropData {
     /**
      * @return the chance to have a drop, under a 1.000.000 chance.
      */
-    public double getChance() {
+    public int getChance() {
         return _chance;
     }
 }

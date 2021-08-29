@@ -59,6 +59,11 @@ public final class RequestMoveToLocationInVehicle extends L2GameClientPacket {
             }
 
             final BoatEntrance closestEntrance = boat.getClosestEntrance(player.getPosition());
+            if (closestEntrance == null) {
+                player.sendPacket(ActionFailed.STATIC_PACKET);
+                return;
+            }
+
             player.getAI().tryToMoveTo(closestEntrance.getOuterLocation(), boat);
         }
     }

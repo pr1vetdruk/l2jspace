@@ -1,12 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.model.clanhall;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.util.Calendar;
-
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ClanHallManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ZoneManager;
@@ -15,10 +10,13 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Door;
 import ru.privetdruk.l2jspace.gameserver.model.entity.ClanHallSiege;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
-import ru.privetdruk.l2jspace.gameserver.model.zone.type.SiegableHallZone;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.SiegeZone;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.Calendar;
 
 public final class SiegableHall extends ClanHall {
     private static final String UPDATE_CLANHALL = "UPDATE clanhall SET ownerId=?, endDate=? WHERE id=?";
@@ -39,13 +37,10 @@ public final class SiegableHall extends ClanHall {
         _siegeLength = set.getLong("siegeLength");
         _scheduleConfig = set.getIntegerArray("scheduleConfig");
 
-        // Feed _siegeZone.
-        for (SiegeZone zone : ZoneManager.getInstance().getAllZones(SiegeZone.class)) {
-            if (zone.getSiegableId() == getId()) {
-                _siegeZone = zone;
-                break;
-            }
-        }
+        _siegeZone = ZoneManager.getInstance().getAllZones(SiegeZone.class).stream()
+                .filter(z -> z.getSiegableId() == getId())
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
@@ -59,11 +54,6 @@ public final class SiegableHall extends ClanHall {
         } catch (Exception e) {
             LOGGER.error("Couldn't save SiegableHall.", e);
         }
-    }
-
-    @Override
-    public SiegableHallZone getZone() {
-        return (SiegableHallZone) super.getZone();
     }
 
     public final void setSiege(final ClanHallSiege siegable) {

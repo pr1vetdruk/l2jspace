@@ -1,14 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.ai.type;
 
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Future;
-
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.AiEventType;
 import ru.privetdruk.l2jspace.gameserver.enums.IntentionType;
@@ -30,6 +24,11 @@ import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
 
 public class AttackableAI extends CreatureAI implements Runnable {
     protected static final int MAX_ATTACK_TIMEOUT = 90000; // 1m30
@@ -178,7 +177,7 @@ public class AttackableAI extends CreatureAI implements Runnable {
         if (actorClans != null) {
             for (final Attackable called : me.getKnownTypeInRadius(Attackable.class, me.getTemplate().getClanRange())) {
                 // Called hasn't AI, is dead, or got already target registered.
-                if (!called.hasAI() || called.isDead() || called.getAggroList().containsKey(target))
+                if (!called.hasAI() || called.isDead())
                     continue;
 
                 // Caller clan doesn't correspond to the called clan.

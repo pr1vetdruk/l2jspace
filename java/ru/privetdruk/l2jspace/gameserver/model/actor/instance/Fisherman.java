@@ -1,7 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.FishingChampionshipManager;
 import ru.privetdruk.l2jspace.gameserver.data.xml.SkillTreeData;
@@ -10,11 +8,9 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.holder.skillnode.FishingSkillNode;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.AcquireSkillDone;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.AcquireSkillList;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
+
+import java.util.List;
 
 /**
  * An instance type extending {@link Merchant}, used for fishing event.

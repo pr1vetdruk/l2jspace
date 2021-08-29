@@ -1,15 +1,14 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.Map.Entry;
-
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.FestivalOfDarknessManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.SevenSignsManager;
 import ru.privetdruk.l2jspace.gameserver.enums.CabalType;
 import ru.privetdruk.l2jspace.gameserver.enums.FestivalType;
 import ru.privetdruk.l2jspace.gameserver.enums.SealType;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
+
+import java.util.Map.Entry;
 
 public class SSQStatus extends L2GameServerPacket {
     private final int _objectId;

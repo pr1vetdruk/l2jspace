@@ -1,12 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.move;
 
-import java.awt.Color;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.math.MathUtil;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.ZoneManager;
 import ru.privetdruk.l2jspace.gameserver.enums.FloodProtector;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.MoveType;
@@ -22,6 +16,11 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExServerPrimitive;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MoveToLocation;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MoveToPawn;
+
+import java.awt.*;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.List;
 
 /**
  * This class groups all movement data related to a {@link Player}.
@@ -108,7 +107,7 @@ public class PlayerMove extends CreatureMove<Player> {
     }
 
     @Override
-    protected void moveToLocation(Location destination, boolean pathfinding) {
+    public void moveToLocation(Location destination, boolean pathfinding) {
         if (!_actor.getClient().performAction(FloodProtector.MOVE)) {
             _actor.sendPacket(ActionFailed.STATIC_PACKET);
             return;

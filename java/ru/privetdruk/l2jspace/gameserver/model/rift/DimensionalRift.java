@@ -1,15 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.model.rift;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Future;
-import java.util.stream.Collectors;
-
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.DimensionalRiftManager;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
@@ -17,6 +9,13 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.group.Party;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.Earthquake;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
 /**
  * The main core of Dimension Rift system, which is part of Seven Signs.<br>
@@ -112,7 +111,7 @@ public class DimensionalRift {
 
         _spawnTimerTask = ThreadPool.schedule(() -> _room.spawn(), Config.RIFT_SPAWN_DELAY);
 
-        long jumpTime = Rnd.get(Config.RIFT_AUTO_JUMPS_TIME_MIN, Config.RIFT_AUTO_JUMPS_TIME_MAX) * 1000;
+        long jumpTime = Rnd.get(Config.RIFT_AUTO_JUMPS_TIME_MIN, Config.RIFT_AUTO_JUMPS_TIME_MAX) * 1000L;
         if (_room.isBossRoom())
             jumpTime *= Config.RIFT_BOSS_ROOM_TIME_MULTIPLY;
 

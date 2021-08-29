@@ -1,13 +1,12 @@
 package ru.privetdruk.l2jspace.loginserver.data.sql;
 
+import ru.privetdruk.l2jspace.common.logging.CLogger;
+import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
+import ru.privetdruk.l2jspace.loginserver.model.Account;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-import ru.privetdruk.l2jspace.common.logging.CLogger;
-import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
-import ru.privetdruk.l2jspace.loginserver.model.Account;
 
 /**
  * This class controls all generated {@link Account}s.

@@ -1,13 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.container.player;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.concurrent.ConcurrentSkipListMap;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
 import ru.privetdruk.l2jspace.gameserver.enums.ShortcutType;
 import ru.privetdruk.l2jspace.gameserver.enums.items.EtcItemType;
 import ru.privetdruk.l2jspace.gameserver.model.Macro;
@@ -15,9 +9,15 @@ import ru.privetdruk.l2jspace.gameserver.model.Shortcut;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExAutoSoulShot;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ShortCutInit;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ShortCutDelete;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ShortCutRegister;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.function.Predicate;
 
 public class ShortcutList extends ConcurrentSkipListMap<Integer, Shortcut> {
     private static final long serialVersionUID = 1L;
@@ -131,7 +131,7 @@ public class ShortcutList extends ConcurrentSkipListMap<Integer, Shortcut> {
             }
         }
 
-        _owner.sendPacket(new ShortCutInit(_owner));
+        _owner.sendPacket(new ShortCutDelete(slot));
 
         for (int shotId : _owner.getAutoSoulShot())
             _owner.sendPacket(new ExAutoSoulShot(shotId, 1));
@@ -199,6 +199,17 @@ public class ShortcutList extends ConcurrentSkipListMap<Integer, Shortcut> {
                 _owner.sendPacket(new ShortCutRegister(_owner, shortcut));
             }
         }
+    }
+
+    /**
+     * Refresh all occurences of {@link Shortcut}s based on a {@link Predicate}.
+     *
+     * @param predicate : The {@link Predicate} to use as filter.
+     */
+    public void refreshShortcuts(Predicate<Shortcut> predicate) {
+        values().stream()
+                .filter(predicate)
+                .forEach(s -> _owner.sendPacket(new ShortCutRegister(_owner, s)));
     }
 
     /**

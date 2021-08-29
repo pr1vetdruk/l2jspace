@@ -1,9 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.group;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
@@ -12,6 +9,8 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.CreatureSay;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExShowScreenMessage;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.L2GameServerPacket;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+
+import java.util.List;
 
 public abstract class AbstractGroup {
     private Player _leader;

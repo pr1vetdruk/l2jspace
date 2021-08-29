@@ -1,14 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
 import ru.privetdruk.l2jspace.common.math.MathUtil;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.CommunityBoard;
 import ru.privetdruk.l2jspace.gameserver.data.manager.BotsPreventionManager;
@@ -36,6 +29,12 @@ import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public final class RequestBypassToServer extends L2GameClientPacket {
     private static final Logger GMAUDIT_LOG = Logger.getLogger("gmaudit");
@@ -165,6 +164,7 @@ public final class RequestBypassToServer extends L2GameClientPacket {
                     return;
             }
 
+            // Olympiad registration check.
             if (OlympiadManager.getInstance().isRegisteredInComp(player)) {
                 player.sendPacket(SystemMessageId.WHILE_YOU_ARE_ON_THE_WAITING_LIST_YOU_ARE_NOT_ALLOWED_TO_WATCH_THE_GAME);
                 return;
@@ -175,19 +175,10 @@ public final class RequestBypassToServer extends L2GameClientPacket {
         } else if (_command.startsWith("report"))
             BotsPreventionManager.getInstance().analyseBypass(_command, player);
         else if (_command.startsWith("aggr_info")) {
-            final StringTokenizer st = new StringTokenizer(_command, " ");
-            st.nextToken();// skip command
-            try {
-                final Npc targetNpc = (Npc) player.getTarget();
-                var html = new NpcHtmlMessage(0);
-                if (!st.hasMoreTokens())
-                    showAggrInfo(player, targetNpc, html);
-
-                player.sendPacket(html);
-            } catch (Exception e) {
-                LOGGER.error("bypass user_npc_info error", e);
-            }
-
+            final Npc targetNpc = (Npc) player.getTarget();
+            var html = new NpcHtmlMessage(0);
+            showAggrInfo(player, targetNpc, html);
+            player.sendPacket(html);
         } else if (_command.startsWith("user_npc_info")) {
             final StringTokenizer st = new StringTokenizer(_command, " ");
             st.nextToken();// skip command

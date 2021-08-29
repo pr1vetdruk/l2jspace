@@ -1,12 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.container.npc;
 
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
 import ru.privetdruk.l2jspace.gameserver.geoengine.GeoEngine;
 import ru.privetdruk.l2jspace.gameserver.idfactory.IdFactory;
@@ -15,6 +9,11 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Monster;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.location.SpawnLocation;
+
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class MinionList extends ConcurrentHashMap<Monster, Boolean> {
     private static final long serialVersionUID = 1L;
@@ -109,6 +108,19 @@ public class MinionList extends ConcurrentHashMap<Monster, Boolean> {
      */
     public void onMinionDie(Monster minion, int respawnTime) {
         put(minion, false);
+
+        if (respawnTime > 0 && !_master.isAlikeDead()) {
+            ThreadPool.schedule(() -> {
+                // Master is visible, but minion isn't spawned back (via teleport, for example).
+                if (!_master.isAlikeDead() && _master.isVisible()) {
+                    Boolean state = get(minion);
+                    if (state != null && !state) {
+                        minion.refreshID();
+                        initializeMinion(_master, minion);
+                    }
+                }
+            }, respawnTime * 4L);
+        }
 
         if (minion.isRaidRelated() && respawnTime > 0 && !_master.isAlikeDead()) {
             ThreadPool.schedule(() ->

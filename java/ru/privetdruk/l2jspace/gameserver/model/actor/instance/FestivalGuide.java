@@ -1,10 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
-import java.util.Calendar;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.FestivalOfDarknessManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.SevenSignsManager;
@@ -21,6 +17,9 @@ import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+
+import java.util.Calendar;
+import java.util.List;
 
 public final class FestivalGuide extends Folk {
     protected FestivalType _festivalType;

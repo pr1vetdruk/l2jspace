@@ -1,34 +1,29 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
-import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 
+import java.util.List;
+
 public class GMViewQuestList extends L2GameServerPacket {
-    private final List<Quest> _quests;
-    private final Player _player;
+    private final List<QuestState> questStates;
+    private final Player player;
 
     public GMViewQuestList(Player player) {
-        _quests = player.getQuestList().getAllQuests(true);
-        _player = player;
+        questStates = player.getQuestList().getAllQuests(true);
+        this.player = player;
     }
 
     @Override
     protected final void writeImpl() {
         writeC(0x93);
 
-        writeS(_player.getName());
-        writeH(_quests.size());
+        writeS(player.getName());
+        writeH(questStates.size());
 
-        for (Quest quest : _quests) {
-            // Write quest id.
-            writeD(quest.getQuestId());
-
-            // Write quest's flags or cond value, if active.
-            final QuestState qs = _player.getQuestList().getQuestState(quest.getQuestId());
-            writeD((qs == null) ? 0 : qs.getFlags());
+        for (QuestState questState : questStates) {
+            writeD(questState.getQuest().getQuestId());
+            writeD(questState.getFlags());
         }
     }
 }

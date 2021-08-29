@@ -1,5 +1,13 @@
 package ru.privetdruk.l2jspace.loginserver.data.manager;
 
+import org.w3c.dom.Document;
+import ru.privetdruk.l2jspace.common.data.StatSet;
+import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
+import ru.privetdruk.l2jspace.common.logging.CLogger;
+import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
+import ru.privetdruk.l2jspace.common.random.Rnd;
+import ru.privetdruk.l2jspace.loginserver.model.GameServerInfo;
+
 import java.math.BigInteger;
 import java.nio.file.Path;
 import java.security.KeyPair;
@@ -11,16 +19,6 @@ import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import ru.privetdruk.l2jspace.common.data.StatSet;
-import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
-import ru.privetdruk.l2jspace.common.logging.CLogger;
-import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-import ru.privetdruk.l2jspace.common.random.Rnd;
-
-import ru.privetdruk.l2jspace.loginserver.model.GameServerInfo;
-
-import org.w3c.dom.Document;
 
 public class GameServerManager implements IXmlReader {
     private static final CLogger LOGGER = new CLogger(GameServerManager.class.getName());

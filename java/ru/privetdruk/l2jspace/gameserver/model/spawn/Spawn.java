@@ -1,11 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.model.spawn;
 
-import java.lang.reflect.Constructor;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
 import ru.privetdruk.l2jspace.gameserver.geoengine.GeoEngine;
 import ru.privetdruk.l2jspace.gameserver.idfactory.IdFactory;
@@ -14,6 +11,8 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.location.SpawnLocation;
+
+import java.lang.reflect.Constructor;
 
 /**
  * This class manages the spawn and respawn of a {@link Npc}.

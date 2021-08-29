@@ -1,15 +1,13 @@
 package ru.privetdruk.l2jspace.gameserver.data.xml;
 
+import org.w3c.dom.Document;
+import ru.privetdruk.l2jspace.common.data.StatSet;
+import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
+import ru.privetdruk.l2jspace.gameserver.model.item.Recipe;
+
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
-
-import ru.privetdruk.l2jspace.common.data.StatSet;
-import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
-
-import ru.privetdruk.l2jspace.gameserver.model.item.Recipe;
-
-import org.w3c.dom.Document;
 
 /**
  * This class loads and stores {@link Recipe}s. Recipes are part of craft system, which uses a Recipe associated to items (materials) to craft another item (product).

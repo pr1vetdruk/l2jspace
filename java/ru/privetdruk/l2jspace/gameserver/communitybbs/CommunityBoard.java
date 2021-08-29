@@ -1,24 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.communitybbs;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
 import ru.privetdruk.l2jspace.config.Config;
-import ru.privetdruk.l2jspace.gameserver.communitybbs.manager.BaseBBSManager;
-import ru.privetdruk.l2jspace.gameserver.communitybbs.manager.ClanBBSManager;
-import ru.privetdruk.l2jspace.gameserver.communitybbs.manager.FavoriteBBSManager;
-import ru.privetdruk.l2jspace.gameserver.communitybbs.manager.FriendsBBSManager;
-import ru.privetdruk.l2jspace.gameserver.communitybbs.manager.MailBBSManager;
-import ru.privetdruk.l2jspace.gameserver.communitybbs.manager.PostBBSManager;
-import ru.privetdruk.l2jspace.gameserver.communitybbs.manager.RegionBBSManager;
-import ru.privetdruk.l2jspace.gameserver.communitybbs.manager.TopBBSManager;
-import ru.privetdruk.l2jspace.gameserver.communitybbs.manager.TopicBBSManager;
+import ru.privetdruk.l2jspace.gameserver.communitybbs.manager.*;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.model.Forum;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.model.Post;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.model.Topic;
@@ -27,6 +12,12 @@ import ru.privetdruk.l2jspace.gameserver.enums.bbs.ForumType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.GameClient;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class CommunityBoard {
     private static final CLogger LOGGER = new CLogger(CommunityBoard.class.getName());

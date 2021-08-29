@@ -1,10 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManorManager;
 import ru.privetdruk.l2jspace.gameserver.model.manor.Seed;
 import ru.privetdruk.l2jspace.gameserver.model.manor.SeedProduction;
+
+import java.util.List;
 
 public class ExShowSeedInfo extends L2GameServerPacket {
     private final List<SeedProduction> _seeds;

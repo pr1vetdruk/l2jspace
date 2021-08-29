@@ -1,12 +1,11 @@
 package ru.privetdruk.l2jspace.common.logging.filter;
 
-import java.util.logging.Filter;
-import java.util.logging.LogRecord;
-
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.gameserver.enums.items.EtcItemType;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
+
+import java.util.logging.Filter;
+import java.util.logging.LogRecord;
 
 public class ItemFilter implements Filter {
     private static final String EXCLUDE_PROCESS = "Consume";

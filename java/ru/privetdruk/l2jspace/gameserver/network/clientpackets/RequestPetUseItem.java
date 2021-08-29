@@ -1,7 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
-import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.gameserver.handler.IItemHandler;
 import ru.privetdruk.l2jspace.gameserver.handler.ItemHandler;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;

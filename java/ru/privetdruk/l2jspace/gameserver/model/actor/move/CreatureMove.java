@@ -1,13 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.move;
 
-import java.awt.Color;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.ScheduledFuture;
-
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.ZoneManager;
 import ru.privetdruk.l2jspace.gameserver.enums.AiEventType;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.MoveType;
@@ -20,11 +13,13 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.WaterZone;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExServerPrimitive;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.L2GameServerPacket;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MoveToLocation;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MoveToPawn;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.StopMove;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
+
+import java.awt.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ScheduledFuture;
 
 /**
  * This class groups all movement data related to a {@link Creature}.
@@ -399,16 +394,11 @@ public class CreatureMove<T extends Creature> {
      * Stop the movement of the {@link Creature}.
      */
     public void stop() {
-        // The follow task needs to be stopped regardless of the move task
         cancelFollowTask();
-
-        if (_task == null)
-            return;
+        cancelMoveTask();
 
         _actor.revalidateZone(true);
         _actor.broadcastPacket(new StopMove(_actor));
-
-        cancelMoveTask();
     }
 
     /**

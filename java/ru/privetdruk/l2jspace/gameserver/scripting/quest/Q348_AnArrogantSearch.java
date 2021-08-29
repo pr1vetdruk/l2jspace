@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
@@ -64,11 +63,10 @@ public class Q348_AnArrogantSearch extends Quest {
     private static final Location HOLY_ARK_3_LOC = new Location(50693, 158674, 376);
     private static final Location GUARDIAN_CORPSE_LOC = new Location(-2908, 44128, -2712);
 
-
     // NPCs instances, in order to avoid infinite instances creation speaking to chests.
-    private static Npc _elberoth;
-    private static Npc _shadowFang;
-    private static Npc _angelKiller;
+    private Npc _elberoth;
+    private Npc _shadowFang;
+    private Npc _angelKiller;
 
     public Q348_AnArrogantSearch() {
         super(348, "An Arrogant Search");
@@ -347,9 +345,8 @@ public class Q348_AnArrogantSearch extends Quest {
                             if (!player.getInventory().hasItems(FIRST_KEY_OF_ARK) && !player.getInventory().hasItems(BLOOD_OF_SAINT)) {
                                 if (st.getInteger("angelkiller") == 0) {
                                     htmltext = "30980-01.htm";
-                                    if (_angelKiller == null) {
+                                    if (_angelKiller == null)
                                         _angelKiller = addSpawn(ANGEL_KILLER, npc, true, 600000, true);
-                                    }
 
                                     if (st.getCond() != 18) {
                                         st.setCond(18);
@@ -394,9 +391,8 @@ public class Q348_AnArrogantSearch extends Quest {
                             if (!player.getInventory().hasItems(BOOK_OF_SAINT)) {
                                 if (!player.getInventory().hasItems(SECOND_KEY_OF_ARK)) {
                                     htmltext = "30978-01.htm";
-                                    if (_elberoth == null) {
+                                    if (_elberoth == null)
                                         _elberoth = addSpawn(ARK_GUARDIAN_ELBEROTH, npc, true, 600000, true);
-                                    }
                                 } else {
                                     htmltext = "30978-02.htm";
                                     st.setCond(12);
@@ -418,9 +414,8 @@ public class Q348_AnArrogantSearch extends Quest {
                             if (!player.getInventory().hasItems(BOUGH_OF_SAINT)) {
                                 if (!player.getInventory().hasItems(THIRD_KEY_OF_ARK)) {
                                     htmltext = "30979-01.htm";
-                                    if (_shadowFang == null) {
+                                    if (_shadowFang == null)
                                         _shadowFang = addSpawn(ARK_GUARDIAN_SHADOW_FANG, npc, true, 600000, true);
-                                    }
                                 } else {
                                     htmltext = "30979-02.htm";
                                     st.setCond(16);

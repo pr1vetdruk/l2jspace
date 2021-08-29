@@ -18,6 +18,11 @@ public class EffectPhysicalMute extends AbstractEffect {
 
     @Override
     public boolean onStart() {
+        // Abort cast.
+        if (getEffected().getCast().isCastingNow() && !getEffected().getCast().getCurrentSkill().isMagic()) {
+            getEffected().getCast().stop();
+        }
+
         // Refresh abnormal effects.
         getEffected().updateAbnormalEffect();
 

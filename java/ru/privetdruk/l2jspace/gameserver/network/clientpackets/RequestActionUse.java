@@ -2,7 +2,6 @@ package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
 import ru.privetdruk.l2jspace.common.random.Rnd;
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.enums.SayType;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
@@ -178,9 +177,6 @@ public final class RequestActionUse extends L2GameClientPacket {
 
                 summon.setTarget(target);
 
-                // Summon loses follow status, no matter what.
-                // FIXME summon.getAI().setFollowStatus(false);
-
                 if (target instanceof Creature) {
                     Creature creature = (Creature) target;
                     if (creature.isAttackableWithoutForceBy(player) || (_isCtrlPressed && creature.isAttackableBy(player))) {
@@ -315,7 +311,13 @@ public final class RequestActionUse extends L2GameClientPacket {
                 }
 
                 summon.getAI().setFollowStatus(false);
-                summon.getAI().tryToMoveTo(target.getPosition(), null);
+
+                if (!(target instanceof Creature)) {
+                    summon.getAI().tryToInteract(target, _isCtrlPressed, _isShiftPressed);
+                } else {
+                    summon.getAI().tryToFollow((Creature) target, _isShiftPressed);
+                }
+
                 break;
 
             case 61: // Private Store Package Sell

@@ -1,14 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.template;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ClanHallManager;
 import ru.privetdruk.l2jspace.gameserver.enums.ScriptEventType;
@@ -24,6 +17,8 @@ import ru.privetdruk.l2jspace.gameserver.model.item.DropCategory;
 import ru.privetdruk.l2jspace.gameserver.model.item.DropData;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.*;
 
 public class NpcTemplate extends CreatureTemplate {
     private final int _npcId;

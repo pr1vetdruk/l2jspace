@@ -1,9 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.custom.instance;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.PlayerData;
@@ -14,9 +11,10 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.HennaInfo;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.UserInfo;
+
+import java.util.List;
 
 /**
  * Custom class allowing you to choose your class.<br>
@@ -213,8 +211,9 @@ public final class ClassMaster extends Folk {
         else
             player.setBaseClass(player.getActiveClass());
 
-        player.sendPacket(new HennaInfo(player));
+        player.refreshHennaList();
         player.broadcastUserInfo();
+
         return true;
     }
 
@@ -222,17 +221,13 @@ public final class ClassMaster extends Folk {
      * @param level - current skillId level (0 - start, 1 - first, etc)
      * @return minimum player level required for next class transfer
      */
-    private static final int getMinLevel(int level) {
-        switch (level) {
-            case 0:
-                return 20;
-            case 1:
-                return 40;
-            case 2:
-                return 76;
-            default:
-                return Integer.MAX_VALUE;
-        }
+    private static int getMinLevel(int level) {
+        return switch (level) {
+            case 0 -> 20;
+            case 1 -> 40;
+            case 2 -> 76;
+            default -> Integer.MAX_VALUE;
+        };
     }
 
     /**

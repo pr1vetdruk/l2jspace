@@ -1,16 +1,15 @@
 package ru.privetdruk.l2jspace.gameserver.data.xml;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
-
 import ru.privetdruk.l2jspace.gameserver.data.DocumentItem;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Armor;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.EtcItem;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Weapon;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class loads and stores all {@link Item} templates.

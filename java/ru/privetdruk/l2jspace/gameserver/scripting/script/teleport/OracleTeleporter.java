@@ -1,10 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.teleport;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.gameserver.enums.ScriptEventType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
@@ -12,6 +8,9 @@ import ru.privetdruk.l2jspace.gameserver.model.itemcontainer.PcInventory;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class OracleTeleporter extends Quest {
     private static final int[] TOWN_DAWN =

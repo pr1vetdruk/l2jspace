@@ -1,19 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.model.entity;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ScheduledFuture;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.ClanHallManager;
 import ru.privetdruk.l2jspace.gameserver.data.sql.ClanTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.MapRegionData;
@@ -31,6 +20,16 @@ import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcSay;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ScheduledFuture;
 
 public abstract class ClanHallSiege extends Quest implements Siegable {
     protected static final CLogger LOGGER = new CLogger(ClanHallSiege.class.getName());
@@ -53,7 +52,7 @@ public abstract class ClanHallSiege extends Quest implements Siegable {
     public ScheduledFuture<?> _siegeTask;
     public boolean _missionAccomplished = false;
 
-    public ClanHallSiege(String descr, final int hallId) {
+    protected ClanHallSiege(String descr, final int hallId) {
         super(-1, descr);
 
         _hall = ClanHallManager.getInstance().getSiegableHall(hallId);
@@ -158,17 +157,27 @@ public abstract class ClanHallSiege extends Quest implements Siegable {
 
     @Override
     public boolean checkSide(Clan clan, SiegeSide type) {
-        return true;
+        return clan != null && type == SiegeSide.ATTACKER && _attackers.contains(clan);
     }
 
     @Override
     public boolean checkSides(Clan clan, SiegeSide... types) {
-        return true;
+        if (clan == null) {
+            return false;
+        }
+
+        for (SiegeSide type : types) {
+            if (type == SiegeSide.ATTACKER) {
+                return _attackers.contains(clan);
+            }
+        }
+
+        return false;
     }
 
     @Override
     public boolean checkSides(Clan clan) {
-        return true;
+        return clan != null && _attackers.contains(clan);
     }
 
     public List<Player> getAttackersInZone() {
@@ -205,8 +214,8 @@ public abstract class ClanHallSiege extends Quest implements Siegable {
 
     @Override
     public void startSiege() {
-        if (_attackers.isEmpty() && _hall.getId() != 21) // Fortress of resistance don't have attacker list
-        {
+        // Fortress of Resistance doesn't have attacker list.
+        if (_attackers.isEmpty() && _hall.getId() != 21) {
             onSiegeEnds();
 
             _hall.updateNextSiege();
@@ -224,14 +233,17 @@ public abstract class ClanHallSiege extends Quest implements Siegable {
         loadGuards();
         spawnSiegeGuards();
 
+        // Banish everyone out of the ClanHallZone (which explains the -1 as value).
+        _hall.getZone().banishForeigners(-1);
         _hall.getSiegeZone().setActive(true);
 
         final byte state = 1;
         for (Clan clan : _attackers) {
+            clan.setFlag(null);
+
             for (Player player : clan.getOnlineMembers()) {
                 player.setSiegeState(state);
                 player.broadcastUserInfo();
-                player.setInSiegableHallSiege(true);
             }
         }
 
@@ -268,7 +280,6 @@ public abstract class ClanHallSiege extends Quest implements Siegable {
             for (Player player : clan.getOnlineMembers()) {
                 player.setSiegeState(state);
                 player.broadcastUserInfo();
-                player.setInSiegableHallSiege(false);
             }
         }
 

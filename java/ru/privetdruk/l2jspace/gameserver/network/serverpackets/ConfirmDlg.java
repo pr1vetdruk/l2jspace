@@ -1,8 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
@@ -11,6 +8,9 @@ import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConfirmDlg extends L2GameServerPacket {
     private static final int TYPE_ZONE_NAME = 7;

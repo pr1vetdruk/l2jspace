@@ -1,9 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.trade.TradeItem;
+
+import java.util.List;
 
 public class PrivateStoreListBuy extends L2GameServerPacket {
     private final Player _storePlayer;

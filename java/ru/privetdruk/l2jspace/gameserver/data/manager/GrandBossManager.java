@@ -1,17 +1,16 @@
 package ru.privetdruk.l2jspace.gameserver.data.manager;
 
+import ru.privetdruk.l2jspace.common.data.StatSet;
+import ru.privetdruk.l2jspace.common.logging.CLogger;
+import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
+import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
+import ru.privetdruk.l2jspace.gameserver.model.actor.instance.GrandBoss;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
-
-import ru.privetdruk.l2jspace.common.data.StatSet;
-import ru.privetdruk.l2jspace.common.logging.CLogger;
-import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
-import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.GrandBoss;
 
 /**
  * This class handles the status of all {@link GrandBoss}es.

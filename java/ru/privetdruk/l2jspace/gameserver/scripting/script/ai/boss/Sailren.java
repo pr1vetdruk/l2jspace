@@ -1,13 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.ai.boss;
 
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.GrandBossManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ZoneManager;
@@ -24,6 +18,10 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SpecialCamera;
 import ru.privetdruk.l2jspace.gameserver.scripting.script.ai.AttackableAIScript;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
+
 public class Sailren extends AttackableAIScript {
     private static final BossZone SAILREN_LAIR = ZoneManager.getInstance().getZoneById(110011, BossZone.class);
 
@@ -36,7 +34,6 @@ public class Sailren extends AttackableAIScript {
     private static final int VELOCIRAPTOR = 22223;
     private static final int PTEROSAUR = 22199;
     private static final int TREX = 22217;
-
     private static final int DUMMY = 32110;
     private static final int CUBE = 32107;
 
@@ -44,7 +41,8 @@ public class Sailren extends AttackableAIScript {
 
     private static final SpawnLocation SAILREN_LOC = new SpawnLocation(27549, -6638, -2008, 0);
 
-    private final Set<Npc> minions = ConcurrentHashMap.newKeySet();
+    private final Set<Npc> _minions = ConcurrentHashMap.newKeySet();
+
     private long _timeTracker = 0;
 
     public Sailren() {
@@ -53,29 +51,32 @@ public class Sailren extends AttackableAIScript {
         final StatSet info = GrandBossManager.getInstance().getStatSet(SAILREN);
 
         switch (GrandBossManager.getInstance().getBossStatus(SAILREN)) {
-            case DEAD -> { // Launch the timer to set DORMANT, or set DORMANT directly if timer expired while offline.
+            case DEAD: // Launch the timer to set DORMANT, or set DORMANT directly if timer expired while offline.
                 final long temp = (info.getLong("respawn_time") - System.currentTimeMillis());
                 if (temp > 0)
                     startQuestTimer("unlock", null, null, temp);
                 else
                     GrandBossManager.getInstance().setBossStatus(SAILREN, DORMANT);
-            }
-            case FIGHTING -> {
+                break;
+
+            case FIGHTING:
                 final int loc_x = info.getInteger("loc_x");
                 final int loc_y = info.getInteger("loc_y");
                 final int loc_z = info.getInteger("loc_z");
                 final int heading = info.getInteger("heading");
                 final int hp = info.getInteger("currentHP");
                 final int mp = info.getInteger("currentMP");
+
                 final Npc sailren = addSpawn(SAILREN, loc_x, loc_y, loc_z, heading, false, 0, false);
                 GrandBossManager.getInstance().addBoss((GrandBoss) sailren);
-                minions.add(sailren);
+                _minions.add(sailren);
+
                 sailren.getStatus().setHpMp(hp, mp);
                 sailren.forceRunStance();
 
                 // Don't need to edit _timeTracker, as it's initialized to 0.
                 startQuestTimerAtFixedRate("inactivity", null, null, INTERVAL_CHECK);
-            }
+                break;
         }
     }
 
@@ -94,7 +95,7 @@ public class Sailren extends AttackableAIScript {
                 final Npc temp = addSpawn(VELOCIRAPTOR, SAILREN_LOC, true, 0, false);
                 temp.getAI().tryToActive();
                 temp.forceRunStance();
-                minions.add(temp);
+                _minions.add(temp);
             }
             startQuestTimerAtFixedRate("inactivity", null, null, INTERVAL_CHECK);
         } else if (name.equalsIgnoreCase("spawn")) {
@@ -129,7 +130,7 @@ public class Sailren extends AttackableAIScript {
 
             final Npc temp = addSpawn(SAILREN, SAILREN_LOC, false, 0, false);
             GrandBossManager.getInstance().addBoss((GrandBoss) temp);
-            minions.add(temp);
+            _minions.add(temp);
 
             // Stop skill task.
             cancelQuestTimers("skill");
@@ -147,9 +148,9 @@ public class Sailren extends AttackableAIScript {
                 GrandBossManager.getInstance().setBossStatus(SAILREN, DORMANT);
 
                 // Delete all monsters and clean the list.
-                if (!minions.isEmpty()) {
-                    minions.forEach(Npc::deleteMe);
-                    minions.clear();
+                if (!_minions.isEmpty()) {
+                    _minions.forEach(Npc::deleteMe);
+                    _minions.clear();
                 }
 
                 // Oust all players from area.
@@ -169,40 +170,40 @@ public class Sailren extends AttackableAIScript {
     public String onKill(Npc npc, Creature killer) {
         if (killer instanceof Playable) {
             final Player player = killer.getActingPlayer();
-            if (player == null || !minions.contains(npc) || !SAILREN_LAIR.getAllowedPlayers().contains(player.getObjectId()))
+            if (player == null || !_minions.contains(npc) || !SAILREN_LAIR.getAllowedPlayers().contains(player.getObjectId()))
                 return null;
         }
 
         switch (npc.getNpcId()) {
             case VELOCIRAPTOR:
                 // Once the 3 Velociraptors are dead, spawn a Pterosaur.
-                if (minions.remove(npc) && minions.isEmpty()) {
+                if (_minions.remove(npc) && _minions.isEmpty()) {
                     final Npc temp = addSpawn(PTEROSAUR, SAILREN_LOC, false, 0, false);
                     temp.forceRunStance();
                     temp.getAI().tryToAttack(killer);
-                    minions.add(temp);
+                    _minions.add(temp);
                 }
                 break;
 
             case PTEROSAUR:
                 // Pterosaur is dead, spawn a Trex.
-                if (minions.remove(npc)) {
+                if (_minions.remove(npc)) {
                     final Npc temp = addSpawn(TREX, SAILREN_LOC, false, 0, false);
                     temp.forceRunStance();
                     temp.getAI().tryToAttack(killer);
                     temp.broadcastNpcSay("?");
-                    minions.add(temp);
+                    _minions.add(temp);
                 }
                 break;
 
             case TREX:
                 // Trex is dead, wait 5min and spawn Sailren.
-                if (minions.remove(npc))
+                if (_minions.remove(npc))
                     startQuestTimer("spawn", npc, null, Config.WAIT_TIME_SAILREN);
                 break;
 
             case SAILREN:
-                if (minions.remove(npc)) {
+                if (_minions.remove(npc)) {
                     // Set Sailren as dead.
                     GrandBossManager.getInstance().setBossStatus(SAILREN, DEAD);
 
@@ -212,8 +213,7 @@ public class Sailren extends AttackableAIScript {
                     // Cancel inactivity task.
                     cancelQuestTimers("inactivity");
 
-                    long respawnTime = (long) Config.SPAWN_INTERVAL_SAILREN * 60 + Rnd.get(-60 * Config.RANDOM_SPAWN_TIME_SAILREN, 60 * Config.RANDOM_SPAWN_TIME_SAILREN);
-                    respawnTime *= 60000;
+                    long respawnTime = TimeUnit.HOURS.toMillis(Config.SPAWN_INTERVAL_SAILREN) + Rnd.get(TimeUnit.HOURS.toMillis(Config.RANDOM_SPAWN_TIME_SAILREN));
 
                     startQuestTimer("oust", null, null, INTERVAL_CHECK);
                     startQuestTimer("unlock", null, null, respawnTime);
@@ -233,7 +233,7 @@ public class Sailren extends AttackableAIScript {
     public String onAttack(Npc npc, Creature attacker, int damage, L2Skill skill) {
         if (attacker instanceof Playable) {
             final Player player = attacker.getActingPlayer();
-            if (player == null || !minions.contains(npc) || !SAILREN_LAIR.getAllowedPlayers().contains(player.getObjectId()))
+            if (player == null || !_minions.contains(npc) || !SAILREN_LAIR.getAllowedPlayers().contains(player.getObjectId()))
                 return null;
 
             // Curses

@@ -1,10 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.BuyListManager;
 import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
@@ -20,6 +16,9 @@ import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ShopPreviewInfo;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.UserInfo;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public final class RequestPreviewItem extends L2GameClientPacket {
     @SuppressWarnings("unused")

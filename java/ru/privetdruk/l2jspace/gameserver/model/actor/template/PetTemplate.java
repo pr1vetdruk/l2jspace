@@ -1,10 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.template;
 
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
 import ru.privetdruk.l2jspace.gameserver.model.PetDataEntry;
+
+import java.util.Map;
 
 public final class PetTemplate extends NpcTemplate {
     private final int _food1;

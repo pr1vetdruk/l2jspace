@@ -1,5 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.idfactory;
 
+import ru.privetdruk.l2jspace.common.logging.CLogger;
+import ru.privetdruk.l2jspace.common.math.PrimeFinder;
+import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
+import ru.privetdruk.l2jspace.common.pool.ThreadPool;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,11 +13,6 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import ru.privetdruk.l2jspace.common.logging.CLogger;
-import ru.privetdruk.l2jspace.common.math.PrimeFinder;
-import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 
 /**
  * This class ensure data integrity and correct allocation of unique object ids towards objects.

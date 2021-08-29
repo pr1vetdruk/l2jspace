@@ -1,10 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
@@ -12,6 +8,9 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Q171_ActsOfEvil extends Quest {
     private static final String QUEST_NAME = "Q171_ActsOfEvil";
@@ -219,9 +218,8 @@ public class Q171_ActsOfEvil extends Quest {
 
     @Override
     public String onDecay(Npc npc) {
-        if (!npc.isDead()) {
+        if (!npc.isDead())
             npc.broadcastNpcSay(NpcStringId.ID_17151);
-        }
 
         return null;
     }

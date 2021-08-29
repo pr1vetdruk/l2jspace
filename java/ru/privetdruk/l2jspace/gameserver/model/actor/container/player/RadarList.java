@@ -1,11 +1,11 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.container.player;
 
-import java.util.ArrayList;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.model.location.RadarMarker;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.RadarControl;
+
+import java.util.ArrayList;
 
 public final class RadarList extends ArrayList<RadarMarker> {
     private static final long serialVersionUID = 1L;

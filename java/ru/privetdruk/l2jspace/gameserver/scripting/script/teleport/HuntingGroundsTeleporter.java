@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.teleport;
 
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.SevenSignsManager;
 import ru.privetdruk.l2jspace.gameserver.data.xml.TeleportData;
 import ru.privetdruk.l2jspace.gameserver.enums.CabalType;

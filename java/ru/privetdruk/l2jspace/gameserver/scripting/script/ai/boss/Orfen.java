@@ -2,21 +2,18 @@ package ru.privetdruk.l2jspace.gameserver.scripting.script.ai.boss;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.GrandBossManager;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Attackable;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.actor.*;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.GrandBoss;
 import ru.privetdruk.l2jspace.gameserver.model.location.SpawnLocation;
 import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PlaySound;
 import ru.privetdruk.l2jspace.gameserver.scripting.script.ai.AttackableAIScript;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.concurrent.TimeUnit;
 
 public class Orfen extends AttackableAIScript {
     private static final SpawnLocation[] ORFEN_LOCATION =
@@ -175,8 +172,7 @@ public class Orfen extends AttackableAIScript {
         npc.broadcastPacket(new PlaySound(1, "BS02_D", npc));
         GrandBossManager.getInstance().setBossStatus(ORFEN, DEAD);
 
-        long respawnTime = (long) Config.SPAWN_INTERVAL_ORFEN * 60 + Rnd.get(-60 * Config.RANDOM_SPAWN_TIME_ORFEN, 60 * Config.RANDOM_SPAWN_TIME_ORFEN);
-        respawnTime *= 60000;
+        long respawnTime = TimeUnit.HOURS.toMillis(Config.SPAWN_INTERVAL_ORFEN) + Rnd.get(TimeUnit.HOURS.toMillis(Config.RANDOM_SPAWN_TIME_ORFEN));
 
         startQuestTimer("orfen_unlock", null, null, respawnTime);
 

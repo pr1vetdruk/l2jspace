@@ -1,14 +1,13 @@
 package ru.privetdruk.l2jspace.gameserver.model.zone.type.subtype;
 
+import ru.privetdruk.l2jspace.common.random.Rnd;
+import ru.privetdruk.l2jspace.gameserver.enums.SpawnType;
+import ru.privetdruk.l2jspace.gameserver.model.location.Location;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import ru.privetdruk.l2jspace.common.random.Rnd;
-
-import ru.privetdruk.l2jspace.gameserver.enums.SpawnType;
-import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 
 /**
  * An abstract zone with spawn {@link Location}s, inheriting {@link ZoneType} behavior.

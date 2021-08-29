@@ -1,13 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.skill;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
-
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.gameserver.enums.skills.AbnormalEffect;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectFlag;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectState;
@@ -21,9 +14,15 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.AbnormalStatusUpd
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExOlympiadSpelledInfo;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PartySpelled;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+import ru.privetdruk.l2jspace.gameserver.skill.effect.EffectTemplate;
 import ru.privetdruk.l2jspace.gameserver.skill.function.base.Func;
 import ru.privetdruk.l2jspace.gameserver.skill.function.base.FuncTemplate;
-import ru.privetdruk.l2jspace.gameserver.skill.effect.EffectTemplate;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 public abstract class AbstractEffect {
     private EffectState _state;
@@ -247,11 +246,8 @@ public abstract class AbstractEffect {
             case CREATED: {
                 _state = EffectState.ACTING;
 
-                if (getEffected() instanceof Player) {
-                    if (_skill.isToggle())
-                        getEffected().sendPacket(SystemMessage.getSystemMessage(SystemMessageId.USE_S1).addSkillName(_skill));
-                    else if (_skill.isPvpSkill() && _template.showIcon())
-                        getEffected().sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_FEEL_S1_EFFECT).addSkillName(_skill));
+                if (getEffected() instanceof Player && _skill.isToggle()) {
+                    getEffected().sendPacket(SystemMessage.getSystemMessage(SystemMessageId.USE_S1).addSkillName(_skill));
                 }
 
                 if (_period != 0) {
@@ -281,10 +277,6 @@ public abstract class AbstractEffect {
                 _state = EffectState.FINISHING;
             }
             case FINISHING: {
-                // If the time left is equal to zero, send the message.
-                if (_count == 0 && _template.showIcon() && getEffected() instanceof Player)
-                    getEffected().sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_HAS_WORN_OFF).addSkillName(_skill));
-
                 // if task is null - stopEffectTask does not remove effect.
                 if (_currentFuture == null && getEffected() != null)
                     getEffected().removeEffect(this);

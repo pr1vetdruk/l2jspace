@@ -1,5 +1,13 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.container.player;
 
+import ru.privetdruk.l2jspace.common.logging.CLogger;
+import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
+import ru.privetdruk.l2jspace.gameserver.data.xml.HennaData;
+import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassId;
+import ru.privetdruk.l2jspace.gameserver.enums.actors.HennaType;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.item.Henna;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,15 +15,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import ru.privetdruk.l2jspace.common.logging.CLogger;
-import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
-import ru.privetdruk.l2jspace.gameserver.data.xml.HennaData;
-import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassId;
-import ru.privetdruk.l2jspace.gameserver.enums.actors.HennaType;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
-import ru.privetdruk.l2jspace.gameserver.model.item.Henna;
 
 /**
  * This class handles dyes (or {@link Henna}s) of a {@link Player}.
@@ -41,23 +40,29 @@ public class HennaList {
      * <br>
      * A stat can't be superior to 5. Previous stats are dumped.
      */
-    private void recalculateStats() {
-        for (int i = 0; i < _stats.length; i++)
-            _stats[i] = 0;
+    public void recalculateStats() {
+        Arrays.fill(_stats, 0);
 
         for (Henna henna : _hennas) {
-            if (henna != null) {
-                _stats[0] += henna.getINT();
-                _stats[1] += henna.getSTR();
-                _stats[2] += henna.getCON();
-                _stats[3] += henna.getMEN();
-                _stats[4] += henna.getDEX();
-                _stats[5] += henna.getWIT();
+            if (henna == null) {
+                continue;
             }
+
+            if (!henna.canBeUsedBy(_owner)) {
+                continue;
+            }
+
+            _stats[0] += henna.getINT();
+            _stats[1] += henna.getSTR();
+            _stats[2] += henna.getCON();
+            _stats[3] += henna.getMEN();
+            _stats[4] += henna.getDEX();
+            _stats[5] += henna.getWIT();
         }
 
-        for (int i = 0; i < _stats.length; i++)
+        for (int i = 0; i < _stats.length; i++) {
             _stats[i] = Math.min(_stats[i], MAX_HENNA_STAT_VALUE);
+        }
     }
 
     /**
@@ -136,10 +141,9 @@ public class HennaList {
             LOGGER.error("Couldn't restore hennas.", e);
         }
 
-        for (int i = 0; i < hennas.length; i++)
+        for (int i = 0; i < hennas.length; i++) {
             _hennas[i] = hennas[i];
-
-        recalculateStats();
+        }
     }
 
     /**

@@ -1,9 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.zone.type;
 
-import java.util.concurrent.Future;
-
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.gameserver.enums.SiegeSide;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.Stats;
@@ -13,6 +10,8 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.subtype.CastleZoneType;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.EtcStatusUpdate;
+
+import java.util.concurrent.Future;
 
 /**
  * A zone extending {@link CastleZoneType}, which fires a task on the first character entrance, notably used by castle damage traps.<br>

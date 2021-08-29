@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
-
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
@@ -89,14 +88,17 @@ public class Q645_GhostsOfBatur extends Quest {
             return htmltext;
 
         switch (st.getState()) {
-            case CREATED -> htmltext = (player.getStatus().getLevel() < 23) ? "32017-02.htm" : "32017-01.htm";
-            case STARTED -> {
+            case CREATED:
+                htmltext = (player.getStatus().getLevel() < 23) ? "32017-02.htm" : "32017-01.htm";
+                break;
+
+            case STARTED:
                 final int cond = st.getCond();
                 if (cond == 1)
                     htmltext = "32017-04.htm";
                 else if (cond == 2)
                     htmltext = "32017-05.htm";
-            }
+                break;
         }
 
         return htmltext;

@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.skill.effect;
 
 import ru.privetdruk.l2jspace.common.math.MathUtil;
-
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectType;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.FlyType;
 import ru.privetdruk.l2jspace.gameserver.geoengine.GeoEngine;

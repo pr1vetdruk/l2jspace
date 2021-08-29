@@ -1,7 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.handler.skillhandlers;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillType;
 import ru.privetdruk.l2jspace.gameserver.handler.ISkillHandler;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
@@ -10,6 +8,8 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Monster;
 import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.List;
 
 public class Sweep implements ISkillHandler {
     private static final SkillType[] SKILL_IDS =

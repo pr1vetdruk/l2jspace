@@ -1,15 +1,13 @@
 package ru.privetdruk.l2jspace.gameserver.model.rift;
 
-import java.awt.Polygon;
-import java.awt.Shape;
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * One cell of Dimensional Rift system.<br>

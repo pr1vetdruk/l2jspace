@@ -10,8 +10,6 @@ public abstract class ZoneForm {
 
     public abstract boolean intersectsRectangle(int x1, int x2, int y1, int y2);
 
-    public abstract double getDistanceToZone(int x, int y);
-
     public abstract int getLowZ(); // Support for the ability to extract the z coordinates of zones.
 
     public abstract int getHighZ(); // New fishing patch makes use of that to get the Z for the hook

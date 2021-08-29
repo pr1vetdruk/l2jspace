@@ -1,23 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.siegablehall;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ScheduledFuture;
-
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.cache.HtmCache;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ClanHallManager;
@@ -25,7 +11,6 @@ import ru.privetdruk.l2jspace.gameserver.data.manager.ZoneManager;
 import ru.privetdruk.l2jspace.gameserver.data.sql.ClanTable;
 import ru.privetdruk.l2jspace.gameserver.data.sql.SpawnTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.MapRegionData.TeleportType;
-import ru.privetdruk.l2jspace.gameserver.enums.SayType;
 import ru.privetdruk.l2jspace.gameserver.enums.SiegeStatus;
 import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
@@ -42,9 +27,17 @@ import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.subtype.ZoneType;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcSay;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ScheduledFuture;
 
 /**
  * Rainbow Springs Chateau is located north of the Hot Springs area. A new style of siege war has been applied to it, which is different from previous contested clan hall war styles.<br>
@@ -521,7 +514,7 @@ public final class RainbowSpringsChateau extends ClanHallSiege {
         else {
             _usedTextPassages.put(message, new ArrayList<>());
 
-            npc.broadcastPacket(new NpcSay(npc, SayType.SHOUT, message));
+            npc.broadcastNpcShout(message);
         }
     }
 
@@ -615,8 +608,8 @@ public final class RainbowSpringsChateau extends ClanHallSiege {
                     long counter = 0;
 
                     Clan clan = null;
-                    for (Map.Entry<Integer, Integer> entry : _warDecreesCount.entrySet()) {
-                        int clanId = entry.getKey();
+                    for (Entry<Integer, Integer> entry : _warDecreesCount.entrySet()) {
+                        final int clanId = entry.getKey();
 
                         Clan actingClan = ClanTable.getInstance().getClan(clanId);
                         if (actingClan == null || actingClan.getDissolvingExpiryTime() > 0) {
@@ -624,7 +617,7 @@ public final class RainbowSpringsChateau extends ClanHallSiege {
                             continue;
                         }
 
-                        long count = entry.getValue();
+                        final long count = entry.getValue();
                         if (count > counter) {
                             counter = count;
                             clan = actingClan;

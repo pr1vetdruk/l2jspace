@@ -1,8 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.OperateType;
 import ru.privetdruk.l2jspace.gameserver.model.World;
@@ -11,6 +8,9 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.trade.ItemRequest;
 import ru.privetdruk.l2jspace.gameserver.model.trade.TradeList;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public final class RequestPrivateStoreBuy extends L2GameClientPacket {
     private static final int BATCH_LENGTH = 12; // length of one item

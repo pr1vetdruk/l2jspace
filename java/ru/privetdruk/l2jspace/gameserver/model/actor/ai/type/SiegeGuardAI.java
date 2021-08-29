@@ -1,10 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.ai.type;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.random.Rnd;
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.SiegeSide;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
@@ -19,6 +16,8 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.container.npc.AggroInfo;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.SiegeGuard;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.List;
 
 public class SiegeGuardAI extends AttackableAI {
     public SiegeGuardAI(SiegeGuard guard) {

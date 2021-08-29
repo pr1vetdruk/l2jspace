@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.handler.itemhandlers;
 
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState;

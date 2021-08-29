@@ -1,11 +1,11 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.enums.StatusType;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StatusUpdate extends L2GameServerPacket {
     private final int _objectId;

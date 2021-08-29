@@ -1,9 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
-import java.util.logging.Logger;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.SayType;
 import ru.privetdruk.l2jspace.gameserver.handler.ChatHandler;
@@ -11,6 +7,10 @@ import ru.privetdruk.l2jspace.gameserver.handler.IChatHandler;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
+
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 public final class Say2 extends L2GameClientPacket {
     private static final Logger CHAT_LOG = Logger.getLogger("chat");

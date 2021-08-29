@@ -1,13 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.data.manager;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
-
 import ru.privetdruk.l2jspace.gameserver.geoengine.GeoEngine;
 import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Fence;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Fence table to manage {@link Fence} spawn/despawn.

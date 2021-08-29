@@ -1,5 +1,14 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.container.player;
 
+import ru.privetdruk.l2jspace.common.lang.StringUtil;
+import ru.privetdruk.l2jspace.common.logging.CLogger;
+import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
+import ru.privetdruk.l2jspace.gameserver.enums.ShortcutType;
+import ru.privetdruk.l2jspace.gameserver.model.Macro;
+import ru.privetdruk.l2jspace.gameserver.model.Macro.MacroCmd;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SendMacroList;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,16 +16,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.StringTokenizer;
-
-import ru.privetdruk.l2jspace.common.lang.StringUtil;
-import ru.privetdruk.l2jspace.common.logging.CLogger;
-import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
-import ru.privetdruk.l2jspace.gameserver.enums.ShortcutType;
-import ru.privetdruk.l2jspace.gameserver.model.Macro;
-import ru.privetdruk.l2jspace.gameserver.model.Macro.MacroCmd;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SendMacroList;
 
 /**
  * An ordered container holding {@link Macro}s of a {@link Player}.

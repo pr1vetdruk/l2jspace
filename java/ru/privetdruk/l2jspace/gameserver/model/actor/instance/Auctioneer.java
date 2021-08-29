@@ -1,13 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
-import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.List;
-import java.util.StringTokenizer;
-
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
 import ru.privetdruk.l2jspace.common.math.MathUtil;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.ClanHallManager;
 import ru.privetdruk.l2jspace.gameserver.data.xml.MapRegionData;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
@@ -19,6 +13,11 @@ import ru.privetdruk.l2jspace.gameserver.model.clanhall.Seller;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
+
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public final class Auctioneer extends Folk {
     private static final int PAGE_LIMIT = 15;

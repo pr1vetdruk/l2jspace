@@ -1,10 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.holder.Timestamp;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class SkillCoolTime extends L2GameServerPacket {
     public List<Timestamp> _reuseTimeStamps;

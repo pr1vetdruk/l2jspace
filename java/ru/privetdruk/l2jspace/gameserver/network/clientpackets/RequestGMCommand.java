@@ -4,13 +4,7 @@ import ru.privetdruk.l2jspace.gameserver.data.sql.ClanTable;
 import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.GMHennaInfo;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.GMViewCharacterInfo;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.GMViewItemList;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.GMViewPledgeInfo;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.GMViewQuestList;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.GMViewSkillInfo;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.GMViewWarehouseWithdrawList;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
 
 public final class RequestGMCommand extends L2GameClientPacket {
     private String _targetName;

@@ -1,12 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.skill.condition;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.List;
 
 public final class ConditionPlayerHasClanHall extends Condition {
     private final List<Integer> _clanHall;

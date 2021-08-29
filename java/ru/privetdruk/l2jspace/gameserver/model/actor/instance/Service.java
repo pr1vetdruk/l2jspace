@@ -6,7 +6,6 @@ import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.sql.PlayerInfoTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.MultisellData;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.Sex;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
@@ -22,7 +21,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-public class Service extends Npc {
+public class Service extends Merchant {
     private static final String UPDATE_PREMIUMSERVICE = "REPLACE INTO account_premium (premium_service,enddate,account_name) values(?,?,?)";
 
     public Service(int objectId, NpcTemplate template) {
@@ -41,99 +40,81 @@ public class Service extends Npc {
         String actualCommand = st.nextToken(); // Get actual command
 
         switch (actualCommand.toLowerCase()) {
-            case ("noobles"):
+            case ("noobles") -> {
                 if (player.getClassId().getLevel() < 3) {
                     player.sendMessage("Вы должны получить 3-ю профессию.");
                     return;
                 }
-
                 if (player.isNoble()) {
                     player.sendMessage("Вы уже имеете статус Дворянина.");
                     return;
                 }
-
                 if (!player.destroyItemByItemId("ServiceShop", Config.NOBLE_ITEM_ID, Config.NOBLE_ITEM_COUNT, player, true))
                     return;
-
                 player.setNoble(true, true);
                 player.broadcastUserInfo();
-                break;
-            case ("multisell"):
+            }
+            case ("multisell") -> {
                 if (st.countTokens() < 1)
                     return;
-
                 MultisellData.getInstance().separateAndSend(st.nextToken(), player, this, false);
-                break;
-            case ("setnamecolor"):
+            }
+            case ("setnamecolor") -> {
                 if (st.countTokens() < 1)
                     return;
-
                 if (!player.destroyItemByItemId("ServiceShop", Config.CHANGE_NAME_COLOR_ITEM_ID, Config.CHANGE_NAME_COLOR_ITEM_COUNT, player, true))
                     return;
-
                 int сolorId = Integer.parseInt(st.nextToken());
                 changeColor(player, 1, сolorId);
                 player.broadcastUserInfo();
                 player.store();
                 player.sendMessage("Цвет ника успешно изменен.");
-                break;
-            case ("settitlecolor"):
+            }
+            case ("settitlecolor") -> {
                 if (st.countTokens() < 1)
                     return;
-
                 if (!player.destroyItemByItemId("ServiceShop", Config.CHANGE_TITLE_COLOR_ITEM_ID, Config.CHANGE_TITLE_COLOR_ITEM_COUNT, player, true))
                     return;
-
                 int сolorIdTitle = Integer.parseInt(st.nextToken());
                 changeColor(player, 2, сolorIdTitle);
                 player.broadcastUserInfo();
                 player.store();
                 player.sendMessage("Цвет титула успешно изменен.");
-                break;
-            case ("setname"):
+            }
+            case ("setname") -> {
                 if (st.countTokens() < 1)
                     return;
-
                 String nick = st.nextToken();
-                if (nick.length() < 3 || nick.length() > 16 || !isValidNick(nick)) {
+                if (nick.length() < 1 || nick.length() > 16 || !isValidNick(nick)) {
                     player.sendMessage("Вы ввели некорректный ник.");
                     return;
                 }
-
                 if (PlayerInfoTable.getInstance().getPlayerObjectId(nick) > 0) {
                     player.sendMessage("Данное имя занято");
                     return;
                 }
-
                 if (!player.destroyItemByItemId("NameChange", Config.CHANGE_NAME_ITEM_ID, Config.CHANGE_NAME_ITEM_COUNT, player, true))
                     return;
-
                 player.setName(nick);
                 PlayerInfoTable.getInstance().updatePlayerData(player, false);
-
                 player.store();
                 player.broadcastUserInfo();
-
                 if (player.getClan() != null)
                     player.getClan().broadcastClanStatus();
-
                 player.sendMessage("Имя успешно изменено");
-                break;
-            case ("premium"):
+            }
+            case ("premium") -> {
                 if (!Config.USE_PREMIUM_SERVICE) {
                     player.sendMessage("В настоящий момент данная функция недоступна.");
                     return;
                 }
-
                 if (player.getPremServiceData() > Calendar.getInstance().getTimeInMillis()) {
                     player.sendMessage("Вы уже имеете премиум-аккаунт");
                     return;
                 }
-
                 int cmd = 0;
                 long premiumTime = 0L;
                 int price = 0;
-
                 if (st.countTokens() >= 1) {
                     try {
                         cmd = Integer.parseInt(st.nextToken());
@@ -164,7 +145,6 @@ public class Service extends Npc {
                         price = Config.BUY_PREMIUM_DAYS_28_PRICE;
                         break;
                 }
-
                 try {
                     Calendar now = Calendar.getInstance();
                     now.add(Calendar.DATE, cmd);
@@ -172,19 +152,16 @@ public class Service extends Npc {
                 } catch (NumberFormatException nfe) {
                     return;
                 }
-
                 if (!player.destroyItemByItemId("ServiceHero" + cmd, Config.PREMIUM_ITEM_ID, price, player, true))
                     return;
-
                 player.setPremiumService(1);
                 updateDatabasePremium(premiumTime, player.getAccountName());
                 player.sendMessage(String.format("Вы приобрели премиум-аккаунт.\nКоличество дней: %d.", cmd));
                 player.broadcastUserInfo();
-                break;
-            case ("gender"):
+            }
+            case ("gender") -> {
                 if (!player.destroyItemByItemId("ServiceShop", Config.GENDER_ITEM_ID, Config.GENDER_ITEM_COUNT, player, true))
                     return;
-
                 switch (player.getAppearance().getSex()) {
                     case MALE:
                         player.getAppearance().setSex(Sex.FEMALE);
@@ -195,135 +172,113 @@ public class Service extends Npc {
                         player.getAppearance().setHairStyle(1);
                         break;
                 }
-
                 player.store();
                 player.broadcastUserInfo();
                 player.sendMessage("Ваш пол был успешно изменен.");
                 player.decayMe();
                 player.spawnMe();
                 player.logout(false);
-                break;
-            case ("nullpk"):
+            }
+            case ("nullpk") -> {
                 if (player.getPkKills() == 0) {
                     player.sendMessage("Вам нечего очищать");
                     return;
                 }
-
                 if (player.getInventory().getItemByItemId(Config.NULL_PK_ITEM_ID) == null) {
                     player.sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
                     return;
                 }
-
                 if (player.getInventory().getItemByItemId(Config.NULL_PK_ITEM_ID).getCount() < Config.NULL_PK_ITEM_COUNT) {
                     player.sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
                     return;
                 }
-
                 player.destroyItemByItemId("ServiceShop", Config.NULL_PK_ITEM_ID, Config.NULL_PK_ITEM_COUNT, player, true);
                 player.setPkKills(0);
                 player.setKarma(0);
                 player.sendMessage("Ваши счётчики PK и кармы были успешно обнулены.");
-                break;
-            case ("clanlvl8"):
+            }
+            case ("clanlvl8") -> {
                 if (!player.isClanLeader()) {
                     player.sendMessage("Данная операция доступна только лидеру клана.");
                     return;
                 }
-
                 if (player.getClan() == null || player.getClan().getLevel() < 5) {
                     player.sendMessage("Клан должен быть 5 уровня или выше.");
                     return;
                 }
-
                 if (player.getClan().getLevel() == 8) {
                     player.sendMessage("У вашего клана уже максимальный уровень.");
                     return;
                 }
-
                 if (player.getInventory().getItemByItemId(Config.CLAN_LVL_8_ITEM_ID) == null) {
                     player.sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
                     return;
                 }
-
                 if (player.getInventory().getItemByItemId(Config.CLAN_LVL_8_ITEM_ID).getCount() < Config.CLAN_LVL_8_ITEM_COUNT) {
                     player.sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
                     return;
                 }
-
                 player.destroyItemByItemId("ServiceShop", Config.CLAN_LVL_8_ITEM_ID, Config.CLAN_LVL_8_ITEM_COUNT, player, true);
                 player.getClan().changeLevel(8);
                 player.sendMessage("Уровень вашего клана успешно повышен до максимального");
-                break;
-            case ("clanskill"):
+            }
+            case ("clanskill") -> {
                 if (!player.isClanLeader()) {
                     player.sendMessage("Данная операция доступна только лидеру клана.");
                     return;
                 }
-
                 if (player.getClan() == null || player.getClan().getLevel() < 5) {
                     player.sendMessage("Клан должен быть 5 уровня или выше.");
                     return;
                 }
-
                 if (player.getInventory().getItemByItemId(Config.CLAN_SKILL_ITEM_ID) == null) {
                     player.sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
                     return;
                 }
-
                 if (player.getInventory().getItemByItemId(Config.CLAN_SKILL_ITEM_ID).getCount() < Config.CLAN_SKILL_ITEM_COUNT) {
                     player.sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
                     return;
                 }
-
                 Collection<L2Skill> currentSkills = player.getClan().getClanSkills().values();
                 boolean haveAll = true;
                 for (int i = 370; i < 391; i++) {
                     if (!currentSkills.contains(SkillTable.getInstance().getInfo(i, 3)))
                         haveAll = false;
                 }
-
                 if (!currentSkills.contains(SkillTable.getInstance().getInfo(391, 1)))
                     haveAll = false;
-
                 if (haveAll) {
                     player.sendMessage("Вашему клану уже доступны все клановые умения.");
                     return;
                 }
-
                 player.destroyItemByItemId("ServiceShop", Config.CLAN_SKILL_ITEM_ID, Config.CLAN_SKILL_ITEM_COUNT, player, true);
                 for (int i = 370; i < 391; i++)
                     player.getClan().addClanSkill(SkillTable.getInstance().getInfo(i, 3), true);
-
                 player.getClan().addClanSkill(SkillTable.getInstance().getInfo(391, 1), true);
-
                 player.getClan().broadcastToMembers(new PledgeSkillList(player.getClan()));
                 player.sendMessage("Вашему клану успешно выданы все клановые умения.");
-                break;
-            case ("clanrep"):
+            }
+            case ("clanrep") -> {
                 if (!player.isClanLeader()) {
                     player.sendMessage("Данная операция доступна только лидеру клана");
                     return;
                 }
-
                 if (player.getClan() == null || player.getClan().getLevel() < 5) {
                     player.sendMessage("Клан должен быть 5 уровня");
                     return;
                 }
-
                 if (player.getInventory().getItemByItemId(Config.CLAN_REP_ITEM_ID) == null) {
                     player.sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
                     return;
                 }
-
                 if (player.getInventory().getItemByItemId(Config.CLAN_REP_ITEM_ID).getCount() < Config.CLAN_REP_ITEM_COUNT) {
                     player.sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
                     return;
                 }
-
                 player.destroyItemByItemId("ServiceShop", Config.CLAN_REP_ITEM_ID, Config.CLAN_REP_ITEM_COUNT, player, true);
                 player.getClan().addReputationScore(Config.CLAN_REP_COUNT);
                 player.sendMessage("Репутация вашего клана " + player.getClan().getReputationScore() + "");
-                break;
+            }
         }
 
         super.onBypassFeedback(player, command);
@@ -346,78 +301,35 @@ public class Service extends Npc {
     }
 
     private static void changeColor(Player player, int i, int colorId) {
-        boolean check = false;
+        String newcolor = switch (colorId) {
+            case 1 -> "FFFF00";
+            case 2 -> "111111";
+            case 3 -> "FF0000";
+            case 4 -> "FF00FF";
+            case 5 -> "808080";
+            case 6 -> "008000";
+            case 7 -> "00FF00";
+            case 8 -> "800000";
+            case 9 -> "008080";
+            case 10 -> "800080";
+            case 11 -> "808000";
+            case 12 -> "FFFFFF";
+            case 13 -> "00FFFF";
+            case 14 -> "C0C0C0";
+            case 15 -> "17A0D4";
+            default -> "";
+        };
 
         if (i == 1) {
-            if (player.destroyItemByItemId("Name Color Change", Config.CHANGE_NAME_COLOR_ITEM_ID, Config.CHANGE_NAME_COLOR_ITEM_COUNT, player, true))
-                check = true;
+            player.getAppearance().setNameColor(Integer.decode("0x" + newcolor));
+            player.broadcastUserInfo();
+            player.setNameColor(Integer.decode("0x" + newcolor));
+            player.store();
         } else if (i == 2) {
-            if (player.destroyItemByItemId("Title Color Change", Config.CHANGE_TITLE_COLOR_ITEM_ID, Config.CHANGE_TITLE_COLOR_ITEM_COUNT, player, true))
-                check = true;
-        }
-
-        String newcolor = "";
-
-        switch (colorId) {
-            case 1:
-                newcolor = "FFFF00";
-                break;
-            case 2:
-                newcolor = "000000";
-                break;
-            case 3:
-                newcolor = "FF0000";
-                break;
-            case 4:
-                newcolor = "FF00FF";
-                break;
-            case 5:
-                newcolor = "808080";
-                break;
-            case 6:
-                newcolor = "008000";
-                break;
-            case 7:
-                newcolor = "00FF00";
-                break;
-            case 8:
-                newcolor = "800000";
-                break;
-            case 9:
-                newcolor = "008080";
-                break;
-            case 10:
-                newcolor = "800080";
-                break;
-            case 11:
-                newcolor = "808000";
-                break;
-            case 12:
-                newcolor = "FFFFFF";
-                break;
-            case 13:
-                newcolor = "00FFFF";
-                break;
-            case 14:
-                newcolor = "C0C0C0";
-                break;
-            case 15:
-                newcolor = "17A0D4";
-                break;
-        }
-
-        if (check) {
-            if (i == 1) {
-                player.getAppearance().setNameColor(Integer.decode("0x" + newcolor).intValue());
-                player.broadcastUserInfo();
-                player.store();
-                player.sendMessage("Цвет ника успешно изменен.");
-            } else if (i == 2) {
-                player.getAppearance().setTitleColor(Integer.decode("0x" + newcolor).intValue());
-                player.broadcastUserInfo();
-                player.store();
-                player.sendMessage("Цвет титула успешно изменен.");
-            }
+            player.getAppearance().setTitleColor(Integer.decode("0x" + newcolor));
+            player.broadcastUserInfo();
+            player.setTitleColor(Integer.decode("0x" + newcolor));
+            player.store();
         }
     }
 

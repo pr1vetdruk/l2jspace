@@ -1,14 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.data.manager;
 
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.sql.SpawnTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
@@ -22,8 +17,11 @@ import ru.privetdruk.l2jspace.gameserver.model.rift.DimensionalRiftRoom;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Loads and stores available {@link DimensionalRiftRoom}s for the {@link DimensionalRift} system.

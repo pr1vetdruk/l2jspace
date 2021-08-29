@@ -1,7 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.handler.chathandlers;
 
-import java.util.StringTokenizer;
-
 import ru.privetdruk.l2jspace.gameserver.enums.FloodProtector;
 import ru.privetdruk.l2jspace.gameserver.enums.SayType;
 import ru.privetdruk.l2jspace.gameserver.handler.IChatHandler;
@@ -9,6 +7,8 @@ import ru.privetdruk.l2jspace.gameserver.handler.IVoicedCommandHandler;
 import ru.privetdruk.l2jspace.gameserver.handler.VoicedCommandHandler;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.CreatureSay;
+
+import java.util.StringTokenizer;
 
 public class ChatAll implements IChatHandler {
     private static final SayType[] COMMAND_IDS =

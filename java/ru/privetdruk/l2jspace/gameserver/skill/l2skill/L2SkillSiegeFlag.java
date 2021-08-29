@@ -1,8 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.skill.l2skill;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
+import ru.privetdruk.l2jspace.gameserver.data.manager.ClanHallManager;
 import ru.privetdruk.l2jspace.gameserver.enums.SiegeSide;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
 import ru.privetdruk.l2jspace.gameserver.idfactory.IdFactory;
@@ -11,11 +11,14 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.SiegeFlag;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
+import ru.privetdruk.l2jspace.gameserver.model.entity.ClanHallSiege;
 import ru.privetdruk.l2jspace.gameserver.model.entity.Siege;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
-import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import static ru.privetdruk.l2jspace.gameserver.network.SystemMessageId.*;
+import static ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage.getSystemMessage;
 
 public class L2SkillSiegeFlag extends L2Skill {
     private final boolean _isAdvanced;
@@ -74,22 +77,36 @@ public class L2SkillSiegeFlag extends L2Skill {
      * @return True if the {@link Player} can place a {@link SiegeFlag}.
      */
     public static boolean check(Player player, boolean isCheckOnly) {
-        final Siege siege = CastleManager.getInstance().getActiveSiege(player);
+        boolean isAttackerUnderActiveSiege = false;
+
+        // Check first if an active Siege is under process.
+        Siege siege = CastleManager.getInstance().getActiveSiege(player);
+        if (siege != null) {
+            isAttackerUnderActiveSiege = siege.checkSide(player.getClan(), SiegeSide.ATTACKER);
+        } else {
+            // If no Siege, check ClanHallSiege.
+            ClanHallSiege chs = ClanHallManager.getInstance().getActiveSiege(player);
+            if (chs != null) {
+                isAttackerUnderActiveSiege = chs.checkSide(player.getClan(), SiegeSide.ATTACKER);
+            }
+        }
 
         SystemMessage sm = null;
-        if (siege == null || !siege.checkSide(player.getClan(), SiegeSide.ATTACKER))
-            sm = SystemMessage.getSystemMessage(SystemMessageId.S1_CANNOT_BE_USED).addSkillName(247);
-        else if (!player.isClanLeader())
-            sm = SystemMessage.getSystemMessage(SystemMessageId.ONLY_CLAN_LEADER_CAN_ISSUE_COMMANDS);
-        else if (player.getClan().getFlag() != null)
-            sm = SystemMessage.getSystemMessage(SystemMessageId.NOT_ANOTHER_HEADQUARTERS);
-        else if (!player.isInsideZone(ZoneId.HQ))
-            sm = SystemMessage.getSystemMessage(SystemMessageId.NOT_SET_UP_BASE_HERE);
-        else if (!player.getKnownTypeInRadius(SiegeFlag.class, 400).isEmpty())
-            sm = SystemMessage.getSystemMessage(SystemMessageId.HEADQUARTERS_TOO_CLOSE);
+        if (!isAttackerUnderActiveSiege) {
+            sm = getSystemMessage(S1_CANNOT_BE_USED).addSkillName(247);
+        } else if (!player.isClanLeader()) {
+            sm = getSystemMessage(ONLY_CLAN_LEADER_CAN_ISSUE_COMMANDS);
+        } else if (player.getClan().getFlag() != null) {
+            sm = getSystemMessage(NOT_ANOTHER_HEADQUARTERS);
+        } else if (!player.isInsideZone(ZoneId.HQ)) {
+            sm = getSystemMessage(NOT_SET_UP_BASE_HERE);
+        } else if (!player.getKnownTypeInRadius(SiegeFlag.class, 400).isEmpty()) {
+            sm = getSystemMessage(HEADQUARTERS_TOO_CLOSE);
+        }
 
-        if (sm != null && !isCheckOnly)
+        if (sm != null && !isCheckOnly) {
             player.sendPacket(sm);
+        }
 
         return sm == null;
     }

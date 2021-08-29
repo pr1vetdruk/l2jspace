@@ -1,10 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.RaidPointManager;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExGetBossRecord;
+
+import java.util.Map;
 
 public class RequestGetBossRecord extends L2GameClientPacket {
     @SuppressWarnings("unused")

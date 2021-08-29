@@ -1,7 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers;
 
-import java.util.StringTokenizer;
-
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.ArmorSetData;
 import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
@@ -14,6 +12,8 @@ import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Weapon;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.InventoryUpdate;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.StringTokenizer;
 
 public class AdminEnchant implements IAdminCommandHandler {
     private static final String[] ADMIN_COMMANDS =

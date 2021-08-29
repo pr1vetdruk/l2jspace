@@ -1,11 +1,11 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import ru.privetdruk.l2jspace.gameserver.enums.SayType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class CreatureSay extends L2GameServerPacket {
     private final int _objectId;

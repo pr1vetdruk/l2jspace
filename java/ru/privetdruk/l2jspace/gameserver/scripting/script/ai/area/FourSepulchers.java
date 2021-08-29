@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.ai.area;
 
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.manager.FourSepulchersManager;

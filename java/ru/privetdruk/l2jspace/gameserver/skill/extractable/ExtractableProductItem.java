@@ -1,8 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.skill.extractable;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
+
+import java.util.List;
 
 public class ExtractableProductItem {
     private final List<IntIntHolder> _items;

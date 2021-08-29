@@ -1,11 +1,11 @@
 package ru.privetdruk.l2jspace.gameserver.communitybbs.model;
 
+import ru.privetdruk.l2jspace.gameserver.enums.MailType;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-
-import ru.privetdruk.l2jspace.gameserver.enums.MailType;
 
 public class Mail {
     private final int _id;

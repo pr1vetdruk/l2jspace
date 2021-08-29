@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.holder.skillnode;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
 import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
 
 /**

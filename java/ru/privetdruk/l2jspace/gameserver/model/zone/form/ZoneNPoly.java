@@ -1,9 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.model.zone.form;
 
-import java.awt.Color;
-
 import ru.privetdruk.l2jspace.gameserver.model.zone.ZoneForm;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExServerPrimitive;
+
+import java.awt.*;
 
 public class ZoneNPoly extends ZoneForm {
     private final int[] _x;
@@ -68,19 +68,6 @@ public class ZoneNPoly extends ZoneForm {
         }
 
         return false;
-    }
-
-    @Override
-    public double getDistanceToZone(int x, int y) {
-        double test, shortestDist = Math.pow(_x[0] - x, 2) + Math.pow(_y[0] - y, 2);
-
-        for (int i = 1; i < _y.length; i++) {
-            test = Math.pow(_x[i] - x, 2) + Math.pow(_y[i] - y, 2);
-            if (test < shortestDist)
-                shortestDist = test;
-        }
-
-        return Math.sqrt(shortestDist);
     }
 
     @Override

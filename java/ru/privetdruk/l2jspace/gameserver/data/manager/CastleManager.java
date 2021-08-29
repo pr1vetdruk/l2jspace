@@ -1,17 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.data.manager;
 
-import java.nio.file.Path;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
 import ru.privetdruk.l2jspace.gameserver.data.sql.ClanTable;
 import ru.privetdruk.l2jspace.gameserver.enums.CabalType;
 import ru.privetdruk.l2jspace.gameserver.enums.SpawnType;
@@ -24,8 +16,14 @@ import ru.privetdruk.l2jspace.gameserver.model.location.TowerSpawnLocation;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.SiegeZone;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
+import java.nio.file.Path;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Loads and stores {@link Castle}s informations, using database and XML informations.

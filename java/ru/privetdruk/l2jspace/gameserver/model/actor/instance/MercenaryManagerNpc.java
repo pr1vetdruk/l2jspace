@@ -1,7 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
-import java.util.StringTokenizer;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.BuyListManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.SevenSignsManager;
 import ru.privetdruk.l2jspace.gameserver.enums.SealType;
@@ -12,6 +10,8 @@ import ru.privetdruk.l2jspace.gameserver.model.buylist.NpcBuyList;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.BuyList;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
+
+import java.util.StringTokenizer;
 
 public final class MercenaryManagerNpc extends Folk {
     public MercenaryManagerNpc(int objectId, NpcTemplate template) {

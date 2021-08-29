@@ -1,8 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.enums.actors;
 
-import java.util.EnumSet;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+
+import java.util.EnumSet;
 
 /**
  * This class defines all classes (ex : human fighter, darkFighter...) that a player can chose.

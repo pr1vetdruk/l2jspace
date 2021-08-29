@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.ai.group;
 
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.enums.IntentionType;
 import ru.privetdruk.l2jspace.gameserver.enums.ScriptEventType;
 import ru.privetdruk.l2jspace.gameserver.enums.items.WeaponType;

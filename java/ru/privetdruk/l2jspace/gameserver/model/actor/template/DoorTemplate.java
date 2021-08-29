@@ -1,11 +1,15 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.template;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
 import ru.privetdruk.l2jspace.gameserver.enums.DoorType;
 import ru.privetdruk.l2jspace.gameserver.enums.OpenType;
+import ru.privetdruk.l2jspace.gameserver.model.location.Point2D;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExServerPrimitive;
+
+import java.awt.*;
 
 public class DoorTemplate extends CreatureTemplate {
+    private final Point2D[] _coords;
     private final String _name;
     private final int _id;
     private final DoorType _type;
@@ -48,6 +52,7 @@ public class DoorTemplate extends CreatureTemplate {
         _geoY = set.getInteger("geoY");
         _geoZ = set.getInteger("geoZ");
         _geoData = set.getObject("geoData", byte[][].class);
+        _coords = set.getObject("coords", Point2D[].class);
 
         _castleId = set.getInteger("castle", 0);
         _clanHallId = set.getInteger("clanHall", 0);
@@ -134,5 +139,25 @@ public class DoorTemplate extends CreatureTemplate {
 
     public final int getCloseTime() {
         return _closeTime;
+    }
+
+    public void visualizeDoor(ExServerPrimitive debug) {
+        final int z1 = _z - 32;
+        final int z2 = _z + 32;
+
+        for (int i = 0; i < _coords.length; i++) {
+            int nextIndex = i + 1;
+
+            // ending point to first one
+            if (nextIndex == _coords.length)
+                nextIndex = 0;
+
+            final Point2D curPoint = _coords[i];
+            final Point2D nextPoint = _coords[nextIndex];
+
+            debug.addLine(_name + " MinZ", Color.GREEN, true, curPoint.getX(), curPoint.getY(), z1, nextPoint.getX(), nextPoint.getY(), z1);
+            debug.addLine(_name, Color.YELLOW, true, curPoint.getX(), curPoint.getY(), _z, nextPoint.getX(), nextPoint.getY(), _z);
+            debug.addLine(_name + " MaxZ", Color.RED, true, curPoint.getX(), curPoint.getY(), z2, nextPoint.getX(), nextPoint.getY(), z2);
+        }
     }
 }

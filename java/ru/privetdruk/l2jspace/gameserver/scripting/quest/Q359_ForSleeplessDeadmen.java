@@ -1,16 +1,15 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Q359_ForSleeplessDeadmen extends Quest {
     private static final String QUEST_NAME = "Q359_ForSleeplessDeadmen";
@@ -39,7 +38,7 @@ public class Q359_ForSleeplessDeadmen extends Quest {
     // Drop chances
     private static final Map<Integer, Integer> CHANCES = new HashMap<>();
 
-    {
+    static {
         CHANCES.put(DOOM_SERVANT, 320000);
         CHANCES.put(DOOM_GUARD, 340000);
         CHANCES.put(DOOM_ARCHER, 420000);

@@ -1,14 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.skill;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.StringTokenizer;
-
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.math.MathUtil;
-
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
 import ru.privetdruk.l2jspace.gameserver.enums.items.ArmorType;
@@ -18,11 +12,7 @@ import ru.privetdruk.l2jspace.gameserver.geoengine.GeoEngine;
 import ru.privetdruk.l2jspace.gameserver.handler.ITargetHandler;
 import ru.privetdruk.l2jspace.gameserver.handler.TargetHandler;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Attackable;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
+import ru.privetdruk.l2jspace.gameserver.model.actor.*;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Cubic;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Door;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.SiegeFlag;
@@ -32,12 +22,17 @@ import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Weapon;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
-import ru.privetdruk.l2jspace.gameserver.skill.function.base.Func;
-import ru.privetdruk.l2jspace.gameserver.skill.function.base.FuncTemplate;
 import ru.privetdruk.l2jspace.gameserver.skill.condition.Condition;
 import ru.privetdruk.l2jspace.gameserver.skill.effect.EffectTemplate;
 import ru.privetdruk.l2jspace.gameserver.skill.extractable.ExtractableProductItem;
 import ru.privetdruk.l2jspace.gameserver.skill.extractable.ExtractableSkill;
+import ru.privetdruk.l2jspace.gameserver.skill.function.base.Func;
+import ru.privetdruk.l2jspace.gameserver.skill.function.base.FuncTemplate;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public abstract class L2Skill implements IChanceSkillTrigger {
     protected static final CLogger LOGGER = new CLogger(L2Skill.class.getName());
@@ -369,8 +364,6 @@ public abstract class L2Skill implements IChanceSkillTrigger {
     }
 
     /**
-     * TODO sourceInArena isn't used.
-     *
      * @param caster        : The {@link Creature} caster launching this {@link L2Skill}.
      * @param target        : The {@link Creature} target to check.
      * @param isCtrlPressed : Has the skill been cast with the control key pressed?
@@ -865,35 +858,6 @@ public abstract class L2Skill implements IChanceSkillTrigger {
         return _chanceCondition;
     }
 
-    // What does this even mean? Pvp-only? in which case, it's wrong
-    public final boolean isPvpSkill() {
-        switch (_skillType) {
-            case DOT:
-            case BLEED:
-            case POISON:
-            case DEBUFF:
-            case AGGDEBUFF:
-            case STUN:
-            case ROOT:
-            case FEAR:
-            case SLEEP:
-            case MDOT:
-            case MUTE:
-            case WEAKNESS:
-            case PARALYZE:
-            case CANCEL:
-            case MAGE_BANE:
-            case WARRIOR_BANE:
-            case BETRAY:
-            case AGGDAMAGE:
-            case AGGREDUCE_CHAR:
-            case MANADAM:
-                return true;
-            default:
-                return false;
-        }
-    }
-
     public final boolean is7Signs() {
         return _id > 4360 && _id < 4367;
     }
@@ -1142,13 +1106,13 @@ public abstract class L2Skill implements IChanceSkillTrigger {
         }
 
         if (effector.getOwner() != effected && (isDebuff() || isOffensive())) {
-                if (effected.isInvul()) {
-                    return Collections.emptyList();
-                }
+            if (effected.isInvul()) {
+                return Collections.emptyList();
+            }
 
-                if (!effector.getOwner().getAccessLevel().canGiveDamage()) {
-                    return Collections.emptyList();
-                }
+            if (!effector.getOwner().getAccessLevel().canGiveDamage()) {
+                return Collections.emptyList();
+            }
         }
 
         // Perfect block, don't bother going further.

@@ -1,15 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.zone.type.subtype;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
-
 import ru.privetdruk.l2jspace.gameserver.enums.ScriptEventType;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
@@ -19,6 +10,9 @@ import ru.privetdruk.l2jspace.gameserver.model.zone.ZoneForm;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExServerPrimitive;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.L2GameServerPacket;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * An abstract base class for any zone type, which holds {@link Creature}s affected by this zone, linked {@link Quest}s and the associated {@link ZoneForm}.<br>
@@ -87,14 +81,6 @@ public abstract class ZoneType {
      */
     public boolean isInsideZone(WorldObject object) {
         return isInsideZone(object.getX(), object.getY(), object.getZ());
-    }
-
-    public double getDistanceToZone(int x, int y) {
-        return _zone.getDistanceToZone(x, y);
-    }
-
-    public double getDistanceToZone(WorldObject object) {
-        return _zone.getDistanceToZone(object.getX(), object.getY());
     }
 
     public void visualizeZone(ExServerPrimitive debug, int z) {

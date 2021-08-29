@@ -1,13 +1,13 @@
 package ru.privetdruk.l2jspace.gameserver.model.multisell;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Armor;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Weapon;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * A dynamic layer of {@link ListContainer}, which holds the current {@link Npc} objectId for security reasons.<br>

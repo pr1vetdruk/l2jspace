@@ -1,11 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.cast;
 
-import java.util.concurrent.ScheduledFuture;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.math.MathUtil;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.gameserver.enums.AiEventType;
 import ru.privetdruk.l2jspace.gameserver.enums.GaugeColor;
 import ru.privetdruk.l2jspace.gameserver.enums.ScriptEventType;
@@ -17,25 +14,18 @@ import ru.privetdruk.l2jspace.gameserver.enums.skills.Stats;
 import ru.privetdruk.l2jspace.gameserver.geoengine.GeoEngine;
 import ru.privetdruk.l2jspace.gameserver.handler.ISkillHandler;
 import ru.privetdruk.l2jspace.gameserver.handler.SkillHandler;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Attackable;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
+import ru.privetdruk.l2jspace.gameserver.model.actor.*;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Monster;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Weapon;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MagicSkillCanceled;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MagicSkillLaunched;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MagicSkillUse;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SetupGauge;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
 import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.concurrent.ScheduledFuture;
 
 /**
  * This class groups all cast data related to a {@link Creature}.
@@ -261,11 +251,10 @@ public class CreatureCast<T extends Creature> {
                 ((Player) _actor).decreaseCharges(_skill.getNumCharges());
         }
 
-        for (final Creature target : _targets) {
-            if (target instanceof Player && (_skill.getSkillType() == SkillType.BUFF || _skill.getSkillType() == SkillType.SEED))
-                target.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_FEEL_S1_EFFECT).addSkillName(_skill));
-            else if (target instanceof Summon && _actor instanceof Player)
+        for (Creature target : _targets) {
+            if (target instanceof Summon && _actor instanceof Player) {
                 ((Summon) target).updateAndBroadcastStatus(1);
+            }
         }
 
         callSkill(_skill, _targets);
@@ -332,8 +321,14 @@ public class CreatureCast<T extends Creature> {
             return false;
         }
 
-        if ((skill.isMagic() && _actor.isMuted()) || (!skill.isMagic() && _actor.isPhysicalMuted()))
+        if ((skill.isMagic() && _actor.isMuted()) || (!skill.isMagic() && _actor.isPhysicalMuted()) && skill.getId() == 4215) {
             return false;
+        }
+
+        if (target != _actor && target.isInArena() && (skill.getSkillType() == SkillType.BUFF || skill.getSkillType() == SkillType.HEAL) && !isCtrlPressed && !target.isInParty()) {
+            _actor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.TARGET_IS_INCORRECT));
+            return false;
+        }
 
         if (skill.getCastRange() > 0 && !GeoEngine.getInstance().canSeeTarget(_actor, target)) {
             _actor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CANT_SEE_TARGET));
@@ -459,8 +454,9 @@ public class CreatureCast<T extends Creature> {
                 switch (skill.getTargetType()) {
                     case CORPSE_MOB:
                     case AREA_CORPSE_MOB:
-                        if (target.isDead())
+                        if (target instanceof Npc && target.isDead()) {
                             ((Npc) target).endDecayTask();
+                        }
                         break;
                     default:
                         break;

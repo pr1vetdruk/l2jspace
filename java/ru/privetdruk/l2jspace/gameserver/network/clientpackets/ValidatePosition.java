@@ -1,7 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
-import java.awt.Color;
-
 import ru.privetdruk.l2jspace.gameserver.enums.TeleportMode;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.MoveType;
 import ru.privetdruk.l2jspace.gameserver.model.World;
@@ -10,6 +8,8 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExServerPrimitive;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.GetOnVehicle;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ValidateLocation;
+
+import java.awt.*;
 
 public class ValidatePosition extends L2GameClientPacket {
     private int _x;

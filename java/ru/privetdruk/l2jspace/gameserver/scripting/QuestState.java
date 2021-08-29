@@ -1,19 +1,18 @@
 package ru.privetdruk.l2jspace.gameserver.scripting;
 
+import ru.privetdruk.l2jspace.common.data.MemoSet;
+import ru.privetdruk.l2jspace.common.logging.CLogger;
+import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
+import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExShowQuestMark;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.QuestList;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
-
-import ru.privetdruk.l2jspace.common.data.MemoSet;
-import ru.privetdruk.l2jspace.common.logging.CLogger;
-import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
-import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExShowQuestMark;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.QuestList;
 
 /**
  * A container holding one {@link Player}'s {@link Quest} progress. It extends {@link MemoSet}.<br>
@@ -197,9 +196,6 @@ public final class QuestState extends MemoSet {
 
         // Set new state.
         set(STATE, state);
-
-        // Update player's quest list (quest was added or completed).
-        _player.sendPacket(new QuestList(_player));
     }
 
     /**
@@ -294,8 +290,10 @@ public final class QuestState extends MemoSet {
         // Update player's quest list (quest step changed).
         _player.sendPacket(new QuestList(_player));
 
-        if (_quest.isRealQuest() && cond > 0)
+        if (_quest.isRealQuest()) {
+            _player.sendPacket(new QuestList(_player));
             _player.sendPacket(new ExShowQuestMark(_quest.getQuestId()));
+        }
     }
 
     /**
@@ -319,11 +317,13 @@ public final class QuestState extends MemoSet {
         clear();
 
         // Remove/Complete quest.
-        if (repeatable) {
+        if (repeatable)
             _player.getQuestList().remove(this);
-            _player.sendPacket(new QuestList(_player));
-        } else
+        else
             setState(QuestStatus.COMPLETED);
+
+        if (_quest.isRealQuest())
+            _player.sendPacket(new QuestList(_player));
 
         // Remove registered quest items.
         int[] itemIds = _quest.getItemsIds();

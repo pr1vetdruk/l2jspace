@@ -1,19 +1,13 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
-import java.util.Map.Entry;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.manager.MailBBSManager;
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.custom.model.SkillEnum;
+import ru.privetdruk.l2jspace.gameserver.custom.service.WeddingService;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable.FrequentSkill;
-import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
-import ru.privetdruk.l2jspace.gameserver.data.manager.ClanHallManager;
-import ru.privetdruk.l2jspace.gameserver.custom.service.WeddingService;
-import ru.privetdruk.l2jspace.gameserver.data.manager.DimensionalRiftManager;
-import ru.privetdruk.l2jspace.gameserver.data.manager.PetitionManager;
-import ru.privetdruk.l2jspace.gameserver.data.manager.SevenSignsManager;
+import ru.privetdruk.l2jspace.gameserver.data.manager.*;
 import ru.privetdruk.l2jspace.gameserver.data.xml.AdminData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.AnnouncementData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.MapRegionData.TeleportType;
@@ -34,28 +28,13 @@ import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.SubPledge;
 import ru.privetdruk.l2jspace.gameserver.network.GameClient.GameClientState;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.Die;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.EtcStatusUpdate;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExMailArrived;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExStorageMaxCount;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.FriendList;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.HennaInfo;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ItemList;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PlaySound;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PledgeShowMemberListAll;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PledgeShowMemberListUpdate;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PledgeSkillList;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.QuestList;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ShortCutInit;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SkillCoolTime;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.UserInfo;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.taskmanager.GameTimeTaskManager;
+
+import java.util.Map.Entry;
 
 public class EnterWorld extends L2GameClientPacket {
     @Override
@@ -103,6 +82,14 @@ public class EnterWorld extends L2GameClientPacket {
         // Set dead status if applies
         if (player.getStatus().getHp() < 0.5 && player.isMortal())
             player.setIsDead(true);
+
+        if (player.getNameColor() != 0) {
+            player.getAppearance().setNameColor(player.getNameColor());
+        }
+
+        if (player.getTitleColor() != 0) {
+            player.getAppearance().setTitleColor(player.getTitleColor());
+        }
 
         player.getMacroList().sendUpdate();
         player.sendPacket(new ExStorageMaxCount(player));
@@ -165,12 +152,8 @@ public class EnterWorld extends L2GameClientPacket {
             }
 
             for (SiegableHall hall : ClanHallManager.getInstance().getSiegableHalls()) {
-                if (!hall.isInSiege())
-                    continue;
-
-                if (hall.isRegistered(clan)) {
+                if (hall.isInSiege() && hall.isRegistered(clan)) {
                     player.setSiegeState((byte) 1);
-                    player.setInSiegableHallSiege(true);
                 }
             }
 

@@ -1,12 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.data;
 
+import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
 import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
-
-import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public class SkillTable {
     private static final Logger _log = Logger.getLogger(SkillTable.class.getName());

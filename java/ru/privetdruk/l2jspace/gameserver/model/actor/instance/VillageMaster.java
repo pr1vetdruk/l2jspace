@@ -1,11 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.data.sql.ClanTable;
@@ -24,14 +19,12 @@ import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.ClanMember;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.SubPledge;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.AcquireSkillList;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.MagicSkillUse;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PledgeShowMemberListAll;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.UserInfo;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 /**
  * The generic villagemaster. Some childs instances depends of it for race/classe restriction.
@@ -106,7 +99,6 @@ public class VillageMaster extends Folk {
             subPledge.setName(cmdParams2);
             clan.updateSubPledgeInDB(subPledge);
             clan.broadcastToMembers(new PledgeShowMemberListAll(clan, subPledge.getId()));
-            player.sendMessage("Pledge name have been changed to: " + cmdParams2);
         } else if (actualCommand.equalsIgnoreCase("create_royal")) {
             if (cmdParams.isEmpty())
                 return;
@@ -236,6 +228,11 @@ public class VillageMaster extends Folk {
             }
 
             final Clan clan = player.getClan();
+            if (clan.getDissolvingExpiryTime() <= 0) {
+                player.sendPacket(SystemMessageId.NO_REQUESTS_TO_DISPERSE);
+                return;
+            }
+
             clan.setDissolvingExpiryTime(0);
             clan.updateClanInDB();
         } else if (actualCommand.equalsIgnoreCase("increase_clan_level")) {
@@ -631,15 +628,14 @@ public class VillageMaster extends Folk {
             }
         }
 
-        if (pledgeType != Clan.SUBUNIT_ACADEMY) {
-            if (clan.getClanMember(leaderName) == null || clan.getClanMember(leaderName).getPledgeType() != 0) {
-                if (pledgeType >= Clan.SUBUNIT_KNIGHT1)
-                    player.sendPacket(SystemMessageId.CAPTAIN_OF_ORDER_OF_KNIGHTS_CANNOT_BE_APPOINTED);
-                else if (pledgeType >= Clan.SUBUNIT_ROYAL1)
-                    player.sendPacket(SystemMessageId.CAPTAIN_OF_ROYAL_GUARD_CANNOT_BE_APPOINTED);
-
-                return;
+        if (pledgeType != Clan.SUBUNIT_ACADEMY && (clan.getClanMember(leaderName) == null || clan.getClanMember(leaderName).getPledgeType() != 0)) {
+            if (pledgeType >= Clan.SUBUNIT_KNIGHT1) {
+                player.sendPacket(SystemMessageId.CAPTAIN_OF_ORDER_OF_KNIGHTS_CANNOT_BE_APPOINTED);
+            } else if (pledgeType >= Clan.SUBUNIT_ROYAL1) {
+                player.sendPacket(SystemMessageId.CAPTAIN_OF_ROYAL_GUARD_CANNOT_BE_APPOINTED);
             }
+
+            return;
         }
 
         final int leaderId = pledgeType != Clan.SUBUNIT_ACADEMY ? clan.getClanMember(leaderName).getObjectId() : 0;

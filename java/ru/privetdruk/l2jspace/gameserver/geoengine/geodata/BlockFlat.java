@@ -1,8 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.geoengine.geodata;
 
-import java.nio.ByteBuffer;
-
 import ru.privetdruk.l2jspace.gameserver.enums.GeoType;
+
+import java.nio.ByteBuffer;
 
 public class BlockFlat extends ABlock {
     protected final short _height;

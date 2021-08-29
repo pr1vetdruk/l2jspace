@@ -1,9 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.Collection;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.Collection;
 
 public class GMViewSkillInfo extends L2GameServerPacket {
     private final Player _player;

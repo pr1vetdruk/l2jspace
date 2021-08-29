@@ -1,12 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.model.itemcontainer.listeners;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.model.itemcontainer.Inventory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Recorder of alterations in a given {@link Inventory}.

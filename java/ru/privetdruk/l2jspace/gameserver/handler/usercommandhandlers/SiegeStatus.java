@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.handler.usercommandhandlers;
 
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.enums.SiegeSide;
 import ru.privetdruk.l2jspace.gameserver.handler.IUserCommandHandler;

@@ -34,20 +34,19 @@ public class Q001_LettersOfLove extends Quest {
 
     @Override
     public String onAdvEvent(String event, Npc npc, Player player) {
-        String htmlText = event;
-        QuestState questState = player.getQuestList().getQuestState(QUEST_NAME);
-        if (questState == null) {
-            return htmlText;
-        }
+        String htmltext = event;
+        QuestState st = player.getQuestList().getQuestState(QUEST_NAME);
+        if (st == null)
+            return htmltext;
 
         if (event.equalsIgnoreCase("30048-06.htm")) {
-            questState.setState(QuestStatus.STARTED);
-            questState.setCond(1);
+            st.setState(QuestStatus.STARTED);
+            st.setCond(1);
             playSound(player, SOUND_ACCEPT);
             giveItems(player, DARIN_LETTER, 1);
         }
 
-        return htmlText;
+        return htmltext;
     }
 
     @Override

@@ -1,7 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
 import ru.privetdruk.l2jspace.gameserver.enums.AuraTeamType;
@@ -26,15 +24,10 @@ import ru.privetdruk.l2jspace.gameserver.model.itemcontainer.PetInventory;
 import ru.privetdruk.l2jspace.gameserver.model.olympiad.OlympiadGameManager;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.AbstractNpcInfo.SummonInfo;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.L2GameServerPacket;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PetDelete;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PetInfo;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PetItemList;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PetStatusShow;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PetStatusUpdate;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.RelationChanged;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.List;
 
 public abstract class Summon extends Playable {
     public static final int CONTRACT_PAYMENT = 4140;
@@ -531,5 +524,15 @@ public abstract class Summon extends Playable {
                     return skill;
         }
         return null;
+    }
+
+    @Override
+    public void onTeleported() {
+        super.onTeleported();
+
+        // Need it only for "crests on summons" custom.
+        if (Config.SHOW_SUMMON_CREST) {
+            sendPacket(new SummonInfo(this, getOwner(), 0));
+        }
     }
 }

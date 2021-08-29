@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.loginserver.model;
 
 import ru.privetdruk.l2jspace.common.network.ServerType;
-
 import ru.privetdruk.l2jspace.loginserver.data.manager.GameServerManager;
 import ru.privetdruk.l2jspace.loginserver.data.sql.AccountTable;
 

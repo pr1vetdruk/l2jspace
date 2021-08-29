@@ -1,21 +1,20 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.container.player;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
 import ru.privetdruk.l2jspace.gameserver.data.xml.RecipeData;
 import ru.privetdruk.l2jspace.gameserver.enums.ShortcutType;
 import ru.privetdruk.l2jspace.gameserver.model.Shortcut;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.craft.ManufactureItem;
 import ru.privetdruk.l2jspace.gameserver.model.item.Recipe;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RecipeBook {
     private static final CLogger LOGGER = new CLogger(RecipeBook.class.getName());

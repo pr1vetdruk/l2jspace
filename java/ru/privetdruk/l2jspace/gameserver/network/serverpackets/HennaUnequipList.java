@@ -1,9 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.item.Henna;
+
+import java.util.List;
 
 public class HennaUnequipList extends L2GameServerPacket {
     private final int _adena;

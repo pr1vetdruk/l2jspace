@@ -1,16 +1,14 @@
 package ru.privetdruk.l2jspace.gameserver.data.xml;
 
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
-
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class loads and stores spellbook / skillId relation.<br>

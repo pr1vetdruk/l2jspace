@@ -1,11 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.taskmanager;
 
+import ru.privetdruk.l2jspace.common.pool.ThreadPool;
+import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Walker;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Walker;
 
 /**
  * Handles {@link Walker} waiting state case, when they got a delay option on their WalkNode.

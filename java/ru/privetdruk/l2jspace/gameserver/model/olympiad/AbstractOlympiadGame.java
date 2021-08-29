@@ -1,10 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.model.olympiad;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.enums.MessageType;
 import ru.privetdruk.l2jspace.gameserver.enums.OlympiadType;
@@ -24,6 +21,8 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.InventoryUpdate;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.L2GameServerPacket;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.List;
 
 /**
  * The abstract layer for an Olympiad game (individual, class and non-class based).
@@ -92,6 +91,13 @@ public abstract class AbstractOlympiadGame {
      * Delete all effects related to {@link Player}s, and fully heal them. Unsummon their {@link Pet} if existing.
      */
     protected abstract void removals();
+
+    /**
+     * Dualbox check.
+     *
+     * @return
+     */
+    protected abstract boolean checkDualbox();
 
     /**
      * Buff {@link Player}s.
@@ -344,18 +350,16 @@ public abstract class AbstractOlympiadGame {
      *
      * @param player : the happy benefactor.
      */
-    protected static final void buffPlayer(Player player) {
+    protected static void buffPlayer(Player player) {
         L2Skill skill = SkillTable.getInstance().getInfo(1204, 2); // Windwalk 2
         if (skill != null) {
             skill.getEffects(player, player);
-            player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_FEEL_S1_EFFECT).addSkillName(1204));
         }
 
         if (!player.isMageClass()) {
             skill = SkillTable.getInstance().getInfo(1086, 1); // Haste 1
             if (skill != null) {
                 skill.getEffects(player, player);
-                player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_FEEL_S1_EFFECT).addSkillName(1086));
             }
         }
     }
@@ -365,7 +369,7 @@ public abstract class AbstractOlympiadGame {
      *
      * @param player : The Player to affect.
      */
-    protected static final void cleanEffects(Player player) {
+    protected static void cleanEffects(Player player) {
         player.setOlympiadStart(false);
         player.abortAll(true);
         player.getAI().tryToIdle();

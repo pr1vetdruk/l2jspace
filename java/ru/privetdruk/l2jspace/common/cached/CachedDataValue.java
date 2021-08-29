@@ -1,9 +1,9 @@
 package ru.privetdruk.l2jspace.common.cached;
 
-import java.sql.SQLException;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
+
+import java.sql.SQLException;
 
 public class CachedDataValue {
     public static final CLogger LOGGER = new CLogger(CachedDataValue.class.getName());

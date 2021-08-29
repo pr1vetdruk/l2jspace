@@ -2,7 +2,6 @@ package ru.privetdruk.l2jspace.gameserver.model.item;
 
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 
 /**

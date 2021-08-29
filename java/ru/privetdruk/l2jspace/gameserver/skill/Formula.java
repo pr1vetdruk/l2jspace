@@ -4,7 +4,6 @@ import ru.privetdruk.l2jspace.common.lang.StringUtil;
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.math.MathUtil;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.xml.PlayerLevelData;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.NpcRace;
@@ -19,6 +18,7 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Cubic;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Door;
+import ru.privetdruk.l2jspace.gameserver.model.actor.instance.SiegeFlag;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Armor;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Weapon;
@@ -197,16 +197,17 @@ public final class Formula {
         return lethalRate > Rnd.get(1000);
     }
 
-    public static final void calcLethalHit(Creature attacker, Creature target, L2Skill skill) {
+    public static void calcLethalHit(Creature attacker, Creature target, L2Skill skill) {
         // If the attacker can't attack, return.
         Player attackerPlayer = attacker.getActingPlayer();
         if (attackerPlayer != null && !attackerPlayer.getAccessLevel().canGiveDamage()) {
             return;
         }
 
-        // If the target is invulnerable, related to RaidBoss or a Door, return.
-        if (target.isInvul() || target.isRaidRelated() || target instanceof Door)
+        // If the target is invulnerable, related to RaidBoss or a Door/SiegeFlag, return.
+        if (target.isInvul() || target.isRaidRelated() || target instanceof Door || target instanceof SiegeFlag) {
             return;
+        }
 
         // If one of following IDs is found, return (Tyrannosaurus x 3, Headquarters).
         if (target instanceof Npc) {
@@ -368,9 +369,14 @@ public final class Formula {
         // End calculation.
         double damage = 0;
         if (crit) {
-            damage = ((attackPower * 2 * critDamMul * critDamPosMul * critVuln * posMul * rndMul * raceMul * pvpMul * elemMul * weaponMul) + addCritPower) * 77. / defence;
+            damage = ((attackPower * 2. * critDamMul * critDamPosMul * critVuln * posMul * rndMul * raceMul * pvpMul * elemMul * weaponMul) + addCritPower) * 77. / defence;
         } else {
             damage = (attackPower * posMul * rndMul * raceMul * pvpMul * elemMul * weaponMul) * 77. / defence;
+        }
+
+        // If using ss, the damages are multiplied by 2.
+        if (ss) {
+            damage *= 2.;
         }
 
         if (Config.DEVELOPER) {
@@ -1057,10 +1063,7 @@ public final class Formula {
 
             int traitAmount = attacker.getStatus().getAttackElementValue(element);
             if (traitAmount > 0) {
-                double targetElementValue = target.getStatus().getDefenseElementValue(element);
-                if (targetElementValue != 1.) {
-                    elemMod *= 1. - target.getStatus().getDefenseElementValue(element);
-                }
+                elemMod *= target.getStatus().getDefenseElementValue(element);
             }
         }
 

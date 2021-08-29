@@ -1,5 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.communitybbs.manager;
 
+import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
+import ru.privetdruk.l2jspace.gameserver.communitybbs.model.Favorite;
+import ru.privetdruk.l2jspace.gameserver.data.cache.HtmCache;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,12 +14,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.concurrent.ConcurrentHashMap;
-
-import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
-import ru.privetdruk.l2jspace.gameserver.communitybbs.model.Favorite;
-import ru.privetdruk.l2jspace.gameserver.data.cache.HtmCache;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 
 public class FavoriteBBSManager extends BaseBBSManager {
     private static final String SELECT_FAVORITES = "SELECT * FROM bbs_favorite ORDER BY id ASC";

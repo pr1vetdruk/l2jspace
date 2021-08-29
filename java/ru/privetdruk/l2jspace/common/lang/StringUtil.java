@@ -1,5 +1,7 @@
 package ru.privetdruk.l2jspace.common.lang;
 
+import ru.privetdruk.l2jspace.common.logging.CLogger;
+
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,8 +10,6 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-
-import ru.privetdruk.l2jspace.common.logging.CLogger;
 
 public final class StringUtil {
     public static final String DIGITS = "0123456789";

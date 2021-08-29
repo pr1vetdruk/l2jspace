@@ -1,16 +1,15 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Q373_SupplierOfReagents extends Quest {
     private static final String QUEST_NAME = "Q373_SupplierOfReagents";
@@ -83,50 +82,50 @@ public class Q373_SupplierOfReagents extends Quest {
      * <li>LAVA_WYRM : 75% chance to drop - wyrm's blood (50,5%) and lava stone (24,5%)</li>
      * </ul>
      */
-    private static final Map<Integer, int[]> DROP_LIST = new HashMap<>();
+    private static final Map<Integer, int[]> DROPLIST = new HashMap<>();
 
     static {
-        DROP_LIST.put(PLATINUM_GUARDIAN_SHAMAN, new int[]
+        DROPLIST.put(PLATINUM_GUARDIAN_SHAMAN, new int[]
                 {
                         REAGENT_BOX,
                         442000,
                         0
                 });
-        DROP_LIST.put(HAMES_ORC_SHAMAN, new int[]
+        DROPLIST.put(HAMES_ORC_SHAMAN, new int[]
                 {
                         REAGENT_POUCH_3,
                         470000,
                         0
                 });
-        DROP_LIST.put(PLATINUM_TRIBE_SHAMAN, new int[]
+        DROPLIST.put(PLATINUM_TRIBE_SHAMAN, new int[]
                 {
                         REAGENT_POUCH_2,
                         QUICKSILVER,
                         680,
                         1000
                 });
-        DROP_LIST.put(HALLATE_MAID, new int[]
+        DROPLIST.put(HALLATE_MAID, new int[]
                 {
                         REAGENT_POUCH_1,
                         VOLCANIC_ASH,
                         664,
                         844
                 });
-        DROP_LIST.put(HALLATE_GUARDIAN, new int[]
+        DROPLIST.put(HALLATE_GUARDIAN, new int[]
                 {
                         DEMONS_BLOOD,
                         MOONSTONE_SHARD,
                         729,
                         833
                 });
-        DROP_LIST.put(CRENDION, new int[]
+        DROPLIST.put(CRENDION, new int[]
                 {
                         ROTTEN_BONE,
                         QUICKSILVER,
                         618,
                         1000
                 });
-        DROP_LIST.put(LAVA_WYRM, new int[]
+        DROPLIST.put(LAVA_WYRM, new int[]
                 {
                         WYRMS_BLOOD,
                         LAVA_STONE,
@@ -370,7 +369,7 @@ public class Q373_SupplierOfReagents extends Quest {
         if (st == null)
             return null;
 
-        final int[] drop = DROP_LIST.get(npc.getNpcId());
+        final int[] drop = DROPLIST.get(npc.getNpcId());
 
         if (drop[2] == 0)
             dropItems(st.getPlayer(), drop[0], 1, 0, drop[1]);

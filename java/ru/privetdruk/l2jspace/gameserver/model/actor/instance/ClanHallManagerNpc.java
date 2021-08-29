@@ -1,8 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
-import java.text.SimpleDateFormat;
-import java.util.StringTokenizer;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.xml.TeleportData;
 import ru.privetdruk.l2jspace.gameserver.enums.TeleportType;
@@ -15,11 +12,10 @@ import ru.privetdruk.l2jspace.gameserver.model.clanhall.ClanHall;
 import ru.privetdruk.l2jspace.gameserver.model.clanhall.ClanHallFunction;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ClanHallDecoration;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.WarehouseDepositList;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.WarehouseWithdrawList;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
+
+import java.text.SimpleDateFormat;
+import java.util.StringTokenizer;
 
 public class ClanHallManagerNpc extends Merchant {
     private static final String HP_GRADE_0 = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 20\">20%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 40\">40%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 220\">220%</a>]";

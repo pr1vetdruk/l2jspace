@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.ArmorSetData;
 import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
@@ -14,11 +13,7 @@ import ru.privetdruk.l2jspace.gameserver.model.item.kind.Armor;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Weapon;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.EnchantResult;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.InventoryUpdate;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ItemList;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.StatusUpdate;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
 public final class RequestEnchantItem extends AbstractEnchantPacket {

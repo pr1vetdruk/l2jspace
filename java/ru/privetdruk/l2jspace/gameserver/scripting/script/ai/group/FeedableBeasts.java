@@ -1,12 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.ai.group;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import ru.privetdruk.l2jspace.common.random.Rnd;
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
 import ru.privetdruk.l2jspace.gameserver.enums.ScriptEventType;
@@ -23,6 +18,10 @@ import ru.privetdruk.l2jspace.gameserver.scripting.quest.Q020_BringUpWithLove;
 import ru.privetdruk.l2jspace.gameserver.scripting.quest.Q655_AGrandPlanForTamingWildBeasts;
 import ru.privetdruk.l2jspace.gameserver.scripting.script.ai.AttackableAIScript;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class FeedableBeasts extends AttackableAIScript {
     private static final int GOLDEN_SPICE = 6643;

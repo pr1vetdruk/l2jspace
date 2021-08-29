@@ -1,8 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.skill.effect;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
 import ru.privetdruk.l2jspace.gameserver.enums.AiEventType;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
@@ -22,6 +19,9 @@ import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
 import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.skill.l2skill.L2SkillSignetCasttime;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EffectSignetMDam extends AbstractEffect {
     private boolean _srcInArena;

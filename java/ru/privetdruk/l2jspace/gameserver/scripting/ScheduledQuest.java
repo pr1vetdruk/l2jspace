@@ -1,9 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.scripting;
 
+import ru.privetdruk.l2jspace.gameserver.enums.ScheduleType;
+
 import java.util.Calendar;
 import java.util.concurrent.ScheduledFuture;
-
-import ru.privetdruk.l2jspace.gameserver.enums.ScheduleType;
 
 public abstract class ScheduledQuest extends Quest {
     private ScheduleType _type;

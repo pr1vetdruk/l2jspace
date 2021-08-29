@@ -1,16 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.container.player;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
 import ru.privetdruk.l2jspace.gameserver.data.xml.ScriptData;
 import ru.privetdruk.l2jspace.gameserver.enums.ScriptEventType;
 import ru.privetdruk.l2jspace.gameserver.model.World;
@@ -19,6 +10,14 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public final class QuestList extends ArrayList<QuestState> {
     private static final CLogger LOGGER = new CLogger(QuestList.class.getName());
@@ -65,21 +64,10 @@ public final class QuestList extends ArrayList<QuestState> {
      * @param completed : If true, include completed quests to the {@link List}.
      * @return A {@link List} of started and eventually completed {@link Quest}s.
      */
-    public List<Quest> getAllQuests(boolean completed) {
-        final List<Quest> quests = new ArrayList<>();
-
-        for (final QuestState qs : this) {
-            if (qs == null || completed && qs.isCreated() || !completed && !qs.isStarted())
-                continue;
-
-            final Quest quest = qs.getQuest();
-            if (quest == null || !quest.isRealQuest())
-                continue;
-
-            quests.add(quest);
-        }
-
-        return quests;
+    public List<QuestState> getAllQuests(boolean completed) {
+        return stream()
+                .filter(qs -> qs.getQuest().isRealQuest() && (qs.isStarted() || (qs.isCompleted() && completed)))
+                .collect(Collectors.toList());
     }
 
     /**

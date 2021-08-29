@@ -2,7 +2,6 @@ package ru.privetdruk.l2jspace.loginserver.network.gameserverpackets;
 
 import ru.privetdruk.l2jspace.common.network.AttributeType;
 import ru.privetdruk.l2jspace.common.network.ServerType;
-
 import ru.privetdruk.l2jspace.loginserver.data.manager.GameServerManager;
 import ru.privetdruk.l2jspace.loginserver.model.GameServerInfo;
 import ru.privetdruk.l2jspace.loginserver.network.clientpackets.ClientBasePacket;

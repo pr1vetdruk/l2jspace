@@ -1,11 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.network.gameserverpackets;
 
-import java.security.GeneralSecurityException;
-import java.security.interfaces.RSAPublicKey;
+import ru.privetdruk.l2jspace.common.logging.CLogger;
 
 import javax.crypto.Cipher;
-
-import ru.privetdruk.l2jspace.common.logging.CLogger;
+import java.security.GeneralSecurityException;
+import java.security.interfaces.RSAPublicKey;
 
 public class BlowFishKey extends GameServerBasePacket {
     private static final CLogger LOGGER = new CLogger(BlowFishKey.class.getName());

@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.skill.condition;
 
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;

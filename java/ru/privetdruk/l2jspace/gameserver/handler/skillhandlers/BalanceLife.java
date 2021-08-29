@@ -1,8 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.handler.skillhandlers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillType;
 import ru.privetdruk.l2jspace.gameserver.handler.ISkillHandler;
 import ru.privetdruk.l2jspace.gameserver.handler.SkillHandler;
@@ -10,6 +7,9 @@ import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BalanceLife implements ISkillHandler {
     private static final SkillType[] SKILL_IDS =

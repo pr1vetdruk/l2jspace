@@ -1,12 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Future;
-
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.manager.DuelManager;
 import ru.privetdruk.l2jspace.gameserver.enums.AiEventType;
@@ -31,6 +26,10 @@ import ru.privetdruk.l2jspace.gameserver.skill.Formula;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.skill.l2skill.L2SkillDrain;
 import ru.privetdruk.l2jspace.gameserver.taskmanager.AttackStanceTaskManager;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Future;
 
 public class Cubic {
     public static final int STORM_CUBIC = 1;

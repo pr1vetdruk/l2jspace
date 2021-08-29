@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.boat;
 
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.BoatManager;
 import ru.privetdruk.l2jspace.gameserver.enums.SayType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Boat;

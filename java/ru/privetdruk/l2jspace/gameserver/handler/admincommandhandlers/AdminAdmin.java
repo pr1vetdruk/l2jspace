@@ -1,14 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers;
 
-import java.awt.Color;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.StringTokenizer;
-
 import ru.privetdruk.l2jspace.common.data.Pagination;
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.gameserver.data.cache.HtmCache;
 import ru.privetdruk.l2jspace.gameserver.data.manager.BuyListManager;
 import ru.privetdruk.l2jspace.gameserver.data.xml.AdminData;
@@ -23,11 +17,12 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Door;
 import ru.privetdruk.l2jspace.gameserver.model.buylist.NpcBuyList;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.model.location.WalkerLocation;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.BuyList;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.CameraMode;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExServerPrimitive;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
+
+import java.awt.*;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.StringTokenizer;
 
 public class AdminAdmin implements IAdminCommandHandler {
     private static final String[] ADMIN_COMMANDS =

@@ -1,9 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.model.zone.form;
 
-import java.awt.Color;
-
 import ru.privetdruk.l2jspace.gameserver.model.zone.ZoneForm;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ExServerPrimitive;
+
+import java.awt.*;
 
 public class ZoneCylinder extends ZoneForm {
     protected static final int STEP = 50;
@@ -69,11 +69,6 @@ public class ZoneCylinder extends ZoneForm {
         }
 
         return false;
-    }
-
-    @Override
-    public double getDistanceToZone(int x, int y) {
-        return (Math.sqrt((Math.pow(_x - x, 2) + Math.pow(_y - y, 2))) - _rad);
     }
 
     @Override

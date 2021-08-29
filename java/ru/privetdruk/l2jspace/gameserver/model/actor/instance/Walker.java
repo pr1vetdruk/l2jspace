@@ -1,12 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.data.xml.WalkerRouteData;
 import ru.privetdruk.l2jspace.gameserver.model.actor.ai.type.CreatureAI;
 import ru.privetdruk.l2jspace.gameserver.model.actor.ai.type.WalkerAI;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.location.WalkerLocation;
+
+import java.util.List;
 
 /**
  * A Walker is a {@link Folk} which continuously walks, following a defined route. It got no other Intention than MOVE_TO, so it never stops walking/running - except for programmed timers - and can speak.<br>

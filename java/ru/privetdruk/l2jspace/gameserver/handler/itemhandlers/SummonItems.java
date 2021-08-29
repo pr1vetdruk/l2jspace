@@ -1,7 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.handler.itemhandlers;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
@@ -17,6 +15,8 @@ import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+
+import java.util.List;
 
 public class SummonItems implements IItemHandler {
     @Override

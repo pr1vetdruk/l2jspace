@@ -1,18 +1,14 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.itemcontainer.PcFreight;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.EnchantResult;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PackageToList;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.WarehouseDepositList;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.WarehouseWithdrawList;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.*;
+
+import java.util.Map;
 
 /**
  * An instance type extending {@link Folk}, used by warehouse keepers.<br>

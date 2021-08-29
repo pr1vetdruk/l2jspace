@@ -1,15 +1,10 @@
 package ru.privetdruk.l2jspace.loginserver.network;
 
-import java.net.InetAddress;
-import java.nio.ByteBuffer;
-import java.security.interfaces.RSAPrivateKey;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.mmocore.MMOClient;
 import ru.privetdruk.l2jspace.common.mmocore.MMOConnection;
 import ru.privetdruk.l2jspace.common.mmocore.SendablePacket;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.loginserver.LoginController;
 import ru.privetdruk.l2jspace.loginserver.crypt.LoginCrypt;
 import ru.privetdruk.l2jspace.loginserver.crypt.ScrambledKeyPair;
@@ -18,6 +13,10 @@ import ru.privetdruk.l2jspace.loginserver.model.Account;
 import ru.privetdruk.l2jspace.loginserver.network.serverpackets.L2LoginServerPacket;
 import ru.privetdruk.l2jspace.loginserver.network.serverpackets.LoginFail;
 import ru.privetdruk.l2jspace.loginserver.network.serverpackets.PlayFail;
+
+import java.net.InetAddress;
+import java.nio.ByteBuffer;
+import java.security.interfaces.RSAPrivateKey;
 
 /**
  * Represents a client connected into the LoginServer

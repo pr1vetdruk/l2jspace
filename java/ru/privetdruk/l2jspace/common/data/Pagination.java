@@ -1,5 +1,8 @@
 package ru.privetdruk.l2jspace.common.data;
 
+import ru.privetdruk.l2jspace.common.lang.StringUtil;
+import ru.privetdruk.l2jspace.common.math.MathUtil;
+
 import java.util.AbstractList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -8,9 +11,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-import ru.privetdruk.l2jspace.common.lang.StringUtil;
-import ru.privetdruk.l2jspace.common.math.MathUtil;
 
 public class Pagination<A> extends AbstractList<A> {
     private static final String NORMAL_LINE_SIZE = "<img height=17>";

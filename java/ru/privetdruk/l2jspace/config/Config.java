@@ -1,5 +1,15 @@
 package ru.privetdruk.l2jspace.config;
 
+import ru.privetdruk.l2jspace.common.config.ExProperties;
+import ru.privetdruk.l2jspace.common.logging.CLogger;
+import ru.privetdruk.l2jspace.common.math.MathUtil;
+import ru.privetdruk.l2jspace.config.custom.EventConfig;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventLoadingMode;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType;
+import ru.privetdruk.l2jspace.gameserver.enums.GeoType;
+import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
+import ru.privetdruk.l2jspace.gameserver.model.olympiad.enums.OlympiadPeriod;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,24 +18,8 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.util.stream.Collectors;
-
-import ru.privetdruk.l2jspace.common.config.ExProperties;
-import ru.privetdruk.l2jspace.common.logging.CLogger;
-import ru.privetdruk.l2jspace.common.math.MathUtil;
-
-import ru.privetdruk.l2jspace.config.custom.EventConfig;
-import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventLoadingMode;
-import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType;
-import ru.privetdruk.l2jspace.gameserver.enums.GeoType;
-import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
-import ru.privetdruk.l2jspace.gameserver.model.olympiad.enums.OlympiadPeriod;
 
 /**
  * This class contains global server configuration.<br>

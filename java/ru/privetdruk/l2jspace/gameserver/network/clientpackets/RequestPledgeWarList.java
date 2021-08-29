@@ -1,10 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
-import java.util.Set;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PledgeReceiveWarList;
+
+import java.util.Set;
 
 public final class RequestPledgeWarList extends L2GameClientPacket {
     private int _page;

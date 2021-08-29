@@ -1,42 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.handler;
 
+import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.*;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminAdmin;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminAnnouncements;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminBookmark;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminCached;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminClanHall;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminCursedWeapon;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminDoor;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminEditChar;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminEffects;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminEnchant;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminFind;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminGeoEngine;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminInfo;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminItem;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminKnownlist;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminMaintenance;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminManage;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminManor;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminMovieMaker;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminOlympiad;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminPetition;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminPledge;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminPolymorph;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminPremium;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminPunish;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminReload;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminSiege;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminSkill;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminSpawn;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminSummon;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminTarget;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminTeleport;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminTest;
-import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminZone;
 
 public class AdminCommandHandler {
     private final Map<Integer, IAdminCommandHandler> _entries = new HashMap<>();

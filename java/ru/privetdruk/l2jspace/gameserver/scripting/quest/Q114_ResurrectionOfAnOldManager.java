@@ -339,7 +339,6 @@ public class Q114_ResurrectionOfAnOldManager extends Quest {
                             takeItems(player, DETECTOR, 1);
                             giveItems(player, DETECTOR_2, 1);
                             player.sendPacket(new ExShowScreenMessage(NpcStringId.ID_11453, 4500));
-
                             return null;
                         } else if (cond == 18)
                             htmltext = "32046-01.htm";
@@ -368,9 +367,8 @@ public class Q114_ResurrectionOfAnOldManager extends Quest {
     @Override
     public String onDecay(Npc npc) {
         if (npc == _golem) {
-            if (!npc.isDead()) {
-                npc.broadcastNpcSay(NpcStringId.ID_11451);
-            }
+            if (!npc.isDead())
+                npc.broadcastNpcSay(NpcStringId.ID_11451, "Wendy");
 
             _golem = null;
         }

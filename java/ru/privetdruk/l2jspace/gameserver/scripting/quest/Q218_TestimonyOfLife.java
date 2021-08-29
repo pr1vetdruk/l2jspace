@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassRace;
@@ -345,36 +344,24 @@ public class Q218_TestimonyOfLife extends SecondClassQuest {
 
         switch (npc.getNpcId()) {
             case 20550:
-                if (st.getCond() == 4
-                        && dropItems(player, PURE_MITHRIL_ORE, 1, 10, 500000)
-                        && player.getInventory().getItemCount(WYRM_TALON) >= 20
-                        && player.getInventory().getItemCount(ANT_SOLDIER_ACID) >= 20) {
+                if (st.getCond() == 4 && dropItems(player, PURE_MITHRIL_ORE, 1, 10, 500000) && player.getInventory().getItemCount(WYRM_TALON) >= 20 && player.getInventory().getItemCount(ANT_SOLDIER_ACID) >= 20)
                     st.setCond(5);
-                }
-
                 break;
+
             case 20176:
-                if (st.getCond() == 4
-                        && dropItems(player, WYRM_TALON, 1, 20, 500000)
-                        && player.getInventory().getItemCount(PURE_MITHRIL_ORE) >= 10
-                        && player.getInventory().getItemCount(ANT_SOLDIER_ACID) >= 20) {
+                if (st.getCond() == 4 && dropItems(player, WYRM_TALON, 1, 20, 500000) && player.getInventory().getItemCount(PURE_MITHRIL_ORE) >= 10 && player.getInventory().getItemCount(ANT_SOLDIER_ACID) >= 20)
                     st.setCond(5);
-                }
-
                 break;
+
             case 20082:
             case 20084:
             case 20086:
             case 20087:
             case 20088:
-                if (st.getCond() == 4
-                        && dropItems(player, ANT_SOLDIER_ACID, 1, 20, 800000)
-                        && player.getInventory().getItemCount(PURE_MITHRIL_ORE) >= 10
-                        && player.getInventory().getItemCount(WYRM_TALON) >= 20) {
+                if (st.getCond() == 4 && dropItems(player, ANT_SOLDIER_ACID, 1, 20, 800000) && player.getInventory().getItemCount(PURE_MITHRIL_ORE) >= 10 && player.getInventory().getItemCount(WYRM_TALON) >= 20)
                     st.setCond(5);
-                }
-
                 break;
+
             case 20233:
                 if (st.getCond() == 9 && dropItems(player, SPIDER_ICHOR, 1, 20, 500000) && player.getInventory().getItemCount(HARPY_DOWN) >= 20)
                     st.setCond(10);

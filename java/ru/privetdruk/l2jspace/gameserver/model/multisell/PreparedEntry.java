@@ -1,8 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.model.multisell;
 
-import java.util.ArrayList;
-
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
+
+import java.util.ArrayList;
 
 /**
  * A dynamic layer of {@link Entry}, which holds the tax amount and can retain previous {@link ItemInstance} enchantment.

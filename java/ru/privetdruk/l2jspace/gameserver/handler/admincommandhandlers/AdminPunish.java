@@ -1,18 +1,17 @@
 package ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.util.StringTokenizer;
-
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
 import ru.privetdruk.l2jspace.gameserver.LoginServerThread;
 import ru.privetdruk.l2jspace.gameserver.enums.PunishmentType;
 import ru.privetdruk.l2jspace.gameserver.handler.IAdminCommandHandler;
 import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.StringTokenizer;
 
 public class AdminPunish implements IAdminCommandHandler {
     private static final String UPDATE_BAN = "UPDATE characters SET punish_level=?, punish_timer=? WHERE char_name=?";

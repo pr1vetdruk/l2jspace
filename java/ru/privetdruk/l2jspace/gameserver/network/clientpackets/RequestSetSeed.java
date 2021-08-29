@@ -1,8 +1,5 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManorManager;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
@@ -10,6 +7,9 @@ import ru.privetdruk.l2jspace.gameserver.model.manor.Seed;
 import ru.privetdruk.l2jspace.gameserver.model.manor.SeedProduction;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.ActionFailed;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RequestSetSeed extends L2GameClientPacket {
     private static final int BATCH_LENGTH = 12;

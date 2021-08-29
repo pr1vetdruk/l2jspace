@@ -1,8 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
+
+import java.util.List;
 
 public class SellList extends L2GameServerPacket {
     private final int _money;

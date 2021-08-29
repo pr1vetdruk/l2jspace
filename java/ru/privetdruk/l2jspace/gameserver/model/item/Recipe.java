@@ -1,10 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.model.item;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
 import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
+
+import java.util.List;
 
 /**
  * This datatype is used to store Recipe informations used by Dwarf to craft items.<br>

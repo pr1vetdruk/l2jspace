@@ -1,14 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.data.xml;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.nio.file.Path;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
-
 import ru.privetdruk.l2jspace.gameserver.data.cache.HtmCache;
 import ru.privetdruk.l2jspace.gameserver.enums.SayType;
 import ru.privetdruk.l2jspace.gameserver.model.Announcement;
@@ -17,8 +12,11 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.CreatureSay;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
+import java.io.File;
+import java.io.FileWriter;
+import java.nio.file.Path;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * This class loads and stores {@link Announcement}s, the key being dynamically generated on loading.<br>

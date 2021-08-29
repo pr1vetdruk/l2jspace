@@ -55,10 +55,8 @@ public final class RequestSellItem extends L2GameClientPacket {
         if (merchant == null || !player.getAI().canDoInteract(merchant))
             return;
 
-        if (_listId > 1000000) // lease
-        {
-            if (merchant.getTemplate().getNpcId() != _listId - 1000000)
-                return;
+        if (_listId > 1000000 && merchant.getTemplate().getNpcId() != _listId - 1000000) {
+            return;
         }
 
         long totalPrice = 0;
@@ -70,11 +68,11 @@ public final class RequestSellItem extends L2GameClientPacket {
                 continue;
 
             int price = item.getReferencePrice() / 2;
-            totalPrice += price * i.getValue();
+            totalPrice += (long) price * i.getValue();
             if ((Integer.MAX_VALUE / i.getValue()) < price || totalPrice > Integer.MAX_VALUE)
                 return;
 
-            item = player.getInventory().destroyItem("Sell", i.getId(), i.getValue(), player, merchant);
+            player.getInventory().destroyItem("Sell", i.getId(), i.getValue(), player, merchant);
         }
 
         player.addAdena("Sell", (int) totalPrice, merchant, false);

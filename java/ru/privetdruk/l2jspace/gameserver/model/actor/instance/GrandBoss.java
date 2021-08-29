@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.instance;
 
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.HeroManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.RaidPointManager;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;

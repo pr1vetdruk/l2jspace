@@ -2,7 +2,6 @@ package ru.privetdruk.l2jspace.loginserver.network.clientpackets;
 
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.mmocore.ReceivablePacket;
-
 import ru.privetdruk.l2jspace.loginserver.network.LoginClient;
 
 public abstract class L2LoginClientPacket extends ReceivablePacket<LoginClient> {

@@ -1,9 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.Collection;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.item.Recipe;
+
+import java.util.Collection;
 
 public class RecipeBookItemList extends L2GameServerPacket {
     private Collection<Recipe> _recipes;

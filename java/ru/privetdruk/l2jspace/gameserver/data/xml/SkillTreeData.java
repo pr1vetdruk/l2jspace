@@ -1,13 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.data.xml;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-
+import org.w3c.dom.Document;
 import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
-
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.holder.skillnode.ClanSkillNode;
@@ -16,7 +10,11 @@ import ru.privetdruk.l2jspace.gameserver.model.holder.skillnode.FishingSkillNode
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
-import org.w3c.dom.Document;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * This class loads and stores datatypes extending SkillNode, such as {@link FishingSkillNode}, {@link EnchantSkillNode} and {@link ClanSkillNode}.

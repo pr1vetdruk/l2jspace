@@ -3,6 +3,7 @@ package ru.privetdruk.l2jspace.gameserver.skill.effect;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectFlag;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
+import ru.privetdruk.l2jspace.gameserver.model.actor.cast.CreatureCast;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
@@ -19,7 +20,10 @@ public class EffectMute extends AbstractEffect {
     @Override
     public boolean onStart() {
         // Abort cast.
-        getEffected().getCast().stop();
+        CreatureCast<? extends Creature> cast = getEffected().getCast();
+        if (cast.isCastingNow() && cast.getCurrentSkill().isMagic()) {
+            cast.stop();
+        }
 
         // Refresh abnormal effects.
         getEffected().updateAbnormalEffect();

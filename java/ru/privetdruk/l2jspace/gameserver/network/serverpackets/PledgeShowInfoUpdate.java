@@ -3,27 +3,47 @@ package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
 
 public class PledgeShowInfoUpdate extends L2GameServerPacket {
-    private final Clan _clan;
+    private final int _clanId;
+    private final int _crestId;
+    private final int _level;
+    private final int _castleId;
+    private final int _chId;
+    private final int _rank;
+    private final int _reputation;
+    private final int _allyId;
+    private final String _allyName;
+    private final int _allyCrestId;
+    private final int _atWar;
 
     public PledgeShowInfoUpdate(Clan clan) {
-        _clan = clan;
+        _clanId = clan.getClanId();
+        _crestId = clan.getCrestId();
+        _level = clan.getLevel();
+        _castleId = clan.getCastleId();
+        _chId = clan.getClanHallId();
+        _rank = clan.getRank();
+        _reputation = clan.getReputationScore();
+        _allyId = clan.getAllyId();
+        _allyName = clan.getAllyName();
+        _allyCrestId = clan.getAllyCrestId();
+        _atWar = (clan.isAtWar()) ? 1 : 0;
     }
 
     @Override
     protected final void writeImpl() {
         writeC(0x88);
-        writeD(_clan.getClanId());
-        writeD(_clan.getCrestId());
-        writeD(_clan.getLevel());
-        writeD(_clan.getCastleId());
-        writeD(_clan.getClanHallId());
-        writeD(_clan.getRank());
-        writeD(_clan.getReputationScore());
+        writeD(_clanId);
+        writeD(_crestId);
+        writeD(_level);
+        writeD(_castleId);
+        writeD(_chId);
+        writeD(_rank);
+        writeD(_reputation);
         writeD(0);
         writeD(0);
-        writeD(_clan.getAllyId());
-        writeS(_clan.getAllyName()); // c5
-        writeD(_clan.getAllyCrestId()); // c5
-        writeD(_clan.isAtWar() ? 1 : 0); // c5
+        writeD(_allyId);
+        writeS(_allyName);
+        writeD(_allyCrestId);
+        writeD(_atWar);
     }
 }

@@ -1,35 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.handler;
 
+import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillTargetType;
+import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.*;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillTargetType;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetAlly;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetArea;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetAreaCorpseMob;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetAreaSummon;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetAura;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetAuraUndead;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetBehindAura;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetClan;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetCorpseAlly;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetCorpseMob;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetCorpsePet;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetCorpsePlayer;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetEnemySummon;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetFrontArea;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetFrontAura;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetGround;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetHoly;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetOne;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetOwnerPet;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetParty;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetPartyMember;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetPartyOther;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetSelf;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetSummon;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetUndead;
-import ru.privetdruk.l2jspace.gameserver.handler.targethandlers.TargetUnlockable;
 
 public class TargetHandler {
     private final Map<SkillTargetType, ITargetHandler> _entries = new HashMap<>();

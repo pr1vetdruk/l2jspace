@@ -1,18 +1,8 @@
 package ru.privetdruk.l2jspace.loginserver;
 
-import java.net.InetAddress;
-import java.security.GeneralSecurityException;
-import java.security.KeyPairGenerator;
-import java.security.spec.RSAKeyGenParameterSpec;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import javax.crypto.Cipher;
-
 import ru.privetdruk.l2jspace.common.crypt.BCrypt;
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.loginserver.crypt.ScrambledKeyPair;
 import ru.privetdruk.l2jspace.loginserver.data.manager.GameServerManager;
@@ -28,6 +18,14 @@ import ru.privetdruk.l2jspace.loginserver.network.serverpackets.AccountKicked;
 import ru.privetdruk.l2jspace.loginserver.network.serverpackets.LoginFail;
 import ru.privetdruk.l2jspace.loginserver.network.serverpackets.LoginOk;
 import ru.privetdruk.l2jspace.loginserver.network.serverpackets.ServerList;
+
+import javax.crypto.Cipher;
+import java.net.InetAddress;
+import java.security.GeneralSecurityException;
+import java.security.KeyPairGenerator;
+import java.security.spec.RSAKeyGenParameterSpec;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class LoginController {
     protected static final CLogger LOGGER = new CLogger(LoginController.class.getName());

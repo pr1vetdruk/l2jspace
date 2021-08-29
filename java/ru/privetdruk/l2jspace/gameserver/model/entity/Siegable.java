@@ -1,11 +1,11 @@
 package ru.privetdruk.l2jspace.gameserver.model.entity;
 
-import java.util.Calendar;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.enums.SiegeSide;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.pledge.Clan;
+
+import java.util.Calendar;
+import java.util.List;
 
 public interface Siegable {
     public void startSiege();

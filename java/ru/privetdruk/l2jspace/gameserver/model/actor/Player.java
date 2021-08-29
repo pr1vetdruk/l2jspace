@@ -1,83 +1,34 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListMap;
-import java.util.concurrent.Future;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.stream.Collectors;
-
 import ru.privetdruk.l2jspace.common.cached.CachedData;
 import ru.privetdruk.l2jspace.common.cached.CachedDataValueBoolean;
+import ru.privetdruk.l2jspace.common.cached.CachedDataValueInt;
 import ru.privetdruk.l2jspace.common.math.MathUtil;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.LoginServerThread;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.CommunityBoard;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.model.Forum;
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
+import ru.privetdruk.l2jspace.gameserver.custom.instance.WeddingManager;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventPlayer;
+import ru.privetdruk.l2jspace.gameserver.custom.service.WeddingService;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable.FrequentSkill;
-import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
-import ru.privetdruk.l2jspace.gameserver.custom.service.WeddingService;
-import ru.privetdruk.l2jspace.gameserver.data.manager.CursedWeaponManager;
-import ru.privetdruk.l2jspace.gameserver.data.manager.DimensionalRiftManager;
-import ru.privetdruk.l2jspace.gameserver.data.manager.FestivalOfDarknessManager;
-import ru.privetdruk.l2jspace.gameserver.data.manager.HeroManager;
-import ru.privetdruk.l2jspace.gameserver.data.manager.PartyMatchRoomManager;
-import ru.privetdruk.l2jspace.gameserver.data.manager.SevenSignsManager;
-import ru.privetdruk.l2jspace.gameserver.data.manager.ZoneManager;
+import ru.privetdruk.l2jspace.gameserver.data.manager.*;
 import ru.privetdruk.l2jspace.gameserver.data.sql.ClanTable;
 import ru.privetdruk.l2jspace.gameserver.data.sql.PlayerInfoTable;
-import ru.privetdruk.l2jspace.gameserver.data.xml.AdminData;
-import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
-import ru.privetdruk.l2jspace.gameserver.data.xml.MapRegionData;
+import ru.privetdruk.l2jspace.gameserver.data.xml.*;
 import ru.privetdruk.l2jspace.gameserver.data.xml.MapRegionData.TeleportType;
-import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
-import ru.privetdruk.l2jspace.gameserver.data.xml.PlayerData;
-import ru.privetdruk.l2jspace.gameserver.data.xml.PlayerLevelData;
-import ru.privetdruk.l2jspace.gameserver.enums.AiEventType;
-import ru.privetdruk.l2jspace.gameserver.enums.CabalType;
-import ru.privetdruk.l2jspace.gameserver.enums.GaugeColor;
-import ru.privetdruk.l2jspace.gameserver.enums.LootRule;
-import ru.privetdruk.l2jspace.gameserver.enums.MessageType;
-import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
-import ru.privetdruk.l2jspace.gameserver.enums.PunishmentType;
-import ru.privetdruk.l2jspace.gameserver.enums.ShortcutType;
-import ru.privetdruk.l2jspace.gameserver.enums.SpawnType;
-import ru.privetdruk.l2jspace.gameserver.enums.StatusType;
-import ru.privetdruk.l2jspace.gameserver.enums.AuraTeamType;
-import ru.privetdruk.l2jspace.gameserver.enums.TeleportMode;
-import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
+import ru.privetdruk.l2jspace.gameserver.enums.*;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.*;
 import ru.privetdruk.l2jspace.gameserver.enums.bbs.ForumAccess;
 import ru.privetdruk.l2jspace.gameserver.enums.bbs.ForumType;
-import ru.privetdruk.l2jspace.gameserver.enums.items.ActionType;
-import ru.privetdruk.l2jspace.gameserver.enums.items.EtcItemType;
-import ru.privetdruk.l2jspace.gameserver.enums.items.ItemLocation;
-import ru.privetdruk.l2jspace.gameserver.enums.items.ItemState;
-import ru.privetdruk.l2jspace.gameserver.enums.items.ShotType;
-import ru.privetdruk.l2jspace.gameserver.enums.items.WeaponType;
+import ru.privetdruk.l2jspace.gameserver.enums.items.*;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectFlag;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.EffectType;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.Stats;
@@ -88,7 +39,6 @@ import ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers.AdminEditC
 import ru.privetdruk.l2jspace.gameserver.handler.skillhandlers.SummonFriend;
 import ru.privetdruk.l2jspace.gameserver.model.AccessLevel;
 import ru.privetdruk.l2jspace.gameserver.model.PetDataEntry;
-import ru.privetdruk.l2jspace.gameserver.model.Shortcut;
 import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.ai.type.CreatureAI;
@@ -96,27 +46,9 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.ai.type.PlayerAI;
 import ru.privetdruk.l2jspace.gameserver.model.actor.attack.PlayerAttack;
 import ru.privetdruk.l2jspace.gameserver.model.actor.cast.PlayerCast;
 import ru.privetdruk.l2jspace.gameserver.model.actor.container.npc.RewardInfo;
-import ru.privetdruk.l2jspace.gameserver.model.actor.container.player.Appearance;
-import ru.privetdruk.l2jspace.gameserver.model.actor.container.player.BlockList;
-import ru.privetdruk.l2jspace.gameserver.model.actor.container.player.CubicList;
-import ru.privetdruk.l2jspace.gameserver.model.actor.container.player.FishingStance;
-import ru.privetdruk.l2jspace.gameserver.model.actor.container.player.HennaList;
-import ru.privetdruk.l2jspace.gameserver.model.actor.container.player.MacroList;
-import ru.privetdruk.l2jspace.gameserver.model.actor.container.player.Punishment;
 import ru.privetdruk.l2jspace.gameserver.model.actor.container.player.QuestList;
-import ru.privetdruk.l2jspace.gameserver.model.actor.container.player.RadarList;
-import ru.privetdruk.l2jspace.gameserver.model.actor.container.player.RecipeBook;
-import ru.privetdruk.l2jspace.gameserver.model.actor.container.player.Request;
-import ru.privetdruk.l2jspace.gameserver.model.actor.container.player.ShortcutList;
-import ru.privetdruk.l2jspace.gameserver.model.actor.container.player.SubClass;
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Door;
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.FestivalMonster;
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Folk;
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Pet;
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Servitor;
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.StaticObject;
-import ru.privetdruk.l2jspace.gameserver.model.actor.instance.TamedBeast;
-import ru.privetdruk.l2jspace.gameserver.custom.instance.WeddingManager;
+import ru.privetdruk.l2jspace.gameserver.model.actor.container.player.*;
+import ru.privetdruk.l2jspace.gameserver.model.actor.instance.*;
 import ru.privetdruk.l2jspace.gameserver.model.actor.move.PlayerMove;
 import ru.privetdruk.l2jspace.gameserver.model.actor.status.PlayerStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.PetTemplate;
@@ -129,15 +61,11 @@ import ru.privetdruk.l2jspace.gameserver.model.group.Party;
 import ru.privetdruk.l2jspace.gameserver.model.group.PartyMatchRoom;
 import ru.privetdruk.l2jspace.gameserver.model.holder.Timestamp;
 import ru.privetdruk.l2jspace.gameserver.model.holder.skillnode.GeneralSkillNode;
+import ru.privetdruk.l2jspace.gameserver.model.item.Henna;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Weapon;
-import ru.privetdruk.l2jspace.gameserver.model.itemcontainer.Inventory;
-import ru.privetdruk.l2jspace.gameserver.model.itemcontainer.ItemContainer;
-import ru.privetdruk.l2jspace.gameserver.model.itemcontainer.PcFreight;
-import ru.privetdruk.l2jspace.gameserver.model.itemcontainer.PcInventory;
-import ru.privetdruk.l2jspace.gameserver.model.itemcontainer.PcWarehouse;
-import ru.privetdruk.l2jspace.gameserver.model.itemcontainer.PetInventory;
+import ru.privetdruk.l2jspace.gameserver.model.itemcontainer.*;
 import ru.privetdruk.l2jspace.gameserver.model.itemcontainer.listeners.ItemPassiveSkillsListener;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.model.location.SpawnLocation;
@@ -161,11 +89,20 @@ import ru.privetdruk.l2jspace.gameserver.skill.effect.EffectTemplate;
 import ru.privetdruk.l2jspace.gameserver.skill.function.FuncHenna;
 import ru.privetdruk.l2jspace.gameserver.skill.function.FuncMaxCpMul;
 import ru.privetdruk.l2jspace.gameserver.skill.function.FuncRegenCpMul;
-import ru.privetdruk.l2jspace.gameserver.taskmanager.AttackStanceTaskManager;
-import ru.privetdruk.l2jspace.gameserver.taskmanager.GameTimeTaskManager;
-import ru.privetdruk.l2jspace.gameserver.taskmanager.PvpFlagTaskManager;
-import ru.privetdruk.l2jspace.gameserver.taskmanager.ShadowItemTaskManager;
-import ru.privetdruk.l2jspace.gameserver.taskmanager.WaterTaskManager;
+import ru.privetdruk.l2jspace.gameserver.taskmanager.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.stream.Collectors;
 
 /**
  * This class represents a player in the world.<br>
@@ -384,8 +321,6 @@ public final class Player extends Playable {
 
     private Forum _forumMemo;
 
-    private boolean _isInSiegableHallSiege;
-
     private final Map<Integer, L2Skill> _skills = new ConcurrentSkipListMap<>();
     private final Map<Integer, Timestamp> _reuseTimeStamps = new ConcurrentHashMap<>();
 
@@ -417,8 +352,10 @@ public final class Player extends Playable {
     private Door _requestedGate;
 
     private final CachedData cachedData = new CachedData(getObjectId());
+    private final CachedDataValueInt nameColor = cachedData.newInt("nameColor");
+    private final CachedDataValueInt titleColor = cachedData.newInt("titleColor");
     private final CachedDataValueBoolean stopExp = cachedData.newBoolean("stopexp");
-    private final CachedDataValueBoolean messageRefusal = cachedData.newBoolean("traderefusal");
+    private final CachedDataValueBoolean tradeRefusal = cachedData.newBoolean("traderefusal");
 
     private int activeBoxes = -1;
     private List<String> activeBoxesCharacters = new ArrayList<>();
@@ -693,6 +630,11 @@ public final class Player extends Playable {
      */
     public MacroList getMacroList() {
         return _macroList;
+    }
+
+    @Override
+    public boolean canBeHealed() {
+        return super.canBeHealed() && !isCursedWeaponEquipped();
     }
 
     /**
@@ -1168,26 +1110,42 @@ public final class Player extends Playable {
      * @param id : The id of the {@link ClassId} to set.
      */
     public void setClassId(int id) {
-        if (!_subclassLock.tryLock())
+        if (!_subclassLock.tryLock()) {
             return;
+        }
 
         try {
             if (getLvlJoinedAcademy() != 0 && _clan != null && ClassId.VALUES[id].getLevel() == 2) {
-                if (getLvlJoinedAcademy() <= 16)
-                    _clan.addReputationScore(400);
-                else if (getLvlJoinedAcademy() >= 39)
-                    _clan.addReputationScore(170);
-                else
-                    _clan.addReputationScore((400 - (getLvlJoinedAcademy() - 16) * 10));
+                // Calculate points to add on Clan Reputation score.
+                int points;
+
+                if (getLvlJoinedAcademy() <= 16) {
+                    points = 400;
+                } else if (getLvlJoinedAcademy() >= 39) {
+                    points = 170;
+                } else {
+                    points = 400 - (getLvlJoinedAcademy() - 16) * 10;
+                }
+
+                // Add the points.
+                _clan.addReputationScore(points);
+
+                // Broadcast to all members, included future ousted member.
+                _clan.broadcastToMembers(SystemMessage.getSystemMessage(SystemMessageId.CLAN_MEMBER_GRADUATED_FROM_ACADEMY).addString(getName()).addNumber(points));
+
+                // Send static messages to the ousted member.
+                sendPacket(SystemMessageId.ACADEMY_MEMBERSHIP_TERMINATED);
+                sendPacket(SystemMessageId.YOU_HAVE_WITHDRAWN_FROM_CLAN);
 
                 setLvlJoinedAcademy(0);
 
-                // Oust pledge member from the academy, because he has finished his 2nd class transfer.
-                _clan.broadcastToMembers(new PledgeShowMemberListDelete(getName()), SystemMessage.getSystemMessage(SystemMessageId.CLAN_MEMBER_S1_EXPELLED).addString(getName()));
-                _clan.removeClanMember(getObjectId(), 0);
-                sendPacket(SystemMessageId.ACADEMY_MEMBERSHIP_TERMINATED);
+                // Refresh existing members, and send last message.
+                _clan.broadcastToMembersExcept(this, new PledgeShowMemberListDelete(getName()), SystemMessage.getSystemMessage(SystemMessageId.S1_HAS_WITHDRAWN_FROM_THE_CLAN).addString(getName()));
 
-                // receive graduation gift : academy circlet
+                // Oust pledge member from the academy.
+                _clan.removeClanMember(getObjectId(), 0);
+
+                // Reward the ousted members with graduation gift : academy circlet
                 addItem("Gift", 8181, 1, this, true);
             }
 
@@ -2209,14 +2167,17 @@ public final class Player extends Playable {
      * @return true if all conditions are met, false otherwise.
      */
     public boolean canOpenPrivateStore(boolean cancelActiveTrade) {
+        // If under shop mode, don't check any conditions except death.
+        if (isInStoreMode()) {
+            return !isAlikeDead();
+        }
+
         // Cancel active trade, if parameter is on.
         if (cancelActiveTrade && getActiveTradeList() != null)
             cancelActiveTrade();
 
         // Under fight conditions.
-        if (isSitting() && isInStoreMode())
-            return true;
-        else if (isInDuel() || AttackStanceTaskManager.getInstance().isInAttackStance(this) || getPvpFlag() > 0 || getAttack().isAttackingNow()) {
+        if (isInDuel() || AttackStanceTaskManager.getInstance().isInAttackStance(this) || getPvpFlag() > 0 || getAttack().isAttackingNow()) {
             setOperateType(OperateType.NONE);
             sendPacket(SystemMessageId.CANT_OPERATE_PRIVATE_STORE_DURING_COMBAT);
             return false;
@@ -4019,6 +3980,7 @@ public final class Player extends Playable {
 
                     player.refreshWeightPenalty();
                     player.refreshExpertisePenalty();
+                    player.refreshHennaList();
 
                     player.restoreFriendList();
 
@@ -4229,7 +4191,7 @@ public final class Player extends Playable {
             return;
 
         try (Connection con = ConnectionPool.getConnection()) {
-            // Delete all current stored effects for char to avoid dupe
+            // Delete all stored effects.
             try (PreparedStatement ps = con.prepareStatement(DELETE_SKILL_SAVE)) {
                 ps.setInt(1, getObjectId());
                 ps.setInt(2, getClassIndex());
@@ -4240,66 +4202,74 @@ public final class Player extends Playable {
             final List<Integer> storedSkills = new ArrayList<>();
 
             try (PreparedStatement ps = con.prepareStatement(ADD_SKILL_SAVE)) {
-                // Store all effect data along with calulated remaining reuse delays for matching skills. 'restore_type'= 0.
+                // Store all effects with their remaining reuse delays. 'restore_type'= 0.
                 if (storeEffects) {
                     for (final AbstractEffect effect : getAllEffects()) {
-                        if (effect.getEffectType() == EffectType.HEAL_OVER_TIME)
+                        // Don't bother with HoT effects.
+                        if (effect.getEffectType() == EffectType.HEAL_OVER_TIME) {
                             continue;
+                        }
 
+                        // Don't bother to reprocess the same skill id/level pair.
                         final L2Skill skill = effect.getSkill();
                         if (storedSkills.contains(skill.getReuseHashCode()))
                             continue;
 
+                        // Store the skill, to avoid to process it twice.
                         storedSkills.add(skill.getReuseHashCode());
-                        if (!effect.isHerbEffect() && effect.getInUse() && !skill.isToggle()) {
-                            ps.setInt(1, getObjectId());
-                            ps.setInt(2, skill.getId());
-                            ps.setInt(3, skill.getLevel());
-                            ps.setInt(4, effect.getCount());
-                            ps.setInt(5, effect.getTime());
 
-                            final Timestamp t = _reuseTimeStamps.get(skill.getReuseHashCode());
-                            if (t != null && t.hasNotPassed()) {
-                                ps.setLong(6, t.getReuse());
-                                ps.setDouble(7, t.getStamp());
-                            } else {
-                                ps.setLong(6, 0);
-                                ps.setDouble(7, 0);
-                            }
+                        // Don't bother about herbs and toggles.
+                        if (effect.isHerbEffect() || skill.isToggle())
+                            continue;
 
-                            ps.setInt(8, 0);
-                            ps.setInt(9, getClassIndex());
-                            ps.setInt(10, ++index);
-                            ps.addBatch(); // Add SQL
+                        ps.setInt(1, getObjectId());
+                        ps.setInt(2, skill.getId());
+                        ps.setInt(3, skill.getLevel());
+                        ps.setInt(4, effect.getCount());
+                        ps.setInt(5, effect.getTime());
+
+                        final Timestamp timestamp = _reuseTimeStamps.get(skill.getReuseHashCode());
+                        if (timestamp != null && timestamp.hasNotPassed()) {
+                            ps.setLong(6, timestamp.getReuse());
+                            ps.setDouble(7, timestamp.getStamp());
+                        } else {
+                            ps.setLong(6, 0);
+                            ps.setDouble(7, 0);
                         }
+
+                        ps.setInt(8, 0);
+                        ps.setInt(9, getClassIndex());
+                        ps.setInt(10, ++index);
+                        ps.addBatch();
                     }
                 }
 
-                // Store the reuse delays of remaining skills which lost effect but still under reuse delay. 'restore_type' 1.
+                // Store the leftover reuse delays. 'restore_type' 1.
                 for (final Map.Entry<Integer, Timestamp> entry : _reuseTimeStamps.entrySet()) {
+                    // Don't bother to reprocess the same skill id/level pair.
                     final int hash = entry.getKey();
                     if (storedSkills.contains(hash))
                         continue;
 
-                    final Timestamp t = entry.getValue();
-                    if (t != null && t.hasNotPassed()) {
+                    final Timestamp timestamp = entry.getValue();
+                    if (timestamp != null && timestamp.hasNotPassed()) {
                         storedSkills.add(hash);
 
                         ps.setInt(1, getObjectId());
-                        ps.setInt(2, t.getId());
-                        ps.setInt(3, t.getValue());
+                        ps.setInt(2, timestamp.getId());
+                        ps.setInt(3, timestamp.getValue());
                         ps.setInt(4, -1);
                         ps.setInt(5, -1);
-                        ps.setLong(6, t.getReuse());
-                        ps.setDouble(7, t.getStamp());
+                        ps.setLong(6, timestamp.getReuse());
+                        ps.setDouble(7, timestamp.getStamp());
                         ps.setInt(8, 1);
                         ps.setInt(9, getClassIndex());
                         ps.setInt(10, ++index);
-                        ps.addBatch(); // Add SQL
+                        ps.addBatch();
                     }
                 }
 
-                ps.executeBatch(); // Execute SQLs
+                ps.executeBatch();
             }
         } catch (final Exception e) {
             LOGGER.error("Couldn't store player effects.", e);
@@ -4390,7 +4360,7 @@ public final class Player extends Playable {
             storeSkill(newSkill, -1);
 
         // Update shortcuts.
-        if (updateShortcuts)
+        if (updateShortcuts || Config.AUTO_LEARN_SKILLS)
             getShortcutList().refreshShortcuts(newSkill.getId(), newSkill.getLevel(), ShortcutType.SKILL);
 
         return true;
@@ -4954,6 +4924,15 @@ public final class Player extends Playable {
         _cubicList.stopCubics(true);
     }
 
+    /**
+     * Refreshes {@link Henna}s in the {@link HennaList} of this {@link Player}.
+     */
+    public void refreshHennaList() {
+        _hennaList.recalculateStats();
+
+        sendPacket(new HennaInfo(this));
+    }
+
     public void enterObserverMode(int x, int y, int z) {
         dropAllSummons();
 
@@ -5499,6 +5478,8 @@ public final class Player extends Playable {
             else
                 _recipeBook.restore();
 
+            _hennaList.restore();
+
             restoreSkills();
             giveSkills();
             regiveTemporarySkills();
@@ -5517,9 +5498,6 @@ public final class Player extends Playable {
             if (st != null)
                 st.exitQuest(true);
 
-            _hennaList.restore();
-            sendPacket(new HennaInfo(this));
-
             int max = getStatus().getMaxHp();
             if (getStatus().getHp() > max)
                 getStatus().setHp(max);
@@ -5534,6 +5512,7 @@ public final class Player extends Playable {
 
             refreshWeightPenalty();
             refreshExpertisePenalty();
+            refreshHennaList();
             broadcastUserInfo();
 
             // Clear resurrect xp calculation
@@ -5708,6 +5687,10 @@ public final class Player extends Playable {
         if (_summon != null)
             _summon.teleportTo(getPosition(), 0);
 
+        // If under shop mode, cancel it. Leave the Player sat down.
+        if (isInStoreMode()) {
+            setOperateType(OperateType.NONE);
+        }
     }
 
     @Override
@@ -5971,8 +5954,9 @@ public final class Player extends Playable {
             if (isCursedWeaponEquipped())
                 CursedWeaponManager.getInstance().getCursedWeapon(_cursedWeaponEquippedId).setPlayer(null);
 
-            if (getClanId() > 0)
-                getClan().broadcastToOtherOnlineMembers(new PledgeShowMemberListUpdate(this), this);
+            if (_clan != null) {
+                _clan.broadcastToMembersExcept(this, new PledgeShowMemberListUpdate(this));
+            }
 
             if (isSeated()) {
                 final WorldObject object = World.getInstance().getObject(_throneId);
@@ -6241,14 +6225,6 @@ public final class Player extends Playable {
             _dismountTask.cancel(true);
             _dismountTask = null;
         }
-    }
-
-    public boolean isInSieagableHallSiege() {
-        return _isInSiegableHallSiege;
-    }
-
-    public void setInSiegableHallSiege(boolean value) {
-        _isInSiegableHallSiege = value;
     }
 
     /**
@@ -6725,6 +6701,7 @@ public final class Player extends Playable {
             statement.setInt(4, 0);
             statement.setLong(5, 0);
             statement.executeUpdate();
+            statement.close();
         } catch (Exception e) {
             LOGGER.warn("Could not insert char data: " + e);
         }
@@ -6737,6 +6714,7 @@ public final class Player extends Playable {
             statement.setLong(2, 0);
             statement.setString(3, account);
             statement.execute();
+            statement.close();
         } catch (SQLException e) {
             LOGGER.warn("PremiumService: Could not increase data");
         }
@@ -6796,30 +6774,14 @@ public final class Player extends Playable {
     @Override
     public void checkCondition(double curHp, double newHp) {
         // passive skills.
-        byte[] _hp =
-                {
-                        30,
-                        30,
-                };
+        byte[] hp = {30, 30,};
 
-        short[] _skills =
-                {
-                        290,
-                        291,
-                };
+        short[] skills = {290, 291,};
 
         // active skills.
-        short[] _effects_skills_id =
-                {
-                        292,
-                        292
-                };
+        short[] effectsSkillsId = {292, 292};
 
-        byte[] _effects_hp =
-                {
-                        30,
-                        60
-                };
+        byte[] effectsHp = {30, 60};
 
         final double percent = getStatus().getMaxHp() / 100;
         final double _curHpPercent = curHp / percent;
@@ -6827,26 +6789,26 @@ public final class Player extends Playable {
         boolean needsUpdate = false;
 
         // check for passive skills
-        for (int i = 0; i < _skills.length; i++) {
-            if (getSkillLevel(_skills[i]) > 0) {
-                if (_curHpPercent > _hp[i] && _newHpPercent <= _hp[i]) {
-                    sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_HP_DECREASED_EFFECT_APPLIES).addSkillName(_skills[i]));
+        for (int i = 0; i < skills.length; i++) {
+            if (getSkillLevel(skills[i]) > 0) {
+                if (_curHpPercent > hp[i] && _newHpPercent <= hp[i]) {
+                    sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_HP_DECREASED_EFFECT_APPLIES).addSkillName(skills[i]));
                     needsUpdate = true;
-                } else if (_curHpPercent <= _hp[i] && _newHpPercent > _hp[i]) {
-                    sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_HP_INCREASED_EFFECT_DISAPPEARS).addSkillName(_skills[i]));
+                } else if (_curHpPercent <= hp[i] && _newHpPercent > hp[i]) {
+                    sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_HP_INCREASED_EFFECT_DISAPPEARS).addSkillName(skills[i]));
                     needsUpdate = true;
                 }
             }
         }
 
         // check for active effects
-        for (int i = 0; i < _effects_skills_id.length; i++) {
-            if (getFirstEffect(_effects_skills_id[i]) != null) {
-                if (_curHpPercent > _effects_hp[i] && _newHpPercent <= _effects_hp[i]) {
-                    sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_HP_DECREASED_EFFECT_APPLIES).addSkillName(_effects_skills_id[i]));
+        for (int i = 0; i < effectsSkillsId.length; i++) {
+            if (getFirstEffect(effectsSkillsId[i]) != null) {
+                if (_curHpPercent > effectsHp[i] && _newHpPercent <= effectsHp[i]) {
+                    sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_HP_DECREASED_EFFECT_APPLIES).addSkillName(effectsSkillsId[i]));
                     needsUpdate = true;
-                } else if (_curHpPercent <= _effects_hp[i] && _newHpPercent > _effects_hp[i]) {
-                    sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_HP_INCREASED_EFFECT_DISAPPEARS).addSkillName(_effects_skills_id[i]));
+                } else if (_curHpPercent <= effectsHp[i] && _newHpPercent > effectsHp[i]) {
+                    sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_HP_INCREASED_EFFECT_DISAPPEARS).addSkillName(effectsSkillsId[i]));
                     needsUpdate = true;
                 }
             }
@@ -6860,6 +6822,24 @@ public final class Player extends Playable {
         return cachedData;
     }
 
+    public int getNameColor() {
+        return nameColor.get();
+    }
+
+    public int setNameColor(int value) {
+        nameColor.set(value);
+        return value;
+    }
+
+    public int getTitleColor() {
+        return titleColor.get();
+    }
+
+    public int setTitleColor(int value) {
+        titleColor.set(value);
+        return value;
+    }
+
     public void setStopExp(boolean value) {
         stopExp.set(value);
     }
@@ -6869,17 +6849,11 @@ public final class Player extends Playable {
     }
 
     public void setTradeRefusal(boolean value) {
-        messageRefusal.set(value);
+        tradeRefusal.set(value);
     }
 
     public boolean isTradeRefusal() {
-        return messageRefusal.get();
-    }
-
-    public final int displayAugmentation(Shortcut sc) {
-        ItemInstance item = getInventory().getItemByObjectId(sc.getId());
-
-        return item == null || !item.isAugmented() ? 0 : item.getAugmentation().getId();
+        return tradeRefusal.get();
     }
 
     public boolean checkMultiBox() {

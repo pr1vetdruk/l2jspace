@@ -1,22 +1,14 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.ai.boss;
 
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable.FrequentSkill;
 import ru.privetdruk.l2jspace.gameserver.data.manager.GrandBossManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ZoneManager;
 import ru.privetdruk.l2jspace.gameserver.data.xml.DoorData;
 import ru.privetdruk.l2jspace.gameserver.enums.IntentionType;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Attackable;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.actor.*;
 import ru.privetdruk.l2jspace.gameserver.model.actor.container.npc.AggroInfo;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Door;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.GrandBoss;
@@ -26,6 +18,10 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.PlaySound;
 import ru.privetdruk.l2jspace.gameserver.scripting.script.ai.AttackableAIScript;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 import ru.privetdruk.l2jspace.gameserver.taskmanager.GameTimeTaskManager;
+
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 public class Zaken extends AttackableAIScript {
     private static final BossZone ZONE = ZoneManager.getInstance().getZoneById(110000, BossZone.class);
@@ -133,9 +129,8 @@ public class Zaken extends AttackableAIScript {
                         willTeleport = false;
 
                     // We're still under willTeleport possibility. Now we check each victim distance. If at least one is near Zaken, we cancel the teleport possibility.
-                    if (willTeleport && VICTIMS.stream().anyMatch(p -> p.isIn3DRadius(_zakenLocation, 1500))) {
+                    if (willTeleport && VICTIMS.stream().anyMatch(p -> p.isIn3DRadius(_zakenLocation, 1500)))
                         willTeleport = false;
-                    }
 
                     // All targets are far, clear victims list and Zaken teleport.
                     if (willTeleport) {
@@ -389,7 +384,7 @@ public class Zaken extends AttackableAIScript {
             GrandBossManager.getInstance().setBossStatus(ZAKEN, DEAD);
 
             // Calculate the next respawn time.
-            long respawnTime = (Config.SPAWN_INTERVAL_ZAKEN * 60L + Rnd.get(-60 * Config.RANDOM_SPAWN_TIME_ZAKEN, 60 * Config.RANDOM_SPAWN_TIME_ZAKEN)) * 60000;
+            final long respawnTime = TimeUnit.HOURS.toMillis(Config.SPAWN_INTERVAL_ZAKEN) + Rnd.get(TimeUnit.HOURS.toMillis(Config.RANDOM_SPAWN_TIME_ZAKEN));
 
             // Cancel tasks.
             cancelQuestTimers("1001");

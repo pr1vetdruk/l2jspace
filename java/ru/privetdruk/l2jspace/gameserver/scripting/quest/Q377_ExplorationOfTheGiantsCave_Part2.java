@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
 import ru.privetdruk.l2jspace.common.random.Rnd;
-
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
@@ -70,9 +69,8 @@ public class Q377_ExplorationOfTheGiantsCave_Part2 extends Quest {
         addStartNpc(31147); // Sobling
         addTalkId(31147);
 
-        for (int npcId : CHANCES.keySet()) {
+        for (int npcId : CHANCES.keySet())
             addKillId(npcId);
-        }
     }
 
     @Override

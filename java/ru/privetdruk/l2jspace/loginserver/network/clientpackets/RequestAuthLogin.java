@@ -1,12 +1,11 @@
 package ru.privetdruk.l2jspace.loginserver.network.clientpackets;
 
-import java.security.GeneralSecurityException;
-
-import javax.crypto.Cipher;
-
 import ru.privetdruk.l2jspace.loginserver.LoginController;
 import ru.privetdruk.l2jspace.loginserver.network.LoginClient;
 import ru.privetdruk.l2jspace.loginserver.network.serverpackets.LoginFail;
+
+import javax.crypto.Cipher;
+import java.security.GeneralSecurityException;
 
 public class RequestAuthLogin extends L2LoginClientPacket {
     private final byte[] _raw = new byte[128];

@@ -1,11 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.taskmanager;
 
+import ru.privetdruk.l2jspace.common.pool.ThreadPool;
+import ru.privetdruk.l2jspace.gameserver.model.buylist.Product;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
-import ru.privetdruk.l2jspace.gameserver.model.buylist.Product;
 
 /**
  * Handles individual {@link Product} restock timers.<br>

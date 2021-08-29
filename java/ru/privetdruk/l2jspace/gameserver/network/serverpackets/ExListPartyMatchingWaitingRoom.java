@@ -1,9 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.PartyMatchRoomManager;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+
+import java.util.List;
 
 public class ExListPartyMatchingWaitingRoom extends L2GameServerPacket {
     private final int _mode;

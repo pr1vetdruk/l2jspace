@@ -1,11 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.network.gameserverpackets;
 
+import ru.privetdruk.l2jspace.common.network.AttributeType;
+import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import ru.privetdruk.l2jspace.common.network.AttributeType;
-
-import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
 
 public class ServerStatus extends GameServerBasePacket {
     private final List<IntIntHolder> _attributes;

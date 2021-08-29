@@ -1,24 +1,18 @@
 package ru.privetdruk.l2jspace.gameserver.data.xml;
 
-import java.nio.file.Path;
-
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import ru.privetdruk.l2jspace.common.data.xml.IXmlReader;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ClanHallManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.SevenSignsManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ZoneManager;
-import ru.privetdruk.l2jspace.gameserver.enums.CabalType;
-import ru.privetdruk.l2jspace.gameserver.enums.SealType;
-import ru.privetdruk.l2jspace.gameserver.enums.SiegeSide;
-import ru.privetdruk.l2jspace.gameserver.enums.SpawnType;
-import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
+import ru.privetdruk.l2jspace.gameserver.enums.*;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassRace;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.clanhall.ClanHall;
-import ru.privetdruk.l2jspace.gameserver.model.clanhall.SiegableHall;
 import ru.privetdruk.l2jspace.gameserver.model.entity.Castle;
 import ru.privetdruk.l2jspace.gameserver.model.entity.ClanHallSiege;
 import ru.privetdruk.l2jspace.gameserver.model.entity.Siege;
@@ -26,8 +20,7 @@ import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.ArenaZone;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.TownZone;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
+import java.nio.file.Path;
 
 /**
  * This class loads and stores map regions values under a 2D int array.<br>

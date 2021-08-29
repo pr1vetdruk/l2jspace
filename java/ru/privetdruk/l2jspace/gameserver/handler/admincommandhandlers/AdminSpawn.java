@@ -1,18 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.handler.admincommandhandlers;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
-
-import ru.privetdruk.l2jspace.gameserver.data.manager.DayNightManager;
-import ru.privetdruk.l2jspace.gameserver.data.manager.FenceManager;
-import ru.privetdruk.l2jspace.gameserver.data.manager.RaidBossManager;
-import ru.privetdruk.l2jspace.gameserver.data.manager.SevenSignsManager;
-import ru.privetdruk.l2jspace.gameserver.data.manager.SevenSignsSpawnManager;
+import ru.privetdruk.l2jspace.gameserver.data.manager.*;
 import ru.privetdruk.l2jspace.gameserver.data.sql.SpawnTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.AdminData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
@@ -27,6 +16,12 @@ import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AdminSpawn implements IAdminCommandHandler {
     private static final String[] ADMIN_COMMANDS =

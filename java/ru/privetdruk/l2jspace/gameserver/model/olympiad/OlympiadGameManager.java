@@ -1,13 +1,14 @@
 package ru.privetdruk.l2jspace.gameserver.model.olympiad;
 
-import java.util.Collection;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.ZoneManager;
+import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.OlympiadStadiumZone;
+import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
+
+import java.util.Collection;
+import java.util.List;
 
 public class OlympiadGameManager implements Runnable {
     private static final CLogger LOGGER = new CLogger(OlympiadGameManager.class.getName());
@@ -34,51 +35,70 @@ public class OlympiadGameManager implements Runnable {
             return;
 
         if (Olympiad.getInstance().isInCompPeriod()) {
-            OlympiadGameTask task;
-            AbstractOlympiadGame newGame;
+            List<List<Integer>> readyClassed = OlympiadManager.getInstance().hasEnoughClassBasedParticipants();
+            boolean readyNonClassed = OlympiadManager.getInstance().hasEnoughNonClassBasedParticipants();
 
-            List<List<Integer>> readyClassed = OlympiadManager.getInstance().hasEnoughRegisteredClassed();
-            boolean readyNonClassed = OlympiadManager.getInstance().hasEnoughRegisteredNonClassed();
+            // Broadcast to registered Players there isn't enough participants.
+            if (readyClassed == null && !readyNonClassed) {
+                // Broadcast to registered class based Players.
+                for (List<Integer> classList : OlympiadManager.getInstance().getClassBasedParticipants().values()) {
+                    for (int objectId : classList) {
+                        final Player player = World.getInstance().getPlayer(objectId);
+                        if (player != null)
+                            player.sendPacket(SystemMessageId.GAMES_DELAYED);
+                    }
+                }
 
-            if (readyClassed != null || readyNonClassed) {
-                // set up the games queue
-                for (int i = 0; i < _tasks.length; i++) {
-                    task = _tasks[i];
-                    synchronized (task) {
-                        if (!task.isRunning()) {
-                            // Fair arena distribution
-                            // 0,2,4,6,8.. arenas checked for classed or teams first
-                            if ((readyClassed != null) && (i % 2) == 0) {
-                                // if no ready teams found check for classed
-                                newGame = OlympiadGameClassed.createGame(i, readyClassed);
-                                if (newGame != null) {
-                                    task.attachGame(newGame);
-                                    continue;
-                                }
-                                readyClassed = null;
+                // Broadcast to registered non class based Players.
+                for (int objectId : OlympiadManager.getInstance().getNonClassBasedParticipants()) {
+                    final Player player = World.getInstance().getPlayer(objectId);
+                    if (player != null)
+                        player.sendPacket(SystemMessageId.GAMES_DELAYED);
+                }
+                return;
+            }
+
+            // set up the games queue
+            for (int i = 0; i < _tasks.length; i++) {
+                OlympiadGameTask task = _tasks[i];
+                synchronized (task) {
+                    // Fair arena distribution
+                    if (!task.isRunning()) {
+                        // 0,2,4,6,8.. arenas checked for classed or teams first
+                        if (readyClassed != null && (i % 2) == 0) {
+                            // if no ready teams found check for classed
+                            final AbstractOlympiadGame newGame = OlympiadGameClassed.createGame(i, readyClassed);
+                            if (newGame != null) {
+                                task.attachGame(newGame);
+                                continue;
                             }
-                            // 1,3,5,7,9.. arenas used for non-classed
-                            // also other arenas will be used for non-classed if no classed or teams available
-                            if (readyNonClassed) {
-                                newGame = OlympiadGameNonClassed.createGame(i, OlympiadManager.getInstance().getRegisteredNonClassBased());
-                                if (newGame != null) {
-                                    task.attachGame(newGame);
-                                    continue;
-                                }
-                                readyNonClassed = false;
+
+                            readyClassed = null;
+                        }
+
+                        // 1,3,5,7,9.. arenas used for non-classed
+                        // also other arenas will be used for non-classed if no classed or teams available
+                        if (readyNonClassed) {
+                            final AbstractOlympiadGame newGame = OlympiadGameNonClassed.createGame(i, OlympiadManager.getInstance().getNonClassBasedParticipants());
+                            if (newGame != null) {
+                                task.attachGame(newGame);
+                                continue;
                             }
+
+                            readyNonClassed = false;
                         }
                     }
 
                     // stop generating games if no more participants
-                    if (readyClassed == null && !readyNonClassed)
+                    if (readyClassed == null && !readyNonClassed) {
                         break;
+                    }
                 }
             }
         } else {
             // not in competition period
             if (isAllTasksFinished()) {
-                OlympiadManager.getInstance().clearRegistered();
+                OlympiadManager.getInstance().clearParticipants();
                 _battleStarted = false;
                 LOGGER.info("All current Olympiad games finished.");
             }

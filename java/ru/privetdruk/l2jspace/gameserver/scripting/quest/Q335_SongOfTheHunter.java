@@ -1,15 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import ru.privetdruk.l2jspace.common.lang.StringUtil;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.enums.ScriptEventType;
@@ -19,6 +12,13 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.network.NpcStringId;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.scripting.QuestState;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class Q335_SongOfTheHunter extends Quest {
     private static final String QUEST_NAME = "Q335_SongOfTheHunter";
@@ -1089,13 +1089,12 @@ public class Q335_SongOfTheHunter extends Quest {
             if (sound)
                 playSound(player, SOUND_MIDDLE);
         } else if (event.equalsIgnoreCase("30746-06.htm")) {
-            for (Map.Entry<Integer, Integer> entry : CYBELLIN_REQUEST_REWARDS.entrySet()) {
-                int bloodCrystal = entry.getKey();
+            for (Entry<Integer, Integer> entry : CYBELLIN_REQUEST_REWARDS.entrySet()) {
+                final int bloodCrystal = entry.getKey();
 
                 if (player.getInventory().hasItems(bloodCrystal)) {
                     takeItems(player, bloodCrystal, -1);
                     rewardItems(player, ADENA, entry.getValue());
-
                     break;
                 }
             }

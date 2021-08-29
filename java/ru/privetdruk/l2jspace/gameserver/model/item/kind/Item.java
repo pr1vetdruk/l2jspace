@@ -1,20 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.model.item.kind;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import ru.privetdruk.l2jspace.common.data.StatSet;
-
-import ru.privetdruk.l2jspace.gameserver.enums.items.ActionType;
-import ru.privetdruk.l2jspace.gameserver.enums.items.ArmorType;
-import ru.privetdruk.l2jspace.gameserver.enums.items.CrystalType;
-import ru.privetdruk.l2jspace.gameserver.enums.items.EtcItemType;
-import ru.privetdruk.l2jspace.gameserver.enums.items.ItemType;
-import ru.privetdruk.l2jspace.gameserver.enums.items.MaterialType;
-import ru.privetdruk.l2jspace.gameserver.enums.items.WeaponType;
+import ru.privetdruk.l2jspace.gameserver.enums.items.*;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
@@ -24,9 +11,11 @@ import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
+import ru.privetdruk.l2jspace.gameserver.skill.condition.Condition;
 import ru.privetdruk.l2jspace.gameserver.skill.function.base.Func;
 import ru.privetdruk.l2jspace.gameserver.skill.function.base.FuncTemplate;
-import ru.privetdruk.l2jspace.gameserver.skill.condition.Condition;
+
+import java.util.*;
 
 /**
  * This container contains all informations concerning an item (weapon, armor, etc).

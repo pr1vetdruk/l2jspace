@@ -1,5 +1,21 @@
 package ru.privetdruk.l2jspace.gameserver;
 
+import ru.privetdruk.l2jspace.common.logging.CLogger;
+import ru.privetdruk.l2jspace.common.network.AttributeType;
+import ru.privetdruk.l2jspace.common.network.ServerType;
+import ru.privetdruk.l2jspace.common.random.Rnd;
+import ru.privetdruk.l2jspace.config.Config;
+import ru.privetdruk.l2jspace.gameserver.enums.FailReason;
+import ru.privetdruk.l2jspace.gameserver.model.World;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.network.GameClient;
+import ru.privetdruk.l2jspace.gameserver.network.GameClient.GameClientState;
+import ru.privetdruk.l2jspace.gameserver.network.gameserverpackets.*;
+import ru.privetdruk.l2jspace.gameserver.network.loginserverpackets.*;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.AuthLoginFail;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.CharSelectInfo;
+import ru.privetdruk.l2jspace.loginserver.crypt.NewCrypt;
+
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,34 +33,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import ru.privetdruk.l2jspace.common.logging.CLogger;
-import ru.privetdruk.l2jspace.common.network.AttributeType;
-import ru.privetdruk.l2jspace.common.network.ServerType;
-import ru.privetdruk.l2jspace.common.random.Rnd;
-
-import ru.privetdruk.l2jspace.config.Config;
-import ru.privetdruk.l2jspace.gameserver.enums.FailReason;
-import ru.privetdruk.l2jspace.gameserver.model.World;
-import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
-import ru.privetdruk.l2jspace.gameserver.network.GameClient;
-import ru.privetdruk.l2jspace.gameserver.network.GameClient.GameClientState;
-import ru.privetdruk.l2jspace.gameserver.network.gameserverpackets.AuthRequest;
-import ru.privetdruk.l2jspace.gameserver.network.gameserverpackets.BlowFishKey;
-import ru.privetdruk.l2jspace.gameserver.network.gameserverpackets.ChangeAccessLevel;
-import ru.privetdruk.l2jspace.gameserver.network.gameserverpackets.GameServerBasePacket;
-import ru.privetdruk.l2jspace.gameserver.network.gameserverpackets.PlayerAuthRequest;
-import ru.privetdruk.l2jspace.gameserver.network.gameserverpackets.PlayerInGame;
-import ru.privetdruk.l2jspace.gameserver.network.gameserverpackets.PlayerLogout;
-import ru.privetdruk.l2jspace.gameserver.network.gameserverpackets.ServerStatus;
-import ru.privetdruk.l2jspace.gameserver.network.loginserverpackets.AuthResponse;
-import ru.privetdruk.l2jspace.gameserver.network.loginserverpackets.InitLS;
-import ru.privetdruk.l2jspace.gameserver.network.loginserverpackets.KickPlayer;
-import ru.privetdruk.l2jspace.gameserver.network.loginserverpackets.LoginServerFail;
-import ru.privetdruk.l2jspace.gameserver.network.loginserverpackets.PlayerAuthResponse;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.AuthLoginFail;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.CharSelectInfo;
-import ru.privetdruk.l2jspace.loginserver.crypt.NewCrypt;
 
 public class LoginServerThread extends Thread {
     protected static final CLogger LOGGER = new CLogger(LoginServerThread.class.getName());

@@ -1,11 +1,11 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.Collection;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.model.buylist.NpcBuyList;
 import ru.privetdruk.l2jspace.gameserver.model.buylist.Product;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
+
+import java.util.Collection;
 
 public class ShopPreviewList extends L2GameServerPacket {
     private final int _listId;

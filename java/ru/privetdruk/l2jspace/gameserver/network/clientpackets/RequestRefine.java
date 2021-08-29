@@ -1,6 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
 import ru.privetdruk.l2jspace.gameserver.data.xml.AugmentationData;
+import ru.privetdruk.l2jspace.gameserver.enums.ShortcutType;
 import ru.privetdruk.l2jspace.gameserver.enums.StatusType;
 import ru.privetdruk.l2jspace.gameserver.model.Augmentation;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
@@ -106,6 +107,9 @@ public final class RequestRefine extends AbstractRefinePacket {
         InventoryUpdate iu = new InventoryUpdate();
         iu.addModifiedItem(targetItem);
         player.sendPacket(iu);
+
+        // Refresh shortcuts.
+        player.getShortcutList().refreshShortcuts(s -> targetItem.getObjectId() == s.getId() && s.getType() == ShortcutType.ITEM);
 
         StatusUpdate su = new StatusUpdate(player);
         su.addAttribute(StatusType.CUR_LOAD, player.getCurrentWeight());

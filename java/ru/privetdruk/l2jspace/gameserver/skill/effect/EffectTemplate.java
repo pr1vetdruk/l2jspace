@@ -1,20 +1,19 @@
 package ru.privetdruk.l2jspace.gameserver.skill.effect;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
-
 import ru.privetdruk.l2jspace.gameserver.enums.skills.AbnormalEffect;
 import ru.privetdruk.l2jspace.gameserver.enums.skills.SkillType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.skill.AbstractEffect;
 import ru.privetdruk.l2jspace.gameserver.skill.ChanceCondition;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
-import ru.privetdruk.l2jspace.gameserver.skill.function.base.FuncTemplate;
 import ru.privetdruk.l2jspace.gameserver.skill.condition.Condition;
+import ru.privetdruk.l2jspace.gameserver.skill.function.base.FuncTemplate;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EffectTemplate {
     private static final CLogger LOGGER = new CLogger(EffectTemplate.class.getName());

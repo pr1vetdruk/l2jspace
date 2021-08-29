@@ -3,13 +3,14 @@ package ru.privetdruk.l2jspace.gameserver.model.zone.type;
 import ru.privetdruk.l2jspace.gameserver.enums.ZoneId;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.zone.type.subtype.SpawnZoneType;
 import ru.privetdruk.l2jspace.gameserver.model.zone.type.subtype.ZoneType;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 
 /**
  * A zone extending {@link ZoneType}, where summoning is forbidden. The place is considered a pvp zone (no flag, no karma). It is used for arenas.
  */
-public class ArenaZone extends ZoneType {
+public class ArenaZone extends SpawnZoneType {
     public ArenaZone(int id) {
         super(id);
     }

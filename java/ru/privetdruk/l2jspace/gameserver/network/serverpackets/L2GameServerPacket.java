@@ -2,7 +2,6 @@ package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.mmocore.SendablePacket;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.network.GameClient;
 

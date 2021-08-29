@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.handler;
 
 import ru.privetdruk.l2jspace.common.logging.CLogger;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 

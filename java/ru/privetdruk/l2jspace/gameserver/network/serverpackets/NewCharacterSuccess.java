@@ -1,11 +1,11 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.data.xml.PlayerData;
 import ru.privetdruk.l2jspace.gameserver.enums.actors.ClassId;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.PlayerTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NewCharacterSuccess extends L2GameServerPacket {
     private final List<PlayerTemplate> _templates = new ArrayList<>();

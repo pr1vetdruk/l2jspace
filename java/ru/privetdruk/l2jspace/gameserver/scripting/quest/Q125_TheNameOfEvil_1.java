@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.quest;
 
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.gameserver.enums.QuestStatus;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
@@ -191,24 +190,20 @@ public class Q125_TheNameOfEvil_1 extends Quest {
 
     @Override
     public String onKill(Npc npc, Creature killer) {
-        Player player = killer.getActingPlayer();
+        final Player player = killer.getActingPlayer();
 
-        QuestState questState = checkPlayerCondition(player, npc, 3);
-        if (questState == null) {
+        final QuestState st = checkPlayerCondition(player, npc, 3);
+        if (st == null)
             return null;
-        }
 
-        int npcId = npc.getNpcId();
+        final int npcId = npc.getNpcId();
         if (ArraysUtil.contains(ORNITHOMIMUS, npcId)) {
-            if (dropItems(player, ORNITHOMIMUS_CLAW, 1, 2, 50000) && player.getInventory().getItemCount(DEINONYCHUS_BONE) == 2) {
-                questState.setCond(4);
-            }
+            if (dropItems(player, ORNITHOMIMUS_CLAW, 1, 2, 50000) && player.getInventory().getItemCount(DEINONYCHUS_BONE) == 2)
+                st.setCond(4);
         } else if (ArraysUtil.contains(DEINONYCHUS, npcId)) {
-            if (dropItems(player, DEINONYCHUS_BONE, 1, 2, 50000) && player.getInventory().getItemCount(ORNITHOMIMUS_CLAW) == 2) {
-                questState.setCond(4);
-            }
+            if (dropItems(player, DEINONYCHUS_BONE, 1, 2, 50000) && player.getInventory().getItemCount(ORNITHOMIMUS_CLAW) == 2)
+                st.setCond(4);
         }
-
         return null;
     }
 }

@@ -1,12 +1,8 @@
 package ru.privetdruk.l2jspace.gameserver.scripting.script.ai;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.common.math.MathUtil;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 import ru.privetdruk.l2jspace.common.util.ArraysUtil;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
 import ru.privetdruk.l2jspace.gameserver.enums.IntentionType;
@@ -21,7 +17,12 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.scripting.Quest;
 import ru.privetdruk.l2jspace.gameserver.skill.L2Skill;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AttackableAIScript extends Quest {
+    private static final String ACTOR_INSTANCE_PACKAGE = "ru.privetdruk.l2jspace.gameserver.model.actor.instance.";
+
     /**
      * Implicit constructor for generic AI script.<br>
      * It is used by default for all {@link Attackable} instances.
@@ -53,8 +54,7 @@ public class AttackableAIScript extends Quest {
         // register all mobs here...
         for (final NpcTemplate template : NpcData.getInstance().getAllNpcs()) {
             try {
-                Class<?> aClass = Class.forName(NpcData.getNpcInstancePackage(template.getNpcId()) + template.getType());
-                if (Attackable.class.isAssignableFrom(aClass)) {
+                if (Attackable.class.isAssignableFrom(Class.forName(ACTOR_INSTANCE_PACKAGE + template.getType()))) {
                     template.addQuestEvent(ScriptEventType.ON_ATTACK, this);
                     template.addQuestEvent(ScriptEventType.ON_KILL, this);
                     template.addQuestEvent(ScriptEventType.ON_SPAWN, this);
@@ -109,7 +109,7 @@ public class AttackableAIScript extends Quest {
 
     @Override
     public String onAttack(Npc npc, Creature attacker, int damage, L2Skill skill) {
-        ((Attackable) npc).getAggroList().addDamageHate(attacker, damage, (damage * 100) / (npc.getStatus().getLevel() + 7));
+        ((Attackable) npc).getAggroList().addDamageHate(attacker, damage, damage / (npc.getStatus().getLevel() + 7) * ((npc.isRaidRelated()) ? 100 : 100));
         return null;
     }
 
@@ -206,10 +206,11 @@ public class AttackableAIScript extends Quest {
                 sideCount++;
         }
 
-        return new int[]{
-                frontCount,
-                backCount,
-                sideCount
-        };
+        return new int[]
+                {
+                        frontCount,
+                        backCount,
+                        sideCount
+                };
     }
 }

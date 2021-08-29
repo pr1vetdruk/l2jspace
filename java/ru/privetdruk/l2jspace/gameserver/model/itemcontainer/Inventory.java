@@ -1,24 +1,9 @@
 package ru.privetdruk.l2jspace.gameserver.model.itemcontainer;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.HeroManager;
 import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
-import ru.privetdruk.l2jspace.gameserver.enums.items.ArmorType;
-import ru.privetdruk.l2jspace.gameserver.enums.items.EtcItemType;
-import ru.privetdruk.l2jspace.gameserver.enums.items.ItemLocation;
-import ru.privetdruk.l2jspace.gameserver.enums.items.ItemState;
-import ru.privetdruk.l2jspace.gameserver.enums.items.ItemType;
-import ru.privetdruk.l2jspace.gameserver.enums.items.WeaponType;
+import ru.privetdruk.l2jspace.gameserver.enums.items.*;
 import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
@@ -29,6 +14,15 @@ import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
 import ru.privetdruk.l2jspace.gameserver.model.itemcontainer.listeners.ChangeRecorderListener;
 import ru.privetdruk.l2jspace.gameserver.model.itemcontainer.listeners.OnEquipListener;
 import ru.privetdruk.l2jspace.gameserver.model.itemcontainer.listeners.StatsListener;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * This class manages a {@link Creature}'s inventory.<br>

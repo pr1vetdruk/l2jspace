@@ -134,7 +134,7 @@ public class Q615_MagicalPowerOfFire_Part1 extends Quest {
             // Put "spawned" flag to 1 to avoid to spawn another.
             st.set("spawned", 1);
 
-            // Spawn Asefa's eye.
+            // Spawn Asefa's Eye.
             Npc asefaEye = addSpawn(ASEFA_EYE, player, true, 10000, true);
             if (asefaEye != null) {
                 asefaEye.broadcastNpcSay(NpcStringId.ID_61503);
@@ -147,12 +147,11 @@ public class Q615_MagicalPowerOfFire_Part1 extends Quest {
 
     @Override
     public String onKill(Npc npc, Creature killer) {
-        Player player = killer.getActingPlayer();
+        final Player player = killer.getActingPlayer();
 
-        QuestState questState = getRandomPartyMemberState(player, npc, QuestStatus.STARTED);
-        if (questState == null) {
+        final QuestState st = getRandomPartyMemberState(player, npc, QuestStatus.STARTED);
+        if (st == null)
             return null;
-        }
 
         npc.broadcastNpcSay(NpcStringId.ID_61504);
 

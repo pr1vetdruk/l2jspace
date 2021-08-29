@@ -1,15 +1,14 @@
 package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
-
 import ru.privetdruk.l2jspace.gameserver.data.manager.CursedWeaponManager;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.InventoryUpdate;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 public final class RequestDestroyItem extends L2GameClientPacket {
     private static final String DELETE_PET = "DELETE FROM pets WHERE item_obj_id=?";

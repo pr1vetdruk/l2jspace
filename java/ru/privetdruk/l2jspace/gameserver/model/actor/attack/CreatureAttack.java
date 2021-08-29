@@ -1,11 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor.attack;
 
-import java.util.ArrayList;
-import java.util.concurrent.ScheduledFuture;
-
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ThreadPool;
-
 import ru.privetdruk.l2jspace.config.Config;
 import ru.privetdruk.l2jspace.gameserver.enums.AiEventType;
 import ru.privetdruk.l2jspace.gameserver.enums.GaugeColor;
@@ -29,6 +25,9 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.Attack;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SetupGauge;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 import ru.privetdruk.l2jspace.gameserver.skill.Formula;
+
+import java.util.ArrayList;
+import java.util.concurrent.ScheduledFuture;
 
 /**
  * This class groups all attack data related to a {@link Creature}.

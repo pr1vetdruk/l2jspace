@@ -1,11 +1,10 @@
 package ru.privetdruk.l2jspace.gameserver.model.item;
 
+import ru.privetdruk.l2jspace.common.random.Rnd;
+import ru.privetdruk.l2jspace.config.Config;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import ru.privetdruk.l2jspace.common.random.Rnd;
-
-import ru.privetdruk.l2jspace.config.Config;
 
 public class DropCategory {
     private final List<DropData> _drops;

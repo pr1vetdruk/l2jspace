@@ -1,12 +1,12 @@
 package ru.privetdruk.l2jspace.gameserver.communitybbs.model;
 
+import ru.privetdruk.l2jspace.common.logging.CLogger;
+import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import ru.privetdruk.l2jspace.common.logging.CLogger;
-import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 
 public class Post {
     private static final CLogger LOGGER = new CLogger(Post.class.getName());

@@ -1,10 +1,10 @@
 package ru.privetdruk.l2jspace.common.logging;
 
+import ru.privetdruk.l2jspace.common.lang.StringReplacer;
+
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
-
-import ru.privetdruk.l2jspace.common.lang.StringReplacer;
 
 /**
  * Wraps the regular {@link Logger} to handle slf4j features, notably {} replacement.<br>

@@ -1,13 +1,13 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.craft.ManufactureItem;
 import ru.privetdruk.l2jspace.gameserver.model.craft.ManufactureList;
 import ru.privetdruk.l2jspace.gameserver.model.item.Recipe;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 public class RecipeShopManageList extends L2GameServerPacket {
     private final Player _player;
