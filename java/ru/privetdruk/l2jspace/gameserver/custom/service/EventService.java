@@ -46,7 +46,7 @@ public class EventService {
                 statement.setString(1, eventType.name());
                 resultSet = statement.executeQuery();
                 if (!resultSet.next()) {
-                    LOGGER.warn("Settings not found!");
+                    LOGGER.warn(eventType.name() + ": Settings not found!");
                     return;
                 }
 

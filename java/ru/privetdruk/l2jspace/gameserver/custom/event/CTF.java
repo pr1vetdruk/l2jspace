@@ -674,9 +674,7 @@ public class CTF extends EventEngine {
 
         StringBuilder content = new StringBuilder();
 
-        if (eventState != IN_PROGRESS && eventState != REGISTRATION) {
-            content.append("<center>В данным момент ивент не проводится.</center>");
-        } else if (eventState != IN_PROGRESS && teamMode == SHUFFLE && players.size() >= settings.getMaxPlayers()) {
+       if (eventState != IN_PROGRESS && teamMode == SHUFFLE && players.size() >= settings.getMaxPlayers()) {
             content.append("Участников: <font color=\"00FF00\">").append(players.size()).append(".</font><br>");
             content.append("Максимум игроков: <font color=\"00FF00\">").append(settings.getMaxPlayers()).append("</font><br><br>");
             content.append("<font color=\"FFFF00\">Вы не можете участвовать в этом ивенте.</font><br>");

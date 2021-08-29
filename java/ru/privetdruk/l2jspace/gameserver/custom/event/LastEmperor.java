@@ -9,6 +9,7 @@ import ru.privetdruk.l2jspace.gameserver.custom.model.Reward;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBorder;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventPlayer;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventType;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.lastemperor.LastEmperorPlayer;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.location.SpawnLocation;
 
@@ -16,7 +17,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBypass.JOIN;
+import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBypass.LEAVE;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.ERROR;
+import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.IN_PROGRESS;
+import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.REGISTRATION;
 
 public class LastEmperor extends EventEngine {
     private EventBorder eventBorder;
@@ -129,7 +134,13 @@ public class LastEmperor extends EventEngine {
 
     @Override
     public void register(Player player, String teamName) {
+        if (!checkPlayerBeforeRegistration(player)) {
+            return;
+        }
 
+        players.put(player.getObjectId(), new LastEmperorPlayer(player, null));
+
+        sendPlayerMessage(player, "Вы успешно зарегистрировались на ивент.");
     }
 
     @Override
@@ -139,11 +150,45 @@ public class LastEmperor extends EventEngine {
 
     @Override
     public String configureMainPageContent(Player player) {
-        return null;
+        StringBuilder content = new StringBuilder();
+
+        int playerLevel = player.getStatus().getLevel();
+
+        if (eventState == REGISTRATION && playerLevel >= settings.getMinLevel() && playerLevel <= settings.getMaxLevel()) {
+            EventPlayer eventPlayer = players.get(player.getObjectId());
+
+            if (eventPlayer != null) {
+                content.append("<center><font color=\"3366CC\">Вы уже принимаете участие!</font></center><br><br>");
+
+
+                content.append("<center>Участников: <font color=\"00FF00\">").append(players.size()).append("</font></center><br>");
+                content.append("<center><font color=\"3366CC\">Дождитесь начала ивента или откажитесь от участия!</font><center>");
+                content.append("<center><button value=\"Покинуть\" action=\"bypass -h npc_%objectId%_")
+                        .append(LEAVE.getBypass())
+                        .append("\" width=\"90\" height=21 back=\"L2UI_ch3.Btn1_normalOn\" fore=\"L2UI_ch3.Btn1_normal\"></center>");
+            } else {
+                content.append("<center><font color=\"3366CC\">Вы хотите принять участие в ивенте?</font></center><br>");
+                content.append("<center><td width=\"200\">Минимальный уровень: <font color=\"00FF00\">").append(settings.getMinLevel()).append("</font></center></td><br>");
+                content.append("<center><td width=\"200\">Максимальный уровень: <font color=\"00FF00\">").append(settings.getMaxLevel()).append("</font></center></td><br><br>");
+                content.append("<center>Участников: <font color=\"00FF00\">").append(players.size()).append("</font></center><br>");
+                content.append("<center><button value=\"Участвовать\" action=\"bypass -h npc_%objectId%_")
+                        .append(JOIN.getBypass())
+                        .append(" eventShuffle\" \"90\" height=21 back=\"L2UI_ch3.Btn1_normalOn\" fore=\"L2UI_ch3.Btn1_normal\"></center>");
+            }
+        } else if (eventState == IN_PROGRESS) {
+            content.append("<center>К сожалению ивент ").append(settings.getEventName()).append(" уже начался.</center>");
+        } else if (playerLevel < settings.getMinLevel() || playerLevel > settings.getMaxLevel()) {
+            content.append("Ваш уровень: <font color=\"00FF00\">").append(playerLevel).append("</font><br>");
+            content.append("Минимальный уровень: <font color=\"00FF00\">").append(settings.getMinLevel()).append("</font><br>");
+            content.append("Максимальный уровень: <font color=\"00FF00\">").append(settings.getMaxLevel()).append("</font><br><br>");
+            content.append("<font color=\"FFFF00\">Вы не можете участвовать в этом ивенте.</font><br>");
+        }
+
+        return content.toString();
     }
 
     @Override
     public void revive(Player player, Player playerKiller) {
-
+        sendPlayerMessage(player, "Вы проиграли, но не стоит расстраиваться, в следующий раз вы будете сильнее!");
     }
 }
