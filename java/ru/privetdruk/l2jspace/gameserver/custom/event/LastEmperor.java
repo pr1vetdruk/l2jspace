@@ -133,7 +133,7 @@ public class LastEmperor extends EventEngine {
     }
 
     @Override
-    public void register(Player player, String teamName) {
+    public void register(Player player) {
         if (!checkPlayerBeforeRegistration(player)) {
             return;
         }
@@ -141,6 +141,10 @@ public class LastEmperor extends EventEngine {
         players.put(player.getObjectId(), new LastEmperorPlayer(player, null));
 
         sendPlayerMessage(player, "Вы успешно зарегистрировались на ивент.");
+    }
+
+    @Override
+    public void register(Player player, String teamName) {
     }
 
     @Override

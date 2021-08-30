@@ -39,6 +39,7 @@ public class EventManager extends Npc {
         }
 
         switch (action) {
+            case JOIN -> event.register(player);
             case JOIN_TEAM -> event.register(player, parameters[TEAM_NAME]);
             case LEAVE -> event.leave(player);
         }
