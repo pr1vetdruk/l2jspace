@@ -75,3 +75,7 @@ DROP TABLE IF EXISTS random_spawn_loc;
 DROP TABLE IF EXISTS spawnlist_4s;
 DROP TABLE IF EXISTS spawnlist;
 DROP TABLE IF EXISTS items_delayed;
+
+DROP TABLE IF EXISTS event;
+DROP TABLE IF EXISTS event_ctf_team_setting;
+DROP TABLE IF EXISTS event_last_emperor_team_setting;

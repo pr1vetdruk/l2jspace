@@ -1,7 +1,7 @@
 -- Created by privetdruk for L2jSpace
-DROP TABLE IF EXISTS event_last_emperor_team_settings;
+DROP TABLE IF EXISTS event_last_emperor_team_setting;
 
-CREATE TABLE event_last_emperor_team_settings
+CREATE TABLE event_last_emperor_team_setting
 (
     event_id                 SMALLINT     NOT NULL COMMENT 'Event ID',
     id                       INT(4) NOT NULL DEFAULT 0 COMMENT 'Team ID',
@@ -13,10 +13,10 @@ CREATE TABLE event_last_emperor_team_settings
   DEFAULT CHARSET = utf8
   COLLATE = utf8_unicode_ci;
 
-ALTER TABLE event_last_emperor_team_settings COMMENT = 'Last Emperor teams settings';
+ALTER TABLE event_last_emperor_team_setting COMMENT = 'Last Emperor teams settings';
 
 -- Настройки спавна для 123 игроков
-INSERT INTO event_last_emperor_team_settings (event_id, id, position_x, position_y, position_z)
+INSERT INTO event_last_emperor_team_setting (event_id, id, position_x, position_y, position_z)
 VALUES
        -- 1 ряд 41 игрок
        (3, 40, 150222, 45965, -3408), -- 20
@@ -59,8 +59,10 @@ VALUES
        (3, 35, 148742, 45965, -3408), -- 17
        (3, 37, 148702, 45965, -3408), -- 18
        (3, 39, 148662, 45965, -3408), -- 19
-       (3, 41, 148622, 45965, -3408), -- 20
+       (3, 41, 148622, 45965, -3408); -- 20
 
+INSERT INTO event_last_emperor_team_setting (event_id, id, position_x, position_y, position_z)
+VALUES
        -- 2 ряд 41 игрок
        (3, 82, 150222, 45935, -3408), -- 20
        (3, 80, 150182, 45935, -3408), -- 19
@@ -102,8 +104,10 @@ VALUES
        (3, 75, 148742, 45935, -3408), -- 17
        (3, 77, 148702, 45935, -3408), -- 18
        (3, 79, 148662, 45935, -3408), -- 19
-       (3, 81, 148622, 45935, -3408), -- 20
+       (3, 81, 148622, 45935, -3408); -- 20
 
+INSERT INTO event_last_emperor_team_setting (event_id, id, position_x, position_y, position_z)
+VALUES
        -- 23 ряд 41 игрок
        (3, 122, 150222, 45905, -3408), -- 20
        (3, 120, 150182, 45905, -3408), -- 19
