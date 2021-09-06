@@ -1,0 +1,443 @@
+[31-08-2021 22:28:15]	INFO	--------------------------------------------------=[ Config ]
+[31-08-2021 22:28:15]	INFO	Loading GameServer configuration files.
+[31-08-2021 22:28:15]	WARNING	The following property key 'LvlAutoLearnSkills' is missing. It will use default value '40'.
+[31-08-2021 22:28:15]	WARNING	The following property key 'RateGrandDropItems' is missing. It will use default value '1.0'.
+[31-08-2021 22:28:15]	INFO	Loaded 707 Filter Words.
+[31-08-2021 22:28:15]	INFO	-------------------------------------------------=[ Poolers ]
+[31-08-2021 22:28:15]	INFO	Initializing ConnectionPool.
+[31-08-2021 22:28:15]	INFO	Initializing ThreadPool.
+[31-08-2021 22:28:15]	INFO	-----------------------------------------------=[ IdFactory ]
+[31-08-2021 22:28:15]	INFO	Updated characters online status.
+[31-08-2021 22:28:15]	INFO	Cleaned 0 elements from database.
+[31-08-2021 22:28:15]	INFO	Cleaned 0 expired timestamps from database.
+[31-08-2021 22:28:15]	INFO	Initializing 102912 objectIds pool, with 0 used ids.
+[31-08-2021 22:28:15]	INFO	---------------------------------------------------=[ Cache ]
+[31-08-2021 22:28:15]	INFO	Loaded 0 crests.
+[31-08-2021 22:28:15]	INFO	---------------------------------------------------=[ World ]
+[31-08-2021 22:28:15]	INFO	World grid (176 by 256) is now set up.
+[31-08-2021 22:28:16]	INFO	Loaded regions.
+[31-08-2021 22:28:16]	INFO	Loaded 2 announcements.
+[31-08-2021 22:28:16]	INFO	Loaded 0 server variables.
+[31-08-2021 22:28:16]	INFO	--------------------------------------------------=[ Skills ]
+[31-08-2021 22:28:17]	INFO	SkillTable: Loaded 29744 skills.
+[31-08-2021 22:28:17]	INFO	Loaded 117 fishing skills.
+[31-08-2021 22:28:17]	INFO	Loaded 64 clan skills.
+[31-08-2021 22:28:17]	INFO	Loaded 14550 enchant skills.
+[31-08-2021 22:28:17]	INFO	---------------------------------------------------=[ Items ]
+[31-08-2021 22:28:18]	INFO	Loaded items.
+[31-08-2021 22:28:18]	INFO	Loaded 14 summon items.
+[31-08-2021 22:28:18]	INFO	Loaded 180 hennas.
+[31-08-2021 22:28:18]	INFO	Loaded 675 buyLists.
+[31-08-2021 22:28:18]	INFO	Loaded 85 multisell.
+[31-08-2021 22:28:18]	INFO	Loaded 871 recipes.
+[31-08-2021 22:28:18]	INFO	Loaded 51 armor sets.
+[31-08-2021 22:28:18]	INFO	Loaded 270 fish.
+[31-08-2021 22:28:18]	INFO	Loaded 334 spellbooks.
+[31-08-2021 22:28:18]	INFO	Loaded 39 Soul Crystals data and 124 NPCs data.
+[31-08-2021 22:28:18]	INFO	Loaded 4 sets of augmentation stats.
+[31-08-2021 22:28:18]	INFO	Loaded 170 blue, 1070 purple and 540 red Life-Stone skills.
+[31-08-2021 22:28:18]	INFO	Loaded 2 cursed weapons.
+[31-08-2021 22:28:18]	INFO	--------------------------------------------------=[ Admins ]
+[31-08-2021 22:28:18]	INFO	Loaded 10 access levels.
+[31-08-2021 22:28:18]	INFO	Loaded 100 admin command rights.
+[31-08-2021 22:28:18]	INFO	Loaded 0 bookmarks.
+[31-08-2021 22:28:18]	INFO	Loaded 0 petitions.
+[31-08-2021 22:28:18]	INFO	----------------------------------------------=[ Characters ]
+[31-08-2021 22:28:19]	INFO	Loaded 89 player classes templates.
+[31-08-2021 22:28:19]	INFO	Loaded 0 player infos.
+[31-08-2021 22:28:19]	INFO	Loaded 81 player levels.
+[31-08-2021 22:28:19]	INFO	Loaded 0 RaidPoints entries.
+[31-08-2021 22:28:19]	INFO	----------------------------------------=[ Community server ]
+[31-08-2021 22:28:19]	INFO	---------------------------------------------------=[ Clans ]
+[31-08-2021 22:28:19]	INFO	Loaded 0 clans.
+[31-08-2021 22:28:19]	INFO	-----------------------------------=[ Geodata & Pathfinding ]
+[31-08-2021 22:28:22]	INFO	Loaded 137 L2OFF region files.
+[31-08-2021 22:28:23]	INFO	Loaded 31 node buffers.
+[31-08-2021 22:28:23]	INFO	---------------------------------------------------=[ Zones ]
+[31-08-2021 22:28:29]	INFO	Loaded 23 zones classes and total 1016 zones.
+[31-08-2021 22:28:29]	INFO	------------------------------------=[ Castles & Clan Halls ]
+[31-08-2021 22:28:29]	INFO	Loaded 9 castles.
+[31-08-2021 22:28:29]	INFO	New date for Gludio siege: Sat Sep 18 18:00:00 MSK 2021.
+[31-08-2021 22:28:29]	INFO	New date for Dion siege: Sat Sep 18 18:00:00 MSK 2021.
+[31-08-2021 22:28:29]	INFO	New date for Giran siege: Sun Sep 19 18:00:00 MSK 2021.
+[31-08-2021 22:28:29]	INFO	New date for Oren siege: Sun Sep 19 18:00:00 MSK 2021.
+[31-08-2021 22:28:29]	INFO	New date for Aden siege: Sat Sep 18 18:00:00 MSK 2021.
+[31-08-2021 22:28:29]	INFO	New date for Innadril siege: Sun Sep 19 18:00:00 MSK 2021.
+[31-08-2021 22:28:29]	INFO	New date for Goddard siege: Sun Sep 19 18:00:00 MSK 2021.
+[31-08-2021 22:28:29]	INFO	New date for Rune siege: Sat Sep 18 18:00:00 MSK 2021.
+[31-08-2021 22:28:29]	INFO	New date for Schuttgart siege: Sat Sep 18 18:00:00 MSK 2021.
+[31-08-2021 22:28:29]	INFO	Loaded 44 clan halls and 6 siegable clan halls.
+[31-08-2021 22:28:29]	INFO	-------------------------------------------=[ Task Managers ]
+[31-08-2021 22:28:29]	INFO	Restored 0 items on ground.
+[31-08-2021 22:28:29]	INFO	---------------------------------------------=[ Auto Spawns ]
+[31-08-2021 22:28:29]	INFO	Loaded 124 auto spawns.
+[31-08-2021 22:28:29]	INFO	---------------------------------------------=[ Seven Signs ]
+[31-08-2021 22:28:29]	INFO	Currently on Competition (Quest Event) period.
+[31-08-2021 22:28:29]	INFO	The Seal of Strife remains unclaimed.
+[31-08-2021 22:28:29]	INFO	The Seal of Avarice remains unclaimed.
+[31-08-2021 22:28:29]	INFO	The Seal of Gnosis remains unclaimed.
+[31-08-2021 22:28:29]	INFO	The Seven Signs competition will end in a tie this week.
+[31-08-2021 22:28:29]	INFO	Next Seven Signs period change set to Mon Sep 06 18:00:00 MSK 2021.
+[31-08-2021 22:28:29]	INFO	Next Seven Signs period begins in 5 days, 19 hours and 31 mins.
+[31-08-2021 22:28:29]	INFO	The first Festival of Darkness cycle begins in 2 minute(s).
+[31-08-2021 22:28:29]	INFO	-------------------------------------------=[ Manor Manager ]
+[31-08-2021 22:28:29]	INFO	Loaded 247 seeds.
+[31-08-2021 22:28:29]	INFO	----------------------------------------------------=[ NPCs ]
+[31-08-2021 22:28:29]	INFO	Loaded 60 available buffs.
+[31-08-2021 22:28:29]	INFO	Loaded 2 ready to use schemes.
+[31-08-2021 22:28:29]	INFO	Loaded 2 herbs groups.
+[31-08-2021 22:28:30]	INFO	Loaded 6477 NPC templates.
+[31-08-2021 22:28:30]	INFO	Loaded 12 Walker routes.
+[31-08-2021 22:28:30]	INFO	Loaded 547 doors templates.
+[31-08-2021 22:28:30]	INFO	Loaded 29 static objects.
+[31-08-2021 22:28:31]	INFO	Loaded 5262 dungeon.
+[31-08-2021 22:28:31]	INFO	Loaded 38149 spawns.
+[31-08-2021 22:28:33]	INFO	Loaded 195 raid bosses.
+[31-08-2021 22:28:33]	INFO	Loaded 12 GrandBosses instances.
+[31-08-2021 22:28:33]	INFO	Spawned 1310 week 1 creatures
+[31-08-2021 22:28:33]	INFO	Loaded Dimensional Rift rooms.
+[31-08-2021 22:28:33]	INFO	Loaded 14 newbie buffs.
+[31-08-2021 22:28:33]	INFO	Loaded 72 instant teleport positions.
+[31-08-2021 22:28:33]	INFO	Loaded 117 teleport positions.
+[31-08-2021 22:28:33]	INFO	--------------------------------------=[ Olympiads & Heroes ]
+[31-08-2021 22:28:33]	INFO	Loaded 22 stadiums.
+[31-08-2021 22:28:33]	INFO	Couldn't load Olympiad data, default values are used.
+[31-08-2021 22:28:33]	INFO	811 minutes until Olympiad period ends.
+[31-08-2021 22:28:33]	INFO	Next weekly Olympiad change is in 10079 minutes.
+[31-08-2021 22:28:33]	INFO	Loaded 0 nobles.
+[31-08-2021 22:28:33]	INFO	Olympiad competition period starts in 0 days, 0 hours and 0 mins.
+[31-08-2021 22:28:33]	INFO	Olympiad event starts/started @ Tue Aug 31 18:00:00 MSK 2021.
+[31-08-2021 22:28:33]	INFO	Loaded 0 heroes and 0 all time heroes.
+[31-08-2021 22:28:33]	INFO	-----------------------------------------=[ Four Sepulchers ]
+[31-08-2021 22:28:33]	INFO	Loaded 20 Mysterious-Box.
+[31-08-2021 22:28:33]	INFO	Loaded 39 Key-Box.
+[31-08-2021 22:28:33]	INFO	Olympiad game started.
+[31-08-2021 22:28:33]	INFO	Loaded 716 physical type monsters.
+[31-08-2021 22:28:33]	INFO	Loaded 716 magical type monsters.
+[31-08-2021 22:28:33]	INFO	Loaded 4 Shadows of Halisha.
+[31-08-2021 22:28:33]	INFO	Loaded 92 Duke's Hall Gatekeepers.
+[31-08-2021 22:28:33]	INFO	Loaded 68 Emperor's Grave monsters.
+[31-08-2021 22:28:33]	INFO	Loaded 4 managers.
+[31-08-2021 22:28:33]	INFO	----------------------------------------=[ Quests & Scripts ]
+[31-08-2021 22:28:34]	INFO	Devastated Castle siege scheduled for Tue Sep 14 12:00:00 MSK 2021.
+[31-08-2021 22:28:34]	INFO	Fortress of Resistance siege scheduled for Tue Sep 14 12:00:00 MSK 2021.
+[31-08-2021 22:28:34]	INFO	Fortress of the Dead siege scheduled for Tue Sep 14 12:00:00 MSK 2021.
+[31-08-2021 22:28:34]	INFO	Rainbow Springs Chateau siege scheduled for Tue Sep 14 12:00:00 MSK 2021.
+[31-08-2021 22:28:34]	INFO	Loaded 411 regular scripts and 5 scheduled scripts.
+[31-08-2021 22:28:34]	INFO	--------------------------------------------------=[ Events ]
+[31-08-2021 22:28:34]	INFO	CTF 1: starts at 17:00
+[31-08-2021 22:28:34]	INFO	CTF 2: starts at 17:02
+[31-08-2021 22:28:34]	INFO	CTF 1: starts at 17:04
+[31-08-2021 22:28:34]	INFO	CTF 2: starts at 17:06
+[31-08-2021 22:28:34]	INFO	CTF 1: starts at 17:08
+[31-08-2021 22:28:34]	INFO	CTF 2: starts at 17:10
+[31-08-2021 22:28:34]	INFO	CTF 1: starts at 17:12
+[31-08-2021 22:28:34]	INFO	CTF 2: starts at 17:14
+[31-08-2021 22:28:34]	INFO	CTF 1: starts at 17:16
+[31-08-2021 22:28:34]	INFO	CTF 2: starts at 17:18
+[31-08-2021 22:28:34]	INFO	CTF 1: starts at 17:20
+[31-08-2021 22:28:34]	INFO	CTF 2: starts at 17:22
+[31-08-2021 22:28:34]	INFO	CTF 1: starts at 17:24
+[31-08-2021 22:28:34]	INFO	CTF 2: starts at 17:26
+[31-08-2021 22:28:34]	INFO	CTF 1: starts at 17:28
+[31-08-2021 22:28:34]	INFO	CTF 2: starts at 17:30
+[31-08-2021 22:28:34]	INFO	CTF 1: starts at 17:32
+[31-08-2021 22:28:34]	INFO	CTF 2: starts at 17:34
+[31-08-2021 22:28:34]	INFO	CTF 1: starts at 17:36
+[31-08-2021 22:28:34]	INFO	CTF 2: starts at 17:38
+[31-08-2021 22:28:34]	INFO	CTF 1: starts at 17:40
+[31-08-2021 22:28:34]	INFO	CTF 2: starts at 17:42
+[31-08-2021 22:28:34]	INFO	CTF 1: starts at 17:44
+[31-08-2021 22:28:34]	INFO	CTF 2: starts at 17:46
+[31-08-2021 22:28:34]	INFO	CTF 1: starts at 17:48
+[31-08-2021 22:28:34]	INFO	CTF 2: starts at 17:50
+[31-08-2021 22:28:34]	INFO	CTF 1: starts at 17:52
+[31-08-2021 22:28:34]	INFO	CTF 2: starts at 17:54
+[31-08-2021 22:28:34]	INFO	CTF 1: starts at 17:56
+[31-08-2021 22:28:34]	INFO	CTF 2: starts at 17:58
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:00
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:02
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:04
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:06
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:08
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:10
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:12
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:14
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:16
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:18
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:20
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:22
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:24
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:26
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:28
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:30
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:32
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:34
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:36
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:38
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:40
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:42
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:44
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:46
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:48
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:50
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:52
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:54
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:56
+[31-08-2021 22:28:34]	INFO	Last Emperor: starts at 22:58
+[31-08-2021 22:28:34]	INFO	Loaded 0 Derby Track records, currently on race #1.
+[31-08-2021 22:28:34]	INFO	A new Fishing Championship event period has started.
+[31-08-2021 22:28:34]	INFO	------------------------------------------------=[ Handlers ]
+[31-08-2021 22:28:34]	INFO	Loaded 100 admin command handlers.
+[31-08-2021 22:28:34]	INFO	Loaded 13 chat handlers.
+[31-08-2021 22:28:34]	INFO	Loaded 27 item handlers.
+[31-08-2021 22:28:34]	INFO	Loaded 73 skill handlers.
+[31-08-2021 22:28:34]	INFO	Loaded 26 target handlers.
+[31-08-2021 22:28:34]	INFO	Loaded 15 user command handlers.
+[31-08-2021 22:28:34]	INFO	Loaded 6 voiced command handlers.
+[31-08-2021 22:28:34]	INFO	--------------------------------------------------=[ System ]
+[31-08-2021 22:28:34]	INFO	Deadlock detector is disabled.
+[31-08-2021 22:28:34]	INFO	Gameserver has started, used memory: 1263 / 2034 Mo.
+[31-08-2021 22:28:34]	INFO	Maximum allowed players: 100.
+[31-08-2021 22:28:34]	INFO	Server loaded in 19 seconds
+[31-08-2021 22:28:34]	INFO	---------------------------------------------------=[ Login ]
+[31-08-2021 22:28:34]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:28:34]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:28:44]	INFO	Last Emperor: Notification start.
+[31-08-2021 22:28:44]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:28:44]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:28:54]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:28:55]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:29:05]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:29:05]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:29:15]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:29:15]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:29:25]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:29:25]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:29:35]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:29:35]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:29:45]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:29:45]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:29:55]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:29:55]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:30:05]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:30:05]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:30:15]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:30:15]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:30:25]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:30:25]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:30:35]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:30:35]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:30:44]	SEVERE	Last Emperor: You cannot run several events at the same time.
+[31-08-2021 22:30:45]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:30:45]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:30:55]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:30:55]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:31:05]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:31:05]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:31:15]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:31:15]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:31:25]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:31:25]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:31:35]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:31:35]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:31:45]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:31:45]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:31:55]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:31:55]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:32:05]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:32:05]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:32:15]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:32:15]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:32:25]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:32:25]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:32:35]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:32:35]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:32:44]	SEVERE	Last Emperor: You cannot run several events at the same time.
+[31-08-2021 22:32:45]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:32:45]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:32:55]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:32:55]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:33:05]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:33:05]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:33:15]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:33:15]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:33:25]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:33:25]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:33:35]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:33:35]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:33:45]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:33:45]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:33:55]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:33:55]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:34:05]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:34:05]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:34:15]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:34:15]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:34:25]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:34:25]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:34:35]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:34:35]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:34:44]	INFO	Last Emperor: Notification start.
+[31-08-2021 22:34:45]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:34:45]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:34:55]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:34:55]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:35:05]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:35:05]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:35:15]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:35:15]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:35:25]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:35:25]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:35:35]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:35:35]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:35:45]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:35:45]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:35:55]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:35:55]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:36:05]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:36:05]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:36:15]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:36:15]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:36:25]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:36:25]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:36:35]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:36:35]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:36:44]	SEVERE	Last Emperor: You cannot run several events at the same time.
+[31-08-2021 22:36:45]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:36:45]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:36:55]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:36:55]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:37:05]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:37:05]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:37:15]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:37:15]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:37:25]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:37:25]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:37:35]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:37:35]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:37:45]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:37:45]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:37:55]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:37:55]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:38:05]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:38:05]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:38:15]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:38:15]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:38:25]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:38:25]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:38:35]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:38:35]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:38:44]	SEVERE	Last Emperor: You cannot run several events at the same time.
+[31-08-2021 22:38:45]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:38:45]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:38:55]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:38:55]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:39:05]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:39:05]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:39:15]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:39:15]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:39:25]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:39:25]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:39:35]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:39:35]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:39:45]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:39:45]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:39:55]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:39:55]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:40:05]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:40:05]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:40:15]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:40:15]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:40:25]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:40:25]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:40:35]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:40:35]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:40:44]	INFO	Last Emperor: Notification start.
+[31-08-2021 22:40:45]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:40:45]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:40:55]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:40:55]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:41:05]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:41:05]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:41:15]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:41:15]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:41:25]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:41:25]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:41:35]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:41:35]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:41:45]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:41:45]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:41:55]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:41:55]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:42:05]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:42:05]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:42:15]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:42:15]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:42:25]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:42:25]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:42:35]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:42:35]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:42:44]	SEVERE	Last Emperor: You cannot run several events at the same time.
+[31-08-2021 22:42:45]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:42:45]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:42:55]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:42:55]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:43:05]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:43:05]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:43:15]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:43:15]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:43:25]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:43:25]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:43:35]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:43:35]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:43:45]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:43:45]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:43:55]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:43:55]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:44:05]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:44:05]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:44:15]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:44:15]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:44:25]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:44:25]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:44:35]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:44:35]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:44:44]	SEVERE	Last Emperor: You cannot run several events at the same time.
+[31-08-2021 22:44:45]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:44:45]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:44:55]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:44:55]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:45:05]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:45:05]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:45:15]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:45:15]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:45:25]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:45:25]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:45:35]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:45:35]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:45:45]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:45:45]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:45:55]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:45:55]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:46:05]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:46:05]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:46:15]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:46:15]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:46:25]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:46:25]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:46:35]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:46:35]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:46:44]	INFO	Last Emperor: Notification start.
+[31-08-2021 22:46:45]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:46:45]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:46:55]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:46:55]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:47:05]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:47:05]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:47:15]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:47:15]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:47:25]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:47:25]	INFO	LoginServer registration failed: Reason: wrong hexid.
+[31-08-2021 22:47:35]	INFO	Connecting to login on 127.0.0.1:9014.
+[31-08-2021 22:47:35]	INFO	LoginServer registration failed: Reason: wrong hexid.

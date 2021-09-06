@@ -1,0 +1,21 @@
+[31-08-2021 23:43:36]	INFO	--------------------------------------------------=[ Config ]
+[31-08-2021 23:43:36]	INFO	Loading LoginServer configuration files.
+[31-08-2021 23:43:36]	INFO	-------------------------------------------------=[ Poolers ]
+[31-08-2021 23:43:36]	INFO	Initializing ConnectionPool.
+[31-08-2021 23:43:36]	INFO	-----------------------------------------=[ LoginController ]
+[31-08-2021 23:43:37]	INFO	Cached 10 KeyPairs for RSA communication.
+[31-08-2021 23:43:37]	INFO	Stored 20 keys for Blowfish communication.
+[31-08-2021 23:43:37]	INFO	---------------------------------------=[ GameServerManager ]
+[31-08-2021 23:43:37]	INFO	Loaded 127 server names.
+[31-08-2021 23:43:37]	INFO	Loaded 2 registered gameserver(s).
+[31-08-2021 23:43:37]	INFO	Cached 10 RSA keys for gameserver communication.
+[31-08-2021 23:43:37]	INFO	------------------------------------------------=[ Ban List ]
+[31-08-2021 23:43:37]	INFO	Loaded 0 banned IP(s).
+[31-08-2021 23:43:37]	INFO	--------------------------------=[ IP, Ports & Socket infos ]
+[31-08-2021 23:43:37]	INFO	Listening for gameservers on *:9014.
+[31-08-2021 23:43:37]	INFO	Loginserver ready on *:2106.
+[31-08-2021 23:43:37]	INFO	---------------------------=[ Waiting for gameserver answer ]
+[31-08-2021 23:43:57]	INFO	Hooked [2] Sieghardt gameserver on: 127.0.0.1.
+[31-08-2021 23:45:59]	INFO	GameServer [2] Sieghardt is now set as disconnected.
+[31-08-2021 23:46:59]	INFO	Hooked [2] Sieghardt gameserver on: 127.0.0.1.
+[31-08-2021 23:51:26]	INFO	Auto created account 'w'.

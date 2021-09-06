@@ -1,0 +1,18 @@
+[31-08-2021 22:47:52]	INFO	--------------------------------------------------=[ Config ]
+[31-08-2021 22:47:52]	INFO	Loading LoginServer configuration files.
+[31-08-2021 22:47:52]	INFO	-------------------------------------------------=[ Poolers ]
+[31-08-2021 22:47:52]	INFO	Initializing ConnectionPool.
+[31-08-2021 22:47:52]	INFO	-----------------------------------------=[ LoginController ]
+[31-08-2021 22:47:53]	INFO	Cached 10 KeyPairs for RSA communication.
+[31-08-2021 22:47:53]	INFO	Stored 20 keys for Blowfish communication.
+[31-08-2021 22:47:53]	INFO	---------------------------------------=[ GameServerManager ]
+[31-08-2021 22:47:53]	INFO	Loaded 127 server names.
+[31-08-2021 22:47:53]	INFO	Loaded 1 registered gameserver(s).
+[31-08-2021 22:47:53]	INFO	Cached 10 RSA keys for gameserver communication.
+[31-08-2021 22:47:53]	INFO	------------------------------------------------=[ Ban List ]
+[31-08-2021 22:47:53]	INFO	Loaded 0 banned IP(s).
+[31-08-2021 22:47:53]	INFO	--------------------------------=[ IP, Ports & Socket infos ]
+[31-08-2021 22:47:53]	INFO	Listening for gameservers on *:9014.
+[31-08-2021 22:47:53]	INFO	Loginserver ready on *:2106.
+[31-08-2021 22:47:53]	INFO	---------------------------=[ Waiting for gameserver answer ]
+[31-08-2021 22:48:52]	WARNING	Incorrect packet checksum, closing connection.

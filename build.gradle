@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+}
+
+group 'ru.privetdruk'
+version '0.0.1-SNAPSHOT'
+
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+ext {
+    serverBaseDirectory = 'l2jspace'
+}
+
+jar {
+    archiveName 'l2jspace.jar'
+}
+
+dependencies {
+    implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.7.4'
+}
+
+repositories {
+    mavenCentral()
+}
+
+task buildProject(dependsOn: ['clean', 'jar']) {
+    doLast {
+        println '- Transferring [libs]'
+        copy {
+            from layout.buildDirectory.dir("libs")
+            into layout.buildDirectory.dir(serverBaseDirectory.concat("/lib"))
+        }
+
+        println '- Transferring [datapack]'
+        copy {
+            from './datapack/'
+            into layout.buildDirectory.dir(serverBaseDirectory)
+        }
+
+        println '- Deleting folders'
+        delete layout.buildDirectory.dir('classes')
+        delete layout.buildDirectory.dir('generated')
+        delete layout.buildDirectory.dir('libs')
+        delete layout.buildDirectory.dir('tmp')
+    }
+}
