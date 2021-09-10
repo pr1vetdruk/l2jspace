@@ -1290,7 +1290,7 @@ public final class Config {
         ACCEPT_ALTERNATE_ID = server.getProperty("AcceptAlternateID", true);
         USE_BLOWFISH_CIPHER = server.getProperty("UseBlowfishCipher", true);
 
-        DATABASE_URL = server.getProperty("URL", "jdbc:mariadb://localhost/ru.privetdruk.l2jspace");
+        DATABASE_URL = server.getProperty("URL", "jdbc:mariadb://localhost/l2jspace-game-server");
         DATABASE_LOGIN = server.getProperty("Login", "root");
         DATABASE_PASSWORD = server.getProperty("Password", "");
         DATABASE_MAX_CONNECTIONS = server.getProperty("MaximumDbConnections", 10);
@@ -1583,7 +1583,7 @@ public final class Config {
         ACCEPT_NEW_GAMESERVER = server.getProperty("AcceptNewGameServer", false);
         SHOW_LICENCE = server.getProperty("ShowLicence", true);
 
-        DATABASE_URL = server.getProperty("URL", "jdbc:mariadb://localhost/ru.privetdruk.l2jspace");
+        DATABASE_URL = server.getProperty("URL", "jdbc:mariadb://localhost/l2jspace-login-server");
         DATABASE_LOGIN = server.getProperty("Login", "root");
         DATABASE_PASSWORD = server.getProperty("Password", "");
         DATABASE_MAX_CONNECTIONS = server.getProperty("MaximumDbConnections", 5);
