@@ -10,7 +10,7 @@ import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.custom.model.NpcInfoShort;
 import ru.privetdruk.l2jspace.gameserver.custom.model.Reward;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.*;
-import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.CtfEventPlayer;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.CtfPlayer;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.CtfTeamSetting;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.Flag;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.Throne;
@@ -66,6 +66,12 @@ public class CTF extends EventEngine {
         );
 
         eventTaskList.add(this);
+    }
+
+    @Override
+    protected void startEventCustom() {
+        allowPlayersToMove();
+        sitPlayers();
     }
 
     @Override
@@ -178,7 +184,7 @@ public class CTF extends EventEngine {
                     break;
                 }
 
-                CtfEventPlayer ctfPlayer = (CtfEventPlayer) eventPlayer;
+                CtfPlayer ctfPlayer = (CtfPlayer) eventPlayer;
 
                 if (!ctfPlayer.isHasFlag()) {
                     continue;
@@ -193,7 +199,7 @@ public class CTF extends EventEngine {
                     } else if (isOutsideArea(player)) {
                         announceCritical("Игрок " + player.getName() + " сбежал с мероприятия с флагом!");
 
-                        CtfTeamSetting enemyTeam = ((CtfEventPlayer) eventPlayer).getEnemyFlag();
+                        CtfTeamSetting enemyTeam = ((CtfPlayer) eventPlayer).getEnemyFlag();
 
                         if (enemyTeam.getFlag().isTaken()) {
                             enemyTeam.getFlag().setTaken(false);
@@ -228,7 +234,7 @@ public class CTF extends EventEngine {
         }
     }
 
-    public void restoreFlagOnPlayerDie(CtfEventPlayer eventPlayer) {
+    public void restoreFlagOnPlayerDie(CtfPlayer eventPlayer) {
         CtfTeamSetting team = eventPlayer.getEnemyFlag();
 
         team.getFlag().setTaken(false);
@@ -238,7 +244,7 @@ public class CTF extends EventEngine {
         announceCritical("Флаг команды " + team.getName() + " возвращен на базу!");
     }
 
-    public void processInFlagRange(CtfEventPlayer eventPlayer) {
+    public void processInFlagRange(CtfPlayer eventPlayer) {
         try {
             restoreFlags();
 
@@ -266,7 +272,7 @@ public class CTF extends EventEngine {
         }
     }
 
-    private void pickUpFlag(CtfEventPlayer eventPlayer, CtfTeamSetting enemyTeam) {
+    private void pickUpFlag(CtfPlayer eventPlayer, CtfTeamSetting enemyTeam) {
         enemyTeam.getFlag().setTaken(true);
 
         unspawn(enemyTeam.getFlag().getSpawn());
@@ -276,7 +282,7 @@ public class CTF extends EventEngine {
         announceCritical(format("Игрок %s забрал флаг команды %s!", eventPlayer.getPlayer().getName(), enemyTeam.getName()));
     }
 
-    private void returnFlag(CtfEventPlayer eventPlayer) {
+    private void returnFlag(CtfPlayer eventPlayer) {
         CtfTeamSetting enemyTeam = eventPlayer.getEnemyFlag();
 
         enemyTeam.getFlag().setTaken(false);
@@ -309,7 +315,7 @@ public class CTF extends EventEngine {
                     .filter(eventPlayer -> eventPlayer.getTeamSettings() == teamOurFlag
                             && eventPlayer.getPlayer().isOnline())
                     .forEach(eventPlayer -> {
-                        CtfEventPlayer ctfPlayer = (CtfEventPlayer) eventPlayer;
+                        CtfPlayer ctfPlayer = (CtfPlayer) eventPlayer;
                         Player player = ctfPlayer.getPlayer();
 
                         sendPlayerMessage(player, "Игрок " + targetPlayer.getName() + " взял ваш флаг!");
@@ -334,7 +340,7 @@ public class CTF extends EventEngine {
                 player.getZ() < (flag.getZ() + offset);
     }
 
-    public void addFlagToPlayer(CtfEventPlayer eventPlayer, CtfTeamSetting team) {
+    public void addFlagToPlayer(CtfPlayer eventPlayer, CtfTeamSetting team) {
         Player player = eventPlayer.getPlayer();
         int flagItemId = team.getFlag().getItemId();
 
@@ -414,12 +420,12 @@ public class CTF extends EventEngine {
             eventPlayer.getTeamSettings().removePlayer();
         }
 
-        removeFlagFromPlayer((CtfEventPlayer) eventPlayer);
+        removeFlagFromPlayer((CtfPlayer) eventPlayer);
     }
 
     @Override
     protected void updatePlayerEventDataCustom(EventPlayer e) {
-        CtfEventPlayer eventPlayer = (CtfEventPlayer) e;
+        CtfPlayer eventPlayer = (CtfPlayer) e;
         Player player = eventPlayer.getPlayer();
         TeamSetting team = eventPlayer.getTeamSettings();
 
@@ -636,7 +642,7 @@ public class CTF extends EventEngine {
     @Override
     public void addDisconnectedPlayer(Player player) {
         switch (eventState) {
-            case TELEPORTATION, PREPARE_TO_START, IN_PROGRESS -> {
+            case TELEPORTATION, PREPARE_FOR_START, IN_PROGRESS -> {
                 EventPlayer eventPlayer = allPlayers.get(player.getObjectId());
 
                 if (eventPlayer != null) {
@@ -763,20 +769,20 @@ public class CTF extends EventEngine {
             team.addPlayer();
         }
 
-        players.put(player.getObjectId(), new CtfEventPlayer(player, team));
+        players.put(player.getObjectId(), new CtfPlayer(player, team));
 
         sendPlayerMessage(player, "Вы успешно зарегистрировались на ивент.");
     }
 
     @Override
-    public void revive(Player player, Player playerKiller) {
+    public void doDie(Player player, Player playerKiller) {
         sendPlayerMessage(player, String.format(
                 "Вы будете воскрешены и перемещены к флагу команды через %d %s!",
                 EventConfig.CTF.DELAY_BEFORE_REVIVE,
                 declensionWords(EventConfig.CTF.DELAY_BEFORE_REVIVE, secondWords)
         ));
 
-        CtfEventPlayer eventPlayer = (CtfEventPlayer) player.getEventPlayer();
+        CtfPlayer eventPlayer = (CtfPlayer) player.getEventPlayer();
 
         if (eventPlayer.isHasFlag()) {
             restoreFlagOnPlayerDie(eventPlayer);
@@ -790,7 +796,12 @@ public class CTF extends EventEngine {
         }, TimeUnit.SECONDS.toMillis(EventConfig.CTF.DELAY_BEFORE_REVIVE));
     }
 
-    private void removeFlagFromPlayer(CtfEventPlayer eventPlayer) {
+    @Override
+    public boolean isAllowedTeleportAfterDeath() {
+        return false;
+    }
+
+    private void removeFlagFromPlayer(CtfPlayer eventPlayer) {
         int flagItemId = eventPlayer.getTeamSettings().getFlag().getItemId();
 
         Player player = eventPlayer.getPlayer();

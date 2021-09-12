@@ -95,7 +95,9 @@ public abstract class Playable extends Creature {
         // Stop HP/MP/CP Regeneration task
         getStatus().stopHpMpRegeneration();
 
-        Player playerKiller = Optional.ofNullable(killer).map(WorldObject::getActingPlayer).orElse(null);
+        Player playerKiller = Optional.ofNullable(killer)
+                .map(WorldObject::getActingPlayer)
+                .orElse(null);
         Player player;
 
         if (this instanceof Player) {
@@ -114,7 +116,7 @@ public abstract class Playable extends Creature {
             }
 
             if (this instanceof Player) {
-                event.revive(player, playerKiller);
+                event.doDie(player, playerKiller);
             }
         }
         // Stop all active skills effects in progress

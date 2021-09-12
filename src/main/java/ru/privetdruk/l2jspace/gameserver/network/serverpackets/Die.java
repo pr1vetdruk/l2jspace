@@ -1,5 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
+import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CastleManager;
 import ru.privetdruk.l2jspace.gameserver.data.manager.ClanHallManager;
 import ru.privetdruk.l2jspace.gameserver.enums.SiegeSide;
@@ -18,7 +19,7 @@ public class Die extends L2GameServerPacket {
     private boolean sweepable;
     private boolean allowFixedRes;
     private Clan clan;
-    private boolean isTeleportToVillage;
+    private boolean teleportToVillage = true;
 
     public Die(Creature creature) {
         this.creature = creature;
@@ -29,7 +30,10 @@ public class Die extends L2GameServerPacket {
             Player player = (Player) creature;
             allowFixedRes = player.getAccessLevel().allowFixedRes();
             clan = player.getClan();
-            isTeleportToVillage = !player.isEventPlayer();
+
+            if (player.isEventPlayer()) {
+                teleportToVillage = EventEngine.findActive().isAllowedTeleportAfterDeath();
+            }
         } else if (creature instanceof Monster) {
             sweepable = ((Monster) creature).getSpoilState().isSweepable();
         }
@@ -43,9 +47,9 @@ public class Die extends L2GameServerPacket {
 
         writeC(0x06);
         writeD(objectId);
-        writeD(isTeleportToVillage ? 0x01 : 0); // to nearest village
+        writeD(teleportToVillage ? 0x01 : 0); // to nearest village
 
-        if (isTeleportToVillage && clan != null) {
+        if (teleportToVillage && clan != null) {
             final Siege siege = CastleManager.getInstance().getActiveSiege(creature);
             final ClanHallSiege chs = ClanHallManager.getInstance().getActiveSiege(creature);
 

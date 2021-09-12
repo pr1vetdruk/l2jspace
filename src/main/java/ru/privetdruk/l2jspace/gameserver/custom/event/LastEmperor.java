@@ -1,6 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.custom.event;
 
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
+import ru.privetdruk.l2jspace.common.util.StringUtil;
 import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.custom.builder.EventSettingBuilder;
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
@@ -9,19 +10,27 @@ import ru.privetdruk.l2jspace.gameserver.custom.model.Reward;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBorder;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventPlayer;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventType;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.TeamSetting;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.lastemperor.LastEmperorPlayer;
+import ru.privetdruk.l2jspace.gameserver.custom.service.DoorService;
+import ru.privetdruk.l2jspace.gameserver.custom.util.Chronos;
+import ru.privetdruk.l2jspace.gameserver.enums.AuraTeamType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
+import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.model.location.SpawnLocation;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayDeque;
+import java.util.Queue;
 
+import static java.lang.String.format;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static ru.privetdruk.l2jspace.common.util.StringUtil.declensionWords;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBypass.JOIN;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBypass.LEAVE;
-import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.ERROR;
-import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.IN_PROGRESS;
-import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.REGISTRATION;
+import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.*;
 
 public class LastEmperor extends EventEngine {
     private EventBorder eventBorder;
@@ -37,6 +46,105 @@ public class LastEmperor extends EventEngine {
         );
 
         eventTaskList.add(this);
+    }
+
+    @Override
+    protected void startEventCustom() {
+        while (players.size() > 1) {
+            Queue<PairOfRivals> pairOfRivals = identifyPairOfRivals();
+
+            while (pairOfRivals.peek() != null) {
+                announceCritical("Осталось участников: " + players.size());
+                PairOfRivals pair = pairOfRivals.poll();
+
+                if (!pair.presentBothPlayers()) {
+                    EventPlayer winner = pair.determineWinnerWithoutFight();
+
+                    if (winner != null) {
+                        announceCritical("Игроку <" + winner.getPlayer().getName() + "> не нашлось соперника.");
+                        continue;
+                    }
+                }
+
+                announceCritical(String.format(
+                        "Игроку %s и %s приготовиться к бою!",
+                        pair.getPlayer1().getPlayer().getName(),
+                        pair.getPlayer2().getPlayer().getName()
+                ));
+
+                eventState = PREPARE_FOR_START;
+                pair.configurePlayersBeforeStart();
+                waiter(15, "До начала боя осталось %d %s."); // todo конфиг
+
+                pair.setRivals();
+                eventState = FIGHT;
+                announceCritical("Бой!");
+
+                waiter(120, "До конца боя осталось  %d %s."); // todo конфиг
+
+                completeRound(pair);
+            }
+        }
+
+        players.values().forEach(eventPlayer ->
+                announceCritical("Победителем турнира Последний Император становится игрок <" + eventPlayer.getPlayer().getName() + ">. Поздравляем!")
+        );
+    }
+
+    private void completeRound(PairOfRivals pair) {
+        EventPlayer winner = pair.determineWinner();
+        EventPlayer loser = pair.determineLoser();
+
+        announceCritical("Статистика боя:");
+        announceDamage(pair.getPlayer1());
+        announceDamage(pair.getPlayer2());
+
+        playAnimation(winner.getPlayer(), true);
+
+        pair.clearBeforeNextRound();
+
+        if (players.size() > 2) {
+            announceCritical("В следующий раунд попадает игрок <" + winner.getPlayer().getName() + ">");
+
+            waiter(5, null);
+
+            winner.getPlayer().sitDown();
+            winner.setAllowedToWalk(false);
+            teleport(winner);
+        }
+
+        exclude(loser.getPlayer());
+    }
+
+    private void announceDamage(EventPlayer player) {
+        announceCritical("Игрок <" + player.getPlayer().getName() + "> нанес " + player.getDamageDone() + " урона");
+    }
+
+    private void waiter(long intervalSeconds, String message) {
+        long interval = SECONDS.toMillis(intervalSeconds);
+        final long startWaiterTime = Chronos.currentTimeMillis();
+        int seconds = (int) (interval / 1000);
+
+        while (((startWaiterTime + interval) > Chronos.currentTimeMillis()) && eventState != WINNER_IS_DETERMINED) {
+            if (message != null) {
+                String secondsWord = declensionWords(seconds, StringUtil.secondWords);
+                switch (seconds) {
+                    case 120, 30, 15, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 -> announceCritical(format(message, seconds, secondsWord));
+                }
+            }
+
+            seconds--;
+
+            long startOneSecondWaiterStartTime = Chronos.currentTimeMillis();
+
+            // Only the try catch with Thread.sleep(1000) give bad countdown on high wait times
+            while ((startOneSecondWaiterStartTime + 1000) > Chronos.currentTimeMillis()) {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException ignored) {
+                }
+            }
+        }
     }
 
     @Override
@@ -86,6 +194,27 @@ public class LastEmperor extends EventEngine {
 
             statement.close();
             resultSet.close();
+
+            statement = connection.prepareStatement("SELECT * FROM event_last_emperor_team_setting WHERE event_id = ? ORDER BY id");
+            statement.setInt(1, eventId);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                teamSettings.add(
+                        new TeamSetting(
+                                null,
+                                null,
+                                0,
+                                new Location(
+                                        resultSet.getInt("position_x"),
+                                        resultSet.getInt("position_y"),
+                                        resultSet.getInt("position_z")
+                                )
+                        )
+                );
+            }
+
+            resultSet.close();
         } catch (Exception e) {
             eventState = ERROR;
             logError("loadData", e);
@@ -104,7 +233,7 @@ public class LastEmperor extends EventEngine {
 
     @Override
     protected void restorePlayerDataCustom(EventPlayer eventPlayer) {
-
+        eventPlayer.setAllowedToWalk(true);
     }
 
     @Override
@@ -114,12 +243,14 @@ public class LastEmperor extends EventEngine {
 
     @Override
     protected void spawnOtherNpc() {
-
+        DoorService.close(24190002); // todo CONST
+        DoorService.close(24190003);
     }
 
     @Override
     protected void unspawnNpcCustom() {
-
+        DoorService.open(24190002); // todo CONST
+        DoorService.open(24190003);
     }
 
     @Override
@@ -192,7 +323,127 @@ public class LastEmperor extends EventEngine {
     }
 
     @Override
-    public void revive(Player player, Player playerKiller) {
+    public void doDie(Player player, Player playerKiller) {
         sendPlayerMessage(player, "Вы проиграли, но не стоит расстраиваться, в следующий раз вы будете сильнее!");
+
+        LastEmperorPlayer eventKiller = (LastEmperorPlayer) playerKiller.getEventPlayer();
+        eventKiller.setWinner(true);
+
+        eventState = WINNER_IS_DETERMINED;
+    }
+
+    @Override
+    public boolean isAllowedTeleportAfterDeath() {
+        return true;
+    }
+
+    private Queue<PairOfRivals> identifyPairOfRivals() {
+        Queue<PairOfRivals> pairOfRivalsQueue = new ArrayDeque<>();
+
+        PairOfRivals pairOfRivals = null;
+
+        for (EventPlayer player : players.values()) {
+            if (pairOfRivals == null) {
+                pairOfRivals = new PairOfRivals();
+                pairOfRivals.setPlayer1((LastEmperorPlayer) player);
+                pairOfRivalsQueue.add(pairOfRivals);
+            } else {
+                pairOfRivals.setPlayer2((LastEmperorPlayer) player);
+                pairOfRivals = null;
+            }
+        }
+
+        return pairOfRivalsQueue;
+    }
+
+    private static class PairOfRivals {
+        private LastEmperorPlayer eventPlayer1;
+        private LastEmperorPlayer eventPlayer2;
+
+        public LastEmperorPlayer getPlayer1() {
+            return eventPlayer1;
+        }
+
+        public void setPlayer1(LastEmperorPlayer player1) {
+            this.eventPlayer1 = player1;
+        }
+
+        public LastEmperorPlayer getPlayer2() {
+            return eventPlayer2;
+        }
+
+        public void setPlayer2(LastEmperorPlayer player2) {
+            this.eventPlayer2 = player2;
+        }
+
+        public boolean presentBothPlayers() {
+            return eventPlayer1 != null
+                    && eventPlayer2 != null
+                    && eventPlayer1.getPlayer().isOnline()
+                    && eventPlayer2.getPlayer().isOnline();
+        }
+
+        public void configurePlayersBeforeStart() {
+            Player player1 = eventPlayer1.getPlayer();
+            Player player2 = eventPlayer2.getPlayer();
+
+            eventPlayer1.setAllowedToWalk(true);
+            eventPlayer2.setAllowedToWalk(true);
+
+            player1.setAura(AuraTeamType.BLUE);
+            player2.setAura(AuraTeamType.RED);
+
+            player1.teleToLocation(new Location(150171, 46728, -3408));
+            player2.teleToLocation(new Location(148765, 46728, -3408));
+
+            player1.standUp();
+            player2.standUp();
+        }
+
+        public void setRivals() {
+            eventPlayer1.setRival(eventPlayer2);
+            eventPlayer2.setRival(eventPlayer1);
+        }
+
+        public void clearBeforeNextRound() {
+            eventPlayer1.setRival(null);
+            eventPlayer2.setRival(null);
+
+            eventPlayer1.getPlayer().setAura(AuraTeamType.NONE);
+            eventPlayer2.getPlayer().setAura(AuraTeamType.NONE);
+
+            eventPlayer1.resetDamage();
+            eventPlayer2.resetDamage();
+        }
+
+        public EventPlayer determineWinnerWithoutFight() {
+            if (eventPlayer1 != null && eventPlayer1.getPlayer().isOnline()) {
+                return eventPlayer1;
+            } else if (eventPlayer2 != null && eventPlayer2.getPlayer().isOnline()) {
+                return eventPlayer2;
+            } else {
+                return null;
+            } 
+        }
+
+        public EventPlayer determineWinner() {
+            if (eventPlayer1.isWinner()) {
+                return eventPlayer1;
+            } else if (eventPlayer2.isWinner()) {
+                return eventPlayer2;
+            } else {
+                return eventPlayer1.getDamageDone() >= eventPlayer2.getDamageDone() ? eventPlayer1 : eventPlayer2;
+            }
+        }
+
+        public EventPlayer determineLoser() {
+            if (eventPlayer1.isWinner()) {
+                return eventPlayer2;
+            } else if (eventPlayer2.isWinner()) {
+                return eventPlayer1;
+            } else {
+                return eventPlayer1.getDamageDone() >= eventPlayer2.getDamageDone() ? eventPlayer2 : eventPlayer1;
+            }
+        }
     }
 }

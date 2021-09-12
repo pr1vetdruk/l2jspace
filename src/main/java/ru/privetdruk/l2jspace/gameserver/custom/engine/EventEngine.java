@@ -5,6 +5,7 @@ import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.custom.model.NpcInfoShort;
 import ru.privetdruk.l2jspace.gameserver.custom.model.SkillEnum;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.*;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.lastemperor.LastEmperorPlayer;
 import ru.privetdruk.l2jspace.gameserver.custom.service.AnnouncementService;
 import ru.privetdruk.l2jspace.gameserver.custom.task.EventTask;
 import ru.privetdruk.l2jspace.gameserver.custom.util.Chronos;
@@ -124,20 +125,20 @@ public abstract class EventEngine implements EventTask {
 
     public static boolean isCanAttack(Player player, Player targetPlayer) {
         if (player.isEventPlayer() && targetPlayer.isEventPlayer()) {
-            TeamSetting playerTeam = player.getEventPlayer().getTeamSettings();
-            TeamSetting targetTeam = targetPlayer.getEventPlayer().getTeamSettings();
+            EventPlayer eventPlayer = player.getEventPlayer();
+            EventPlayer targetEventPlayer = targetPlayer.getEventPlayer();
 
-            return playerTeam != targetTeam;
+            EventPlayer playerRival = eventPlayer.getRival();
+            EventPlayer targetPlayerRival = targetEventPlayer.getRival();
+
+            return ((playerRival == targetEventPlayer && targetPlayerRival == eventPlayer) || (playerRival == null && targetPlayerRival == null))
+                    && eventPlayer.getTeamSettings() != targetEventPlayer.getTeamSettings();
         }
 
         return false;
     }
 
     protected void finishEvent() {
-        if (eventState != IN_PROGRESS) {
-            return;
-        }
-
         eventState = FINISH;
 
         unspawnEventNpc();
@@ -147,7 +148,7 @@ public abstract class EventEngine implements EventTask {
     }
 
     protected void startEvent() {
-        eventState = PREPARE_TO_START;
+        eventState = PREPARE_FOR_START;
 
         allPlayers = new HashMap<>(players);
 
@@ -157,10 +158,12 @@ public abstract class EventEngine implements EventTask {
 
         eventState = IN_PROGRESS;
 
-        sitPlayers();
+        startEventCustom();
 
         waiter(MINUTES.toSeconds(settings.getDurationEvent()));
     }
+
+    protected abstract void startEventCustom();
 
     protected void abortEvent() {
         unspawnEventNpc();
@@ -238,9 +241,9 @@ public abstract class EventEngine implements EventTask {
 
         eventState = TELEPORTATION;
 
-        if (eventType.isTeam()) {
-            shuffleTeams();
-        }
+        prohibitPlayersToMove();
+
+        shufflePlayers();
 
         removeOfflinePlayers();
 
@@ -260,6 +263,21 @@ public abstract class EventEngine implements EventTask {
 
         players.values().forEach(this::teleport);
     }
+
+    /**
+     * Запретить игрокам передвижение
+     */
+    protected void prohibitPlayersToMove() {
+        players.values().forEach(eventPlayer -> eventPlayer.setAllowedToWalk(false));
+    }
+
+    /**
+     * Разрешить игрокам передвижение
+     */
+    protected void allowPlayersToMove() {
+        players.values().forEach(eventPlayer -> eventPlayer.setAllowedToWalk(true));
+    }
+
 
     protected void teleport(EventPlayer eventPlayer) {
         Player player = eventPlayer.getPlayer();
@@ -295,7 +313,7 @@ public abstract class EventEngine implements EventTask {
         }
     }
 
-    private void sitPlayers() {
+    protected void sitPlayers() {
         players.values().stream()
                 .map(EventPlayer::getPlayer)
                 .forEach(this::sitPlayer);
@@ -395,7 +413,7 @@ public abstract class EventEngine implements EventTask {
         }
     }
 
-    protected void shuffleTeams() {
+    protected void shufflePlayers() {
         if (teamMode != SHUFFLE) {
             return;
         }
@@ -429,7 +447,7 @@ public abstract class EventEngine implements EventTask {
     }
 
     protected void logError(String method, Exception e) {
-        LOGGER.severe(settings.getEventName() + "." + method + "(): " + e);
+        LOGGER.severe(settings.getEventName() + "." + method + "(): " + e.getMessage());
     }
 
     protected void logError(String message) {
@@ -445,17 +463,9 @@ public abstract class EventEngine implements EventTask {
             seconds--; // Here because we don't want to see two time announce at the same time
 
             switch (eventState) {
-                case REGISTRATION, IN_PROGRESS, TELEPORTATION, PREPARE_TO_START -> {
+                case REGISTRATION, IN_PROGRESS, TELEPORTATION, PREPARE_FOR_START -> {
                     switch (seconds) {
-                        case 3600: // 1 hour left
-                        case 1800: // 30 minutes left
-                        case 900: // 15 minutes left
-                        case 600: // 10 minutes left
-                        case 300: // 5 minutes left
-                        case 240: // 4 minutes left
-                        case 180: // 3 minutes left
-                        case 120: // 2 minutes left
-                        case 60: { // 1 minute left
+                        case 3600, 1800, 900, 600, 300, 240, 180, 120, 60 -> {
                             if (seconds == 3600) {
                                 removeOfflinePlayers();
                             }
@@ -469,21 +479,17 @@ public abstract class EventEngine implements EventTask {
                             } else if (eventState == IN_PROGRESS) {
                                 announceCritical(format("До завершения ивента осталось %d %s.", minutes, minutesWord));
                             }
+                        }
+                        case 30, 15, 10, 5, 4, 3, 2, 1 -> {
+                            if (seconds < 2 || seconds > 5) {
+                                removeOfflinePlayers();
+                            }
 
-                            break;
-                        }
-                        case 30: // 30 seconds left
-                        case 15: // 15 seconds left
-                        case 10: { // 10 seconds left
-                            removeOfflinePlayers();
-                            // fallthrou?
-                        }
-                        case 1: { // 1 seconds left
                             String secondsWord = declensionWords(seconds, StringUtil.secondWords);
                             String message = null;
 
                             switch (eventState) {
-                                case PREPARE_TO_START -> message = "До начала ивента осталось %d %s.";
+                                case PREPARE_FOR_START -> message = "До начала ивента осталось %d %s.";
                                 case REGISTRATION -> message = "До закрытия регистрации осталось %d %s.";
                                 case TELEPORTATION -> {
                                     if (seconds == 1) {
@@ -497,8 +503,6 @@ public abstract class EventEngine implements EventTask {
                             if (message != null) {
                                 announceCritical(format(message, seconds, secondsWord));
                             }
-
-                            break;
                         }
                     }
                 }
@@ -703,7 +707,9 @@ public abstract class EventEngine implements EventTask {
 
     public abstract String configureMainPageContent(Player player);
 
-    public abstract void revive(Player player, Player playerKiller);
+    public abstract void doDie(Player player, Player playerKiller);
+
+    public abstract boolean isAllowedTeleportAfterDeath();
 
     public void onDisconnect(Player player) {
         exclude(player);

@@ -4,11 +4,11 @@ import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventPlayer;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.TeamSetting;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 
-public class CtfEventPlayer extends EventPlayer {
+public class CtfPlayer extends EventPlayer {
     private CtfTeamSetting enemyFlag = null;
     private int countFlags = 0;
 
-    public CtfEventPlayer(Player player, TeamSetting teamSettings) {
+    public CtfPlayer(Player player, TeamSetting teamSettings) {
         super(player, teamSettings);
     }
 

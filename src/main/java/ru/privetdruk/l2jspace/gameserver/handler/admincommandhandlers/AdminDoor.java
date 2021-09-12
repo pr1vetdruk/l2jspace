@@ -36,7 +36,7 @@ public class AdminDoor implements IAdminCommandHandler {
         return ADMIN_COMMANDS;
     }
 
-    private static void testDoor(Player player, WorldObject worldObject, boolean isOpenCondition) {
+    public static void testDoor(Player player, WorldObject worldObject, boolean isOpenCondition) {
         if (worldObject instanceof Door)
             ((Door) worldObject).changeState(isOpenCondition, false);
         else

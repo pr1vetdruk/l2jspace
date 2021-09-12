@@ -3,7 +3,7 @@ package ru.privetdruk.l2jspace.gameserver.custom.instance;
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.custom.event.CTF;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState;
-import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.CtfEventPlayer;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.CtfPlayer;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.CtfTeamSetting;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
@@ -23,14 +23,14 @@ public class CtfFlag extends Npc {
             return;
         }
 
-        CtfEventPlayer eventPlayer = (CtfEventPlayer) event.getPlayers().get(player.getObjectId());
+        CtfPlayer eventPlayer = (CtfPlayer) event.getPlayers().get(player.getObjectId());
 
         event.processInFlagRange(eventPlayer);
 
         show(eventPlayer);
     }
 
-    public void show(CtfEventPlayer eventPlayer) {
+    public void show(CtfPlayer eventPlayer) {
         CtfTeamSetting team = eventPlayer.getTeamSettings();
         NpcHtmlMessage dialog = new NpcHtmlMessage(5);
         StringBuilder page = new StringBuilder("<html><head><body><center>");

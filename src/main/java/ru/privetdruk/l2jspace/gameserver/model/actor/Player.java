@@ -1321,7 +1321,7 @@ public final class Player extends Playable {
      * </ul>
      */
     public void standUp() {
-        if (isEventPlayer() && EventEngine.findActive().isSitForced()) {
+        if (isEventPlayer() && !eventPlayer.isAllowedToWalk()) {
             sendMessage("Темная сила за пределами вашего смертного понимания заставляет ваши колени дрожать, когда вы пытаетесь встать ...");
             return;
         }
@@ -2659,7 +2659,14 @@ public final class Player extends Playable {
         }
 
         // Check if it's pvp (cases : regular, wars, victim is PKer)
-        if (checkIfPvP(target) || (targetPlayer.getClan() != null && getClan() != null && getClan().isAtWarWith(targetPlayer.getClanId()) && targetPlayer.getClan().isAtWarWith(getClanId()) && targetPlayer.getPledgeType() != Clan.SUBUNIT_ACADEMY && getPledgeType() != Clan.SUBUNIT_ACADEMY) || (targetPlayer.getKarma() > 0 && Config.KARMA_AWARD_PK_KILL)) {
+        if (checkIfPvP(target) ||
+                (targetPlayer.getClan() != null
+                        && getClan() != null
+                        && getClan().isAtWarWith(targetPlayer.getClanId())
+                        && targetPlayer.getClan().isAtWarWith(getClanId())
+                        && targetPlayer.getPledgeType() != Clan.SUBUNIT_ACADEMY
+                        && getPledgeType() != Clan.SUBUNIT_ACADEMY)
+                || (targetPlayer.getKarma() > 0 && Config.KARMA_AWARD_PK_KILL)) {
             if (target instanceof Player) {
                 // Add PvP point to attacker.
                 setPvpKills(getPvpKills() + 1);
@@ -6166,7 +6173,7 @@ public final class Player extends Playable {
     }
 
     @Override
-    public final void sendDamageMessage(Creature target, int damage, boolean mcrit, boolean pcrit, boolean miss) {
+    public void sendDamageMessage(Creature target, int damage, boolean mcrit, boolean pcrit, boolean miss) {
         // Check if hit is missed
         if (miss) {
             sendPacket(SystemMessageId.MISSED_TARGET);
@@ -6174,21 +6181,33 @@ public final class Player extends Playable {
         }
 
         // Check if hit is critical
-        if (pcrit)
+        if (pcrit) {
             sendPacket(SystemMessageId.CRITICAL_HIT);
-        if (mcrit)
+        }
+        if (mcrit) {
             sendPacket(SystemMessageId.CRITICAL_HIT_MAGIC);
+        }
 
         if (target.isInvul()) {
-            if (target.isParalyzed())
+            if (target.isParalyzed()) {
                 sendPacket(SystemMessageId.OPPONENT_PETRIFIED);
-            else
+            } else {
                 sendPacket(SystemMessageId.ATTACK_WAS_BLOCKED);
-        } else
+            }
+        } else {
             sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_DID_S1_DMG).addNumber(damage));
+        }
 
-        if (isInOlympiadMode() && target instanceof Player && ((Player) target).isInOlympiadMode() && ((Player) target).getOlympiadGameId() == getOlympiadGameId())
+        if (isInOlympiadMode()
+                && target instanceof Player
+                && ((Player) target).isInOlympiadMode()
+                && ((Player) target).getOlympiadGameId() == getOlympiadGameId()) {
             OlympiadGameManager.getInstance().notifyCompetitorDamage(this, damage);
+        }
+
+        if (isEventPlayer()) {
+            eventPlayer.addDamageDone(damage);
+        }
     }
 
     public void checkItemRestriction() {
