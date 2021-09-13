@@ -38,6 +38,8 @@ public class EventConfig {
         public static final String PROPERTIES = "./config/custom/event/last-emperor.properties";
         public static boolean ENABLED;
         public static String[] LAUNCH_TIMES;
+        public static int PREPARE_FOR_BATTLE;
+        public static int TIME_TO_FIGHT;
         public static EventTeamType TEAM_MODE;
         public static boolean UNSUMMON_PET;
         public static boolean REMOVE_ALL_EFFECTS;

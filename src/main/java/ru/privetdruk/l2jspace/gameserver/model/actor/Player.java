@@ -4580,6 +4580,12 @@ public final class Player extends Playable {
         }
 
         Player targetPlayer = target.getActingPlayer();
+
+        if ((isEventPlayer() && !targetPlayer.isEventPlayer())
+                || (!isEventPlayer() && targetPlayer.isEventPlayer())) {
+            return false;
+        }
+
         // No checks for players in Arena
         if (isInsideZone(ZoneId.PVP) && targetPlayer.isInsideZone(ZoneId.PVP)) {
             return true;
@@ -4595,11 +4601,6 @@ public final class Player extends Playable {
         // No checks for players in Duel
         if (isInDuel() && targetPlayer.isInDuel() && getDuelId() == targetPlayer.getDuelId()) {
             return true;
-        }
-
-        if ((isEventPlayer() && !targetPlayer.isEventPlayer())
-                || (!isEventPlayer() && targetPlayer.isEventPlayer())) {
-            return false;
         }
 
         boolean sameParty = (isInParty() && targetPlayer.isInParty() && getParty().getLeader() == targetPlayer.getParty().getLeader());
@@ -5238,7 +5239,9 @@ public final class Player extends Playable {
         return _lvlJoinedAcademy > 0;
     }
 
-    public void setAura(AuraTeamType team) {
+    public void
+    setAura(AuraTeamType team) {
+        LOGGER.info(getName() + " aura " + team.name());
         _team = team;
     }
 

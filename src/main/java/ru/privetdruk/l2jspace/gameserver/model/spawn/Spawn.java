@@ -36,7 +36,7 @@ public final class Spawn implements Runnable {
     private int _respawnMinDelay;
     private int _respawnMaxDelay;
 
-    public Spawn(NpcTemplate template) throws SecurityException, ClassNotFoundException, NoSuchMethodException {
+    public Spawn(NpcTemplate template) {
         if (template == null) {
             return;
         }
@@ -44,7 +44,7 @@ public final class Spawn implements Runnable {
         parameterConfiguration(template);
     }
 
-    public Spawn(int id) throws SecurityException, ClassNotFoundException, NoSuchMethodException {
+    public Spawn(int id) {
         final NpcTemplate template = NpcData.getInstance().getTemplate(id);
         if (template == null) {
             LOGGER.warn("Couldn't properly spawn with id {} ; the template is missing.", id);
@@ -356,11 +356,16 @@ public final class Spawn implements Runnable {
         return "Spawn [id=" + _template.getNpcId() + ", loc=" + _loc.toString() + "]";
     }
 
-    private void parameterConfiguration(NpcTemplate template) throws NoSuchMethodException, ClassNotFoundException {
+    private void parameterConfiguration(NpcTemplate template) {
         _template = template;
 
         String packageName = NpcData.getNpcInstancePackage(template.getNpcId());
 
-        _constructor = Class.forName(packageName + _template.getType()).getConstructor(parameters);
+        try {
+            _constructor = Class.forName(packageName + _template.getType()).getConstructor(parameters);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
     }
 }

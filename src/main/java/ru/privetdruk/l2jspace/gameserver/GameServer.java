@@ -189,7 +189,7 @@ public class GameServer {
         }
 
         StringUtil.printSection("Events");
-        EventService.getInstance();
+        EventService.getInstance().load();;
         DerbyTrackManager.getInstance();
         LotteryManager.getInstance();
 

@@ -1449,6 +1449,8 @@ public final class Config {
 
         EventConfig.LastEmperor.ENABLED = lastEmperor.getProperty("Enabled", false);
         EventConfig.LastEmperor.LAUNCH_TIMES = lastEmperor.getProperty("LaunchTimes", "").split(";");
+        EventConfig.LastEmperor.PREPARE_FOR_BATTLE = lastEmperor.getProperty("PrepareForBattle", 15);
+        EventConfig.LastEmperor.TIME_TO_FIGHT = lastEmperor.getProperty("TimeToFight", 120);
         EventConfig.LastEmperor.TEAM_MODE = EventTeamType.valueOf(lastEmperor.getProperty("TeamMode", EventTeamType.SHUFFLE.name()));
         EventConfig.LastEmperor.UNSUMMON_PET = lastEmperor.getProperty("UnsummonPet", true);
         EventConfig.LastEmperor.REMOVE_ALL_EFFECTS = lastEmperor.getProperty("RemoveAllEffects", false);

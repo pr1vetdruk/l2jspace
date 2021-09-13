@@ -1,12 +1,16 @@
 package ru.privetdruk.l2jspace.gameserver.custom.service;
 
-import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 import ru.privetdruk.l2jspace.config.custom.EventConfig;
+import ru.privetdruk.l2jspace.gameserver.custom.builder.EventSettingBuilder;
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
+import ru.privetdruk.l2jspace.gameserver.custom.model.NpcInfoShort;
+import ru.privetdruk.l2jspace.gameserver.custom.model.Reward;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventLoadingMode;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventSetting;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventType;
+import ru.privetdruk.l2jspace.gameserver.model.location.SpawnLocation;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
@@ -16,12 +20,68 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class EventService {
-    private static final CLogger LOGGER = new CLogger(EventService.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(EventService.class.getName());
 
-    public static EventService getInstance() {
-        return SingletonHolder.INSTANCE;
+    public EventSetting findEventSetting(int id, EventType type) {
+        try (Connection connection = ConnectionPool.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT e.* FROM event e WHERE e.id = ? AND e.type = ?");
+            statement.setInt(1, id);
+            statement.setString(2, type.name());
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (!resultSet.next()) {
+                LOGGER.warning("Не удалось найти настройки для " + type.name());
+                return null;
+            }
+
+            EventSetting settings = new EventSettingBuilder()
+                    .setName(resultSet.getString("name"))
+                    .setDescription(resultSet.getString("description"))
+                    .setRegistrationLocationName(resultSet.getString("registration_location"))
+                    .setMinLevel(resultSet.getInt("min_level"))
+                    .setMaxLevel(resultSet.getInt("max_level"))
+                    .setNpc(new NpcInfoShort(
+                            resultSet.getInt("npc_id"),
+                            new SpawnLocation(
+                                    resultSet.getInt("npc_x"),
+                                    resultSet.getInt("npc_y"),
+                                    resultSet.getInt("npc_z"),
+                                    resultSet.getInt("npc_heading")
+                            )
+                    ))
+                    .setTimeRegistration(resultSet.getInt("time_registration"))
+                    .setDurationTime(resultSet.getInt("duration_event"))
+                    .setMinPlayers(resultSet.getInt("min_players"))
+                    .setMaxPlayers(resultSet.getInt("max_players"))
+                    .setIntervalBetweenMatches(resultSet.getLong("delay_next_event"))
+                    .build();
+
+            statement.close();
+            resultSet.close();
+
+            statement = connection.prepareStatement("SELECT ev.* FROM event_reward ev WHERE ev.event_id = ? ORDER BY ev.id ASC");
+            statement.setInt(1, id);
+
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Reward reward = new Reward();
+
+                reward.setId(resultSet.getInt("reward_id"));
+                reward.setAmount(resultSet.getInt("reward_amount"));
+
+                settings.getRewards().add(reward);
+            }
+
+            return settings;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void load() {
@@ -46,7 +106,7 @@ public class EventService {
                 statement.setString(1, eventType.name());
                 resultSet = statement.executeQuery();
                 if (!resultSet.next()) {
-                    LOGGER.warn(eventType.name() + ": Settings not found!");
+                    LOGGER.warning(eventType.name() + ": Settings not found!");
                     return;
                 }
 
@@ -54,14 +114,14 @@ public class EventService {
                     eventIdList.add(resultSet.getInt("id"));
                 } while (resultSet.next());
             } catch (Exception e) {
-                LOGGER.error("An error occurred while reading event data!");
+                LOGGER.severe("An error occurred while reading event data!");
                 return;
             } finally {
                 if (resultSet != null) {
                     try {
                         resultSet.close();
                     } catch (SQLException e) {
-                        LOGGER.warn(e.getMessage());
+                        LOGGER.warning(e.getMessage());
                     }
                 }
             }
@@ -87,12 +147,12 @@ public class EventService {
                 }
             }
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            LOGGER.error("Failed to load " + eventType);
+            LOGGER.severe("Failed to load " + eventType);
         }
     }
 
-    private EventService() {
-        load();
+    public static EventService getInstance() {
+        return SingletonHolder.INSTANCE;
     }
 
     private static class SingletonHolder {

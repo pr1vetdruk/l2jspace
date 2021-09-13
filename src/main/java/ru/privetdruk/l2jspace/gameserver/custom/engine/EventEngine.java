@@ -5,7 +5,6 @@ import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.custom.model.NpcInfoShort;
 import ru.privetdruk.l2jspace.gameserver.custom.model.SkillEnum;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.*;
-import ru.privetdruk.l2jspace.gameserver.custom.model.event.lastemperor.LastEmperorPlayer;
 import ru.privetdruk.l2jspace.gameserver.custom.service.AnnouncementService;
 import ru.privetdruk.l2jspace.gameserver.custom.task.EventTask;
 import ru.privetdruk.l2jspace.gameserver.custom.util.Chronos;
@@ -132,7 +131,8 @@ public abstract class EventEngine implements EventTask {
             EventPlayer targetPlayerRival = targetEventPlayer.getRival();
 
             return ((playerRival == targetEventPlayer && targetPlayerRival == eventPlayer) || (playerRival == null && targetPlayerRival == null))
-                    && eventPlayer.getTeamSettings() != targetEventPlayer.getTeamSettings();
+                    && eventPlayer.getTeamSettings() != targetEventPlayer.getTeamSettings()
+                    && eventPlayer.isCanAttack();
         }
 
         return false;
@@ -368,11 +368,7 @@ public abstract class EventEngine implements EventTask {
 
         announceCritical("Открыта регистрация на ивент!");
 
-        Item rewardTemplate = ItemData.getInstance().getTemplate(settings.getReward().getId());
-
-        if (EventConfig.Engine.ANNOUNCE_REWARD && rewardTemplate != null) {
-            announceCritical(format("Награда за победу: %d %s", settings.getReward().getAmount(), rewardTemplate.getName()));
-        }
+        announceRewards();
 
         announceCritical(format("Уровни: %d - %d", settings.getMinLevel(), settings.getMaxLevel()));
         announceCritical("Зарегистрироваться можно в " + settings.getRegistrationLocationName());
@@ -382,6 +378,19 @@ public abstract class EventEngine implements EventTask {
         }
 
         waiter(MINUTES.toSeconds(settings.getTimeRegistration()));
+    }
+
+    private void announceRewards() {
+        if (EventConfig.Engine.ANNOUNCE_REWARD && !settings.getRewards().isEmpty()) {
+            announceCritical("Награда за победу:");
+
+            settings.getRewards().forEach(reward -> {
+                Item rewardTemplate = ItemData.getInstance().getTemplate(reward.getId());
+                announceCritical(reward.getAmount() + "шт. " + rewardTemplate.getName());
+            });
+
+            announceRewardsAfter();
+        }
     }
 
     protected void spawnMainNpc() throws ClassNotFoundException, NoSuchMethodException {
@@ -439,7 +448,7 @@ public abstract class EventEngine implements EventTask {
     }
 
     protected void announceCritical(String message) {
-        announcementService.criticalToAll(settings.getEventName() + ": " + message);
+        announcementService.criticalToAll(message);
     }
 
     protected void logInfo(String message) {
@@ -457,7 +466,7 @@ public abstract class EventEngine implements EventTask {
     protected void waiter(long intervalSeconds) {
         long interval = SECONDS.toMillis(intervalSeconds);
         final long startWaiterTime = Chronos.currentTimeMillis();
-        int seconds = (int) (interval / 1000);
+        int seconds = (int) intervalSeconds;
 
         while (((startWaiterTime + interval) > Chronos.currentTimeMillis()) && eventState != ABORT) {
             seconds--; // Here because we don't want to see two time announce at the same time
@@ -710,6 +719,8 @@ public abstract class EventEngine implements EventTask {
     public abstract void doDie(Player player, Player playerKiller);
 
     public abstract boolean isAllowedTeleportAfterDeath();
+
+    protected abstract void announceRewardsAfter();
 
     public void onDisconnect(Player player) {
         exclude(player);

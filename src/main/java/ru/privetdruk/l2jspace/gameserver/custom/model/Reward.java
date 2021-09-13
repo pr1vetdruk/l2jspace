@@ -1,8 +1,11 @@
 package ru.privetdruk.l2jspace.gameserver.custom.model;
 
 public class Reward {
-    private final int id;
-    private final int amount;
+    private int id;
+    private int amount;
+
+    public Reward() {
+    }
 
     public Reward(int id, int amount) {
         this.id = id;
@@ -15,5 +18,13 @@ public class Reward {
 
     public int getAmount() {
         return amount;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 }

@@ -4,6 +4,9 @@ import ru.privetdruk.l2jspace.gameserver.custom.model.NpcInfoShort;
 import ru.privetdruk.l2jspace.gameserver.custom.model.Reward;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EventSetting {
     private String eventName;
     private String eventDescription;
@@ -14,7 +17,7 @@ public class EventSetting {
     private int maxPlayers;
     private NpcInfoShort mainNpc;
     private Spawn spawnMainNpc;
-    private Reward reward;
+    private List<Reward> rewards;
     private int timeRegistration;
     private int durationEvent;
     private long intervalBetweenMatches;
@@ -28,7 +31,6 @@ public class EventSetting {
                         int minLevel,
                         int maxLevel,
                         NpcInfoShort mainNpc,
-                        Reward reward,
                         int timeRegistration,
                         int durationEvent,
                         int minPlayers,
@@ -40,7 +42,7 @@ public class EventSetting {
         this.minLevel = minLevel;
         this.maxLevel = maxLevel;
         this.mainNpc = mainNpc;
-        this.reward = reward;
+        this.rewards = new ArrayList<>();
         this.timeRegistration = timeRegistration;
         this.durationEvent = durationEvent;
         this.minPlayers = minPlayers;
@@ -72,8 +74,8 @@ public class EventSetting {
         return mainNpc;
     }
 
-    public Reward getReward() {
-        return reward;
+    public List<Reward> getRewards() {
+        return rewards;
     }
 
     public int getTimeRegistration() {
@@ -120,8 +122,8 @@ public class EventSetting {
         this.mainNpc = mainNpc;
     }
 
-    public void setReward(Reward reward) {
-        this.reward = reward;
+    public void setRewards(List<Reward> rewards) {
+        this.rewards = rewards;
     }
 
     public void setTimeRegistration(int timeRegistration) {

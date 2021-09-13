@@ -48,11 +48,6 @@ public class EventSettingBuilder {
         return this;
     }
 
-    public EventSettingBuilder setReward(Reward reward) {
-        this.reward = reward;
-        return this;
-    }
-
     public EventSettingBuilder setTimeRegistration(int timeRegistration) {
         this.timeRegistration = timeRegistration;
         return this;
@@ -79,6 +74,6 @@ public class EventSettingBuilder {
     }
 
     public EventSetting build() {
-        return new EventSetting(name, description, registrationLocationName, minLevel, maxLevel, npc, reward, timeRegistration, durationTime, minPlayers, maxPlayers, intervalBetweenMatches);
+        return new EventSetting(name, description, registrationLocationName, minLevel, maxLevel, npc, timeRegistration, durationTime, minPlayers, maxPlayers, intervalBetweenMatches);
     }
 }

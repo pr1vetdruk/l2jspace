@@ -351,7 +351,7 @@ public abstract class Playable extends Creature {
             return true;
         }
 
-        if (player.isEventPlayer() && targetPlayer.isEventPlayer()) {
+        if (player.isEventPlayer() || targetPlayer.isEventPlayer()) {
             return EventEngine.isCanAttack(player, targetPlayer);
         }
 
@@ -446,19 +446,28 @@ public abstract class Playable extends Creature {
 
     @Override
     public boolean isAttackableBy(Creature attacker) {
-        if (!super.isAttackableBy(attacker))
+        if (!super.isAttackableBy(attacker)) {
             return false;
+        }
+
+        if (this instanceof Player
+                && attacker instanceof Player
+                && (((Player) this).isEventPlayer() || ((Player) attacker).isEventPlayer())) {
+            return EventEngine.isCanAttack(((Player) this), ((Player) attacker));
+        }
 
         // Attackables can attack Playables anytime, anywhere
-        if (attacker instanceof Monster)
+        if (attacker instanceof Monster) {
             return true;
+        }
 
         // SiegeGuards cannot attack defenders/owners
         if (attacker instanceof SiegeGuard) {
             if (getActingPlayer().getClan() != null) {
-                final Siege siege = CastleManager.getInstance().getActiveSiege(this);
-                if (siege != null && siege.checkSides(getActingPlayer().getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER))
+                Siege siege = CastleManager.getInstance().getActiveSiege(this);
+                if (siege != null && siege.checkSides(getActingPlayer().getClan(), SiegeSide.DEFENDER, SiegeSide.OWNER)) {
                     return false;
+                }
             }
 
             return true;
@@ -509,7 +518,7 @@ public abstract class Playable extends Creature {
             return true;
         }
 
-        if (player.isEventPlayer() && attackerPlayer.isEventPlayer()) {
+        if (player.isEventPlayer() || attackerPlayer.isEventPlayer()) {
             return EventEngine.isCanAttack(player, attackerPlayer);
         }
 

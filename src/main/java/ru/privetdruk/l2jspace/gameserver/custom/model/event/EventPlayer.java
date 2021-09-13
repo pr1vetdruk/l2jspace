@@ -19,6 +19,11 @@ public class EventPlayer {
     private boolean allowedToWalk = true;
 
     /**
+     * Может атаковать
+     */
+    private boolean canAttack = false;
+
+    /**
      * Нанесенный урон
      */
     private long damageDone = 0L;
@@ -105,5 +110,13 @@ public class EventPlayer {
 
     public void resetDamage() {
         damageDone = 0L;
+    }
+
+    public boolean isCanAttack() {
+        return canAttack;
+    }
+
+    public void setCanAttack(boolean canAttack) {
+        this.canAttack = canAttack;
     }
 }

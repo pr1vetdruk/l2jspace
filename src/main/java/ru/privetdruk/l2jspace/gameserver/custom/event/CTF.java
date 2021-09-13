@@ -5,15 +5,14 @@ import ru.privetdruk.l2jspace.common.pool.ThreadPool;
 import ru.privetdruk.l2jspace.common.random.Rnd;
 import ru.privetdruk.l2jspace.common.util.StringUtil;
 import ru.privetdruk.l2jspace.config.custom.EventConfig;
-import ru.privetdruk.l2jspace.gameserver.custom.builder.EventSettingBuilder;
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.custom.model.NpcInfoShort;
-import ru.privetdruk.l2jspace.gameserver.custom.model.Reward;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.*;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.CtfPlayer;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.CtfTeamSetting;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.Flag;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.Throne;
+import ru.privetdruk.l2jspace.gameserver.custom.service.EventService;
 import ru.privetdruk.l2jspace.gameserver.data.sql.SpawnTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
@@ -83,49 +82,15 @@ public class CTF extends EventEngine {
     @Override
     public void loadData(int eventId) {
         try (Connection connection = ConnectionPool.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM event WHERE id = ? AND type = ?");
-            statement.setInt(1, eventId);
-            statement.setString(2, eventType.name());
+            settings = EventService.getInstance().findEventSetting(eventId, eventType);
 
-            ResultSet resultSet = statement.executeQuery();
-
-            if (!resultSet.next()) {
-                LOGGER.warning("Не удалось найти настройки для CTF.");
+            if (settings == null) {
                 return;
             }
 
-            settings = new EventSettingBuilder()
-                    .setName(resultSet.getString("name"))
-                    .setDescription(resultSet.getString("description"))
-                    .setRegistrationLocationName(resultSet.getString("registration_location"))
-                    .setMinLevel(resultSet.getInt("min_level"))
-                    .setMaxLevel(resultSet.getInt("max_level"))
-                    .setNpc(new NpcInfoShort(
-                            resultSet.getInt("npc_id"),
-                            new SpawnLocation(
-                                    resultSet.getInt("npc_x"),
-                                    resultSet.getInt("npc_y"),
-                                    resultSet.getInt("npc_z"),
-                                    resultSet.getInt("npc_heading")
-                            )
-                    ))
-                    .setReward(new Reward(
-                            resultSet.getInt("reward_id"),
-                            resultSet.getInt("reward_amount")
-                    ))
-                    .setTimeRegistration(resultSet.getInt("time_registration"))
-                    .setDurationTime(resultSet.getInt("duration_event"))
-                    .setMinPlayers(resultSet.getInt("min_players"))
-                    .setMaxPlayers(resultSet.getInt("max_players"))
-                    .setIntervalBetweenMatches(resultSet.getLong("delay_next_event"))
-                    .build();
-
-            statement.close();
-            resultSet.close();
-
-            statement = connection.prepareStatement("SELECT * FROM event_ctf_team_setting WHERE event_id = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM event_ctf_team_setting WHERE event_id = ?");
             statement.setInt(1, eventId);
-            resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 ctfTeamSettings.add(
@@ -663,18 +628,18 @@ public class CTF extends EventEngine {
         }
 
         if (result == WON) {
-            player.addItem(
-                    settings.getEventName(),
-                    settings.getReward().getId(),
-                    settings.getReward().getAmount(),
-                    player,
-                    true
+            settings.getRewards().forEach(reward ->
+                    player.addItem(
+                            settings.getEventName(),
+                            reward.getId(),
+                            reward.getAmount(),
+                            player,
+                            true
+                    )
             );
         }
 
         player.sendPacket(new CreatureSay(player.getObjectId(), SayType.PARTYROOM_COMMANDER, settings.getEventName(), result.name()));
-
-        // Send a Server->Client ActionFailed to the PlayerInstance in order to avoid that the client wait another packet
         player.sendPacket(ActionFailed.STATIC_PACKET);
     }
 
@@ -739,8 +704,12 @@ public class CTF extends EventEngine {
                                 .append(" eventShuffle\" \"90\" height=21 back=\"L2UI_ch3.Btn1_normalOn\" fore=\"L2UI_ch3.Btn1_normal\"></center>");
                         content.append("<center><font color=\"3366CC\">Команды будут выбраны случайным образом!</font></center><br>");
                         content.append("<center>Участников:</font> <font color=\"LEVEL\">").append(players.size()).append("</center></font><br>");
-                        content.append("<center>Награда: <font color=\"LEVEL\">").append(settings.getReward().getAmount())
-                                .append(" ").append(ItemData.getInstance().getTemplate(settings.getReward().getId()).getName()).append("</center></font>");
+                        content.append("<center>Награда:</center>");
+
+                        settings.getRewards().forEach(reward -> {
+                            content.append("<center><font color=\"LEVEL\">").append(reward.getAmount())
+                                    .append(" ").append(ItemData.getInstance().getTemplate(reward.getId()).getName()).append("</center></font>");
+                        });
                     }
                 }
             } else if (eventState == IN_PROGRESS) {
@@ -799,6 +768,11 @@ public class CTF extends EventEngine {
     @Override
     public boolean isAllowedTeleportAfterDeath() {
         return false;
+    }
+
+    @Override
+    protected void announceRewardsAfter() {
+
     }
 
     private void removeFlagFromPlayer(CtfPlayer eventPlayer) {
