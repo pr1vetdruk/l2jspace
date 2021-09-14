@@ -491,4 +491,12 @@ public class NpcTemplate extends CreatureTemplate {
                 list.add(quest);
         }
     }
+
+    public void setUsingServerSideName(boolean _usingServerSideName) {
+        this._usingServerSideName = _usingServerSideName;
+    }
+
+    public void setUsingServerSideTitle(boolean _usingServerSideTitle) {
+        this._usingServerSideTitle = _usingServerSideTitle;
+    }
 }

@@ -7,6 +7,7 @@ import ru.privetdruk.l2jspace.common.util.StringUtil;
 import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.custom.model.NpcInfoShort;
+import ru.privetdruk.l2jspace.gameserver.custom.model.enums.SocialActionEnum;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.*;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.CtfPlayer;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.CtfTeamSetting;
@@ -40,7 +41,7 @@ import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 import static ru.privetdruk.l2jspace.common.util.StringUtil.declensionWords;
-import static ru.privetdruk.l2jspace.common.util.StringUtil.secondWords;
+import static ru.privetdruk.l2jspace.common.util.StringUtil.SECOND_WORDS;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.SkillEnum.Mount.Wyvern.WYVERN_BREATH;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.SkillEnum.Prophet.MAGIC_BARRIER;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBypass.JOIN_TEAM;
@@ -255,7 +256,7 @@ public class CTF extends EventEngine {
 
         // Remove the flag from this player
         Player player = eventPlayer.getPlayer();
-        player.broadcastPacket(new SocialAction(player, 16)); // Amazing glow TODO id
+        player.broadcastPacket(new SocialAction(player, SocialActionEnum.AMAZING_GLOW.getId()));
         player.broadcastUserInfo();
         player.broadcastPacket(new SocialAction(player, 3)); // Victory TODO id
         player.broadcastUserInfo();
@@ -270,7 +271,7 @@ public class CTF extends EventEngine {
                 "Теперь у команды %s: %d %s.",
                 team.getName(),
                 team.getPoints(),
-                StringUtil.declensionWords(team.getPoints(), StringUtil.pointWords)
+                StringUtil.declensionWords(team.getPoints(), StringUtil.POINT_WORDS)
         ));
     }
 
@@ -318,7 +319,7 @@ public class CTF extends EventEngine {
         // Add the flag in his hands
         eventPlayer.setEnemyFlag(team);
         player.getInventory().equipItem(ItemInstance.create(flagItemId, 1, player, null));
-        player.broadcastPacket(new SocialAction(player, 16)); // Amazing glow
+        player.broadcastPacket(new SocialAction(player, SocialActionEnum.AMAZING_GLOW.getId()));
         player.broadcastUserInfo();
         player.sendPacket(new CreatureSay(player.getObjectId(), SayType.PARTYROOM_COMMANDER, "Event Manager", "Отлично! Теперь отнеси флаг на свою базу!"));
     }
@@ -748,7 +749,7 @@ public class CTF extends EventEngine {
         sendPlayerMessage(player, String.format(
                 "Вы будете воскрешены и перемещены к флагу команды через %d %s!",
                 EventConfig.CTF.DELAY_BEFORE_REVIVE,
-                declensionWords(EventConfig.CTF.DELAY_BEFORE_REVIVE, secondWords)
+                declensionWords(EventConfig.CTF.DELAY_BEFORE_REVIVE, SECOND_WORDS)
         ));
 
         CtfPlayer eventPlayer = (CtfPlayer) player.getEventPlayer();

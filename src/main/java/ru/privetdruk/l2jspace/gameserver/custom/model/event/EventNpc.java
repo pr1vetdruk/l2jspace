@@ -6,20 +6,36 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.location.SpawnLocation;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
+import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SocialAction;
 
 public class EventNpc {
+    private final EventType event;
     private final NpcTemplate npcTemplate;
     private final String name;
     private final String title;
     private final SpawnLocation location;
+    private final int roundVictorySkillAnimationId;
+    private final int victorySkillAnimationId;
+    private final int socialActionId;
 
     private Npc npc;
 
-    public EventNpc(int npcId, String name, String title, SpawnLocation location) {
+    public EventNpc(int victorySkillAnimationId,
+                    int roundVictorySkillAnimationId,
+                    int socialActionId,
+                    EventType event,
+                    int npcId,
+                    String name,
+                    String title,
+                    SpawnLocation location) {
+        this.event = event;
         this.npcTemplate = NpcData.getInstance().getTemplate(npcId);
-        this.name = name == null ? "LastEmperor" : name;
-        this.title = title == null ? "Event NPC" : title;
+        this.name = name == null ? "Event NPC" : name;
+        this.title = title == null ? event.getName() : title;
         this.location = location;
+        this.roundVictorySkillAnimationId = roundVictorySkillAnimationId;
+        this.victorySkillAnimationId = victorySkillAnimationId;
+        this.socialActionId = socialActionId;
     }
 
     public Npc getNpc() {
@@ -31,6 +47,9 @@ public class EventNpc {
     }
 
     public void spawn() {
+        npcTemplate.setUsingServerSideName(true);
+        npcTemplate.setUsingServerSideTitle(true);
+
         Spawn spawn = new Spawn(npcTemplate);
 
         spawn.setLoc(location);
@@ -38,17 +57,41 @@ public class EventNpc {
         SpawnTable.getInstance().addSpawn(spawn, false);
         spawn.doSpawn(true);
 
-        Npc npc = spawn.getNpc();
-        npc.setMortal(false);
-        npc.decayMe();
-        npc.setTitle(title);
-        npc.setName(name);
+        Npc spawnNpc = spawn.getNpc();
+        spawnNpc.setMortal(false);
+        spawnNpc.decayMe();
+        spawnNpc.setTitle(title);
+        spawnNpc.setName(name);
 
-        npc.spawnMe(npc.getX(), npc.getY(), npc.getZ());
+        spawnNpc.spawnMe(spawnNpc.getX(), spawnNpc.getY(), spawnNpc.getZ());
+
+        npc = spawnNpc;
     }
 
     public void unspawn() {
         SpawnTable.getInstance().deleteSpawn(npc.getSpawn(), true);
         npc.deleteMe();
+    }
+
+    public void playVictoryAnimation() {
+        playSkillAnimation(victorySkillAnimationId);
+    }
+
+    public void playRoundVictoryAnimation() {
+        playSkillAnimation(roundVictorySkillAnimationId);
+    }
+
+    private void playSkillAnimation(int skillId) {
+        if (skillId > 0) {
+            npc.performSkillAnimation(skillId);
+        }
+
+        playSocialAnimation();
+    }
+
+    private void playSocialAnimation() {
+        if (socialActionId > 0) {
+            npc.broadcastPacket(new SocialAction(npc, socialActionId));
+        }
     }
 }

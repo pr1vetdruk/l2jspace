@@ -1788,4 +1788,8 @@ public abstract class Creature extends WorldObject {
     public boolean canBeHealed() {
         return !isDead() && !isInvul();
     }
+
+    public void performSkillAnimation(int skillId) {
+        broadcastPacket(new MagicSkillUse(this, this, skillId, 1, 5500, 1));
+    }
 }

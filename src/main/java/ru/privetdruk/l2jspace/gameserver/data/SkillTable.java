@@ -237,6 +237,10 @@ public class SkillTable {
         public L2Skill getSkill() {
             return _skill;
         }
+
+        public int getId() {
+            return _id;
+        }
     }
 
     private static class SingletonHolder {

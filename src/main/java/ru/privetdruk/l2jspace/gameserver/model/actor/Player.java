@@ -15,6 +15,7 @@ import ru.privetdruk.l2jspace.gameserver.communitybbs.CommunityBoard;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.model.Forum;
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.custom.instance.WeddingManager;
+import ru.privetdruk.l2jspace.gameserver.custom.model.enums.SocialActionEnum;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventPlayer;
 import ru.privetdruk.l2jspace.gameserver.custom.service.WeddingService;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
@@ -5241,7 +5242,6 @@ public final class Player extends Playable {
 
     public void
     setAura(AuraTeamType team) {
-        LOGGER.info(getName() + " aura " + team.name());
         _team = team;
     }
 
@@ -6952,7 +6952,6 @@ public final class Player extends Playable {
         }
     }
 
-
     /**
      * Added to other GMs, test also this {@link Player} instance. If GM, set it.
      */
@@ -6983,5 +6982,10 @@ public final class Player extends Playable {
 
     public List<String> getActiveBoxesCharacters() {
         return activeBoxesCharacters;
+    }
+
+    public void performSocialAction(SocialActionEnum socialAction) {
+        broadcastPacket(new SocialAction(this, socialAction.getId()));
+        broadcastUserInfo();
     }
 }

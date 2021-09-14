@@ -33,7 +33,7 @@ import static java.lang.String.format;
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static ru.privetdruk.l2jspace.common.util.StringUtil.declensionWords;
-import static ru.privetdruk.l2jspace.common.util.StringUtil.secondWords;
+import static ru.privetdruk.l2jspace.common.util.StringUtil.SECOND_WORDS;
 import static ru.privetdruk.l2jspace.config.custom.EventConfig.Engine.DELAY_BEFORE_TELEPORT;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.*;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.SHUFFLE;
@@ -141,8 +141,8 @@ public abstract class EventEngine implements EventTask {
     protected void finishEvent() {
         eventState = FINISH;
 
-        unspawnEventNpc();
         determineWinner();
+        unspawnEventNpc();
         restorePlayerData();
         returnPlayers();
     }
@@ -166,10 +166,10 @@ public abstract class EventEngine implements EventTask {
     protected abstract void startEventCustom();
 
     protected void abortEvent() {
-        unspawnEventNpc();
-        restorePlayerData();
-
         if (eventState != REGISTRATION) {
+            unspawnEventNpc();
+            restorePlayerData();
+
             abortCustom();
             returnPlayers();
         }
@@ -183,7 +183,7 @@ public abstract class EventEngine implements EventTask {
         announceCritical(format(
                 "Все участники ивента будут возвращены обратно через %d %s.",
                 EventConfig.Engine.DELAY_BEFORE_TELEPORT_RETURN,
-                declensionWords(EventConfig.Engine.DELAY_BEFORE_TELEPORT_RETURN, secondWords)
+                declensionWords(EventConfig.Engine.DELAY_BEFORE_TELEPORT_RETURN, SECOND_WORDS)
         ));
 
         sitPlayers();
@@ -250,16 +250,14 @@ public abstract class EventEngine implements EventTask {
         announceCritical(format(
                 "Все участники ивента будут телепортированы на ивент через %d %s.",
                 DELAY_BEFORE_TELEPORT,
-                declensionWords(DELAY_BEFORE_TELEPORT, StringUtil.secondWords)
+                declensionWords(DELAY_BEFORE_TELEPORT, StringUtil.SECOND_WORDS)
         ));
-
-        waiter(DELAY_BEFORE_TELEPORT);
 
         spawnOtherNpc();
         updatePlayerEventData();
         sitPlayers();
 
-        waiter(1);
+        waiter(DELAY_BEFORE_TELEPORT);
 
         players.values().forEach(this::teleport);
     }
@@ -457,6 +455,7 @@ public abstract class EventEngine implements EventTask {
 
     protected void logError(String method, Exception e) {
         LOGGER.severe(settings.getEventName() + "." + method + "(): " + e.getMessage());
+        e.printStackTrace();
     }
 
     protected void logError(String message) {
@@ -480,7 +479,7 @@ public abstract class EventEngine implements EventTask {
                             }
 
                             long minutes = SECONDS.toMinutes(seconds);
-                            String minutesWord = declensionWords(minutes, StringUtil.minuteWords);
+                            String minutesWord = declensionWords(minutes, StringUtil.MINUTE_WORDS);
 
                             if (eventState == REGISTRATION) {
                                 announceCritical("Зарегистрироваться можно в " + settings.getRegistrationLocationName());
@@ -494,7 +493,7 @@ public abstract class EventEngine implements EventTask {
                                 removeOfflinePlayers();
                             }
 
-                            String secondsWord = declensionWords(seconds, StringUtil.secondWords);
+                            String secondsWord = declensionWords(seconds, StringUtil.SECOND_WORDS);
                             String message = null;
 
                             switch (eventState) {

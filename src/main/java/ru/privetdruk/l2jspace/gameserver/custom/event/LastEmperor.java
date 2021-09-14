@@ -6,6 +6,7 @@ import ru.privetdruk.l2jspace.common.util.StringUtil;
 import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.custom.model.Reward;
+import ru.privetdruk.l2jspace.gameserver.custom.model.enums.SocialActionEnum;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.*;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.lastemperor.LastEmperorPlayer;
 import ru.privetdruk.l2jspace.gameserver.custom.service.DoorService;
@@ -23,7 +24,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayDeque;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
 
@@ -32,38 +32,36 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static ru.privetdruk.l2jspace.common.util.StringUtil.declensionWords;
 import static ru.privetdruk.l2jspace.config.custom.EventConfig.LastEmperor.PREPARE_FOR_BATTLE;
 import static ru.privetdruk.l2jspace.config.custom.EventConfig.LastEmperor.TIME_TO_FIGHT;
+import static ru.privetdruk.l2jspace.gameserver.custom.model.enums.SocialActionEnum.Npc.GLADNESS;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBypass.JOIN;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBypass.LEAVE;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.*;
+import static ru.privetdruk.l2jspace.gameserver.data.SkillTable.FrequentSkill.LARGE_FIREWORK;
 
 public class LastEmperor extends EventEngine {
     private EventBorder eventBorder;
     private final int HEADING = 16000;
     private final int ARENA_CENTER_X = 149422;
 
-    // 30872
-    // 30868 центральный
-    // 30872
-
     private final List<EventNpc> STATIC_NPCS = List.of(
-            new EventNpc(30872, null, "Guard", new SpawnLocation(149617, 45677, -3408, HEADING)),
-            new EventNpc(30868, "Sly Eye", "Tournament Manager", new SpawnLocation(ARENA_CENTER_X, 45703, -3408, HEADING)),
-            new EventNpc(30868, null, "Guard", new SpawnLocation(149227, 45677, -3408, HEADING)),
-            new EventNpc(35422, null, null, new SpawnLocation(ARENA_CENTER_X, 45600, -3408, HEADING)),
-            new EventNpc(35423, null, null, new SpawnLocation(149272, 45600, -3408, HEADING)),
-            new EventNpc(35424, null, null, new SpawnLocation(149572, 45600, -3408, HEADING)),
-            new EventNpc(35423, null, null, new SpawnLocation(148473, 46728, -3408, 0)), // base player 2
-            new EventNpc(35424, null, null, new SpawnLocation(150371, 46728, -3408, 32000)), // base player 1
-            new EventNpc(35062, null, null, new SpawnLocation(148473, 47063, -3408, 48000)), // flag
-            new EventNpc(35062, null, null, new SpawnLocation(148710, 47063, -3408, 48000)), // flag
-            new EventNpc(35062, null, null, new SpawnLocation(148947, 47063, -3408, 48000)), // flag
-            new EventNpc(35062, null, null, new SpawnLocation(149184, 47063, -3408, 48000)), // flag
-            new EventNpc(35062, null, null, new SpawnLocation(ARENA_CENTER_X, 47063, -3408, 48000)), // flag
-            new EventNpc(35062, null, null, new SpawnLocation(149659, 47063, -3408, 48000)), // flag
-            new EventNpc(35062, null, null, new SpawnLocation(149896, 47063, -3408, 48000)), // flag
-            new EventNpc(35062, null, null, new SpawnLocation(150133, 47063, -3408, 48000)), // flag
-            new EventNpc(35062, null, null, new SpawnLocation(150371, 47063, -3408, 48000)), // flag
-            new EventNpc(35469, "Trojan Horse", "Event Manager", new SpawnLocation(ARENA_CENTER_X, 46728, -3408, HEADING))
+            new EventNpc(0, 0, 0, eventType, 30872, null, "Guard", new SpawnLocation(149572, 45677, -3408, HEADING)),
+            new EventNpc(0, 0, GLADNESS.getId(), eventType, 30868, "Sly Eye", "Tournament Manager", new SpawnLocation(ARENA_CENTER_X, 45703, -3408, HEADING)),
+            new EventNpc(0, 0, 0, eventType, 30873, null, "Guard", new SpawnLocation(149272, 45677, -3408, HEADING)),
+            new EventNpc(0, 0, 0, eventType, 35422, null, null, new SpawnLocation(ARENA_CENTER_X, 45600, -3408, HEADING)),
+            new EventNpc(0, 0, 0, eventType, 35423, null, null, new SpawnLocation(149272, 45600, -3408, HEADING)),
+            new EventNpc(0, 0, 0, eventType, 35424, null, null, new SpawnLocation(149572, 45600, -3408, HEADING)),
+            new EventNpc(0, 0, 0, eventType, 35423, null, null, new SpawnLocation(148573, 46728, -3408, 0)), // base player 2
+            new EventNpc(0, 0, 0, eventType, 35424, null, null, new SpawnLocation(150371, 46728, -3408, 32000)), // base player 1
+            new EventNpc(LARGE_FIREWORK.getId(), 0, 0, eventType, 35062, "Flag", null, new SpawnLocation(148473, 47063, -3408, 48000)), // flag
+            new EventNpc(LARGE_FIREWORK.getId(), 0, 0, eventType, 35062, "Flag", null, new SpawnLocation(148710, 47063, -3408, 48000)), // flag
+            new EventNpc(LARGE_FIREWORK.getId(), 0, 0, eventType, 35062, "Flag", null, new SpawnLocation(148947, 47063, -3408, 48000)), // flag
+            new EventNpc(LARGE_FIREWORK.getId(), 0, 0, eventType, 35062, "Flag", null, new SpawnLocation(149184, 47063, -3408, 48000)), // flag
+            new EventNpc(LARGE_FIREWORK.getId(), 0, 0, eventType, 35062, "Flag", null, new SpawnLocation(ARENA_CENTER_X, 47063, -3408, 48000)), // flag
+            new EventNpc(LARGE_FIREWORK.getId(), 0, 0, eventType, 35062, "Flag", null, new SpawnLocation(149659, 47063, -3408, 48000)), // flag
+            new EventNpc(LARGE_FIREWORK.getId(), 0, 0, eventType, 35062, "Flag", null, new SpawnLocation(149896, 47063, -3408, 48000)), // flag
+            new EventNpc(LARGE_FIREWORK.getId(), 0, 0, eventType, 35062, "Flag", null, new SpawnLocation(150133, 47063, -3408, 48000)), // flag
+            new EventNpc(LARGE_FIREWORK.getId(), 0, 0, eventType, 35062, "Flag", null, new SpawnLocation(150371, 47063, -3408, 48000)), // flag
+            new EventNpc(LARGE_FIREWORK.getId(), LARGE_FIREWORK.getId(), 0, eventType, 35469, "Trojan Horse", "Event Manager", new SpawnLocation(ARENA_CENTER_X, 46936, -3408, HEADING))
     );
 
 
@@ -125,24 +123,29 @@ public class LastEmperor extends EventEngine {
         EventPlayer winner = pair.determineWinner();
         EventPlayer loser = pair.determineLoser();
 
+        Player winnerPlayer = winner.getPlayer();
+
+        winnerPlayer.performSocialAction(SocialActionEnum.AMAZING_GLOW);
+        winnerPlayer.performSocialAction(SocialActionEnum.VICTORY);
+
         announceCritical("Статистика боя:");
         announceDamage(pair.getPlayer1());
         announceDamage(pair.getPlayer2());
 
         pair.preparePlayersBeforeNextRound();
 
-        playAnimation(winner.getPlayer(), true);
-
         if (players.size() > 2) {
-            announceCritical("В следующий раунд попадает игрок <" + winner.getPlayer().getName() + ">");
+            announceCritical("В следующий раунд попадает игрок <" + winnerPlayer.getName() + ">");
+
+            STATIC_NPCS.forEach(EventNpc::playRoundVictoryAnimation);
 
             waiter(5);
 
-            winner.getPlayer().sitDown();
+            winnerPlayer.sitDown();
 
             waiter(3);
 
-            winner.getPlayer().getPosition().setHeading(HEADING);
+            winnerPlayer.getPosition().setHeading(HEADING);
             teleport(winner);
         }
 
@@ -164,12 +167,12 @@ public class LastEmperor extends EventEngine {
                 switch (seconds) {
                     case 300, 240, 180, 120, 60 -> {
                         long minutes = SECONDS.toMinutes(seconds);
-                        String minutesWord = declensionWords(minutes, StringUtil.minuteWords);
+                        String minutesWord = declensionWords(minutes, StringUtil.MINUTE_WORDS);
 
                         announceCritical(format(message, minutes, minutesWord));
                     }
                     case 30, 15, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 -> {
-                        String secondsWord = declensionWords(seconds, StringUtil.secondWords);
+                        String secondsWord = declensionWords(seconds, StringUtil.SECOND_WORDS);
 
                         announceCritical(format(message, seconds, secondsWord));
                     }
@@ -194,7 +197,7 @@ public class LastEmperor extends EventEngine {
         long interval = SECONDS.toMillis(seconds);
         final long startWaiterTime = Chronos.currentTimeMillis();
 
-        while (((startWaiterTime + interval) > Chronos.currentTimeMillis()) && eventState != WINNER_IS_DETERMINED) {
+        while (((startWaiterTime + interval) > Chronos.currentTimeMillis())) {
             seconds--;
             long startOneSecondWaiterStartTime = Chronos.currentTimeMillis();
 
@@ -297,12 +300,16 @@ public class LastEmperor extends EventEngine {
 
     @Override
     protected void determineWinner() {
+        STATIC_NPCS.forEach(EventNpc::playVictoryAnimation);
+
         players.values().stream()
                 .map(EventPlayer::getPlayer)
                 .forEach(player -> {
                     announceCritical("Победителем турнира Последний Император становится игрок <" + player.getName() + ">. Поздравляем!");
                     giveReward(player);
                 });
+
+        waiter(10);
     }
 
     private void giveReward(Player player) {
@@ -474,7 +481,10 @@ public class LastEmperor extends EventEngine {
             player2.getPosition().setHeading(0);
 
             player1.teleToLocation(new Location(150171, 46728, -3408));
-            player2.teleToLocation(new Location(148673, 46728, -3408));
+            player2.teleToLocation(new Location(148773, 46728, -3408));
+
+            player1.broadcastUserInfo();
+            player2.broadcastUserInfo();
 
             player1.standUp();
             player2.standUp();

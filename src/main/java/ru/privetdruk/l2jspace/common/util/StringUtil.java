@@ -1,9 +1,9 @@
 package ru.privetdruk.l2jspace.common.util;
 
 public class StringUtil {
-    public static String[] minuteWords = new String[] {"минут", "минуты", "минута"};
-    public static String[] secondWords = new String[] {"секунд", "секунды", "секунда"};
-    public static String[] pointWords = new String[] {"очков", "очка", "очко"};
+    public static final String[] MINUTE_WORDS = new String[] {"минут", "минуты", "минута"};
+    public static final String[] SECOND_WORDS = new String[] {"секунд", "секунды", "секунда"};
+    public static final String[] POINT_WORDS = new String[] {"очков", "очка", "очко"};
 
     public static String declensionWords(long value, String[] declinations) {
         if (value == 0) {
