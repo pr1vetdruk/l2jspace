@@ -36,7 +36,7 @@ public class TargetCorpseAlly implements ITargetHandler {
                         continue;
 
                     // Do not select player from opposing duel side
-                    if (player.isInDuel() && (player.getDuelId() != targetPlayer.getDuelId() || player.getTeam() != targetPlayer.getTeam()))
+                    if (player.isInDuel() && (player.getDuelId() != targetPlayer.getDuelId() || player.getTeamAura() != targetPlayer.getTeamAura()))
                         continue;
 
                     list.add(targetPlayer);

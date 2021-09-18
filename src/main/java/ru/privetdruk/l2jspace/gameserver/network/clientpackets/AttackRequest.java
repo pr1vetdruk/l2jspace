@@ -2,6 +2,8 @@ package ru.privetdruk.l2jspace.gameserver.network.clientpackets;
 
 import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Playable;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
@@ -47,30 +49,22 @@ public final class AttackRequest extends L2GameClientPacket {
         }
 
         // No attacks to same team in Event
-        if (player.isEventPlayer()) {
-            if (target instanceof Player) {
-                if (checkTeammate(player, (Player) target)) {
-                    player.sendPacket(ActionFailed.STATIC_PACKET);
-                    return;
-                }
-            } else if (target instanceof Summon) {
-                if (checkTeammate(player, ((Summon) target).getOwner())) {
-                    player.sendPacket(ActionFailed.STATIC_PACKET);
-                    return;
-                }
-            }
+        if (isTargetTeammate(player, target)) {
+            player.sendPacket(ActionFailed.STATIC_PACKET);
+            return;
         }
 
         // (player.getTarget() == target) -> This happens when you control + click a target without having had it selected beforehand. Behaves as the Action packet and will NOT trigger an attack.
         target.onAction(player, (player.getTarget() == target), isShiftAction);
     }
 
-    private boolean checkTeammate(Player player, Player target) {
-        if (player.isEventPlayer() && target.isEventPlayer()) {
-            String playerTeamName = player.getEventPlayer().getTeamSettings().getName();
-            String targetPlayerTeamName = target.getEventPlayer().getTeamSettings().getName();
+    private boolean isTargetTeammate(Player player, WorldObject target) {
+        if (player.isEventPlayer()) {
+            Player targetPlayer = target.getActingPlayer();
 
-            return playerTeamName.equals(targetPlayerTeamName);
+            if (targetPlayer.isEventPlayer()) {
+                return player.getEventPlayer().getTeamSettings().equals(targetPlayer.getEventPlayer().getTeamSettings());
+            }
         }
 
         return false;

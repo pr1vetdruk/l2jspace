@@ -13,7 +13,6 @@ import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.LoginServerThread;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.CommunityBoard;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.model.Forum;
-import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.custom.instance.WeddingManager;
 import ru.privetdruk.l2jspace.gameserver.custom.model.enums.SocialActionEnum;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventPlayer;
@@ -313,7 +312,7 @@ public final class Player extends Playable {
     private final int[] _loto = new int[5];
     private final int[] _race = new int[2];
 
-    private AuraTeamType _team = AuraTeamType.NONE;
+    private TeamAura _team = TeamAura.NONE;
 
     private int _alliedVarkaKetra; // lvl of alliance with ketra orcs or varka silenos, used in quests and aggro checks [-5,-1] varka, 0 neutral, [1,5] ketra
 
@@ -5240,12 +5239,11 @@ public final class Player extends Playable {
         return _lvlJoinedAcademy > 0;
     }
 
-    public void
-    setAura(AuraTeamType team) {
+    public void setTeamAura(TeamAura team) {
         _team = team;
     }
 
-    public AuraTeamType getTeam() {
+    public TeamAura getTeamAura() {
         return _team;
     }
 
@@ -6201,14 +6199,16 @@ public final class Player extends Playable {
             sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_DID_S1_DMG).addNumber(damage));
         }
 
+        boolean targetIsPlayer = target instanceof Player;
+
         if (isInOlympiadMode()
-                && target instanceof Player
+                && targetIsPlayer
                 && ((Player) target).isInOlympiadMode()
                 && ((Player) target).getOlympiadGameId() == getOlympiadGameId()) {
             OlympiadGameManager.getInstance().notifyCompetitorDamage(this, damage);
         }
 
-        if (isEventPlayer()) {
+        if (isEventPlayer() && targetIsPlayer && ((Player) target).isEventPlayer()) {
             eventPlayer.addDamageDone(damage);
         }
     }
@@ -6987,5 +6987,14 @@ public final class Player extends Playable {
     public void performSocialAction(SocialActionEnum socialAction) {
         broadcastPacket(new SocialAction(this, socialAction.getId()));
         broadcastUserInfo();
+    }
+
+    /**
+     * Сбросить перезарядку всех скилов
+     */
+    public void resetCooldownSkills() {
+        getReuseTimeStamp().clear();
+        getDisabledSkills().clear();
+        sendPacket(new SkillCoolTime(this));
     }
 }

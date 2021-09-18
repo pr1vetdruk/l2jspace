@@ -54,7 +54,7 @@ public class TargetAlly implements ITargetHandler {
                 }
 
                 // Do not buff opposing duel side
-                if (player.isInDuel() && (player.getDuelId() != targetPlayer.getDuelId() || player.getTeam() != targetPlayer.getTeam())) {
+                if (player.isInDuel() && (player.getDuelId() != targetPlayer.getDuelId() || player.getTeamAura() != targetPlayer.getTeamAura())) {
                     continue;
                 }
 

@@ -146,7 +146,7 @@ public class EventSetting {
         this.intervalBetweenMatches = intervalBetweenMatches;
     }
 
-    public Spawn getSpawnMainNpc() {
+    public Spawn getRegisterNpc() {
         return spawnMainNpc;
     }
 

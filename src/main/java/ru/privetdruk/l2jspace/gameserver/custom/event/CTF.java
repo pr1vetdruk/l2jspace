@@ -17,7 +17,7 @@ import ru.privetdruk.l2jspace.gameserver.custom.service.EventService;
 import ru.privetdruk.l2jspace.gameserver.data.sql.SpawnTable;
 import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
 import ru.privetdruk.l2jspace.gameserver.data.xml.NpcData;
-import ru.privetdruk.l2jspace.gameserver.enums.AuraTeamType;
+import ru.privetdruk.l2jspace.gameserver.enums.TeamAura;
 import ru.privetdruk.l2jspace.gameserver.enums.SayType;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Npc;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
@@ -377,7 +377,7 @@ public class CTF extends EventEngine {
         }
 
         if (EventConfig.CTF.AURA) {
-            player.setAura(AuraTeamType.NONE);
+            player.setTeamAura(TeamAura.NONE);
         }
 
         player.broadcastUserInfo();
@@ -401,7 +401,7 @@ public class CTF extends EventEngine {
         }
 
         if (EventConfig.CTF.AURA && teamSettings.size() == 2) {
-            player.setAura(AuraTeamType.fromId(teamSettings.indexOf(team) + 1));
+            player.setTeamAura(TeamAura.fromId(teamSettings.indexOf(team) + 1));
         }
 
         if (player.isMounted()) {
@@ -554,8 +554,7 @@ public class CTF extends EventEngine {
     }
 
     @Override
-    protected void abortCustom() {
-        unspawnNpcCustom();
+    protected void cancelEventCustom() {
     }
 
     @Override

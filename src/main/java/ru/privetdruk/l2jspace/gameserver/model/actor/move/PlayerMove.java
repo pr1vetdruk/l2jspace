@@ -113,6 +113,15 @@ public class PlayerMove extends CreatureMove<Player> {
             return;
         }
 
+        Player actingPlayer = _actor.getActingPlayer();
+
+        if (actingPlayer != null
+                && actingPlayer.isEventPlayer()
+                && !actingPlayer.getEventPlayer().isAllowedToWalk()) {
+            _actor.sendPacket(ActionFailed.STATIC_PACKET);
+            return;
+        }
+
         if (_task != null)
             updatePosition(true);
 

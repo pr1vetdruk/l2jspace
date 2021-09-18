@@ -96,9 +96,7 @@ public class AdminEditChar implements IAdminCommandHandler {
                     break;
 
                 case "skill_reuse":
-                    targetPlayer.getReuseTimeStamp().clear();
-                    targetPlayer.getDisabledSkills().clear();
-                    targetPlayer.sendPacket(new SkillCoolTime(targetPlayer));
+                    targetPlayer.resetCooldownSkills();
 
                     player.sendMessage(targetPlayer.getName() + "'s skills reuse timers are now cleaned.");
                     break;

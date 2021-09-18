@@ -13,7 +13,7 @@ import ru.privetdruk.l2jspace.gameserver.custom.service.DoorService;
 import ru.privetdruk.l2jspace.gameserver.custom.service.EventService;
 import ru.privetdruk.l2jspace.gameserver.custom.util.Chronos;
 import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
-import ru.privetdruk.l2jspace.gameserver.enums.AuraTeamType;
+import ru.privetdruk.l2jspace.gameserver.enums.TeamAura;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
@@ -48,7 +48,7 @@ public class LastEmperor extends EventEngine {
             new EventNpc(0, 0, GLADNESS.getId(), eventType, 30868, "Sly Eye", "Tournament Manager", new SpawnLocation(ARENA_CENTER_X, 45703, -3408, HEADING)),
             new EventNpc(0, 0, 0, eventType, 30873, null, "Guard", new SpawnLocation(149272, 45677, -3408, HEADING)),
             new EventNpc(0, 0, 0, eventType, 35422, null, null, new SpawnLocation(ARENA_CENTER_X, 45600, -3408, HEADING)),
-            new EventNpc(0, 0, 0, eventType, 35423, null, null, new SpawnLocation(149272, 45600, -3408, HEADING)),
+            new EventNpc(0, 0, 0, eventType, 35426, null, null, new SpawnLocation(149272, 45600, -3408, HEADING)),
             new EventNpc(0, 0, 0, eventType, 35424, null, null, new SpawnLocation(149572, 45600, -3408, HEADING)),
             new EventNpc(0, 0, 0, eventType, 35423, null, null, new SpawnLocation(148573, 46728, -3408, 0)), // base player 2
             new EventNpc(0, 0, 0, eventType, 35424, null, null, new SpawnLocation(150371, 46728, -3408, 32000)), // base player 1
@@ -294,7 +294,7 @@ public class LastEmperor extends EventEngine {
     }
 
     @Override
-    protected void abortCustom() {
+    protected void cancelEventCustom() {
 
     }
 
@@ -474,8 +474,8 @@ public class LastEmperor extends EventEngine {
 
             setAllowedToWalk(true);
 
-            player1.setAura(AuraTeamType.BLUE);
-            player2.setAura(AuraTeamType.RED);
+            player1.setTeamAura(TeamAura.BLUE);
+            player2.setTeamAura(TeamAura.RED);
 
             player1.getPosition().setHeading(32000);
             player2.getPosition().setHeading(0);
@@ -499,17 +499,26 @@ public class LastEmperor extends EventEngine {
          * Сбросить данные боя перед следующим раундом
          */
         public void preparePlayersBeforeNextRound() {
+            setCanAttack(false);
+            setAllowedToWalk(false);
+            
             eventPlayer1.setRival(null);
             eventPlayer2.setRival(null);
-
-            eventPlayer1.getPlayer().setAura(AuraTeamType.NONE);
-            eventPlayer2.getPlayer().setAura(AuraTeamType.NONE);
 
             eventPlayer1.resetDamage();
             eventPlayer2.resetDamage();
 
-            setCanAttack(false);
-            setAllowedToWalk(false);
+            Player player1 = eventPlayer1.getPlayer();
+            Player player2 = eventPlayer2.getPlayer();
+
+            player1.setTeamAura(TeamAura.NONE);
+            player2.setTeamAura(TeamAura.NONE);
+
+            player1.resetCooldownSkills();
+            player2.resetCooldownSkills();
+
+            player1.broadcastCharInfo();
+            player2.broadcastCharInfo();
         }
 
         private void setCanAttack(boolean canAttack) {

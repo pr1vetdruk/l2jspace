@@ -93,7 +93,7 @@ public abstract class EventEngine implements EventTask {
             switch (eventState) {
                 case ABORT -> logInfo("Failed to start the event because failed to pass prelaunch checks.");
                 case READY_TO_START -> {
-                    spawnMainNpc();
+                    spawnNpcForRegistration();
                     registration();
 
                     if (checkBeforeTeleport()) {
@@ -101,7 +101,7 @@ public abstract class EventEngine implements EventTask {
                         startEvent();
                         finishEvent();
                     } else {
-                        abortEvent();
+                        cancelEvent();
                     }
                 }
                 default -> logInfo("Failed to start the event because the state of the event is incorrect.");
@@ -142,7 +142,8 @@ public abstract class EventEngine implements EventTask {
         eventState = FINISH;
 
         determineWinner();
-        unspawnEventNpc();
+        unspawnNpcCustom();
+        unspawnNpcForRegistration();
         restorePlayerData();
         returnPlayers();
     }
@@ -165,16 +166,11 @@ public abstract class EventEngine implements EventTask {
 
     protected abstract void startEventCustom();
 
-    protected void abortEvent() {
-        if (eventState != REGISTRATION) {
-            unspawnEventNpc();
-            restorePlayerData();
-
-            abortCustom();
-            returnPlayers();
-        }
-
+    protected void cancelEvent() {
         eventState = ABORT;
+
+        unspawnNpcForRegistration();
+        cancelEventCustom();
 
         announceCritical("Ивент прерван!");
     }
@@ -206,19 +202,17 @@ public abstract class EventEngine implements EventTask {
         });
     }
 
-    protected void unspawnEventNpc() {
-        unspawnNpcCustom();
+    protected void unspawnNpcForRegistration() {
+        Spawn registerNpc = settings.getRegisterNpc();
 
-        Spawn spawnMainNpc = settings.getSpawnMainNpc();
-
-        if (spawnMainNpc == null || spawnMainNpc.getNpc() == null) {
+        if (registerNpc == null || registerNpc.getNpc() == null) {
             return;
         }
 
-        spawnMainNpc.getNpc().deleteMe();
-        spawnMainNpc.setRespawnState(false);
+        registerNpc.getNpc().deleteMe();
+        registerNpc.setRespawnState(false);
 
-        SpawnTable.getInstance().deleteSpawn(spawnMainNpc, true);
+        SpawnTable.getInstance().deleteSpawn(registerNpc, true);
     }
 
     protected void restorePlayerData() {
@@ -391,7 +385,7 @@ public abstract class EventEngine implements EventTask {
         }
     }
 
-    protected void spawnMainNpc() throws ClassNotFoundException, NoSuchMethodException {
+    protected void spawnNpcForRegistration() throws ClassNotFoundException, NoSuchMethodException {
         NpcInfoShort npcInfo = settings.getMainNpc();
         NpcTemplate npcTemplate = NpcData.getInstance().getTemplate(npcInfo.getId());
 
@@ -403,7 +397,7 @@ public abstract class EventEngine implements EventTask {
             spawn.doSpawn(true);
 
             Npc npc = spawn.getNpc();
-            npc.getStatus().setHp(999999999);
+            npc.setMortal(false);
             npc.setTitle(settings.getEventName());
             npc.isAggressive();
             npc.decayMe();
@@ -703,7 +697,7 @@ public abstract class EventEngine implements EventTask {
 
     protected abstract void unspawnNpcCustom();
 
-    protected abstract void abortCustom();
+    protected abstract void cancelEventCustom();
 
     protected abstract void determineWinner();
 
