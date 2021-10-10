@@ -27,16 +27,16 @@ public final class MercenaryManagerNpc extends Folk {
         if (command.startsWith("back"))
             showChatWindow(player);
         else if (command.startsWith("how_to")) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile("data/html/mercmanager/mseller005.htm");
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             player.sendPacket(html);
         } else if (command.startsWith("hire")) {
             // Can't buy new mercenaries if seal validation period isn't reached.
             if (!SevenSignsManager.getInstance().isSealValidationPeriod()) {
-                final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                 html.setFile("data/html/mercmanager/msellerdenial.htm");
-                html.replace("%objectId%", getObjectId());
+                html.replace("%objectId%", getId());
                 player.sendPacket(html);
                 return;
             }
@@ -51,14 +51,14 @@ public final class MercenaryManagerNpc extends Folk {
             player.tempInventoryDisable();
             player.sendPacket(new BuyList(buyList, player.getAdena(), 0));
 
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile("data/html/mercmanager/mseller004.htm");
             player.sendPacket(html);
         } else if (command.startsWith("merc_limit")) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile("data/html/mercmanager/" + ((getCastle().getCastleId() == 5) ? "aden_msellerLimit.htm" : "msellerLimit.htm"));
             html.replace("%castleName%", getCastle().getName());
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             player.sendPacket(html);
         } else
             super.onBypassFeedback(player, command);
@@ -66,7 +66,7 @@ public final class MercenaryManagerNpc extends Folk {
 
     @Override
     public void showChatWindow(Player player) {
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
         final NpcTalkCond condition = getNpcTalkCond(player);
         if (condition == NpcTalkCond.NONE)
@@ -90,7 +90,7 @@ public final class MercenaryManagerNpc extends Folk {
             }
         }
 
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         player.sendPacket(html);
     }
 

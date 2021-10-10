@@ -25,7 +25,7 @@ public class TopicBBSManager extends BaseBBSManager {
                 return;
             }
 
-            forum.addTopic(new Topic(forum, ar5, player.getName(), player.getObjectId(), ar4));
+            forum.addTopic(new Topic(forum, ar5, player.getName(), player.getId(), ar4));
 
             parseCmd("_bbsmemo", player);
         } else if (ar1.equals("del")) {

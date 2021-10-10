@@ -29,7 +29,7 @@ public class DawnPriest extends SignsPriest {
 
         final CabalType winningCabal = SevenSignsManager.getInstance().getWinningCabal();
 
-        switch (SevenSignsManager.getInstance().getPlayerCabal(player.getObjectId())) {
+        switch (SevenSignsManager.getInstance().getPlayerCabal(player.getId())) {
             case DAWN:
                 if (SevenSignsManager.getInstance().isCompResultsPeriod())
                     filename += "dawn_priest_5.htm";
@@ -70,9 +70,9 @@ public class DawnPriest extends SignsPriest {
                 break;
         }
 
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
         html.setFile(filename);
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         player.sendPacket(html);
     }
 }

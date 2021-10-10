@@ -30,7 +30,7 @@ public final class RequestGetOnVehicle extends L2GameClientPacket {
         Boat boat;
         if (player.isInBoat()) {
             boat = player.getBoat();
-            if (boat.getObjectId() != _boatId) {
+            if (boat.getId() != _boatId) {
                 sendPacket(ActionFailed.STATIC_PACKET);
                 return;
             }
@@ -55,6 +55,6 @@ public final class RequestGetOnVehicle extends L2GameClientPacket {
                 boat.addPassenger(player);
         }
 
-        player.broadcastPacket(new GetOnVehicle(player.getObjectId(), boat.getObjectId(), _x, _y, _z));
+        player.broadcastPacket(new GetOnVehicle(player.getId(), boat.getId(), _x, _y, _z));
     }
 }

@@ -35,7 +35,7 @@ public class SellListProcure extends L2GameServerPacket {
             final ItemInstance item = itemEntry.getKey();
 
             writeH(item.getItem().getType1());
-            writeD(item.getObjectId());
+            writeD(item.getId());
             writeD(item.getItemId());
             writeD(itemEntry.getValue());
             writeH(item.getItem().getType2());

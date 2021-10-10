@@ -14,8 +14,12 @@ import ru.privetdruk.l2jspace.gameserver.LoginServerThread;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.CommunityBoard;
 import ru.privetdruk.l2jspace.gameserver.communitybbs.model.Forum;
 import ru.privetdruk.l2jspace.gameserver.custom.instance.WeddingManager;
+import ru.privetdruk.l2jspace.gameserver.custom.model.entity.EventWinnerEntity;
 import ru.privetdruk.l2jspace.gameserver.custom.model.enums.SocialActionEnum;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventPlayer;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventType;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventWinnerStatus;
+import ru.privetdruk.l2jspace.gameserver.custom.service.EventService;
 import ru.privetdruk.l2jspace.gameserver.custom.service.WeddingService;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable;
 import ru.privetdruk.l2jspace.gameserver.data.SkillTable.FrequentSkill;
@@ -150,9 +154,9 @@ public final class Player extends Playable {
     private long _offlineShopStart;
 
     private GameClient _client;
-    private final Map<Integer, String> _chars = new HashMap<>();
+    private Map<Integer, String> _chars = new HashMap<>();
 
-    private final String _accountName;
+    private String _accountName;
     private long _deleteTimer;
 
     private boolean _isOnline;
@@ -165,10 +169,10 @@ public final class Player extends Playable {
     protected int _activeClass;
     protected int _classIndex;
 
-    private final Map<Integer, SubClass> _subClasses = new ConcurrentSkipListMap<>();
-    private final ReentrantLock _subclassLock = new ReentrantLock();
+    private Map<Integer, SubClass> _subClasses = new ConcurrentSkipListMap<>();
+    private ReentrantLock _subclassLock = new ReentrantLock();
 
-    private final Appearance _appearance;
+    private Appearance _appearance;
 
     private long _expBeforeDeath;
     private int _karma;
@@ -182,8 +186,8 @@ public final class Player extends Playable {
 
     private boolean _isIn7sDungeon;
 
-    private final Punishment _punishment = new Punishment(this);
-    private final RecipeBook _recipeBook = new RecipeBook(this);
+    private Punishment _punishment = new Punishment(this);
+    private RecipeBook _recipeBook = new RecipeBook(this);
 
     private boolean _isInOlympiadMode;
     private boolean _isInOlympiadStart;
@@ -195,7 +199,7 @@ public final class Player extends Playable {
     private SystemMessageId _noDuelReason = SystemMessageId.THERE_IS_NO_OPPONENT_TO_RECEIVE_YOUR_CHALLENGE_FOR_A_DUEL;
 
     private Boat _boat;
-    private final SpawnLocation _boatPosition = new SpawnLocation(0, 0, 0, 0);
+    private SpawnLocation _boatPosition = new SpawnLocation(0, 0, 0, 0);
 
     private boolean _canFeed;
     protected PetTemplate _petTemplate;
@@ -221,25 +225,25 @@ public final class Player extends Playable {
     private boolean _isSittingNow;
     private boolean _isStandingNow;
 
-    private final Location _savedLocation = new Location(0, 0, 0);
+    private Location _savedLocation = new Location(0, 0, 0);
 
     private int _recomHave;
     private int _recomLeft;
-    private final List<Integer> _recomChars = new ArrayList<>();
+    private List<Integer> _recomChars = new ArrayList<>();
 
-    private final PcInventory _inventory = new PcInventory(this);
+    private PcInventory _inventory = new PcInventory(this);
     private PcWarehouse _warehouse;
     private PcFreight _freight;
-    private final List<PcFreight> _depositedFreight = new ArrayList<>();
+    private List<PcFreight> _depositedFreight = new ArrayList<>();
 
     private OperateType _operateType = OperateType.NONE;
 
     private TradeList _activeTradeList;
     private ItemContainer _activeWarehouse;
 
-    private final TradeList _buyList = new TradeList(this);
-    private final TradeList _sellList = new TradeList(this);
-    private final ManufactureList _manufactureList = new ManufactureList();
+    private TradeList _buyList = new TradeList(this);
+    private TradeList _sellList = new TradeList(this);
+    private ManufactureList _manufactureList = new ManufactureList();
 
     private PreparedListContainer _currentMultiSell;
 
@@ -248,16 +252,16 @@ public final class Player extends Playable {
 
     private Folk _currentFolk;
 
-    private final PlayerMemo _memos = new PlayerMemo(getObjectId());
+    private PlayerMemo _memos = new PlayerMemo(getId());
 
-    private final FishingStance _fishingStance = new FishingStance(this);
-    private final ShortcutList _shortcutList = new ShortcutList(this);
-    private final MacroList _macroList = new MacroList(this);
-    private final HennaList _hennaList = new HennaList(this);
-    private final RadarList _radarList = new RadarList(this);
-    private final CubicList _cubicList = new CubicList(this);
-    private final BlockList _blockList = new BlockList(this);
-    private final QuestList _questList = new QuestList(this);
+    private FishingStance _fishingStance = new FishingStance(this);
+    private ShortcutList _shortcutList = new ShortcutList(this);
+    private MacroList _macroList = new MacroList(this);
+    private HennaList _hennaList = new HennaList(this);
+    private RadarList _radarList = new RadarList(this);
+    private CubicList _cubicList = new CubicList(this);
+    private BlockList _blockList = new BlockList(this);
+    private QuestList _questList = new QuestList(this);
 
     private Summon _summon;
     private TamedBeast _tamedBeast;
@@ -280,20 +284,20 @@ public final class Player extends Playable {
 
     private int _deathPenaltyBuffLevel;
 
-    private final AtomicInteger _charges = new AtomicInteger();
+    private AtomicInteger _charges = new AtomicInteger();
     private ScheduledFuture<?> _chargeTask;
 
     private AccessLevel _accessLevel;
 
     private Location _enterWorld;
-    private final Map<String, ExServerPrimitive> _debug = new HashMap<>();
+    private Map<String, ExServerPrimitive> _debug = new HashMap<>();
 
     private Party _party;
     private LootRule _lootRule;
 
     private Player _activeRequester;
     private long _requestExpireTime;
-    private final Request _request = new Request(this);
+    private Request _request = new Request(this);
 
     private ScheduledFuture<?> _protectTask;
 
@@ -307,22 +311,22 @@ public final class Player extends Playable {
 
     protected boolean _inventoryDisable;
 
-    private final Set<Integer> _activeSoulShots = ConcurrentHashMap.newKeySet(1);
+    private Set<Integer> _activeSoulShots = ConcurrentHashMap.newKeySet(1);
 
-    private final int[] _loto = new int[5];
-    private final int[] _race = new int[2];
+    private int[] _loto = new int[5];
+    private int[] _race = new int[2];
 
     private TeamAura _team = TeamAura.NONE;
 
     private int _alliedVarkaKetra; // lvl of alliance with ketra orcs or varka silenos, used in quests and aggro checks [-5,-1] varka, 0 neutral, [1,5] ketra
 
-    private final List<String> _validBypass = new ArrayList<>();
-    private final List<String> _validBypass2 = new ArrayList<>();
+    private List<String> _validBypass = new ArrayList<>();
+    private List<String> _validBypass2 = new ArrayList<>();
 
     private Forum _forumMemo;
 
-    private final Map<Integer, L2Skill> _skills = new ConcurrentSkipListMap<>();
-    private final Map<Integer, Timestamp> _reuseTimeStamps = new ConcurrentHashMap<>();
+    private Map<Integer, L2Skill> _skills = new ConcurrentSkipListMap<>();
+    private Map<Integer, Timestamp> _reuseTimeStamps = new ConcurrentHashMap<>();
 
     private int _cursedWeaponEquippedId;
 
@@ -342,25 +346,30 @@ public final class Player extends Playable {
     private boolean _isUnderMarryRequest;
     private int _requesterId;
 
-    private final List<Integer> _friendList = new ArrayList<>(); // Related to CB.
-    private final List<Integer> _selectedFriendList = new ArrayList<>(); // Related to CB.
-    private final List<Integer> _selectedBlocksList = new ArrayList<>(); // Related to CB.
+    private List<Integer> _friendList = new ArrayList<>(); // Related to CB.
+    private List<Integer> _selectedFriendList = new ArrayList<>(); // Related to CB.
+    private List<Integer> _selectedBlocksList = new ArrayList<>(); // Related to CB.
 
     private Player _summonTargetRequest;
     private L2Skill _summonSkillRequest;
 
     private Door _requestedGate;
 
-    private final CachedData cachedData = new CachedData(getObjectId());
-    private final CachedDataValueInt nameColor = cachedData.newInt("nameColor");
-    private final CachedDataValueInt titleColor = cachedData.newInt("titleColor");
-    private final CachedDataValueBoolean stopExp = cachedData.newBoolean("stopexp");
-    private final CachedDataValueBoolean tradeRefusal = cachedData.newBoolean("traderefusal");
+    private CachedData cachedData = new CachedData(getId());
+    private CachedDataValueInt nameColor = cachedData.newInt("nameColor");
+    private CachedDataValueInt titleColor = cachedData.newInt("titleColor");
+    private CachedDataValueBoolean stopExp = cachedData.newBoolean("stopexp");
+    private CachedDataValueBoolean tradeRefusal = cachedData.newBoolean("traderefusal");
 
     private int activeBoxes = -1;
     private List<String> activeBoxesCharacters = new ArrayList<>();
 
     private EventPlayer eventPlayer;
+
+    /**
+     * Ивенты, в которых победил игрок
+     */
+    private List<EventWinnerEntity> wonEvents = null;
 
     /**
      * Constructor of Player (use Creature constructor).
@@ -430,7 +439,7 @@ public final class Player extends Playable {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(INSERT_CHARACTER)) {
             ps.setString(1, accountName);
-            ps.setInt(2, player.getObjectId());
+            ps.setInt(2, player.getId());
             ps.setString(3, player.getName());
             ps.setInt(4, player.getStatus().getLevel());
             ps.setInt(5, player.getStatus().getMaxHp());
@@ -686,31 +695,77 @@ public final class Player extends Playable {
         int result = 0;
 
         // karma and pvp may not be required
-        if (getPvpFlag() != 0)
+        if (getPvpFlag() != 0) {
             result |= RelationChanged.RELATION_PVP_FLAG;
-        if (getKarma() > 0)
+        }
+
+        if (getKarma() > 0) {
             result |= RelationChanged.RELATION_HAS_KARMA;
+        }
 
-        if (isClanLeader())
+        if (isWinnerInEvent(EventType.LAST_EMPEROR)) {
             result |= RelationChanged.RELATION_LEADER;
-
-        if (getSiegeState() != 0) {
             result |= RelationChanged.RELATION_INSIEGE;
-            if (getSiegeState() != target.getSiegeState())
-                result |= RelationChanged.RELATION_ENEMY;
-            else
-                result |= RelationChanged.RELATION_ALLY;
-            if (getSiegeState() == 1)
-                result |= RelationChanged.RELATION_ATTACKER;
+            result |= RelationChanged.RELATION_ALLY;
+        } else {
+            if (isClanLeader()) {
+                result |= RelationChanged.RELATION_LEADER;
+            }
+
+            if (getSiegeState() != 0) {
+                result |= RelationChanged.RELATION_INSIEGE;
+
+                if (getSiegeState() != target.getSiegeState()) {
+                    result |= RelationChanged.RELATION_ENEMY;
+                } else {
+                    result |= RelationChanged.RELATION_ALLY;
+                }
+
+                if (getSiegeState() == 1) {
+                    result |= RelationChanged.RELATION_ATTACKER;
+                }
+            }
         }
 
         if (getClan() != null && target.getClan() != null) {
             if (target.getPledgeType() != Clan.SUBUNIT_ACADEMY && getPledgeType() != Clan.SUBUNIT_ACADEMY && target.getClan().isAtWarWith(getClan().getClanId())) {
                 result |= RelationChanged.RELATION_1SIDED_WAR;
-                if (getClan().isAtWarWith(target.getClan().getClanId()))
+                if (getClan().isAtWarWith(target.getClan().getClanId())) {
                     result |= RelationChanged.RELATION_MUTUAL_WAR;
+                }
             }
         }
+
+        return result;
+    }
+
+    public int getRelationForEventWinner(Player target) {
+        int result = 0;
+
+        // karma and pvp may not be required
+        if (getPvpFlag() != 0) {
+            result |= RelationChanged.RELATION_PVP_FLAG;
+        }
+
+        if (getKarma() > 0) {
+            result |= RelationChanged.RELATION_HAS_KARMA;
+        }
+
+        if (isWinnerInEvent(EventType.LAST_EMPEROR)) {
+            result |= RelationChanged.RELATION_LEADER;
+            result |= RelationChanged.RELATION_ALLY;
+            result |= RelationChanged.RELATION_ENEMY;
+        }
+
+        if (getClan() != null && target.getClan() != null) {
+            if (target.getPledgeType() != Clan.SUBUNIT_ACADEMY && getPledgeType() != Clan.SUBUNIT_ACADEMY && target.getClan().isAtWarWith(getClan().getClanId())) {
+                result |= RelationChanged.RELATION_1SIDED_WAR;
+                if (getClan().isAtWarWith(target.getClan().getClanId())) {
+                    result |= RelationChanged.RELATION_MUTUAL_WAR;
+                }
+            }
+        }
+
         return result;
     }
 
@@ -857,24 +912,24 @@ public final class Player extends Playable {
         target.editRecomHave(1);
         decRecomLeft();
 
-        _recomChars.add(target.getObjectId());
+        _recomChars.add(target.getId());
 
         try (Connection con = ConnectionPool.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(ADD_CHAR_RECOM)) {
-                ps.setInt(1, getObjectId());
-                ps.setInt(2, target.getObjectId());
+                ps.setInt(1, getId());
+                ps.setInt(2, target.getId());
                 ps.execute();
             }
 
             try (PreparedStatement ps = con.prepareStatement(UPDATE_TARGET_RECOM_HAVE)) {
                 ps.setInt(1, target.getRecomHave());
-                ps.setInt(2, target.getObjectId());
+                ps.setInt(2, target.getId());
                 ps.execute();
             }
 
             try (PreparedStatement ps = con.prepareStatement(UPDATE_CHAR_RECOM_LEFT)) {
                 ps.setInt(1, getRecomLeft());
-                ps.setInt(2, getObjectId());
+                ps.setInt(2, getId());
                 ps.execute();
             }
         } catch (final Exception e) {
@@ -883,7 +938,7 @@ public final class Player extends Playable {
     }
 
     public boolean canRecom(Player target) {
-        return !_recomChars.contains(target.getObjectId());
+        return !_recomChars.contains(target.getId());
     }
 
     /**
@@ -1143,7 +1198,7 @@ public final class Player extends Playable {
                 _clan.broadcastToMembersExcept(this, new PledgeShowMemberListDelete(getName()), SystemMessage.getSystemMessage(SystemMessageId.S1_HAS_WITHDRAWN_FROM_THE_CLAN).addString(getName()));
 
                 // Oust pledge member from the academy.
-                _clan.removeClanMember(getObjectId(), 0);
+                _clan.removeClanMember(getId(), 0);
 
                 // Reward the ousted members with graduation gift : academy circlet
                 addItem("Gift", 8181, 1, this, true);
@@ -1921,7 +1976,7 @@ public final class Player extends Playable {
 
         final ItemInstance item = getInventory().getItemByObjectId(objectId);
 
-        if (item == null || item.getOwnerId() != getObjectId())
+        if (item == null || item.getOwnerId() != getId())
             return null;
 
         if (count < 1 || (count > 1 && !item.isStackable()))
@@ -1934,7 +1989,7 @@ public final class Player extends Playable {
         if (_summon != null && _summon.getControlItemId() == objectId || _mountObjectId == objectId)
             return null;
 
-        if (getActiveEnchantItem() != null && getActiveEnchantItem().getObjectId() == objectId)
+        if (getActiveEnchantItem() != null && getActiveEnchantItem().getId() == objectId)
             return null;
 
         // We cannot put a Weapon with Augmention in WH while casting (Possible Exploit)
@@ -2098,7 +2153,7 @@ public final class Player extends Playable {
      * <li>Send a CharInfo packet (public data only) to Player's knownlist.</li>
      * </ul>
      */
-    public final void broadcastUserInfo() {
+    public void broadcastUserInfo() {
         sendPacket(new UserInfo(this));
 
         if (getPolymorphTemplate() != null)
@@ -2107,7 +2162,7 @@ public final class Player extends Playable {
             broadcastCharInfo();
     }
 
-    public final void broadcastCharInfo() {
+    public void broadcastCharInfo() {
         for (final Player player : getKnownType(Player.class)) {
             player.sendPacket(new CharInfo(this));
 
@@ -2124,7 +2179,7 @@ public final class Player extends Playable {
     /**
      * Broadcast player title information.
      */
-    public final void broadcastTitleInfo() {
+    public void broadcastTitleInfo() {
         sendPacket(new UserInfo(this));
         broadcastPacket(new TitleUpdate(this));
     }
@@ -2270,7 +2325,7 @@ public final class Player extends Playable {
         return _currentMultiSell;
     }
 
-    public final void setMultiSell(PreparedListContainer list) {
+    public void setMultiSell(PreparedListContainer list) {
         _currentMultiSell = list;
     }
 
@@ -2309,7 +2364,7 @@ public final class Player extends Playable {
 
         // Verify if it's a static object.
         if (newTarget instanceof StaticObject) {
-            sendPacket(new MyTargetSelected(newTarget.getObjectId(), 0));
+            sendPacket(new MyTargetSelected(newTarget.getId(), 0));
             sendPacket(new StaticObjectInfo((StaticObject) newTarget));
         }
         // Add the Player to the _statusListener of the new target if it's a Creature
@@ -2317,11 +2372,11 @@ public final class Player extends Playable {
             final Creature target = (Creature) newTarget;
 
             // Validate location of the new target.
-            if (newTarget.getObjectId() != getObjectId())
+            if (newTarget.getId() != getId())
                 sendPacket(new ValidateLocation(target));
 
             // Show the client his new target.
-            sendPacket(new MyTargetSelected(target.getObjectId(), (target.isAttackableBy(this) || target instanceof Summon) ? getStatus().getLevel() - target.getStatus().getLevel() : 0));
+            sendPacket(new MyTargetSelected(target.getId(), (target.isAttackableBy(this) || target instanceof Summon) ? getStatus().getLevel() - target.getStatus().getLevel() : 0));
 
             target.getStatus().addStatusListener(this);
 
@@ -2331,7 +2386,7 @@ public final class Player extends Playable {
             su.addAttribute(StatusType.CUR_HP, (int) target.getStatus().getHp());
             sendPacket(su);
 
-            broadcastPacket(new TargetSelected(getObjectId(), newTarget.getObjectId(), getX(), getY(), getZ()), false);
+            broadcastPacket(new TargetSelected(getId(), newTarget.getId(), getX(), getY(), getZ()), false);
         }
 
         if (newTarget instanceof Folk)
@@ -3254,7 +3309,7 @@ public final class Player extends Playable {
             return;
         }
 
-        if (!clan.isMember(getObjectId())) {
+        if (!clan.isMember(getId())) {
             // char has been kicked from clan
             setClan(null);
             return;
@@ -3274,7 +3329,7 @@ public final class Player extends Playable {
      * @return True if the Player is the leader of its clan.
      */
     public boolean isClanLeader() {
-        return _clan != null && getObjectId() == _clan.getLeaderId();
+        return _clan != null && getId() == _clan.getLeaderId();
     }
 
     /**
@@ -3402,7 +3457,7 @@ public final class Player extends Playable {
         forceRunStance();
         stopAllToggles();
 
-        final Ride mount = new Ride(getObjectId(), Ride.ACTION_MOUNT, pet.getTemplate().getNpcId());
+        final Ride mount = new Ride(getId(), Ride.ACTION_MOUNT, pet.getTemplate().getNpcId());
         setMount(pet.getNpcId(), pet.getStatus().getLevel(), mount.getMountType());
 
         _petTemplate = (PetTemplate) pet.getTemplate();
@@ -3426,7 +3481,7 @@ public final class Player extends Playable {
         forceRunStance();
         stopAllToggles();
 
-        final Ride mount = new Ride(getObjectId(), Ride.ACTION_MOUNT, npcId);
+        final Ride mount = new Ride(getId(), Ride.ACTION_MOUNT, npcId);
 
         setMount(npcId, getStatus().getLevel(), mount.getMountType());
 
@@ -3536,7 +3591,7 @@ public final class Player extends Playable {
         setMount(0, 0, 0);
         stopFeed();
 
-        broadcastPacket(new Ride(getObjectId(), Ride.ACTION_DISMOUNT, 0));
+        broadcastPacket(new Ride(getId(), Ride.ACTION_DISMOUNT, 0));
 
         _petTemplate = null;
         _petData = null;
@@ -3765,7 +3820,7 @@ public final class Player extends Playable {
         return _accessLevel;
     }
 
-    public final void setEnterWorldLoc(int x, int y, int z) {
+    public void setEnterWorldLoc(int x, int y, int z) {
         _enterWorld = new Location(x, y, z);
     }
 
@@ -3773,7 +3828,7 @@ public final class Player extends Playable {
         return _debug.computeIfAbsent(name, p -> new ExServerPrimitive(name, _enterWorld));
     }
 
-    public final void clearDebugPackets() {
+    public void clearDebugPackets() {
         _debug.values().stream().peek(ExServerPrimitive::reset).forEach(esp -> esp.sendTo(this));
     }
 
@@ -3833,7 +3888,7 @@ public final class Player extends Playable {
              PreparedStatement ps = con.prepareStatement("UPDATE characters SET online=?, lastAccess=? WHERE obj_id=?")) {
             ps.setInt(1, isOnlineInt());
             ps.setLong(2, System.currentTimeMillis());
-            ps.setInt(3, getObjectId());
+            ps.setInt(3, getId());
             ps.execute();
         } catch (final Exception e) {
             LOGGER.error("Couldn't set player online status.", e);
@@ -3897,7 +3952,7 @@ public final class Player extends Playable {
                         player.setClan(ClanTable.getInstance().getClan(clanId));
 
                     if (player.getClan() != null) {
-                        if (player.getClan().getLeaderId() != player.getObjectId()) {
+                        if (player.getClan().getLeaderId() != player.getId()) {
                             if (player.getPowerGrade() == 0)
                                 player.setPowerGrade(5);
 
@@ -3952,9 +4007,12 @@ public final class Player extends Playable {
                     // Set the position of the Player.
                     player.getPosition().set(rs.getInt("x"), rs.getInt("y"), rs.getInt("z"), rs.getInt("heading"));
 
+                    player.setWonEvents(EventService.getInstance().findAllWonEvents(player.getId()));
+
                     // Set Hero status if it applies
-                    if (HeroManager.getInstance().isActiveHero(objectId))
+                    if (HeroManager.getInstance().isActiveHero(objectId)) {
                         player.setHero(true);
+                    }
 
                     // Set pledge class rank.
                     player.setPledgeClass(ClanMember.calculatePledgeClass(player));
@@ -3965,8 +4023,9 @@ public final class Player extends Playable {
                     player.giveSkills();
 
                     // buff and status icons
-                    if (Config.STORE_SKILL_COOLTIME)
+                    if (Config.STORE_SKILL_COOLTIME) {
                         player.restoreEffects();
+                    }
 
                     // Restore current CP, HP and MP values
                     final double currentHp = rs.getDouble("curHp");
@@ -3979,7 +4038,7 @@ public final class Player extends Playable {
                     }
 
                     // Restore pet if it exists in the world.
-                    final Pet pet = World.getInstance().getPet(player.getObjectId());
+                    final Pet pet = World.getInstance().getPet(player.getId());
                     if (pet != null) {
                         player.setSummon(pet);
                         pet.setOwner(player);
@@ -3997,8 +4056,9 @@ public final class Player extends Playable {
                         ps2.setInt(2, objectId);
 
                         try (ResultSet rs2 = ps2.executeQuery()) {
-                            while (rs2.next())
+                            while (rs2.next()) {
                                 player.getAccountChars().put(rs2.getInt("obj_Id"), rs2.getString("char_name"));
+                            }
                         }
                     }
                     break;
@@ -4013,7 +4073,7 @@ public final class Player extends Playable {
 
     public Forum getMemo() {
         if (_forumMemo == null)
-            _forumMemo = CommunityBoard.getInstance().getOrCreateForum(ForumType.MEMO, ForumAccess.ALL, getObjectId());
+            _forumMemo = CommunityBoard.getInstance().getOrCreateForum(ForumType.MEMO, ForumAccess.ALL, getId());
 
         return _forumMemo;
     }
@@ -4027,7 +4087,7 @@ public final class Player extends Playable {
     private static boolean restoreSubClassData(Player player) {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(RESTORE_CHAR_SUBCLASSES)) {
-            ps.setInt(1, player.getObjectId());
+            ps.setInt(1, player.getId());
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -4164,7 +4224,7 @@ public final class Player extends Playable {
             ps.setLong(44, getClanCreateExpiryTime());
             ps.setString(45, getName());
             ps.setLong(46, getDeathPenaltyBuffLevel());
-            ps.setInt(47, getObjectId());
+            ps.setInt(47, getId());
 
             ps.execute();
         } catch (final Exception e) {
@@ -4183,7 +4243,7 @@ public final class Player extends Playable {
                 ps.setInt(2, subClass.getSp());
                 ps.setInt(3, subClass.getLevel());
                 ps.setInt(4, subClass.getClassId());
-                ps.setInt(5, getObjectId());
+                ps.setInt(5, getId());
                 ps.setInt(6, subClass.getClassIndex());
                 ps.addBatch();
             }
@@ -4200,7 +4260,7 @@ public final class Player extends Playable {
         try (Connection con = ConnectionPool.getConnection()) {
             // Delete all stored effects.
             try (PreparedStatement ps = con.prepareStatement(DELETE_SKILL_SAVE)) {
-                ps.setInt(1, getObjectId());
+                ps.setInt(1, getId());
                 ps.setInt(2, getClassIndex());
                 ps.executeUpdate();
             }
@@ -4229,7 +4289,7 @@ public final class Player extends Playable {
                         if (effect.isHerbEffect() || skill.isToggle())
                             continue;
 
-                        ps.setInt(1, getObjectId());
+                        ps.setInt(1, getId());
                         ps.setInt(2, skill.getId());
                         ps.setInt(3, skill.getLevel());
                         ps.setInt(4, effect.getCount());
@@ -4262,7 +4322,7 @@ public final class Player extends Playable {
                     if (timestamp != null && timestamp.hasNotPassed()) {
                         storedSkills.add(hash);
 
-                        ps.setInt(1, getObjectId());
+                        ps.setInt(1, getId());
                         ps.setInt(2, timestamp.getId());
                         ps.setInt(3, timestamp.getValue());
                         ps.setInt(4, -1);
@@ -4419,7 +4479,7 @@ public final class Player extends Playable {
             try (Connection con = ConnectionPool.getConnection();
                  PreparedStatement ps = con.prepareStatement(DELETE_SKILL_FROM_CHAR)) {
                 ps.setInt(1, skillId);
-                ps.setInt(2, getObjectId());
+                ps.setInt(2, getId());
                 ps.setInt(3, getClassIndex());
                 ps.execute();
             } catch (final Exception e) {
@@ -4443,7 +4503,7 @@ public final class Player extends Playable {
     private void storeSkill(L2Skill skill, int classIndex) {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(ADD_OR_UPDATE_SKILL)) {
-            ps.setInt(1, getObjectId());
+            ps.setInt(1, getId());
             ps.setInt(2, skill.getId());
             ps.setInt(3, skill.getLevel());
             ps.setInt(4, (classIndex > -1) ? classIndex : _classIndex);
@@ -4459,7 +4519,7 @@ public final class Player extends Playable {
     private void restoreSkills() {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(Config.SUBCLASS_SKILLS ? RESTORE_SKILLS_FOR_CHAR_ALT_SUBCLASS : RESTORE_SKILLS_FOR_CHAR)) {
-            ps.setInt(1, getObjectId());
+            ps.setInt(1, getId());
 
             if (!Config.SUBCLASS_SKILLS)
                 ps.setInt(2, getClassIndex());
@@ -4480,7 +4540,7 @@ public final class Player extends Playable {
     public void restoreEffects() {
         try (Connection con = ConnectionPool.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(RESTORE_SKILL_SAVE)) {
-                ps.setInt(1, getObjectId());
+                ps.setInt(1, getId());
                 ps.setInt(2, getClassIndex());
 
                 try (ResultSet rs = ps.executeQuery()) {
@@ -4521,7 +4581,7 @@ public final class Player extends Playable {
             }
 
             try (PreparedStatement ps = con.prepareStatement(DELETE_SKILL_SAVE)) {
-                ps.setInt(1, getObjectId());
+                ps.setInt(1, getId());
                 ps.setInt(2, getClassIndex());
                 ps.executeUpdate();
             }
@@ -4536,7 +4596,7 @@ public final class Player extends Playable {
     private void restoreRecom() {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(RESTORE_CHAR_RECOMS)) {
-            ps.setInt(1, getObjectId());
+            ps.setInt(1, getId());
 
             try (ResultSet rset = ps.executeQuery()) {
                 while (rset.next())
@@ -4559,7 +4619,7 @@ public final class Player extends Playable {
      * @return true if the active player is the looter or in the same party or command channel than looter objectId.
      */
     public boolean isLooterOrInLooterParty(int objectId) {
-        if (objectId == getObjectId())
+        if (objectId == getId())
             return true;
 
         final Player looter = World.getInstance().getPlayer(objectId);
@@ -4698,13 +4758,13 @@ public final class Player extends Playable {
     }
 
     @Override
-    public final void stopAllEffects() {
+    public void stopAllEffects() {
         super.stopAllEffects();
         updateAndBroadcastStatus(2);
     }
 
     @Override
-    public final void stopAllEffectsExceptThoseThatLastThroughDeath() {
+    public void stopAllEffectsExceptThoseThatLastThroughDeath() {
         super.stopAllEffectsExceptThoseThatLastThroughDeath();
         updateAndBroadcastStatus(2);
     }
@@ -4712,7 +4772,7 @@ public final class Player extends Playable {
     /**
      * Stop all toggle-type effects
      */
-    public final void stopAllToggles() {
+    public void stopAllToggles() {
         _effects.stopAllToggles();
     }
 
@@ -4748,7 +4808,7 @@ public final class Player extends Playable {
 
     @Override
     public String toString() {
-        return getName() + " (" + getObjectId() + ")";
+        return getName() + " (" + getId() + ")";
     }
 
     /**
@@ -5219,7 +5279,7 @@ public final class Player extends Playable {
             try (Connection con = ConnectionPool.getConnection();
                  PreparedStatement ps = con.prepareStatement(UPDATE_NOBLESS)) {
                 ps.setBoolean(1, isNoble);
-                ps.setInt(2, getObjectId());
+                ps.setInt(2, getId());
                 ps.executeUpdate();
             } catch (final Exception e) {
                 LOGGER.error("Couldn't update nobless status for {}.", e, getName());
@@ -5311,7 +5371,7 @@ public final class Player extends Playable {
 
             try (Connection con = ConnectionPool.getConnection();
                  PreparedStatement ps = con.prepareStatement(ADD_CHAR_SUBCLASS)) {
-                ps.setInt(1, getObjectId());
+                ps.setInt(1, getId());
                 ps.setInt(2, subclass.getClassId());
                 ps.setLong(3, subclass.getExp());
                 ps.setInt(4, subclass.getSp());
@@ -5350,35 +5410,35 @@ public final class Player extends Playable {
             try (Connection con = ConnectionPool.getConnection()) {
                 // Remove all henna info stored for this sub-class.
                 try (PreparedStatement ps = con.prepareStatement(DELETE_CHAR_HENNAS)) {
-                    ps.setInt(1, getObjectId());
+                    ps.setInt(1, getId());
                     ps.setInt(2, classIndex);
                     ps.execute();
                 }
 
                 // Remove all shortcuts info stored for this sub-class.
                 try (PreparedStatement ps = con.prepareStatement(DELETE_CHAR_SHORTCUTS)) {
-                    ps.setInt(1, getObjectId());
+                    ps.setInt(1, getId());
                     ps.setInt(2, classIndex);
                     ps.execute();
                 }
 
                 // Remove all effects info stored for this sub-class.
                 try (PreparedStatement ps = con.prepareStatement(DELETE_SKILL_SAVE)) {
-                    ps.setInt(1, getObjectId());
+                    ps.setInt(1, getId());
                     ps.setInt(2, classIndex);
                     ps.execute();
                 }
 
                 // Remove all skill info stored for this sub-class.
                 try (PreparedStatement ps = con.prepareStatement(DELETE_CHAR_SKILLS)) {
-                    ps.setInt(1, getObjectId());
+                    ps.setInt(1, getId());
                     ps.setInt(2, classIndex);
                     ps.execute();
                 }
 
                 // Remove all basic info stored about this sub-class.
                 try (PreparedStatement ps = con.prepareStatement(DELETE_CHAR_SUBCLASS)) {
-                    ps.setInt(1, getObjectId());
+                    ps.setInt(1, getId());
                     ps.setInt(2, classIndex);
                     ps.execute();
                 }
@@ -5559,11 +5619,11 @@ public final class Player extends Playable {
         // Teleport player if the Seven Signs period isn't the good one, or if the player isn't in a cabal.
         if (isIn7sDungeon() && !isGM()) {
             if (SevenSignsManager.getInstance().isSealValidationPeriod() || SevenSignsManager.getInstance().isCompResultsPeriod()) {
-                if (SevenSignsManager.getInstance().getPlayerCabal(getObjectId()) != SevenSignsManager.getInstance().getWinningCabal()) {
+                if (SevenSignsManager.getInstance().getPlayerCabal(getId()) != SevenSignsManager.getInstance().getWinningCabal()) {
                     teleportTo(TeleportType.TOWN);
                     setIsIn7sDungeon(false);
                 }
-            } else if (SevenSignsManager.getInstance().getPlayerCabal(getObjectId()) == CabalType.NORMAL) {
+            } else if (SevenSignsManager.getInstance().getPlayerCabal(getId()) == CabalType.NORMAL) {
                 teleportTo(TeleportType.TOWN);
                 setIsIn7sDungeon(false);
             }
@@ -5681,7 +5741,7 @@ public final class Player extends Playable {
     }
 
     @Override
-    public final void onTeleported() {
+    public void onTeleported() {
         super.onTeleported();
 
         if (Config.PLAYER_SPAWN_PROTECTION > 0)
@@ -5766,7 +5826,7 @@ public final class Player extends Playable {
         final ItemInstance item = getInventory().getItemByObjectId(objectId);
 
         // You don't own the item, or item is null.
-        if (item == null || item.getOwnerId() != getObjectId())
+        if (item == null || item.getOwnerId() != getId())
             return null;
 
         // Pet whom item you try to manipulate is summoned/mounted.
@@ -5774,7 +5834,7 @@ public final class Player extends Playable {
             return null;
 
         // Item is under enchant process.
-        if (getActiveEnchantItem() != null && getActiveEnchantItem().getObjectId() == objectId)
+        if (getActiveEnchantItem() != null && getActiveEnchantItem().getId() == objectId)
             return null;
 
         // Can't trade a cursed weapon.
@@ -5926,7 +5986,7 @@ public final class Player extends Playable {
 
             // set the status for pledge member list to OFFLINE
             if (getClan() != null) {
-                final ClanMember clanMember = getClan().getClanMember(getObjectId());
+                final ClanMember clanMember = getClan().getClanMember(getId());
                 if (clanMember != null)
                     clanMember.setPlayerInstance(null);
             }
@@ -6362,7 +6422,7 @@ public final class Player extends Playable {
     /**
      * Set falling timestamp
      */
-    public final void setFalling() {
+    public void setFalling() {
         _fallingTimestamp = System.currentTimeMillis() + FALLING_VALIDATION_DELAY;
     }
 
@@ -6405,12 +6465,12 @@ public final class Player extends Playable {
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement("SELECT friend_id FROM character_friends WHERE char_id = ? AND relation = 0")) {
-            ps.setInt(1, getObjectId());
+            ps.setInt(1, getId());
 
             try (ResultSet rset = ps.executeQuery()) {
                 while (rset.next()) {
                     final int friendId = rset.getInt("friend_id");
-                    if (friendId == getObjectId())
+                    if (friendId == getId())
                         continue;
 
                     _friendList.add(friendId);
@@ -6449,30 +6509,34 @@ public final class Player extends Playable {
 
     @Override
     public void broadcastRelationsChanges() {
-        for (final Player player : getKnownType(Player.class)) {
-            final int relation = getRelation(player);
-            final boolean isAutoAttackable = isAttackableWithoutForceBy(player);
+        for (Player player : getKnownType(Player.class)) {
+            int relation = getRelation(player);
+            boolean isAutoAttackable = isAttackableWithoutForceBy(player);
 
             player.sendPacket(new RelationChanged(this, relation, isAutoAttackable));
-            if (_summon != null)
+
+            if (_summon != null) {
                 player.sendPacket(new RelationChanged(_summon, relation, isAutoAttackable));
+            }
         }
     }
 
     @Override
     public void sendInfo(Player player) {
-        if (_boat != null)
+        if (_boat != null) {
             getPosition().set(_boat.getPosition());
+        }
 
-        if (getPolymorphTemplate() != null)
+        if (getPolymorphTemplate() != null) {
             player.sendPacket(new AbstractNpcInfo.PcMorphInfo(this, getPolymorphTemplate()));
-        else {
+        } else {
             player.sendPacket(new CharInfo(this));
 
             if (isSeated()) {
                 final WorldObject object = World.getInstance().getObject(_throneId);
-                if (object instanceof StaticObject)
-                    player.sendPacket(new ChairSit(getObjectId(), ((StaticObject) object).getStaticObjectId()));
+                if (object instanceof StaticObject) {
+                    player.sendPacket(new ChairSit(getId(), ((StaticObject) object).getStaticObjectId()));
+                }
             }
         }
 
@@ -6480,32 +6544,26 @@ public final class Player extends Playable {
         boolean isAutoAttackable = isAttackableWithoutForceBy(player);
 
         player.sendPacket(new RelationChanged(this, relation, isAutoAttackable));
-        if (_summon != null)
+        if (_summon != null) {
             player.sendPacket(new RelationChanged(_summon, relation, isAutoAttackable));
+        }
 
         relation = player.getRelation(this);
         isAutoAttackable = player.isAttackableWithoutForceBy(this);
 
         sendPacket(new RelationChanged(player, relation, isAutoAttackable));
-        if (player.getSummon() != null)
+        if (player.getSummon() != null) {
             sendPacket(new RelationChanged(player.getSummon(), relation, isAutoAttackable));
+        }
 
-        if (_boat != null)
-            player.sendPacket(new GetOnVehicle(getObjectId(), _boat.getObjectId(), getBoatPosition()));
+        if (_boat != null) {
+            player.sendPacket(new GetOnVehicle(getId(), _boat.getId(), getBoatPosition()));
+        }
 
         switch (getOperateType()) {
-            case SELL:
-            case PACKAGE_SELL:
-                player.sendPacket(new PrivateStoreMsgSell(this));
-                break;
-
-            case BUY:
-                player.sendPacket(new PrivateStoreMsgBuy(this));
-                break;
-
-            case MANUFACTURE:
-                player.sendPacket(new RecipeShopMsg(this));
-                break;
+            case SELL, PACKAGE_SELL -> player.sendPacket(new PrivateStoreMsgSell(this));
+            case BUY -> player.sendPacket(new PrivateStoreMsgBuy(this));
+            case MANUFACTURE -> player.sendPacket(new RecipeShopMsg(this));
         }
     }
 
@@ -6532,7 +6590,7 @@ public final class Player extends Playable {
         if (_summonTargetRequest == null)
             return;
 
-        if (answer == 1 && _summonTargetRequest.getObjectId() == requesterId)
+        if (answer == 1 && _summonTargetRequest.getId() == requesterId)
             SummonFriend.teleportTo(this, _summonTargetRequest, _summonSkillRequest);
 
         _summonTargetRequest = null;
@@ -6592,7 +6650,7 @@ public final class Player extends Playable {
         sendPacket(new DeleteObject(object, (object instanceof Player) && ((Player) object).isSeated()));
     }
 
-    public final void refreshInfos() {
+    public void refreshInfos() {
         for (final WorldObject object : getKnownType(WorldObject.class)) {
             if (object instanceof Player && ((Player) object).isInObserverMode())
                 continue;
@@ -6606,12 +6664,12 @@ public final class Player extends Playable {
      *
      * @param loc : The Location to teleport.
      */
-    public final void teleToLocation(Location loc) {
+    public void teleToLocation(Location loc) {
         super.teleportTo(loc, 0);
     }
 
     @Override
-    public final void teleportTo(Location loc, int randomOffset) {
+    public void teleportTo(Location loc, int randomOffset) {
         if (DimensionalRiftManager.getInstance().checkIfInRiftZone(getX(), getY(), getZ(), true)) {
             sendMessage("You have been sent to the waiting room.");
 
@@ -6623,7 +6681,7 @@ public final class Player extends Playable {
         super.teleportTo(loc, randomOffset);
     }
 
-    private final void sendInfoFrom(WorldObject object) {
+    private void sendInfoFrom(WorldObject object) {
         // Send object info to player.
         object.sendInfo(this);
 
@@ -6643,7 +6701,7 @@ public final class Player extends Playable {
         return formal != null && formal.getItem().getBodyPart() == Item.SLOT_ALLDRESS;
     }
 
-    public final void startFakeDeath() {
+    public void startFakeDeath() {
         _isFakeDeath = true;
         _isSittingNow = true;
         _isStanding = false;
@@ -6660,7 +6718,7 @@ public final class Player extends Playable {
         broadcastPacket(new ChangeWaitType(this, ChangeWaitType.WT_START_FAKEDEATH));
     }
 
-    public final void stopFakeDeath(boolean removeEffects) {
+    public void stopFakeDeath(boolean removeEffects) {
         if (removeEffects)
             stopEffects(EffectType.FAKE_DEATH);
 
@@ -6684,7 +6742,7 @@ public final class Player extends Playable {
         broadcastPacket(new Revive(this));
     }
 
-    public final void setIsFakeDeath(boolean value) {
+    public void setIsFakeDeath(boolean value) {
         _isFakeDeath = value;
     }
 
@@ -6996,5 +7054,25 @@ public final class Player extends Playable {
         getReuseTimeStamp().clear();
         getDisabledSkills().clear();
         sendPacket(new SkillCoolTime(this));
+    }
+
+    public List<EventWinnerEntity> getWonEvents() {
+        return wonEvents;
+    }
+
+    public void setWonEvents(List<EventWinnerEntity> wonEvents) {
+        this.wonEvents = wonEvents;
+    }
+
+    /**
+     * Является победителем в ивенте
+     *
+     * @param eventType Тип ивента
+     * @return Признак является ли
+     */
+    public boolean isWinnerInEvent(EventType eventType) {
+        return wonEvents != null && wonEvents.stream()
+                .anyMatch(event -> event.getEventType() == eventType
+                        && event.getStatus() == EventWinnerStatus.ACTIVE);
     }
 }

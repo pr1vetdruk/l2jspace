@@ -240,8 +240,8 @@ public class SummonAI extends PlayableAI {
     @Override
     public void startAttackStance() {
         if (!AttackStanceTaskManager.getInstance().isInAttackStance(getOwner())) {
-            getActor().broadcastPacket(new AutoAttackStart(getActor().getObjectId()));
-            getOwner().broadcastPacket(new AutoAttackStart(getOwner().getObjectId()));
+            getActor().broadcastPacket(new AutoAttackStart(getActor().getId()));
+            getOwner().broadcastPacket(new AutoAttackStart(getOwner().getId()));
         }
 
         AttackStanceTaskManager.getInstance().add(getOwner());
@@ -249,7 +249,7 @@ public class SummonAI extends PlayableAI {
 
     @Override
     public void stopAttackStance() {
-        getActor().broadcastPacket(new AutoAttackStop(getActor().getObjectId()));
+        getActor().broadcastPacket(new AutoAttackStop(getActor().getId()));
     }
 
     public void switchFollowStatus() {

@@ -21,7 +21,7 @@ public class PrivateStoreListBuy extends L2GameServerPacket {
     @Override
     protected final void writeImpl() {
         writeC(0xb8);
-        writeD(_storePlayer.getObjectId());
+        writeD(_storePlayer.getId());
         writeD(_playerAdena);
         writeD(_items.size());
 

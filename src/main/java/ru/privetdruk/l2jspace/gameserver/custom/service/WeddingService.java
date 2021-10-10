@@ -60,7 +60,7 @@ public class WeddingService {
 
         final int coupleId = IdFactory.getInstance().getNextId();
 
-        _couples.put(coupleId, new IntIntHolder(requester.getObjectId(), partner.getObjectId()));
+        _couples.put(coupleId, new IntIntHolder(requester.getId(), partner.getId()));
 
         requester.setCoupleId(coupleId);
         partner.setCoupleId(coupleId);

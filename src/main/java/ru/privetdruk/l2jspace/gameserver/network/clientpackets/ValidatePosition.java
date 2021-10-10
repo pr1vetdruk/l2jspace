@@ -58,7 +58,7 @@ public class ValidatePosition extends L2GameClientPacket {
             dist = player.getBoatPosition().distance2D(_x, _y);
 
             if (dist > actualSpeed)
-                sendPacket(new GetOnVehicle(player.getObjectId(), _boatId, player.getBoatPosition()));
+                sendPacket(new GetOnVehicle(player.getId(), _boatId, player.getBoatPosition()));
         }
         // For regular movement, send back if the desync is bigger than actual speed.
         else {
@@ -76,7 +76,7 @@ public class ValidatePosition extends L2GameClientPacket {
             // Draw debug packet to all players.
             for (Player p : player.getSurroundingGMs()) {
                 // Get debug packet.
-                final ExServerPrimitive debug = p.getDebugPacket("MOVE" + player.getObjectId());
+                final ExServerPrimitive debug = p.getDebugPacket("MOVE" + player.getId());
                 debug.addPoint(desc, Color.GREEN, true, _x, _y, _z);
                 debug.sendTo(p);
             }

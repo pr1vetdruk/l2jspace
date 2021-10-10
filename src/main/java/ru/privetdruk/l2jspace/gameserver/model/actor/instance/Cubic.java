@@ -230,7 +230,7 @@ public class Cubic {
                     }
 
                     if (_owner.getClan() != null && !_owner.isInsideZone(ZoneId.PVP)) {
-                        if (_owner.getClan().isMember(enemy.getObjectId()))
+                        if (_owner.getClan().isMember(enemy.getId()))
                             return null;
 
                         if (_owner.getAllyId() > 0 && enemy.getAllyId() > 0 && _owner.getAllyId() == enemy.getAllyId())

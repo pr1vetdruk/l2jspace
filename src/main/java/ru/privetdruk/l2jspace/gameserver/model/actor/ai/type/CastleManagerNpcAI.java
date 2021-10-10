@@ -26,7 +26,7 @@ public class CastleManagerNpcAI extends CreatureAI {
 
         Player player = (Player) _currentIntention.getFinalTarget();
 
-        NpcHtmlMessage html = new NpcHtmlMessage(getActor().getObjectId());
+        NpcHtmlMessage html = new NpcHtmlMessage(getActor().getId());
         if (getActor().getStatus().getMp() < skill.getMpConsume() + skill.getMpInitialConsume()) {
             html.setFile("data/html/chamberlain/support-no_mana.htm");
         } else {
@@ -35,7 +35,7 @@ public class CastleManagerNpcAI extends CreatureAI {
         }
 
         html.replace("%mp%", (int) getActor().getStatus().getMp());
-        html.replace("%objectId%", getActor().getObjectId());
+        html.replace("%objectId%", getActor().getId());
 
         player.sendPacket(html);
     }

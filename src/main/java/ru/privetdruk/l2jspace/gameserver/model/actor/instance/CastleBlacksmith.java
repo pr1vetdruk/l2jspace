@@ -15,9 +15,9 @@ public class CastleBlacksmith extends Folk {
     @Override
     public void onBypassFeedback(Player player, String command) {
         if (!Config.ALLOW_MANOR) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile("data/html/npcdefault.htm");
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             html.replace("%npcname%", getName());
             player.sendPacket(html);
             return;
@@ -41,15 +41,15 @@ public class CastleBlacksmith extends Folk {
     @Override
     public void showChatWindow(Player player, int val) {
         if (!Config.ALLOW_MANOR) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile("data/html/npcdefault.htm");
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             html.replace("%npcname%", getName());
             player.sendPacket(html);
             return;
         }
 
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
         final NpcTalkCond condition = getNpcTalkCond(player);
         if (condition == NpcTalkCond.NONE)
@@ -62,7 +62,7 @@ public class CastleBlacksmith extends Folk {
             else
                 html.setFile("data/html/castleblacksmith/castleblacksmith-" + val + ".htm");
         }
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         html.replace("%npcname%", getName());
         html.replace("%castleid%", getCastle().getCastleId());
         player.sendPacket(html);

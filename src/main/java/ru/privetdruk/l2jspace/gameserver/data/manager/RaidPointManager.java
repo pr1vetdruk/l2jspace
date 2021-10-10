@@ -47,7 +47,7 @@ public class RaidPointManager {
     }
 
     public final Map<Integer, Integer> getList(Player player) {
-        return _entries.get(player.getObjectId());
+        return _entries.get(player.getId());
     }
 
     /**
@@ -61,7 +61,7 @@ public class RaidPointManager {
         if (points < 0)
             return;
 
-        final int objectId = player.getObjectId();
+        final int objectId = player.getId();
         final Map<Integer, Integer> playerData = _entries.computeIfAbsent(objectId, m -> new HashMap<>());
 
         points = playerData.merge(bossId, points, Integer::sum);

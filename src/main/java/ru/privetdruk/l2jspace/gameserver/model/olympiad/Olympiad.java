@@ -85,7 +85,7 @@ public class Olympiad {
     }
 
     public boolean isRegistered(Player player) {
-        return getNobleStats(player.getObjectId()) != null;
+        return getNobleStats(player.getId()) != null;
     }
 
     /**
@@ -553,18 +553,18 @@ public class Olympiad {
         if (player == null || _period != OlympiadState.VALIDATION)
             return 0;
 
-        final Integer rankReward = _rankRewards.get(player.getObjectId());
+        final Integer rankReward = _rankRewards.get(player.getId());
         if (rankReward == null)
             return 0;
 
-        final StatSet set = _nobles.get(player.getObjectId());
+        final StatSet set = _nobles.get(player.getId());
         if (set == null || set.getInteger(POINTS) == 0)
             return 0;
 
         if (clear)
             set.set(POINTS, 0);
 
-        int points = (player.isHero() || HeroManager.getInstance().isInactiveHero(player.getObjectId())) ? Config.OLY_HERO_POINTS : 0;
+        int points = (player.isHero() || HeroManager.getInstance().isInactiveHero(player.getId())) ? Config.OLY_HERO_POINTS : 0;
 
         switch (rankReward) {
             case 1:

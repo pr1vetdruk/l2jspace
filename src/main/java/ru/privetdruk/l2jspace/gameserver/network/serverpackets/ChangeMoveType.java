@@ -8,7 +8,7 @@ public class ChangeMoveType extends L2GameServerPacket {
     private final int _swimming;
 
     public ChangeMoveType(Creature creature) {
-        _objectId = creature.getObjectId();
+        _objectId = creature.getId();
         _running = (creature.isRunning()) ? 1 : 0;
         _swimming = (creature.isInWater()) ? 1 : 0;
     }

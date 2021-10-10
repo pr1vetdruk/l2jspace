@@ -68,7 +68,7 @@ public class ItemInfo {
             return;
 
         // Get the Identifier of the ItemInstance
-        _objectId = item.getObjectId();
+        _objectId = item.getId();
 
         // Get the L2Item of the ItemInstance
         _item = item.getItem();
@@ -101,7 +101,7 @@ public class ItemInfo {
             return;
 
         // Get the Identifier of the ItemInstance
-        _objectId = item.getObjectId();
+        _objectId = item.getId();
 
         // Get the L2Item of the ItemInstance
         _item = item.getItem();

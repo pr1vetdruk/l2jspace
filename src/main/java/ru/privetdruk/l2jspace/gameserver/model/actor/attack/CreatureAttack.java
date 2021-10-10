@@ -512,7 +512,7 @@ public class CreatureAttack<T extends Creature> {
 
         public HitHolder(Creature target, int damage, boolean crit, boolean miss, ShieldDefense shieldDefense) {
             _target = target;
-            _targetId = target.getObjectId();
+            _targetId = target.getId();
             _damage = damage;
             _crit = crit;
             this.shieldDefense = shieldDefense;

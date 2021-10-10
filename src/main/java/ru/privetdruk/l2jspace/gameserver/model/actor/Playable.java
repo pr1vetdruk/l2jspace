@@ -294,7 +294,7 @@ public abstract class Playable extends Creature {
         if (item == null)
             return;
 
-        _disabledItems.put(item.getObjectId(), System.currentTimeMillis() + delay);
+        _disabledItems.put(item.getId(), System.currentTimeMillis() + delay);
     }
 
     /**
@@ -310,7 +310,7 @@ public abstract class Playable extends Creature {
         if (item == null || isAllSkillsDisabled())
             return true;
 
-        final int hashCode = item.getObjectId();
+        final int hashCode = item.getId();
 
         final Long timeStamp = _disabledItems.get(hashCode);
         if (timeStamp == null)

@@ -59,9 +59,9 @@ public class Merchant extends Folk {
             if (items.isEmpty()) {
                 final String content = HtmCache.getInstance().getHtm("data/html/" + ((this instanceof Fisherman) ? "fisherman" : "merchant") + "/" + getNpcId() + "-empty.htm");
                 if (content != null) {
-                    final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                    final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                     html.setHtml(content);
-                    html.replace("%objectId%", getObjectId());
+                    html.replace("%objectId%", getId());
                     player.sendPacket(html);
                     return;
                 }
@@ -79,7 +79,7 @@ public class Merchant extends Folk {
 
             MultisellData.getInstance().separateAndSend(st.nextToken(), player, this, false);
         } else if (actualCommand.equalsIgnoreCase("Multisell_Shadow")) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
             if (player.getStatus().getLevel() < 40)
                 html.setFile("data/html/common/shadow_item-lowlevel.htm");
@@ -90,7 +90,7 @@ public class Merchant extends Folk {
             else
                 html.setFile("data/html/common/shadow_item_b.htm");
 
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             player.sendPacket(html);
         } else if (actualCommand.equalsIgnoreCase("Exc_Multisell")) {
             if (st.countTokens() < 1)

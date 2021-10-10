@@ -13,7 +13,7 @@ public class ExConfirmCancelItem extends L2GameServerPacket {
     private final int _price;
 
     public ExConfirmCancelItem(ItemInstance item, int price) {
-        _itemObjId = item.getObjectId();
+        _itemObjId = item.getId();
         _itemId = item.getItemId();
         _price = price;
         _itemAug1 = ((short) item.getAugmentation().getId());

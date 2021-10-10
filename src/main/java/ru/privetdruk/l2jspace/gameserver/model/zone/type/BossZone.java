@@ -77,7 +77,7 @@ public class BossZone extends ZoneType {
                 return;
 
             // Get player object id.
-            final int id = player.getObjectId();
+            final int id = player.getId();
 
             if (_allowedPlayers.contains(id)) {
                 // Get and remove the entry expiration time (once entered, can not enter anymore, unless specified).
@@ -98,7 +98,7 @@ public class BossZone extends ZoneType {
         } else if (character instanceof Summon) {
             final Player player = ((Summon) character).getOwner();
             if (player != null) {
-                if (_allowedPlayers.contains(player.getObjectId()) || player.isGM() || _invadeTime == 0)
+                if (_allowedPlayers.contains(player.getId()) || player.isGM() || _invadeTime == 0)
                     return;
 
                 // Remove summon.
@@ -122,7 +122,7 @@ public class BossZone extends ZoneType {
                     return;
 
                 // Get player object id.
-                final int id = player.getObjectId();
+                final int id = player.getId();
 
                 if (_allowedPlayers.contains(id)) {
                     if (!player.isOnline()) {
@@ -163,7 +163,7 @@ public class BossZone extends ZoneType {
      */
     public void allowPlayerEntry(Player player, int duration) {
         // Get player object id.
-        final int playerId = player.getObjectId();
+        final int playerId = player.getId();
 
         // Allow player entry.
         if (!_allowedPlayers.contains(playerId))
@@ -194,7 +194,7 @@ public class BossZone extends ZoneType {
      */
     public void removePlayer(Player player) {
         // Get player object id.
-        final int id = player.getObjectId();
+        final int id = player.getId();
 
         // Remove player from allowed list.
         _allowedPlayers.remove(Integer.valueOf(id));

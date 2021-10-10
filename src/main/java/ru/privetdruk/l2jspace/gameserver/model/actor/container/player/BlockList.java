@@ -34,9 +34,9 @@ public class BlockList {
     public BlockList(Player owner) {
         _owner = owner;
 
-        _blockList = OFFLINE_LIST.get(owner.getObjectId());
+        _blockList = OFFLINE_LIST.get(owner.getId());
         if (_blockList == null)
-            _blockList = loadList(_owner.getObjectId());
+            _blockList = loadList(_owner.getId());
     }
 
     public boolean isBlockingAll() {
@@ -62,7 +62,7 @@ public class BlockList {
     }
 
     public void playerLogout() {
-        OFFLINE_LIST.put(_owner.getObjectId(), _blockList);
+        OFFLINE_LIST.put(_owner.getId(), _blockList);
     }
 
     private static List<Integer> loadList(int objectId) {
@@ -91,7 +91,7 @@ public class BlockList {
     private void updateInDB(int targetId, boolean state) {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement((state) ? INSERT_BLOCKED_USER : DELETE_BLOCKED_USER)) {
-            ps.setInt(1, _owner.getObjectId());
+            ps.setInt(1, _owner.getId());
             ps.setInt(2, targetId);
             ps.executeUpdate();
         } catch (Exception e) {
@@ -100,7 +100,7 @@ public class BlockList {
     }
 
     public boolean isInBlockList(Player target) {
-        return _blockList.contains(target.getObjectId());
+        return _blockList.contains(target.getId());
     }
 
     public boolean isInBlockList(int targetId) {

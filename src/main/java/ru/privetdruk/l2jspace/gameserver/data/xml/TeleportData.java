@@ -65,7 +65,7 @@ public class TeleportData implements IXmlReader {
      * @param type   : The {@link TeleportType} to filter.
      */
     public void showTeleportList(Player player, Npc npc, TeleportType type) {
-        final NpcHtmlMessage html = new NpcHtmlMessage(npc.getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(npc.getId());
 
         final StringBuilder sb = new StringBuilder();
         sb.append("<html><body>&$556;<br><br>");
@@ -77,7 +77,7 @@ public class TeleportData implements IXmlReader {
                 if (teleport == null || type != teleport.getType())
                     continue;
 
-                StringUtil.append(sb, "<a action=\"bypass -h npc_", npc.getObjectId(), "_teleport ", index, "\" msg=\"811;", teleport.getDesc(), "\">", teleport.getDesc());
+                StringUtil.append(sb, "<a action=\"bypass -h npc_", npc.getId(), "_teleport ", index, "\" msg=\"811;", teleport.getDesc(), "\">", teleport.getDesc());
 
                 if (!Config.FREE_TELEPORT && !(player.getStatus().getLevel() <= Config.LVL_FREE_TELEPORT)) {
                     final int priceCount = teleport.getCalculatedPriceCount(player);

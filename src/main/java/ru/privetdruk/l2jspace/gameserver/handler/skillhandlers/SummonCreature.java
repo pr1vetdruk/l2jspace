@@ -36,11 +36,11 @@ public class SummonCreature implements ISkillHandler {
             return;
 
         // Check for summon item validity.
-        if (item.getOwnerId() != player.getObjectId() || item.getLocation() != ItemLocation.INVENTORY)
+        if (item.getOwnerId() != player.getId() || item.getLocation() != ItemLocation.INVENTORY)
             return;
 
         // Owner has a pet listed in world.
-        if (World.getInstance().getPet(player.getObjectId()) != null)
+        if (World.getInstance().getPet(player.getId()) != null)
             return;
 
         // Check summon item validity.
@@ -58,7 +58,7 @@ public class SummonCreature implements ISkillHandler {
         if (pet == null)
             return;
 
-        World.getInstance().addPet(player.getObjectId(), pet);
+        World.getInstance().addPet(player.getId(), pet);
 
         player.setSummon(pet);
 

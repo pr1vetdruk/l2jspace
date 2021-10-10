@@ -75,7 +75,7 @@ public class BoatManager {
         boat.spawnMe(x, y, z, heading);
         boat.renewBoatEntrances();
 
-        _boats.put(boat.getObjectId(), boat);
+        _boats.put(boat.getId(), boat);
 
         return boat;
     }

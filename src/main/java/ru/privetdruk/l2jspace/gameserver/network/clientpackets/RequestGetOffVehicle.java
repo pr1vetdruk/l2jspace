@@ -29,14 +29,14 @@ public final class RequestGetOffVehicle extends L2GameClientPacket {
         if (player == null)
             return;
 
-        if (!player.isInBoat() || player.getBoat().getObjectId() != _boatId) {
+        if (!player.isInBoat() || player.getBoat().getId() != _boatId) {
             sendPacket(ActionFailed.STATIC_PACKET);
             return;
         }
 
         player.broadcastPacket(new StopMoveInVehicle(player, _boatId));
         player.setBoat(null);
-        player.broadcastPacket(new GetOffVehicle(player.getObjectId(), _boatId, _x, _y, _z));
+        player.broadcastPacket(new GetOffVehicle(player.getId(), _boatId, _x, _y, _z));
 
         // Proper heading has been set when we clicked outside of the ship, just move player forward.
         final Point2D outsidePoint = MathUtil.getNewLocationByDistanceAndHeading(_x, _y, player.getPosition().getHeading(), 60);

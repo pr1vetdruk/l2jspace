@@ -158,7 +158,7 @@ public final class WorldRegion {
         if (object == null)
             return;
 
-        _objects.put(object.getObjectId(), object);
+        _objects.put(object.getId(), object);
 
         if (object instanceof Player)
             _playersCount.incrementAndGet();
@@ -173,7 +173,7 @@ public final class WorldRegion {
         if (object == null)
             return;
 
-        _objects.remove(object.getObjectId());
+        _objects.remove(object.getId());
 
         if (object instanceof Player)
             _playersCount.decrementAndGet();

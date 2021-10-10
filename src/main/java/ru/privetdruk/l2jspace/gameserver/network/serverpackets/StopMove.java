@@ -13,7 +13,7 @@ public class StopMove extends L2GameServerPacket {
     private final int _heading;
 
     public StopMove(Creature cha) {
-        this(cha.getObjectId(), cha.getX(), cha.getY(), cha.getZ(), cha.getHeading());
+        this(cha.getId(), cha.getX(), cha.getY(), cha.getZ(), cha.getHeading());
     }
 
     public StopMove(int objectId, int x, int y, int z, int heading) {

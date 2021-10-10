@@ -69,14 +69,14 @@ public class CastleChamberlain extends Merchant {
     public void onBypassFeedback(Player player, String command) {
         final NpcTalkCond condition = getNpcTalkCond(player);
         if (condition == NpcTalkCond.NONE) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile("data/html/chamberlain/noprivs.htm");
             player.sendPacket(html);
             return;
         }
 
         if (condition == NpcTalkCond.UNDER_SIEGE) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile("data/html/chamberlain/busy.htm");
             player.sendPacket(html);
             return;
@@ -111,16 +111,16 @@ public class CastleChamberlain extends Merchant {
             if (val.equalsIgnoreCase("tele")) {
                 final Castle.CastleFunction chf = getCastle().getFunction(Castle.FUNC_TELEPORT);
                 if (chf == null) {
-                    final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                    final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                     html.setFile("data/html/chamberlain/chamberlain-nac.htm");
-                    html.replace("%objectId%", getObjectId());
+                    html.replace("%objectId%", getId());
                     player.sendPacket(html);
                     return;
                 }
 
                 TeleportData.getInstance().showTeleportList(player, this, (chf.getLvl() == 2) ? TeleportType.CHF_LEVEL_2 : TeleportType.CHF_LEVEL_1);
             } else if (val.equalsIgnoreCase("support")) {
-                final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
                 final Castle.CastleFunction chf = getCastle().getFunction(Castle.FUNC_SUPPORT);
                 if (chf == null)
@@ -129,12 +129,12 @@ public class CastleChamberlain extends Merchant {
                     html.setFile("data/html/chamberlain/support" + chf.getLvl() + ".htm");
                     html.replace("%mp%", (int) getStatus().getMp());
                 }
-                html.replace("%objectId%", getObjectId());
+                html.replace("%objectId%", getId());
                 player.sendPacket(html);
             } else if (val.equalsIgnoreCase("back"))
                 showChatWindow(player);
             else {
-                final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                 html.setFile("data/html/chamberlain/chamberlain-functions.htm");
 
                 final Castle.CastleFunction chfExp = getCastle().getFunction(Castle.FUNC_RESTORE_EXP);
@@ -156,7 +156,7 @@ public class CastleChamberlain extends Merchant {
                     html.replace("%mp_regen%", "0");
 
                 html.replace("%npcId%", getNpcId());
-                html.replace("%objectId%", getObjectId());
+                html.replace("%objectId%", getId());
                 player.sendPacket(html);
             }
         } else if (actualCommand.equalsIgnoreCase("manage")) {
@@ -171,25 +171,25 @@ public class CastleChamberlain extends Merchant {
                     val = st.nextToken();
 
                     if (val.equalsIgnoreCase("hp_cancel")) {
-                        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                         html.setFile("data/html/chamberlain/functions-cancel.htm");
                         html.replace("%apply%", "recovery hp 0");
-                        html.replace("%objectId%", getObjectId());
+                        html.replace("%objectId%", getId());
                         player.sendPacket(html);
                     } else if (val.equalsIgnoreCase("mp_cancel")) {
-                        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                         html.setFile("data/html/chamberlain/functions-cancel.htm");
                         html.replace("%apply%", "recovery mp 0");
-                        html.replace("%objectId%", getObjectId());
+                        html.replace("%objectId%", getId());
                         player.sendPacket(html);
                     } else if (val.equalsIgnoreCase("exp_cancel")) {
-                        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                         html.setFile("data/html/chamberlain/functions-cancel.htm");
                         html.replace("%apply%", "recovery exp 0");
-                        html.replace("%objectId%", getObjectId());
+                        html.replace("%objectId%", getId());
                         player.sendPacket(html);
                     } else if (val.equalsIgnoreCase("edit_hp")) {
-                        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                         html.setFile("data/html/chamberlain/functions-apply.htm");
                         html.replace("%name%", "Fireplace (HP Recovery Device)");
 
@@ -206,10 +206,10 @@ public class CastleChamberlain extends Merchant {
                         html.replace("%cost%", cost + "</font> adenas / " + (Config.CS_HPREG_FEE_RATIO / 86400000) + " day</font>)");
                         html.replace("%use%", "Provides additional HP recovery for clan members in the castle.<font color=\"00FFFF\">" + percent + "%</font>");
                         html.replace("%apply%", "recovery hp " + percent);
-                        html.replace("%objectId%", getObjectId());
+                        html.replace("%objectId%", getId());
                         player.sendPacket(html);
                     } else if (val.equalsIgnoreCase("edit_mp")) {
-                        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                         html.setFile("data/html/chamberlain/functions-apply.htm");
                         html.replace("%name%", "Carpet (MP Recovery)");
 
@@ -224,10 +224,10 @@ public class CastleChamberlain extends Merchant {
                         html.replace("%cost%", cost + "</font> adenas / " + (Config.CS_MPREG_FEE_RATIO / 86400000) + " day</font>)");
                         html.replace("%use%", "Provides additional MP recovery for clan members in the castle.<font color=\"00FFFF\">" + percent + "%</font>");
                         html.replace("%apply%", "recovery mp " + percent);
-                        html.replace("%objectId%", getObjectId());
+                        html.replace("%objectId%", getId());
                         player.sendPacket(html);
                     } else if (val.equalsIgnoreCase("edit_exp")) {
-                        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                         html.setFile("data/html/chamberlain/functions-apply.htm");
                         html.replace("%name%", "Chandelier (EXP Recovery Device)");
 
@@ -242,19 +242,19 @@ public class CastleChamberlain extends Merchant {
                         html.replace("%cost%", cost + "</font> adenas / " + (Config.CS_EXPREG_FEE_RATIO / 86400000) + " day</font>)");
                         html.replace("%use%", "Restores the Exp of any clan member who is resurrected in the castle.<font color=\"00FFFF\">" + percent + "%</font>");
                         html.replace("%apply%", "recovery exp " + percent);
-                        html.replace("%objectId%", getObjectId());
+                        html.replace("%objectId%", getId());
                         player.sendPacket(html);
                     } else if (val.equalsIgnoreCase("hp")) {
                         val = st.nextToken();
                         final int percent = Integer.parseInt(val);
 
-                        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
                         final Castle.CastleFunction chf = getCastle().getFunction(Castle.FUNC_RESTORE_HP);
                         if (chf != null && chf.getLvl() == percent) {
                             html.setFile("data/html/chamberlain/functions-used.htm");
                             html.replace("%val%", val + "%");
-                            html.replace("%objectId%", getObjectId());
+                            html.replace("%objectId%", getId());
                             player.sendPacket(html);
                             return;
                         }
@@ -277,19 +277,19 @@ public class CastleChamberlain extends Merchant {
                         if (!getCastle().updateFunctions(player, Castle.FUNC_RESTORE_HP, percent, fee, Config.CS_HPREG_FEE_RATIO, (getCastle().getFunction(Castle.FUNC_RESTORE_HP) == null)))
                             html.setFile("data/html/chamberlain/low_adena.htm");
 
-                        html.replace("%objectId%", getObjectId());
+                        html.replace("%objectId%", getId());
                         player.sendPacket(html);
                     } else if (val.equalsIgnoreCase("mp")) {
                         val = st.nextToken();
                         final int percent = Integer.parseInt(val);
 
-                        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
                         final Castle.CastleFunction chf = getCastle().getFunction(Castle.FUNC_RESTORE_MP);
                         if (chf != null && chf.getLvl() == percent) {
                             html.setFile("data/html/chamberlain/functions-used.htm");
                             html.replace("%val%", val + "%");
-                            html.replace("%objectId%", getObjectId());
+                            html.replace("%objectId%", getId());
                             player.sendPacket(html);
                             return;
                         }
@@ -310,19 +310,19 @@ public class CastleChamberlain extends Merchant {
                         if (!getCastle().updateFunctions(player, Castle.FUNC_RESTORE_MP, percent, fee, Config.CS_MPREG_FEE_RATIO, (getCastle().getFunction(Castle.FUNC_RESTORE_MP) == null)))
                             html.setFile("data/html/chamberlain/low_adena.htm");
 
-                        html.replace("%objectId%", getObjectId());
+                        html.replace("%objectId%", getId());
                         player.sendPacket(html);
                     } else if (val.equalsIgnoreCase("exp")) {
                         val = st.nextToken();
                         final int percent = Integer.parseInt(val);
 
-                        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
                         final Castle.CastleFunction chf = getCastle().getFunction(Castle.FUNC_RESTORE_EXP);
                         if (chf != null && chf.getLvl() == percent) {
                             html.setFile("data/html/chamberlain/functions-used.htm");
                             html.replace("%val%", val + "%");
-                            html.replace("%objectId%", getObjectId());
+                            html.replace("%objectId%", getId());
                             player.sendPacket(html);
                             return;
                         }
@@ -343,11 +343,11 @@ public class CastleChamberlain extends Merchant {
                         if (!getCastle().updateFunctions(player, Castle.FUNC_RESTORE_EXP, percent, fee, Config.CS_EXPREG_FEE_RATIO, (getCastle().getFunction(Castle.FUNC_RESTORE_EXP) == null)))
                             html.setFile("data/html/chamberlain/low_adena.htm");
 
-                        html.replace("%objectId%", getObjectId());
+                        html.replace("%objectId%", getId());
                         player.sendPacket(html);
                     }
                 } else {
-                    final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                    final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                     html.setFile("data/html/chamberlain/edit_recovery.htm");
                     String hp = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 80\">80%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 120\">120%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 180\">180%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 240\">240%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_hp 300\">300%</a>]";
                     String exp = "[<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 15\">15%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 25\">25%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 35\">35%</a>][<a action=\"bypass -h npc_%objectId%_manage recovery edit_exp 50\">50%</a>]";
@@ -386,7 +386,7 @@ public class CastleChamberlain extends Merchant {
                         html.replace("%change_mp%", mp);
                     }
 
-                    html.replace("%objectId%", getObjectId());
+                    html.replace("%objectId%", getId());
                     player.sendPacket(html);
                 }
             } else if (val.equalsIgnoreCase("other")) {
@@ -397,20 +397,20 @@ public class CastleChamberlain extends Merchant {
                     val = st.nextToken();
 
                     if (val.equalsIgnoreCase("tele_cancel")) {
-                        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                         html.setFile("data/html/chamberlain/functions-cancel.htm");
                         html.replace("%apply%", "other tele 0");
-                        html.replace("%objectId%", getObjectId());
+                        html.replace("%objectId%", getId());
                         player.sendPacket(html);
                     } else if (val.equalsIgnoreCase("support_cancel")) {
-                        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                         html.setFile("data/html/chamberlain/functions-cancel.htm");
                         html.replace("%apply%", "other support 0");
                         html.replace("%apply%", "other tele 0");
-                        html.replace("%objectId%", getObjectId());
+                        html.replace("%objectId%", getId());
                         player.sendPacket(html);
                     } else if (val.equalsIgnoreCase("edit_support")) {
-                        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                         html.setFile("data/html/chamberlain/functions-apply.htm");
                         html.replace("%name%", "Insignia (Supplementary Magic)");
 
@@ -425,10 +425,10 @@ public class CastleChamberlain extends Merchant {
                         html.replace("%cost%", cost + "</font> adenas / " + (Config.CS_SUPPORT_FEE_RATIO / 86400000) + " day</font>)");
                         html.replace("%use%", "Enables the use of supplementary magic.");
                         html.replace("%apply%", "other support " + stage);
-                        html.replace("%objectId%", getObjectId());
+                        html.replace("%objectId%", getId());
                         player.sendPacket(html);
                     } else if (val.equalsIgnoreCase("edit_tele")) {
-                        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                         html.setFile("data/html/chamberlain/functions-apply.htm");
                         html.replace("%name%", "Mirror (Teleportation Device)");
 
@@ -444,19 +444,19 @@ public class CastleChamberlain extends Merchant {
                         html.replace("%cost%", cost + "</font> adenas / " + (Config.CS_TELE_FEE_RATIO / 86400000) + " day</font>)");
                         html.replace("%use%", "Teleports clan members in a castle to the target <font color=\"00FFFF\">Stage " + stage + "</font> staging area");
                         html.replace("%apply%", "other tele " + stage);
-                        html.replace("%objectId%", getObjectId());
+                        html.replace("%objectId%", getId());
                         player.sendPacket(html);
                     } else if (val.equalsIgnoreCase("tele")) {
                         val = st.nextToken();
                         final int lvl = Integer.parseInt(val);
 
-                        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
                         final Castle.CastleFunction chf = getCastle().getFunction(Castle.FUNC_TELEPORT);
                         if (chf != null && chf.getLvl() == lvl) {
                             html.setFile("data/html/chamberlain/functions-used.htm");
                             html.replace("%val%", "Stage " + val);
-                            html.replace("%objectId%", getObjectId());
+                            html.replace("%objectId%", getId());
                             player.sendPacket(html);
                             return;
                         }
@@ -475,19 +475,19 @@ public class CastleChamberlain extends Merchant {
                         if (!getCastle().updateFunctions(player, Castle.FUNC_TELEPORT, lvl, fee, Config.CS_TELE_FEE_RATIO, (getCastle().getFunction(Castle.FUNC_TELEPORT) == null)))
                             html.setFile("data/html/chamberlain/low_adena.htm");
 
-                        html.replace("%objectId%", getObjectId());
+                        html.replace("%objectId%", getId());
                         player.sendPacket(html);
                     } else if (val.equalsIgnoreCase("support")) {
                         val = st.nextToken();
                         final int lvl = Integer.parseInt(val);
 
-                        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
                         final Castle.CastleFunction chf = getCastle().getFunction(Castle.FUNC_SUPPORT);
                         if (chf != null && chf.getLvl() == lvl) {
                             html.setFile("data/html/chamberlain/functions-used.htm");
                             html.replace("%val%", "Stage " + val);
-                            html.replace("%objectId%", getObjectId());
+                            html.replace("%objectId%", getId());
                             player.sendPacket(html);
                             return;
                         }
@@ -508,11 +508,11 @@ public class CastleChamberlain extends Merchant {
                         if (!getCastle().updateFunctions(player, Castle.FUNC_SUPPORT, lvl, fee, Config.CS_SUPPORT_FEE_RATIO, (chf == null)))
                             html.setFile("data/html/chamberlain/low_adena.htm");
 
-                        html.replace("%objectId%", getObjectId());
+                        html.replace("%objectId%", getId());
                         player.sendPacket(html);
                     }
                 } else {
-                    NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                    NpcHtmlMessage html = new NpcHtmlMessage(getId());
                     html.setFile("data/html/chamberlain/edit_other.htm");
 
                     String tele = "[<a action=\"bypass -h npc_%objectId%_manage other edit_tele 1\">Level 1</a>][<a action=\"bypass -h npc_%objectId%_manage other edit_tele 2\">Level 2</a>]";
@@ -540,15 +540,15 @@ public class CastleChamberlain extends Merchant {
                         html.replace("%change_support%", support);
                     }
 
-                    html.replace("%objectId%", getObjectId());
+                    html.replace("%objectId%", getId());
                     player.sendPacket(html);
                 }
             } else if (val.equalsIgnoreCase("back"))
                 showChatWindow(player);
             else {
-                NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                NpcHtmlMessage html = new NpcHtmlMessage(getId());
                 html.setFile("data/html/chamberlain/manage.htm");
-                html.replace("%objectId%", getObjectId());
+                html.replace("%objectId%", getId());
                 player.sendPacket(html);
             }
         } else if (actualCommand.equalsIgnoreCase("support")) {
@@ -583,10 +583,10 @@ public class CastleChamberlain extends Merchant {
             if (chf == null || chf.getLvl() == 0)
                 return;
 
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile("data/html/chamberlain/support" + chf.getLvl() + ".htm");
             html.replace("%mp%", (int) getStatus().getMp());
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             player.sendPacket(html);
         } else if (actualCommand.equalsIgnoreCase("products")) {
             if (!validatePrivileges(player, Clan.CP_CS_USE_FUNCTIONS))
@@ -604,9 +604,9 @@ public class CastleChamberlain extends Merchant {
             else {
                 final Clan clan = ClanTable.getInstance().getClan(getCastle().getOwnerId());
 
-                final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                 html.setFile("data/html/chamberlain/report.htm");
-                html.replace("%objectId%", getObjectId());
+                html.replace("%objectId%", getId());
                 html.replace("%clanname%", clan.getName());
                 html.replace("%clanleadername%", clan.getLeaderName());
                 html.replace("%castlename%", getCastle().getName());
@@ -671,9 +671,9 @@ public class CastleChamberlain extends Merchant {
                     }
                 }
             }
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile(filename);
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             html.replace("%tax_income%", StringUtil.formatNumber(getCastle().getTreasury()));
             html.replace("%withdraw_amount%", StringUtil.formatNumber(amount));
             player.sendPacket(html);
@@ -683,9 +683,9 @@ public class CastleChamberlain extends Merchant {
                 return;
 
             if (val.isEmpty()) {
-                final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                 html.setFile("data/html/chamberlain/" + getNpcId() + "-d.htm");
-                html.replace("%objectId%", getObjectId());
+                html.replace("%objectId%", getId());
                 player.sendPacket(html);
                 return;
             }
@@ -694,14 +694,14 @@ public class CastleChamberlain extends Merchant {
             while (st.hasMoreTokens())
                 getCastle().openCloseDoor(player, Integer.parseInt(st.nextToken()), open);
 
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile((open) ? "data/html/chamberlain/doors-open.htm" : "data/html/chamberlain/doors-close.htm");
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             player.sendPacket(html);
 
         } else if (actualCommand.equalsIgnoreCase("tax_set")) // tax rates control
         {
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
             if (!validatePrivileges(player, Clan.CP_CS_TAXES))
                 html.setFile("data/html/chamberlain/tax.htm");
@@ -712,7 +712,7 @@ public class CastleChamberlain extends Merchant {
                 html.setFile("data/html/chamberlain/tax-adjust.htm");
             }
 
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             html.replace("%tax%", getCastle().getTaxPercent());
             player.sendPacket(html);
         } else if (actualCommand.equalsIgnoreCase("manor")) {
@@ -734,9 +734,9 @@ public class CastleChamberlain extends Merchant {
             }
 
             if (filename.length() != 0) {
-                final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                 html.setFile(filename);
-                html.replace("%objectId%", getObjectId());
+                html.replace("%objectId%", getId());
                 player.sendPacket(html);
             }
         } else if (command.startsWith("manor_menu_select")) {
@@ -819,7 +819,7 @@ public class CastleChamberlain extends Merchant {
 
             sendFileMessage(player, "data/html/chamberlain/siegetime6.htm");
         } else if (actualCommand.equals("give_crown")) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
             if (condition == NpcTalkCond.OWNER) {
                 if (player.getInventory().getItemByItemId(6841) == null) {
@@ -838,11 +838,11 @@ public class CastleChamberlain extends Merchant {
             if (!validatePrivileges(player, Clan.CP_CS_USE_FUNCTIONS))
                 return;
 
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
             // Player is registered as dusk, or we aren't in the good side of competition.
             if (SevenSignsManager.getInstance().isSealValidationPeriod()) {
-                if (SevenSignsManager.getInstance().getPlayerCabal(player.getObjectId()) == CabalType.DUSK)
+                if (SevenSignsManager.getInstance().getPlayerCabal(player.getId()) == CabalType.DUSK)
                     html.setFile("data/html/chamberlain/not-dawn-or-event.htm");
                     // We already reached the tickets limit.
                 else if (getCastle().getLeftCertificates() == 0)
@@ -856,17 +856,17 @@ public class CastleChamberlain extends Merchant {
             } else
                 html.setFile("data/html/chamberlain/not-dawn-or-event.htm");
 
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             player.sendPacket(html);
         } else if (actualCommand.equals("validate_certificate")) {
             if (!validatePrivileges(player, Clan.CP_CS_USE_FUNCTIONS))
                 return;
 
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
             // Player is registered as dusk, or we aren't in the good side of competition.
             if (SevenSignsManager.getInstance().isSealValidationPeriod()) {
-                if (SevenSignsManager.getInstance().getPlayerCabal(player.getObjectId()) == CabalType.DUSK)
+                if (SevenSignsManager.getInstance().getPlayerCabal(player.getId()) == CabalType.DUSK)
                     html.setFile("data/html/chamberlain/not-dawn-or-event.htm");
                     // We already reached the tickets limit.
                 else if (getCastle().getLeftCertificates() == 0)
@@ -887,7 +887,7 @@ public class CastleChamberlain extends Merchant {
             } else
                 html.setFile("data/html/chamberlain/not-dawn-or-event.htm");
 
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             player.sendPacket(html);
         } else if (actualCommand.equalsIgnoreCase("castle_devices")) {
             if (!validatePrivileges(player, Clan.CP_CS_SET_FUNCTIONS))
@@ -898,7 +898,7 @@ public class CastleChamberlain extends Merchant {
             if (!validatePrivileges(player, Clan.CP_CS_SET_FUNCTIONS))
                 return;
 
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             if (val.isEmpty())
                 html.setFile("data/html/chamberlain/" + getNpcId() + "-gu.htm");
             else {
@@ -906,7 +906,7 @@ public class CastleChamberlain extends Merchant {
                 html.replace("%id%", val);
                 html.replace("%type%", st.nextToken());
             }
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             player.sendPacket(html);
         } else if (actualCommand.equalsIgnoreCase("doors_choose_upgrade")) {
             if (!validatePrivileges(player, Clan.CP_CS_SET_FUNCTIONS))
@@ -916,9 +916,9 @@ public class CastleChamberlain extends Merchant {
             final String type = st.nextToken();
             final String level = st.nextToken();
 
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile("data/html/chamberlain/doors-confirm.htm");
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             html.replace("%id%", id);
             html.replace("%level%", level);
             html.replace("%type%", type);
@@ -942,7 +942,7 @@ public class CastleChamberlain extends Merchant {
 
             final int currentHpRatio = door.getStatus().getUpgradeHpRatio();
 
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
             if (currentHpRatio >= level) {
                 html.setFile("data/html/chamberlain/doors-already-updated.htm");
@@ -954,20 +954,20 @@ public class CastleChamberlain extends Merchant {
 
                 html.setFile("data/html/chamberlain/doors-success.htm");
             }
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             player.sendPacket(html);
         } else if (actualCommand.equalsIgnoreCase("traps_update")) {
             if (!validatePrivileges(player, Clan.CP_CS_SET_FUNCTIONS))
                 return;
 
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             if (val.isEmpty())
                 html.setFile("data/html/chamberlain/" + getNpcId() + "-tu.htm");
             else {
                 html.setFile("data/html/chamberlain/traps-update" + ((getCastle().getName().equalsIgnoreCase("aden")) ? "1" : "") + ".htm");
                 html.replace("%trapIndex%", val);
             }
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             player.sendPacket(html);
         } else if (actualCommand.equalsIgnoreCase("traps_choose_upgrade")) {
             if (!validatePrivileges(player, Clan.CP_CS_SET_FUNCTIONS))
@@ -976,9 +976,9 @@ public class CastleChamberlain extends Merchant {
             final String trapIndex = val;
             final String level = st.nextToken();
 
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile("data/html/chamberlain/traps-confirm.htm");
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             html.replace("%trapIndex%", trapIndex);
             html.replace("%level%", level);
             html.replace("%price%", getTrapCost(Integer.parseInt(level)));
@@ -996,7 +996,7 @@ public class CastleChamberlain extends Merchant {
             final int trapIndex = Integer.parseInt(val);
             final int currentLevel = getCastle().getTrapUpgradeLevel(trapIndex);
 
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
             if (currentLevel >= level) {
                 html.setFile("data/html/chamberlain/traps-already-updated.htm");
@@ -1008,7 +1008,7 @@ public class CastleChamberlain extends Merchant {
 
                 html.setFile("data/html/chamberlain/traps-success.htm");
             }
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             player.sendPacket(html);
         } else
             super.onBypassFeedback(player, command);
@@ -1018,7 +1018,7 @@ public class CastleChamberlain extends Merchant {
     public void showChatWindow(Player player) {
         player.sendPacket(ActionFailed.STATIC_PACKET);
 
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
         final NpcTalkCond condition = getNpcTalkCond(player);
         if (condition == NpcTalkCond.NONE)
@@ -1028,7 +1028,7 @@ public class CastleChamberlain extends Merchant {
         else
             html.setFile("data/html/chamberlain/chamberlain.htm");
 
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         player.sendPacket(html);
     }
 
@@ -1050,7 +1050,7 @@ public class CastleChamberlain extends Merchant {
 
     private boolean validatePrivileges(Player player, int privilege) {
         if (!player.hasClanPrivileges(privilege)) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile("data/html/chamberlain/noprivs.htm");
             player.sendPacket(html);
             return false;
@@ -1059,9 +1059,9 @@ public class CastleChamberlain extends Merchant {
     }
 
     private void sendFileMessage(Player player, String htmlMessage) {
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
         html.setFile(htmlMessage);
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         html.replace("%npcId%", getNpcId());
         html.replace("%time%", getCastle().getSiegeDate().getTime().toString());
         player.sendPacket(html);

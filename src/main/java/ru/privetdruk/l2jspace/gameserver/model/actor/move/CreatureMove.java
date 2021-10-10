@@ -135,7 +135,7 @@ public class CreatureMove<T extends Creature> {
             // Draw debug packet to surrounding GMs.
             for (Player p : _actor.getSurroundingGMs()) {
                 // Get debug packet.
-                final ExServerPrimitive debug = p.getDebugPacket("MOVE" + _actor.getObjectId());
+                final ExServerPrimitive debug = p.getDebugPacket("MOVE" + _actor.getId());
 
                 // Reset the packet lines and points.
                 debug.reset();
@@ -330,7 +330,7 @@ public class CreatureMove<T extends Creature> {
             // Draw debug packet to surrounding GMs.
             for (Player p : _actor.getSurroundingGMs()) {
                 // Get debug packet.
-                final ExServerPrimitive debug = p.getDebugPacket("MOVE" + _actor.getObjectId());
+                final ExServerPrimitive debug = p.getDebugPacket("MOVE" + _actor.getId());
 
                 // Draw a RED point for current position.
                 debug.addPoint(heading, Color.RED, true, _actor.getPosition());
@@ -446,7 +446,7 @@ public class CreatureMove<T extends Creature> {
             // Draw debug packet to all players.
             for (Player p : _actor.getSurroundingGMs()) {
                 // Get debug packet.
-                final ExServerPrimitive debug = p.getDebugPacket("PATH" + _actor.getObjectId());
+                final ExServerPrimitive debug = p.getDebugPacket("PATH" + _actor.getId());
 
                 // Reset the packet and add all lines and points.
                 debug.reset();

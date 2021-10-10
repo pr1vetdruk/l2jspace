@@ -27,7 +27,7 @@ public final class PartySmallWindowAll extends L2GameServerPacket {
             if (player == _player)
                 continue;
 
-            writeD(player.getObjectId());
+            writeD(player.getId());
             writeS(player.getName());
             writeD((int) player.getStatus().getCp());
             writeD(player.getStatus().getMaxCp());

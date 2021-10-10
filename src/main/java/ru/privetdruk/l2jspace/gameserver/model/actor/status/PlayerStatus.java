@@ -572,7 +572,7 @@ public class PlayerStatus extends PlayableStatus<Player> {
 
         final Clan clan = _actor.getClan();
         if (clan != null) {
-            final ClanMember member = clan.getClanMember(_actor.getObjectId());
+            final ClanMember member = clan.getClanMember(_actor.getId());
             if (member != null)
                 member.refreshLevel();
 

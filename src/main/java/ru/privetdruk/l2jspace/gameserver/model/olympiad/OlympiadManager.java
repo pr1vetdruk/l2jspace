@@ -61,7 +61,7 @@ public class OlympiadManager {
     }
 
     private boolean isRegistered(Player player, boolean showMessage) {
-        final Integer objId = player.getObjectId();
+        final Integer objId = player.getId();
 
         if (_nonClassBasedParticipants.contains(objId)) {
             if (showMessage)
@@ -90,7 +90,7 @@ public class OlympiadManager {
             if (game == null)
                 continue;
 
-            if (game.containsParticipant(player.getObjectId())) {
+            if (game.containsParticipant(player.getId())) {
                 if (showMessage)
                     player.sendPacket(SystemMessageId.YOU_HAVE_ALREADY_BEEN_REGISTERED_IN_A_WAITING_LIST_OF_AN_EVENT);
 
@@ -116,13 +116,13 @@ public class OlympiadManager {
                 if (!checkNoble(npc, player))
                     return false;
                 final List<Integer> classed = _classBasedParticipants.computeIfAbsent(player.getBaseClass(), c -> new CopyOnWriteArrayList<>());
-                classed.add(player.getObjectId());
+                classed.add(player.getId());
                 player.sendPacket(SystemMessageId.YOU_HAVE_BEEN_REGISTERED_IN_A_WAITING_LIST_OF_CLASSIFIED_GAMES);
             }
             case NON_CLASSED -> {
                 if (!checkNoble(npc, player))
                     return false;
-                _nonClassBasedParticipants.add(player.getObjectId());
+                _nonClassBasedParticipants.add(player.getId());
                 player.sendPacket(SystemMessageId.YOU_HAVE_BEEN_REGISTERED_IN_A_WAITING_LIST_OF_NO_CLASS_GAMES);
             }
         }
@@ -148,7 +148,7 @@ public class OlympiadManager {
         if (isInCompetition(player, false))
             return false;
 
-        final Integer objectId = player.getObjectId();
+        final Integer objectId = player.getId();
         if (_nonClassBasedParticipants.remove(objectId)) {
             player.sendPacket(SystemMessageId.YOU_HAVE_BEEN_DELETED_FROM_THE_WAITING_LIST_OF_A_GAME);
             return true;
@@ -168,7 +168,7 @@ public class OlympiadManager {
         if (task != null && task.isGameStarted())
             task.getGame().handleDisconnect(player);
 
-        final Integer objId = player.getObjectId();
+        final Integer objId = player.getId();
         if (_nonClassBasedParticipants.remove(objId))
             return;
 
@@ -209,7 +209,7 @@ public class OlympiadManager {
         if (isInCompetition(player, true))
             return false;
 
-        StatSet set = Olympiad.getInstance().getNobleStats(player.getObjectId());
+        StatSet set = Olympiad.getInstance().getNobleStats(player.getId());
         if (set == null) {
             set = new StatSet();
             set.set(Olympiad.CLASS_ID, player.getBaseClass());
@@ -220,14 +220,14 @@ public class OlympiadManager {
             set.set(Olympiad.COMP_LOST, 0);
             set.set(Olympiad.COMP_DRAWN, 0);
 
-            Olympiad.getInstance().registerPlayer(player.getObjectId(), set);
+            Olympiad.getInstance().registerPlayer(player.getId(), set);
         }
 
-        final int points = Olympiad.getInstance().getNoblePoints(player.getObjectId());
+        final int points = Olympiad.getInstance().getNoblePoints(player.getId());
         if (points <= 0) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(npc.getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(npc.getId());
             html.setFile("data/html/olympiad/noble_nopoints1.htm");
-            html.replace("%objectId%", npc.getObjectId());
+            html.replace("%objectId%", npc.getId());
             player.sendPacket(html);
             return false;
         }

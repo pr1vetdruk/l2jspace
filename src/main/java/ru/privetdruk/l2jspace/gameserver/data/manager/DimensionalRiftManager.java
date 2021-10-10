@@ -171,7 +171,7 @@ public class DimensionalRiftManager implements IXmlReader {
 
         // Party members' count is lower than config.
         if (party.getMembersCount() < Config.RIFT_MIN_PARTY_SIZE) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(npc.getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(npc.getId());
             html.setFile("data/html/seven_signs/rift/SmallParty.htm");
             html.replace("%npc_name%", npc.getName());
             html.replace("%count%", Integer.toString(Config.RIFT_MIN_PARTY_SIZE));
@@ -182,7 +182,7 @@ public class DimensionalRiftManager implements IXmlReader {
         // Rift is full.
         final List<DimensionalRiftRoom> availableRooms = getFreeRooms(type);
         if (availableRooms.isEmpty()) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(npc.getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(npc.getId());
             html.setFile("data/html/seven_signs/rift/Full.htm");
             html.replace("%npc_name%", npc.getName());
             player.sendPacket(html);
@@ -203,7 +203,7 @@ public class DimensionalRiftManager implements IXmlReader {
         for (Player member : party.getMembers()) {
             final ItemInstance item = member.getInventory().getItemByItemId(DIMENSIONAL_FRAGMENT);
             if (item == null || item.getCount() < getNeededItems(type)) {
-                final NpcHtmlMessage html = new NpcHtmlMessage(npc.getObjectId());
+                final NpcHtmlMessage html = new NpcHtmlMessage(npc.getId());
                 html.setFile("data/html/seven_signs/rift/NoFragments.htm");
                 html.replace("%npc_name%", npc.getName());
                 html.replace("%count%", Integer.toString(count));
@@ -237,7 +237,7 @@ public class DimensionalRiftManager implements IXmlReader {
     }
 
     public void showHtmlFile(Player player, String file, Npc npc) {
-        final NpcHtmlMessage html = new NpcHtmlMessage(npc.getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(npc.getId());
         html.setFile(file);
         html.replace("%npc_name%", npc.getName());
         player.sendPacket(html);

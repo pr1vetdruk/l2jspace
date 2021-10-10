@@ -120,13 +120,13 @@ public class DrChaos extends AttackableAIScript {
             }
         } else if (name.equalsIgnoreCase("1")) {
             npc.broadcastPacket(new SocialAction(npc, 2));
-            npc.broadcastPacket(new SpecialCamera(npc.getObjectId(), 1, -200, 15, 5500, 13500, 0, 0, 1, 0));
+            npc.broadcastPacket(new SpecialCamera(npc.getId(), 1, -200, 15, 5500, 13500, 0, 0, 1, 0));
         } else if (name.equalsIgnoreCase("2"))
             npc.broadcastPacket(new SocialAction(npc, 3));
         else if (name.equalsIgnoreCase("3"))
             npc.broadcastPacket(new SocialAction(npc, 1));
         else if (name.equalsIgnoreCase("4")) {
-            npc.broadcastPacket(new SpecialCamera(npc.getObjectId(), 1, -150, 10, 3500, 5000, 0, 0, 1, 0));
+            npc.broadcastPacket(new SpecialCamera(npc.getId(), 1, -150, 10, 3500, 5000, 0, 0, 1, 0));
             npc.getAI().tryToMoveTo(GROTTO_LOC, null);
         } else if (name.equalsIgnoreCase("5")) {
             // Delete Dr. Chaos && spawn the war golem.
@@ -136,7 +136,7 @@ public class DrChaos extends AttackableAIScript {
 
             // The "npc" variable attribution is now for the golem.
             npc = golem;
-            npc.broadcastPacket(new SpecialCamera(npc.getObjectId(), 30, 200, 20, 6000, 8000, 0, 0, 1, 0));
+            npc.broadcastPacket(new SpecialCamera(npc.getId(), 30, 200, 20, 6000, 8000, 0, 0, 1, 0));
             npc.broadcastPacket(new SocialAction(npc, 1));
             npc.broadcastPacket(new PlaySound(1, "Rm03_A", npc));
 

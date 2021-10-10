@@ -71,7 +71,7 @@ public class SummonFriend implements ISkillHandler {
                     confirm.addCharName(player);
                     confirm.addZoneName(activeChar.getPosition());
                     confirm.addTime(30000);
-                    confirm.addRequesterId(player.getObjectId());
+                    confirm.addRequesterId(player.getId());
                     target.sendPacket(confirm);
                 } else {
                     teleportTo(target, player, skill);

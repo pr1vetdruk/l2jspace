@@ -46,7 +46,7 @@ public class SoulShots implements IItemHandler {
         if (weaponItem.getReducedSoulShot() > 0 && Rnd.get(100) < weaponItem.getReducedSoulShotChance())
             ssCount = weaponItem.getReducedSoulShot();
 
-        if (!Config.INFINITY_SS && !player.destroyItemWithoutTrace(item.getObjectId(), ssCount)) {
+        if (!Config.INFINITY_SS && !player.destroyItemWithoutTrace(item.getId(), ssCount)) {
             if (!player.disableAutoShot(item.getItemId()))
                 player.sendPacket(SystemMessageId.NOT_ENOUGH_SOULSHOTS);
 

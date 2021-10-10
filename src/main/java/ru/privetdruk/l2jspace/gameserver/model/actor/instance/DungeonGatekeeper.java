@@ -18,7 +18,7 @@ public class DungeonGatekeeper extends Folk {
     public void onBypassFeedback(Player player, String command) {
         player.sendPacket(ActionFailed.STATIC_PACKET);
 
-        final CabalType playerCabal = SevenSignsManager.getInstance().getPlayerCabal(player.getObjectId());
+        final CabalType playerCabal = SevenSignsManager.getInstance().getPlayerCabal(player.getId());
 
         if (command.startsWith("necro")) {
             boolean canPort = true;
@@ -42,7 +42,7 @@ public class DungeonGatekeeper extends Folk {
             }
 
             if (!canPort) {
-                final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                 html.setFile(SevenSignsManager.SEVEN_SIGNS_HTML_PATH + "necro_no.htm");
                 player.sendPacket(html);
             } else {
@@ -71,7 +71,7 @@ public class DungeonGatekeeper extends Folk {
             }
 
             if (!canPort) {
-                final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                 html.setFile(SevenSignsManager.SEVEN_SIGNS_HTML_PATH + "cata_no.htm");
                 player.sendPacket(html);
             } else {

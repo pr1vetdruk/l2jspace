@@ -116,7 +116,7 @@ public abstract class AbstractGroup {
      * @return the leader objectId.
      */
     public int getLeaderObjectId() {
-        return _leader.getObjectId();
+        return _leader.getId();
     }
 
     /**
@@ -126,7 +126,7 @@ public abstract class AbstractGroup {
      * @return {@code true} if the specified player is the leader of this group, {@code false} otherwise.
      */
     public boolean isLeader(Player player) {
-        return _leader.getObjectId() == player.getObjectId();
+        return _leader.getId() == player.getId();
     }
 
     /**

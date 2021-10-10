@@ -278,7 +278,7 @@ public class TradeList extends CopyOnWriteArrayList<TradeItem> {
         TradeList sync1;
         TradeList sync2;
 
-        if (getOwner().getObjectId() > partnerList.getOwner().getObjectId()) {
+        if (getOwner().getId() > partnerList.getOwner().getId()) {
             sync1 = partnerList;
             sync2 = this;
         } else {
@@ -336,7 +336,7 @@ public class TradeList extends CopyOnWriteArrayList<TradeItem> {
      */
     private boolean validate(Player partner, boolean isCheckingItems) {
         // Check owner validity.
-        if (_owner == null || World.getInstance().getPlayer(_owner.getObjectId()) == null)
+        if (_owner == null || World.getInstance().getPlayer(_owner.getId()) == null)
             return false;
 
         // Check partner validity.
@@ -708,7 +708,7 @@ public class TradeList extends CopyOnWriteArrayList<TradeItem> {
                 if (oldItem == null)
                     continue;
 
-                objectId = oldItem.getObjectId();
+                objectId = oldItem.getId();
                 oldItem = player.checkItemManipulation(objectId, itemRequest.getCount());
                 if (oldItem == null)
                     continue;

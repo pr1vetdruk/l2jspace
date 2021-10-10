@@ -7,7 +7,7 @@ public class FinishRotation extends L2GameServerPacket {
     private final int _charObjId;
 
     public FinishRotation(Creature cha) {
-        _charObjId = cha.getObjectId();
+        _charObjId = cha.getId();
         _heading = cha.getHeading();
     }
 

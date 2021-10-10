@@ -20,14 +20,14 @@ public class TradeStart extends L2GameServerPacket {
             return;
 
         writeC(0x1E);
-        writeD(_tradeList.getPartner().getObjectId());
+        writeD(_tradeList.getPartner().getId());
         writeH(_items.length);
 
         for (ItemInstance temp : _items) {
             final Item item = temp.getItem();
 
             writeH(item.getType1());
-            writeD(temp.getObjectId());
+            writeD(temp.getId());
             writeD(temp.getItemId());
             writeD(temp.getCount());
             writeH(item.getType2());

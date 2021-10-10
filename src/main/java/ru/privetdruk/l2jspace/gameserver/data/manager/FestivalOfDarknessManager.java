@@ -3452,7 +3452,7 @@ public class FestivalOfDarknessManager {
             List<Integer> participants = _dawnFestivalParticipants.get(festivalId);
 
             // If there are no participants in this festival, move on to the next.
-            if (participants != null && participants.contains(player.getObjectId())) {
+            if (participants != null && participants.contains(player.getId())) {
                 playerFestivalInfo[0] = CabalType.DAWN.ordinal();
                 playerFestivalInfo[1] = festivalId;
 
@@ -3461,7 +3461,7 @@ public class FestivalOfDarknessManager {
 
             participants = _duskFestivalParticipants.get(++festivalId);
 
-            if (participants != null && participants.contains(player.getObjectId())) {
+            if (participants != null && participants.contains(player.getId())) {
                 playerFestivalInfo[0] = CabalType.DUSK.ordinal();
                 playerFestivalInfo[1] = festivalId;
 
@@ -3483,11 +3483,11 @@ public class FestivalOfDarknessManager {
             return false;
 
         for (List<Integer> participants : _dawnFestivalParticipants.values())
-            if (participants != null && participants.contains(player.getObjectId()))
+            if (participants != null && participants.contains(player.getId()))
                 return true;
 
         for (List<Integer> participants : _duskFestivalParticipants.values())
-            if (participants != null && participants.contains(player.getObjectId()))
+            if (participants != null && participants.contains(player.getId()))
                 return true;
 
         return false;
@@ -3513,7 +3513,7 @@ public class FestivalOfDarknessManager {
         if (festivalParty != null) {
             participants = new ArrayList<>(festivalParty.getMembersCount());
             for (Player player : festivalParty.getMembers())
-                participants.add(player.getObjectId());
+                participants.add(player.getId());
         }
 
         if (oracle == CabalType.DAWN)
@@ -3698,7 +3698,7 @@ public class FestivalOfDarknessManager {
      * @return playerBonus (the share of the bonus for the party)
      */
     public final int distribAccumulatedBonus(Player player) {
-        if (SevenSignsManager.getInstance().getPlayerCabal(player.getObjectId()) != SevenSignsManager.getInstance().getWinningCabal())
+        if (SevenSignsManager.getInstance().getPlayerCabal(player.getId()) != SevenSignsManager.getInstance().getWinningCabal())
             return 0;
 
         final Map<Integer, StatSet> map = _festivalData.get(_signsCycle);
@@ -4234,10 +4234,10 @@ public class FestivalOfDarknessManager {
                 return;
 
             try {
-                FestivalSpawn origPosition = _originalLocations.get(participant.getObjectId());
+                FestivalSpawn origPosition = _originalLocations.get(participant.getId());
 
                 if (isRemoving)
-                    _originalLocations.remove(participant.getObjectId());
+                    _originalLocations.remove(participant.getId());
 
                 participant.getAI().tryToIdle();
                 participant.teleportTo(origPosition._x, origPosition._y, origPosition._z, 20);

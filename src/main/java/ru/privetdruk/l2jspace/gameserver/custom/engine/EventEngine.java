@@ -196,7 +196,7 @@ public abstract class EventEngine implements EventTask {
                 player.teleportTo(spawnLocation, eventPlayer.getTeamSettings().getOffset());
             }
 
-            players.remove(player.getObjectId());
+            players.remove(player.getId());
 
             sitPlayer(player);
         });
@@ -535,7 +535,7 @@ public abstract class EventEngine implements EventTask {
                             || eventPlayer.getPlayer().getOfflineStartTime() > 0)
                     .forEach(eventPlayer -> {
                         restorePlayerDataCustom(eventPlayer);
-                        players.remove(eventPlayer.getPlayer().getObjectId());
+                        players.remove(eventPlayer.getPlayer().getId());
                     });
         } catch (Exception e) {
             LOGGER.warning(e.getMessage());
@@ -563,7 +563,7 @@ public abstract class EventEngine implements EventTask {
             return false;
         }
 
-        if (players.containsKey(player.getObjectId())) {
+        if (players.containsKey(player.getId())) {
             player.sendMessage("Вы уже участвуете в ивенте.");
             return false;
         }
@@ -614,7 +614,7 @@ public abstract class EventEngine implements EventTask {
     }
 
     public void leave(Player player) {
-        players.remove(player.getObjectId());
+        players.remove(player.getId());
     }
 
     public void exclude(Player player) {

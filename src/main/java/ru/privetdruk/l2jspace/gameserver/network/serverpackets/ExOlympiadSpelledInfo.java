@@ -12,7 +12,7 @@ public class ExOlympiadSpelledInfo extends L2GameServerPacket {
     private final List<EffectHolder> _effects = new ArrayList<>();
 
     public ExOlympiadSpelledInfo(Player player) {
-        _objectId = player.getObjectId();
+        _objectId = player.getId();
     }
 
     @Override

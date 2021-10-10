@@ -39,7 +39,7 @@ public final class OfflineTradersTable {
             for (Player pc : World.getInstance().getPlayers()) {
                 try {
                     if (pc.getOperateType() != OperateType.NONE && (pc.getClient() == null || pc.getClient().isDetached())) {
-                        save_offline_status.setInt(1, pc.getObjectId());
+                        save_offline_status.setInt(1, pc.getId());
                         save_offline_status.setLong(2, pc.getOfflineStartTime());
                         save_offline_status.setInt(3, pc.getOperateType().getId());
 
@@ -51,7 +51,7 @@ public final class OfflineTradersTable {
 
                                 title = pc.getBuyList().getTitle();
                                 for (final TradeItem i : pc.getBuyList()) {
-                                    save_items.setInt(1, pc.getObjectId());
+                                    save_items.setInt(1, pc.getId());
                                     save_items.setInt(2, i.getItem().getItemId());
                                     save_items.setLong(3, i.getCount());
                                     save_items.setLong(4, i.getPrice());
@@ -69,7 +69,7 @@ public final class OfflineTradersTable {
                                 title = pc.getSellList().getTitle();
                                 pc.getSellList().updateItems();
                                 for (final TradeItem i : pc.getSellList()) {
-                                    save_items.setInt(1, pc.getObjectId());
+                                    save_items.setInt(1, pc.getId());
                                     save_items.setInt(2, i.getObjectId());
                                     save_items.setLong(3, i.getCount());
                                     save_items.setLong(4, i.getPrice());
@@ -84,7 +84,7 @@ public final class OfflineTradersTable {
 
                                 title = pc.getManufactureList().getStoreName();
                                 for (final ManufactureItem i : pc.getManufactureList()) {
-                                    save_items.setInt(1, pc.getObjectId());
+                                    save_items.setInt(1, pc.getId());
                                     save_items.setInt(2, i.getId());
                                     save_items.setLong(3, 0);
                                     save_items.setLong(4, i.getValue());
@@ -99,7 +99,7 @@ public final class OfflineTradersTable {
                         save_offline_status.clearParameters();
                     }
                 } catch (final Exception e) {
-                    LOGGER.info("error while saving offline trader " + pc.getObjectId() + ".", e);
+                    LOGGER.info("error while saving offline trader " + pc.getId() + ".", e);
                 }
             }
 
@@ -163,7 +163,7 @@ public final class OfflineTradersTable {
 
                     LoginServerThread.getInstance().addClient(player.getAccountName(), client);
 
-                    stm_items.setInt(1, player.getObjectId());
+                    stm_items.setInt(1, player.getId());
                     try (ResultSet items = stm_items.executeQuery()) {
                         switch (type) {
                             case BUY:
@@ -200,7 +200,7 @@ public final class OfflineTradersTable {
 
                     nTraders++;
                 } catch (final Exception e) {
-                    LOGGER.warn("error loading trader " + player.getObjectId() + ".", e);
+                    LOGGER.warn("error loading trader " + player.getId() + ".", e);
                     player.deleteMe();
                 }
             }

@@ -42,22 +42,22 @@ public class Fisherman extends Merchant {
             showFishSkillList(player);
         else if (command.startsWith("FishingChampionship")) {
             if (!Config.ALLOW_FISH_CHAMPIONSHIP) {
-                final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                 html.setFile("data/html/fisherman/championship/no_fish_event001.htm");
                 player.sendPacket(html);
                 return;
             }
-            FishingChampionshipManager.getInstance().showChampScreen(player, getObjectId());
+            FishingChampionshipManager.getInstance().showChampScreen(player, getId());
         } else if (command.startsWith("FishingReward")) {
             if (!Config.ALLOW_FISH_CHAMPIONSHIP) {
-                final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                 html.setFile("data/html/fisherman/championship/no_fish_event001.htm");
                 player.sendPacket(html);
                 return;
             }
 
             if (!FishingChampionshipManager.getInstance().isWinner(player.getName())) {
-                final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                 html.setFile("data/html/fisherman/championship/no_fish_event_reward001.htm");
                 player.sendPacket(html);
                 return;

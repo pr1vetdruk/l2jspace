@@ -32,7 +32,7 @@ public final class RequestSendL2FriendSay extends L2GameClientPacket {
             return;
 
         final Player recipient = World.getInstance().getPlayer(_recipient);
-        if (recipient == null || !recipient.getFriendList().contains(player.getObjectId())) {
+        if (recipient == null || !recipient.getFriendList().contains(player.getId())) {
             player.sendPacket(SystemMessageId.TARGET_IS_NOT_FOUND_IN_THE_GAME);
             return;
         }

@@ -57,25 +57,25 @@ public class OlympiadManagerNpc extends Folk {
             case 31770:
             case 31771:
             case 31772:
-                if (player.isHero() || HeroManager.getInstance().isInactiveHero(player.getObjectId()))
+                if (player.isHero() || HeroManager.getInstance().isInactiveHero(player.getId()))
                     filename = "hero_main.htm";
                 else
                     filename = "hero_main2.htm";
                 break;
         }
 
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
         html.setFile("data/html/olympiad/" + filename);
 
         // Hidden option for players who are in inactive mode.
         if (filename == "hero_main.htm") {
             String hiddenText = "";
-            if (HeroManager.getInstance().isInactiveHero(player.getObjectId()))
+            if (HeroManager.getInstance().isInactiveHero(player.getId()))
                 hiddenText = "<a action=\"bypass -h npc_%objectId%_Olympiad 5\">\"I want to be a Hero.\"</a><br>";
 
             html.replace("%hero%", hiddenText);
         }
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         player.sendPacket(html);
 
         // Send a Server->Client ActionFailed to the Player in order to avoid that the client wait another packet
@@ -85,7 +85,7 @@ public class OlympiadManagerNpc extends Folk {
     @Override
     public void onBypassFeedback(Player player, String command) {
         if (command.startsWith("OlympiadNoble")) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             if (player.isCursedWeaponEquipped()) {
                 html.setFile(Olympiad.OLYMPIAD_HTML_PATH + "noble_cant_cw.htm");
                 player.sendPacket(html);
@@ -94,14 +94,14 @@ public class OlympiadManagerNpc extends Folk {
 
             if (player.getClassIndex() != 0) {
                 html.setFile(Olympiad.OLYMPIAD_HTML_PATH + "noble_cant_sub.htm");
-                html.replace("%objectId%", getObjectId());
+                html.replace("%objectId%", getId());
                 player.sendPacket(html);
                 return;
             }
 
             if (!player.isNoble() || (player.getClassId().getLevel() < 3)) {
                 html.setFile(Olympiad.OLYMPIAD_HTML_PATH + "noble_cant_thirdclass.htm");
-                html.replace("%objectId%", getObjectId());
+                html.replace("%objectId%", getId());
                 player.sendPacket(html);
                 return;
             }
@@ -119,15 +119,15 @@ public class OlympiadManagerNpc extends Folk {
                     html.setFile(Olympiad.OLYMPIAD_HTML_PATH + "noble_registered.htm");
                     html.replace("%listClassed%", classed);
                     html.replace("%listNonClassed%", nonClassed);
-                    html.replace("%objectId%", getObjectId());
+                    html.replace("%objectId%", getId());
                     player.sendPacket(html);
                     break;
 
                 case 3: // There are %points% Grand Olympiad points granted for this event.
-                    int points = Olympiad.getInstance().getNoblePoints(player.getObjectId());
+                    int points = Olympiad.getInstance().getNoblePoints(player.getId());
                     html.setFile(Olympiad.OLYMPIAD_HTML_PATH + "noble_points1.htm");
                     html.replace("%points%", points);
-                    html.replace("%objectId%", getObjectId());
+                    html.replace("%objectId%", getId());
                     player.sendPacket(html);
                     break;
 
@@ -141,7 +141,7 @@ public class OlympiadManagerNpc extends Folk {
 
                 case 6: // request tokens reward
                     html.setFile(Olympiad.OLYMPIAD_HTML_PATH + ((Olympiad.getInstance().getNoblessePasses(player, false) > 0) ? "noble_settle.htm" : "noble_nopoints2.htm"));
-                    html.replace("%objectId%", getObjectId());
+                    html.replace("%objectId%", getId());
                     player.sendPacket(html);
                     break;
 
@@ -159,7 +159,7 @@ public class OlympiadManagerNpc extends Folk {
         } else if (command.startsWith("Olympiad")) {
             int val = Integer.parseInt(command.substring(9, 10));
 
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             switch (val) {
                 case 2: // Show rank for a specific class, example >> Olympiad 1_88
                     int classId = Integer.parseInt(command.substring(11));
@@ -182,7 +182,7 @@ public class OlympiadManagerNpc extends Folk {
                             html.replace("%rank" + index + "%", "");
                         }
 
-                        html.replace("%objectId%", getObjectId());
+                        html.replace("%objectId%", getId());
                         player.sendPacket(html);
                     }
                     break;
@@ -211,7 +211,7 @@ public class OlympiadManagerNpc extends Folk {
                         StringUtil.append(sb, "</a><br>");
                     }
                     html.replace("%list%", sb.toString());
-                    html.replace("%objectId%", getObjectId());
+                    html.replace("%objectId%", getId());
                     player.sendPacket(html);
                     break;
 
@@ -220,15 +220,15 @@ public class OlympiadManagerNpc extends Folk {
                     break;
 
                 case 5: // Hero pending state.
-                    if (HeroManager.getInstance().isInactiveHero(player.getObjectId())) {
+                    if (HeroManager.getInstance().isInactiveHero(player.getId())) {
                         html.setFile(Olympiad.OLYMPIAD_HTML_PATH + "hero_confirm.htm");
-                        html.replace("%objectId%", getObjectId());
+                        html.replace("%objectId%", getId());
                         player.sendPacket(html);
                     }
                     break;
 
                 case 6: // Hero confirm action.
-                    if (HeroManager.getInstance().isInactiveHero(player.getObjectId())) {
+                    if (HeroManager.getInstance().isInactiveHero(player.getId())) {
                         if (player.isSubClassActive() || player.getStatus().getLevel() < 76) {
                             player.sendMessage("You may only become an hero on a main class whose level is 75 or more.");
                             return;
@@ -242,11 +242,11 @@ public class OlympiadManagerNpc extends Folk {
                     html.setFile(Olympiad.OLYMPIAD_HTML_PATH + "hero_main.htm");
 
                     String hiddenText = "";
-                    if (HeroManager.getInstance().isInactiveHero(player.getObjectId()))
+                    if (HeroManager.getInstance().isInactiveHero(player.getId()))
                         hiddenText = "<a action=\"bypass -h npc_%objectId%_Olympiad 5\">\"I want to be a Hero.\"</a><br>";
 
                     html.replace("%hero%", hiddenText);
-                    html.replace("%objectId%", getObjectId());
+                    html.replace("%objectId%", getId());
                     player.sendPacket(html);
                     break;
 

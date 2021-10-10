@@ -108,7 +108,7 @@ public abstract class ZoneType {
         // If the character is inside the zone.
         if (isInsideZone(character)) {
             // We test if the character was part of the zone.
-            if (!_characters.containsKey(character.getObjectId())) {
+            if (!_characters.containsKey(character.getId())) {
                 // Notify to scripts.
                 final List<Quest> quests = getQuestByEvent(ScriptEventType.ON_ENTER_ZONE);
                 if (quests != null) {
@@ -117,7 +117,7 @@ public abstract class ZoneType {
                 }
 
                 // Register player.
-                _characters.put(character.getObjectId(), character);
+                _characters.put(character.getId(), character);
 
                 // Notify Zone implementation.
                 onEnter(character);
@@ -138,7 +138,7 @@ public abstract class ZoneType {
      */
     public void removeCharacter(Creature character) {
         // We test and remove the character if he was part of the zone.
-        if (_characters.remove(character.getObjectId()) != null) {
+        if (_characters.remove(character.getId()) != null) {
             // Notify to scripts.
             final List<Quest> quests = getQuestByEvent(ScriptEventType.ON_EXIT_ZONE);
             if (quests != null) {
@@ -156,7 +156,7 @@ public abstract class ZoneType {
      * @return true if the {@link Creature} is in the zone _characters {@link Map}.
      */
     public boolean isCharacterInZone(Creature character) {
-        return _characters.containsKey(character.getObjectId());
+        return _characters.containsKey(character.getId());
     }
 
     public Collection<Creature> getCharacters() {

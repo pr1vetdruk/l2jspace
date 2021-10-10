@@ -44,7 +44,7 @@ public abstract class ItemContainer {
      * @return the owner objectId of the inventory.
      */
     public int getOwnerId() {
-        return (getOwner() == null) ? 0 : getOwner().getObjectId();
+        return (getOwner() == null) ? 0 : getOwner().getId();
     }
 
     /**
@@ -114,7 +114,7 @@ public abstract class ItemContainer {
      * @return An {@link ItemInstance} using its object ID, or null if not found in this {@link ItemContainer}.
      */
     public ItemInstance getItemByObjectId(int objectId) {
-        return _items.stream().filter(i -> i.getObjectId() == objectId).findFirst().orElse(null);
+        return _items.stream().filter(i -> i.getId() == objectId).findFirst().orElse(null);
     }
 
     /**

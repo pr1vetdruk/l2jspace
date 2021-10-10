@@ -10,7 +10,7 @@ public class ValidateLocation extends L2GameServerPacket {
     private final int _heading;
 
     public ValidateLocation(Creature creature) {
-        _objectId = creature.getObjectId();
+        _objectId = creature.getId();
         _x = creature.getX();
         _y = creature.getY();
         _z = creature.getZ();

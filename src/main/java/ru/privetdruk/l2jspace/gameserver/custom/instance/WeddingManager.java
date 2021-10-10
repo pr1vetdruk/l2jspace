@@ -59,7 +59,7 @@ public class WeddingManager extends Folk {
                 partner.setUnderMarryRequest(true);
 
                 // memorize the requesterId for future use, and send a popup to the target
-                partner.setRequesterId(player.getObjectId());
+                partner.setRequesterId(player.getId());
                 partner.sendPacket(new ConfirmDlg(1983).addString(player.getName() + " asked you to marry. Do you want to start a new relationship ?"));
             } else
                 sendHtmlMessage(player, "data/html/mods/wedding/notfound.htm");
@@ -67,7 +67,7 @@ public class WeddingManager extends Folk {
             WeddingService.getInstance().deleteCouple(player.getCoupleId());
         else if (command.startsWith("GoToLove")) {
             // Find the partner using the couple id.
-            final int partnerId = WeddingService.getInstance().getPartnerId(player.getCoupleId(), player.getObjectId());
+            final int partnerId = WeddingService.getInstance().getPartnerId(player.getCoupleId(), player.getId());
             if (partnerId == 0) {
                 player.sendMessage("Your partner can't be found.");
                 return;
@@ -97,7 +97,7 @@ public class WeddingManager extends Folk {
 
     private boolean weddingConditions(Player requester, Player partner) {
         // Check if player target himself
-        if (partner.getObjectId() == requester.getObjectId()) {
+        if (partner.getId() == requester.getId()) {
             sendHtmlMessage(requester, "data/html/mods/wedding/error_wrongtarget.htm");
             return false;
         }
@@ -109,7 +109,7 @@ public class WeddingManager extends Folk {
         }
 
         // Check if player has the target on friendlist
-        if (!requester.getFriendList().contains(partner.getObjectId())) {
+        if (!requester.getFriendList().contains(partner.getId())) {
             sendHtmlMessage(requester, "data/html/mods/wedding/error_friendlist.htm");
             return false;
         }
@@ -160,9 +160,9 @@ public class WeddingManager extends Folk {
     }
 
     private void sendHtmlMessage(Player player, String file) {
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
         html.setFile(file);
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         html.replace("%adenasCost%", StringUtil.formatNumber(Config.WEDDING_PRICE));
         html.replace("%needOrNot%", Config.WEDDING_FORMALWEAR ? "will" : "won't");
         player.sendPacket(html);

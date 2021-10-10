@@ -29,7 +29,7 @@ public class CastleGatekeeper extends Folk {
             if (_teleportTask == null)
                 _teleportTask = ThreadPool.schedule(this::oustPlayers, getTeleportDelay() * 1000L);
 
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile("data/html/castleteleporter/MassGK-1.htm");
             html.replace("%delay%", getTeleportDelay());
             player.sendPacket(html);
@@ -39,7 +39,7 @@ public class CastleGatekeeper extends Folk {
 
     @Override
     public void showChatWindow(Player player) {
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
         if (_teleportTask == null) {
             if (getCastle().getSiege().isInProgress() && getCastle().getSiege().getControlTowerCount() == 0)
@@ -50,7 +50,7 @@ public class CastleGatekeeper extends Folk {
             html.setFile("data/html/castleteleporter/MassGK-1.htm");
             html.replace("%delay%", getTeleportDelay());
         }
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         player.sendPacket(html);
     }
 

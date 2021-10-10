@@ -350,7 +350,7 @@ public class ThirdClassQuest extends Quest {
 
                 // Create corrupted NPC, link it to the player.
                 corrupted = addSpawn(_mobCorrupted, _locCorrupted, false, 300000, true);
-                corrupted.setScriptValue(player.getObjectId());
+                corrupted.setScriptValue(player.getId());
 
                 // Corrupted NPC attack the player.
                 ((Attackable) corrupted).forceAttack(player, 200);
@@ -363,7 +363,7 @@ public class ThirdClassQuest extends Quest {
                 // Npc is busy by fight being in progress.
 
                 // Check if it is player's fight or not.
-                if (corrupted.getScriptValue() == player.getObjectId())
+                if (corrupted.getScriptValue() == player.getId())
                     htmltext = "7-03.htm";
                 else
                     htmltext = "7-04.htm";
@@ -430,11 +430,11 @@ public class ThirdClassQuest extends Quest {
 
                 // Create defender NPC, link it to the player.
                 defender = addSpawn(_npcDefender, _locDefender, false, 60000, true);
-                defender.setScriptValue(player.getObjectId());
+                defender.setScriptValue(player.getId());
 
                 // Create attacker NPC.
                 Attackable attacker = (Attackable) addSpawn(_mobAttacker, _locAttacker, false, 59000, true);
-                attacker.setScriptValue(player.getObjectId());
+                attacker.setScriptValue(player.getId());
 
                 // Defender NPC attacks the attacker and vice versa.
                 defender.getAI().tryToAttack(attacker);
@@ -450,7 +450,7 @@ public class ThirdClassQuest extends Quest {
                 // Npc is busy by fight being in progress.
 
                 // Check if it is player's fight or not.
-                if (defender.getScriptValue() == player.getObjectId())
+                if (defender.getScriptValue() == player.getId())
                     htmltext = "10-03.htm";
                 else
                     htmltext = "10-04.htm";
@@ -731,7 +731,7 @@ public class ThirdClassQuest extends Quest {
         if (cond == 17) {
             if (_npcSpawns.containsKey(npc)) {
                 // Attacker is alive. Check spawning player.
-                if (npc.getScriptValue() == player.getObjectId()) {
+                if (npc.getScriptValue() == player.getId()) {
                     // Attacker is alive, spawned by this player. Check status.
                     if (st.getInteger("attacks") < 16)
                         // Fight still in progress.
@@ -754,7 +754,7 @@ public class ThirdClassQuest extends Quest {
                 if (st.getInteger("attacks") < 16)
                     // Attacker despawned, spawned by any player, player not won yet.
                     htmltext = "4-03.htm";
-                else if (npc.getScriptValue() == player.getObjectId())
+                else if (npc.getScriptValue() == player.getId())
                     // Attacker despawned, spawned by this player, player won this or another fight.
                     htmltext = "4-06.htm";
                 else
@@ -768,7 +768,7 @@ public class ThirdClassQuest extends Quest {
                 htmltext = "4-09.htm";
         }
 
-        player.getQuestList().setLastQuestNpcObjectId(npc.getObjectId());
+        player.getQuestList().setLastQuestNpcObjectId(npc.getId());
         return htmltext;
     }
 
@@ -783,7 +783,7 @@ public class ThirdClassQuest extends Quest {
         // Corrupted NPC at 3rd Tablet of Vision.
         if (npcId == _mobCorrupted) {
             // Check if player spawned the corrupted NPC.
-            if (player.getObjectId() != npc.getScriptValue()) {
+            if (player.getId() != npc.getScriptValue()) {
                 // Force despawn the corrupted NPC.
                 npc.setScriptValue(0);
                 npc.deleteMe();
@@ -799,7 +799,7 @@ public class ThirdClassQuest extends Quest {
             }
         } else if (npcId == _mobAttacker) {
             // Check if player spawned the corrupted NPC.
-            if (player.getObjectId() != npc.getScriptValue())
+            if (player.getId() != npc.getScriptValue())
                 return null;
 
             // Check player's class.
@@ -842,7 +842,7 @@ public class ThirdClassQuest extends Quest {
         // Corrupted NPC at 3rd Tablet of Vision.
         if (npcId == _mobCorrupted) {
             // Check if player spawned the corrupted NPC.
-            if (player.getObjectId() != npc.getScriptValue()) {
+            if (player.getId() != npc.getScriptValue()) {
                 // Force despawn the corrupted NPC.
                 npc.setScriptValue(0);
                 npc.deleteMe();
@@ -941,7 +941,7 @@ public class ThirdClassQuest extends Quest {
         // Corrupted NPC at 3rd Tablet of Vision.
         if (npcId == _mobCorrupted) {
             // Check if player spawned the corrupted NPC.
-            if (player.getObjectId() != npc.getScriptValue())
+            if (player.getId() != npc.getScriptValue())
                 return null;
 
             // Check player's class.
@@ -1013,7 +1013,7 @@ public class ThirdClassQuest extends Quest {
 
                 // Create quest Archon of Halisha monster, link it to the player.
                 Attackable archon = (Attackable) addSpawn(tcq._mobHalisha, npc, false, 600000, true);
-                archon.setScriptValue(p.getObjectId());
+                archon.setScriptValue(p.getId());
 
                 // Quest Archon of Halisha attack the player.
                 archon.forceAttack(p, 200);
@@ -1028,7 +1028,7 @@ public class ThirdClassQuest extends Quest {
         // The Archon of Halisha spawned in Shrine of Loyalty.
         if (npcId == _mobHalisha) {
             // Check if player spawned the Archon of Halisha.
-            if (player.getObjectId() != npc.getScriptValue()) {
+            if (player.getId() != npc.getScriptValue()) {
                 npc.broadcastNpcSay(_msgHalishaKillOther);
                 return null;
             }

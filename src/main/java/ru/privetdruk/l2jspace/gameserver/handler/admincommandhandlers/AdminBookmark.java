@@ -35,7 +35,7 @@ public class AdminBookmark implements IAdminCommandHandler {
                         return;
                     }
 
-                    if (BookmarkTable.getInstance().isExisting(param, player.getObjectId())) {
+                    if (BookmarkTable.getInstance().isExisting(param, player.getId())) {
                         player.sendMessage("The bookmark name already exists.");
                         return;
                     }
@@ -51,12 +51,12 @@ public class AdminBookmark implements IAdminCommandHandler {
 
             final String param = st.nextToken();
 
-            if (!BookmarkTable.getInstance().isExisting(param, player.getObjectId())) {
+            if (!BookmarkTable.getInstance().isExisting(param, player.getId())) {
                 player.sendMessage("That bookmark doesn't exist.");
                 return;
             }
 
-            BookmarkTable.getInstance().deleteBookmark(param, player.getObjectId());
+            BookmarkTable.getInstance().deleteBookmark(param, player.getId());
         }
         showBookmarks(player, page);
     }
@@ -73,7 +73,7 @@ public class AdminBookmark implements IAdminCommandHandler {
      * @param page   : The page id to show.
      */
     private static void showBookmarks(Player player, int page) {
-        final Pagination<Bookmark> list = new Pagination<>(BookmarkTable.getInstance().getBookmarks(player.getObjectId()).stream(), page, PAGE_LIMIT_18);
+        final Pagination<Bookmark> list = new Pagination<>(BookmarkTable.getInstance().getBookmarks(player.getId()).stream(), page, PAGE_LIMIT_18);
 
         // Load static htm.
         final NpcHtmlMessage html = new NpcHtmlMessage(0);

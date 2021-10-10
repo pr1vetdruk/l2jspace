@@ -74,7 +74,7 @@ public class BookmarkTable {
      * @param player : The {@link Player} who requested the creation. We use the Player location as Bookmark location.
      */
     public void saveBookmark(String name, Player player) {
-        final int objId = player.getObjectId();
+        final int objId = player.getId();
         final int x = player.getX();
         final int y = player.getY();
         final int z = player.getZ();

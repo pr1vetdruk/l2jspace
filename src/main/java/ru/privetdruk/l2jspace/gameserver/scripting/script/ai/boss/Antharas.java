@@ -143,17 +143,17 @@ public class Antharas extends AttackableAIScript {
         }
         // Spawn cinematic, regen_task and choose of skill.
         else if (name.equalsIgnoreCase("spawn_1"))
-            ANTHARAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 700, 13, -19, 0, 20000, 0, 0, 1, 0));
+            ANTHARAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 700, 13, -19, 0, 20000, 0, 0, 1, 0));
         else if (name.equalsIgnoreCase("spawn_2")) {
             npc.broadcastPacket(new SocialAction(npc, 1));
-            ANTHARAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 700, 13, 0, 6000, 20000, 0, 0, 1, 0));
+            ANTHARAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 700, 13, 0, 6000, 20000, 0, 0, 1, 0));
         } else if (name.equalsIgnoreCase("spawn_3"))
-            ANTHARAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 3700, 0, -3, 0, 10000, 0, 0, 1, 0));
+            ANTHARAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 3700, 0, -3, 0, 10000, 0, 0, 1, 0));
         else if (name.equalsIgnoreCase("spawn_4")) {
             npc.broadcastPacket(new SocialAction(npc, 2));
-            ANTHARAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 1100, 0, -3, 22000, 30000, 0, 0, 1, 0));
+            ANTHARAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 1100, 0, -3, 22000, 30000, 0, 0, 1, 0));
         } else if (name.equalsIgnoreCase("spawn_5"))
-            ANTHARAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 1100, 0, -3, 300, 7000, 0, 0, 1, 0));
+            ANTHARAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 1100, 0, -3, 300, 7000, 0, 0, 1, 0));
         else if (name.equalsIgnoreCase("spawn_6")) {
             // stores current time for inactivity task.
             _timeTracker = System.currentTimeMillis();
@@ -265,7 +265,7 @@ public class Antharas extends AttackableAIScript {
             dropTimers(npc);
 
             // Launch death animation.
-            ANTHARAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 1200, 20, -10, 10000, 13000, 0, 0, 0, 0));
+            ANTHARAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 1200, 20, -10, 10000, 13000, 0, 0, 0, 0));
             ANTHARAS_LAIR.broadcastPacket(new PlaySound(1, "BS01_D", npc));
             startQuestTimer("die_1", null, null, 8000);
 

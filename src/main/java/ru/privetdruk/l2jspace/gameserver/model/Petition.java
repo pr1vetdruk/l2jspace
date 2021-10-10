@@ -155,7 +155,7 @@ public class Petition {
      * @return True if the operation was sucessful, or false otherwise.
      */
     public boolean addResponder(Player player) {
-        return player != null && player.getObjectId() != _petitionerObjectId && !_responders.contains(player.getObjectId()) && _responders.add(player.getObjectId());
+        return player != null && player.getId() != _petitionerObjectId && !_responders.contains(player.getId()) && _responders.add(player.getId());
     }
 
     public boolean addAdditionalResponder(Player player, Player targetPlayer) {
@@ -177,7 +177,7 @@ public class Petition {
         sendPetitionerPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_LEFT_PETITION_CHAT).addCharName(player));
         sendResponderPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_LEFT_PETITION_CHAT).addCharName(player));
 
-        _responders.remove(Integer.valueOf(player.getObjectId()));
+        _responders.remove(Integer.valueOf(player.getId()));
     }
 
     /**
@@ -227,7 +227,7 @@ public class Petition {
     public void abortConsultation(Player player) {
         boolean wasLastRegisteredGm = true;
         for (int responderId : _responders) {
-            if (responderId == player.getObjectId())
+            if (responderId == player.getId())
                 continue;
 
             final Player responder = World.getInstance().getPlayer(responderId);
@@ -338,9 +338,9 @@ public class Petition {
     public void sendMessage(Player player, String message) {
         CreatureSay cs = null;
 
-        if (getPetitionerObjectId() == player.getObjectId())
+        if (getPetitionerObjectId() == player.getId())
             cs = new CreatureSay(player, SayType.PETITION_PLAYER, message);
-        else if (_responders.contains(player.getObjectId()))
+        else if (_responders.contains(player.getId()))
             cs = new CreatureSay(player, (player.isGM()) ? SayType.PETITION_GM : SayType.PETITION_PLAYER, message);
 
         if (cs != null) {

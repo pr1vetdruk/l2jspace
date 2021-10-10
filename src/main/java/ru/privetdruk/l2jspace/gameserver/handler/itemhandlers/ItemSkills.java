@@ -82,7 +82,7 @@ public class ItemSkills implements IItemHandler {
                 if (!isPet && item.isHerb() && player.hasServitor())
                     player.getSummon().getCast().doInstantCast(itemSkill, item);
             } else
-                playable.getAI().tryToCast(target, itemSkill, forceUse, false, (item.isEtcItem() ? item.getObjectId() : 0));
+                playable.getAI().tryToCast(target, itemSkill, forceUse, false, (item.isEtcItem() ? item.getId() : 0));
 
             // Send message to owner.
             if (isPet)

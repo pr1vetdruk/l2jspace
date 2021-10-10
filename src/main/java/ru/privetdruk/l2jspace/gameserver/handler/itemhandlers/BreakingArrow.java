@@ -34,7 +34,7 @@ public class BreakingArrow implements IItemHandler {
 
         if ((itemId == 8192) && (frintezza.getNpcId() == 29045)) {
             frintezza.broadcastPacket(new SocialAction(frintezza, 2));
-            playable.destroyItem("Consume", item.getObjectId(), 1, null, false);
+            playable.destroyItem("Consume", item.getId(), 1, null, false);
         }
     }
 }

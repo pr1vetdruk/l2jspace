@@ -66,7 +66,7 @@ public final class RequestEnchantItem extends AbstractEnchantPacket {
         }
 
         // attempting to destroy scroll
-        scroll = player.getInventory().destroyItem("Enchant", scroll.getObjectId(), 1, player, item);
+        scroll = player.getInventory().destroyItem("Enchant", scroll.getId(), 1, player, item);
         if (scroll == null) {
             player.sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
             player.setActiveEnchantItem(null);
@@ -84,7 +84,7 @@ public final class RequestEnchantItem extends AbstractEnchantPacket {
             double chance = scrollTemplate.getChance(item);
 
             // last validation check
-            if (item.getOwnerId() != player.getObjectId() || !isEnchantable(item) || chance < 0) {
+            if (item.getOwnerId() != player.getId() || !isEnchantable(item) || chance < 0) {
                 player.sendPacket(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITION);
                 player.setActiveEnchantItem(null);
                 player.sendPacket(EnchantResult.CANCELLED);

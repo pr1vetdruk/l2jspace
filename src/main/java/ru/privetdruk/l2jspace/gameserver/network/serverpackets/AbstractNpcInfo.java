@@ -111,7 +111,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket {
         protected void writeImpl() {
             writeC(0x16);
 
-            writeD(_npc.getObjectId());
+            writeD(_npc.getId());
             writeD(_idTemplate + 1000000);
             writeD(_isAttackable ? 1 : 0);
 
@@ -218,7 +218,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket {
 
             writeC(0x16);
 
-            writeD(_summon.getObjectId());
+            writeD(_summon.getId());
             writeD(_idTemplate + 1000000);
             writeD(_isAttackable ? 1 : 0);
 
@@ -310,7 +310,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket {
         protected void writeImpl() {
             writeC(0x16);
 
-            writeD(_pc.getObjectId());
+            writeD(_pc.getId());
             writeD(_template.getNpcId() + 1000000);
             writeD(1);
 

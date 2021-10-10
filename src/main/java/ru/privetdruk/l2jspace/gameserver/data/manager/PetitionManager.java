@@ -87,7 +87,7 @@ public final class PetitionManager {
         if (player == null)
             return 0;
 
-        return (int) _petitions.values().stream().filter(p -> p.getPetitionerObjectId() == player.getObjectId() && p.getState() != PetitionState.CANCELLED).count();
+        return (int) _petitions.values().stream().filter(p -> p.getPetitionerObjectId() == player.getId() && p.getState() != PetitionState.CANCELLED).count();
     }
 
     /**
@@ -115,7 +115,7 @@ public final class PetitionManager {
             return null;
 
         for (Petition petition : getPetitions(p -> p.getState() == PetitionState.ACCEPTED)) {
-            if (petition.getPetitionerObjectId() == player.getObjectId() || petition.getResponders().contains(player.getObjectId()))
+            if (petition.getPetitionerObjectId() == player.getId() || petition.getResponders().contains(player.getId()))
                 return petition;
         }
         return null;
@@ -129,7 +129,7 @@ public final class PetitionManager {
         if (player == null)
             return null;
 
-        return _petitions.values().stream().filter(p -> p.getState() == PetitionState.CLOSED && p.isUnderFeedback() && p.getPetitionerObjectId() == player.getObjectId()).findAny().orElse(null);
+        return _petitions.values().stream().filter(p -> p.getState() == PetitionState.CLOSED && p.isUnderFeedback() && p.getPetitionerObjectId() == player.getId()).findAny().orElse(null);
     }
 
     /**
@@ -140,7 +140,7 @@ public final class PetitionManager {
         if (player == null)
             return false;
 
-        return _petitions.values().stream().anyMatch(p -> p.getPetitionerObjectId() == player.getObjectId() && (p.getState() == PetitionState.PENDING || p.getState() == PetitionState.ACCEPTED));
+        return _petitions.values().stream().anyMatch(p -> p.getPetitionerObjectId() == player.getId() && (p.getState() == PetitionState.PENDING || p.getState() == PetitionState.ACCEPTED));
     }
 
     /**
@@ -153,12 +153,12 @@ public final class PetitionManager {
      */
     public int submitPetition(PetitionType type, Player player, String content) {
         // Create a new petition instance and add it to the list of pending petitions.
-        final Petition petition = new Petition(type, player.getObjectId(), content);
+        final Petition petition = new Petition(type, player.getId(), content);
 
         _petitions.put(petition.getId(), petition);
 
         // Notify all GMs that a new petition has been submitted.
-        AdminData.getInstance().broadcastToGMs(new CreatureSay(player.getObjectId(), SayType.HERO_VOICE, "Petition System", player.getName() + " has submitted a new petition."));
+        AdminData.getInstance().broadcastToGMs(new CreatureSay(player.getId(), SayType.HERO_VOICE, "Petition System", player.getName() + " has submitted a new petition."));
 
         return petition.getId();
     }
@@ -208,7 +208,7 @@ public final class PetitionManager {
     }
 
     public boolean cancelPendingPetition(Player player) {
-        final Petition petition = _petitions.values().stream().filter(p -> p.getState() == PetitionState.PENDING && p.getPetitionerObjectId() == player.getObjectId()).findAny().orElse(null);
+        final Petition petition = _petitions.values().stream().filter(p -> p.getState() == PetitionState.PENDING && p.getPetitionerObjectId() == player.getId()).findAny().orElse(null);
         if (petition == null)
             return false;
 
@@ -228,7 +228,7 @@ public final class PetitionManager {
             return;
 
         for (Petition petition : getPetitions(p -> p.getState() == PetitionState.PENDING || p.getState() == PetitionState.ACCEPTED)) {
-            if (petition.getPetitionerObjectId() == player.getObjectId() || petition.getResponders().contains(player.getObjectId())) {
+            if (petition.getPetitionerObjectId() == player.getId() || petition.getResponders().contains(player.getId())) {
                 petition.showCompleteLog(player);
                 return;
             }

@@ -9,13 +9,13 @@ public final class MoveToLocation extends L2GameServerPacket {
     private final Location _destination;
 
     public MoveToLocation(Creature creature) {
-        _objectId = creature.getObjectId();
+        _objectId = creature.getId();
         _currentPosition = creature.getPosition().clone();
         _destination = creature.getMove().getDestination().clone();
     }
 
     public MoveToLocation(Creature creature, Location destination) {
-        _objectId = creature.getObjectId();
+        _objectId = creature.getId();
         _currentPosition = creature.getPosition().clone();
         _destination = destination;
     }

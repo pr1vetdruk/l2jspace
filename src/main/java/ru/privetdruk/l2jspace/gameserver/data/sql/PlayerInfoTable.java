@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * It is notably used for any offline character check, such as friendlist, existing character name, etc.
  * </p>
  */
-public final class PlayerInfoTable {
+public class PlayerInfoTable {
     private static final CLogger LOGGER = new CLogger(PlayerInfoTable.class.getName());
 
     private static final String LOAD_DATA = "SELECT account_name, obj_Id, char_name, accesslevel FROM characters";
@@ -45,7 +45,7 @@ public final class PlayerInfoTable {
      * @param playerName  : The player's name.
      * @param accessLevel : The player's access level.
      */
-    public final void addPlayer(int objectId, String accountName, String playerName, int accessLevel) {
+    public void addPlayer(int objectId, String accountName, String playerName, int accessLevel) {
         _infos.putIfAbsent(objectId, new PlayerInfo(accountName, playerName, accessLevel));
     }
 
@@ -55,11 +55,11 @@ public final class PlayerInfoTable {
      * @param player          : The player to update.
      * @param onlyAccessLevel : If true, it will update the access level, otherwise, it will update the player name.
      */
-    public final void updatePlayerData(Player player, boolean onlyAccessLevel) {
+    public void updatePlayerData(Player player, boolean onlyAccessLevel) {
         if (player == null)
             return;
 
-        final PlayerInfo data = _infos.get(player.getObjectId());
+        final PlayerInfo data = _infos.get(player.getId());
         if (data != null) {
             if (onlyAccessLevel)
                 data.setAccessLevel(player.getAccessLevel().getLevel());
@@ -76,7 +76,7 @@ public final class PlayerInfoTable {
      *
      * @param objId : The objectId to check.
      */
-    public final void removePlayer(int objId) {
+    public void removePlayer(int objId) {
         if (_infos.containsKey(objId))
             _infos.remove(objId);
     }
@@ -87,11 +87,14 @@ public final class PlayerInfoTable {
      * @param playerName : The name to check.
      * @return the player objectId.
      */
-    public final int getPlayerObjectId(String playerName) {
+    public int getPlayerObjectId(String playerName) {
         if (playerName == null || playerName.isEmpty())
             return -1;
 
-        return _infos.entrySet().stream().filter(m -> m.getValue().getPlayerName().equalsIgnoreCase(playerName)).map(Entry::getKey).findFirst().orElse(-1);
+        return _infos.entrySet().stream()
+                .filter(m -> m.getValue().getPlayerName().equalsIgnoreCase(playerName))
+                .map(Entry::getKey).findFirst()
+                .orElse(-1);
     }
 
     /**
@@ -100,7 +103,7 @@ public final class PlayerInfoTable {
      * @param objId : The objectId to check.
      * @return the player name.
      */
-    public final String getPlayerName(int objId) {
+    public String getPlayerName(int objId) {
         final PlayerInfo data = _infos.get(objId);
         return (data != null) ? data.getPlayerName() : null;
     }
@@ -111,7 +114,7 @@ public final class PlayerInfoTable {
      * @param objId : The objectId to check.
      * @return the access level.
      */
-    public final int getPlayerAccessLevel(int objId) {
+    public int getPlayerAccessLevel(int objId) {
         final PlayerInfo data = _infos.get(objId);
         return (data != null) ? data.getAccessLevel() : 0;
     }
@@ -122,7 +125,7 @@ public final class PlayerInfoTable {
      * @param accountName : The account name to check.
      * @return the number of characters stored into this account.
      */
-    public final int getCharactersInAcc(String accountName) {
+    public int getCharactersInAcc(String accountName) {
         return (int) _infos.entrySet().stream().filter(m -> m.getValue().getAccountName().equalsIgnoreCase(accountName)).count();
     }
 
@@ -140,23 +143,23 @@ public final class PlayerInfoTable {
             _accessLevel = accessLevel;
         }
 
-        public final String getAccountName() {
+        public String getAccountName() {
             return _accountName;
         }
 
-        public final String getPlayerName() {
+        public String getPlayerName() {
             return _playerName;
         }
 
-        public final int getAccessLevel() {
+        public int getAccessLevel() {
             return _accessLevel;
         }
 
-        public final void setPlayerName(String playerName) {
+        public void setPlayerName(String playerName) {
             _playerName = playerName;
         }
 
-        public final void setAccessLevel(int accessLevel) {
+        public void setAccessLevel(int accessLevel) {
             _accessLevel = accessLevel;
         }
     }

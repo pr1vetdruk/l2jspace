@@ -157,7 +157,7 @@ public class Siege implements Siegable {
                 for (ClanMember member : clan.getMembers()) {
                     final Player player = member.getPlayerInstance();
                     if (player != null && player.isNoble())
-                        HeroManager.getInstance().setCastleTaken(player.getObjectId(), _castle.getCastleId());
+                        HeroManager.getInstance().setCastleTaken(player.getId(), _castle.getCastleId());
                 }
             }
         } else

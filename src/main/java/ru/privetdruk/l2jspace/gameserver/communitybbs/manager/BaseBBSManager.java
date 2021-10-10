@@ -58,7 +58,7 @@ public abstract class BaseBBSManager {
         params.add("0");
         params.add("0");
         params.add(player.getName());
-        params.add(Integer.toString(player.getObjectId()));
+        params.add(Integer.toString(player.getId()));
         params.add(player.getAccountName());
         params.add("9");
         params.add(string2);

@@ -268,7 +268,7 @@ public class PcInventory extends Inventory {
      * @return a List of all sellable items.
      */
     public List<ItemInstance> getSellableItems() {
-        return _items.stream().filter(i -> !i.isEquipped() && i.isSellable() && (getOwner().getSummon() == null || i.getObjectId() != getOwner().getSummon().getControlItemId())).collect(Collectors.toList());
+        return _items.stream().filter(i -> !i.isEquipped() && i.isSellable() && (getOwner().getSummon() == null || i.getId() != getOwner().getSummon().getControlItemId())).collect(Collectors.toList());
     }
 
     /**
@@ -319,7 +319,7 @@ public class PcInventory extends Inventory {
 
             // If item isn't equipable, or equipable but not equiped it is a success.
             if (!adjItem.isEquipable() || (adjItem.isEquipable() && !adjItem.isEquipped())) {
-                item.setObjectId(adjItem.getObjectId());
+                item.setObjectId(adjItem.getId());
                 item.setEnchant(adjItem.getEnchantLevel());
                 item.setCount(Math.min(adjItem.getCount(), item.getQuantity()));
                 return;
@@ -599,7 +599,7 @@ public class PcInventory extends Inventory {
     @Override
     protected boolean removeItem(ItemInstance item) {
         // Delete all existing shortcuts refering to this object id.
-        getOwner().getShortcutList().deleteShortcuts(item.getObjectId(), ShortcutType.ITEM);
+        getOwner().getShortcutList().deleteShortcuts(item.getId(), ShortcutType.ITEM);
 
         // Removes active Enchant Scroll
         if (item.equals(getOwner().getActiveEnchantItem()))

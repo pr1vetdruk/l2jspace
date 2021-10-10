@@ -67,11 +67,11 @@ public final class World {
     }
 
     public void addObject(WorldObject object) {
-        _objects.putIfAbsent(object.getObjectId(), object);
+        _objects.putIfAbsent(object.getId(), object);
     }
 
     public void removeObject(WorldObject object) {
-        _objects.remove(object.getObjectId());
+        _objects.remove(object.getId());
     }
 
     public Collection<WorldObject> getObjects() {
@@ -83,11 +83,11 @@ public final class World {
     }
 
     public void addPlayer(Player cha) {
-        _players.putIfAbsent(cha.getObjectId(), cha);
+        _players.putIfAbsent(cha.getId(), cha);
     }
 
     public void removePlayer(Player cha) {
-        _players.remove(cha.getObjectId());
+        _players.remove(cha.getId());
     }
 
     public Collection<Player> getPlayers() {

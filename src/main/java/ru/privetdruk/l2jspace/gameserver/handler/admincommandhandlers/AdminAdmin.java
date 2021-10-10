@@ -166,14 +166,14 @@ public class AdminAdmin implements IAdminCommandHandler {
                                 // Clear debug move packet to all GMs.
                                 World.getInstance().getPlayers().stream().filter(Player::isGM).forEach(p ->
                                 {
-                                    final ExServerPrimitive debugMove = p.getDebugPacket("MOVE" + targetCreature.getObjectId());
+                                    final ExServerPrimitive debugMove = p.getDebugPacket("MOVE" + targetCreature.getId());
                                     debugMove.reset();
                                     debugMove.sendTo(p);
                                 });
 
                                 // Clear debug move packet to self.
                                 if (targetCreature instanceof Player) {
-                                    final ExServerPrimitive debugMove = ((Player) targetCreature).getDebugPacket("MOVE" + targetCreature.getObjectId());
+                                    final ExServerPrimitive debugMove = ((Player) targetCreature).getDebugPacket("MOVE" + targetCreature.getId());
                                     debugMove.reset();
                                     debugMove.sendTo((Player) targetCreature);
                                 }
@@ -198,14 +198,14 @@ public class AdminAdmin implements IAdminCommandHandler {
 
                                 // Clear debug move packet to all GMs.
                                 World.getInstance().getPlayers().stream().filter(Player::isGM).forEach(p -> {
-                                    final ExServerPrimitive debugPath = p.getDebugPacket("PATH" + targetCreature.getObjectId());
+                                    final ExServerPrimitive debugPath = p.getDebugPacket("PATH" + targetCreature.getId());
                                     debugPath.reset();
                                     debugPath.sendTo(p);
                                 });
 
                                 // Clear debug move packet to self.
                                 if (targetCreature instanceof Player) {
-                                    final ExServerPrimitive debugPath = ((Player) targetCreature).getDebugPacket("PATH" + targetCreature.getObjectId());
+                                    final ExServerPrimitive debugPath = ((Player) targetCreature).getDebugPacket("PATH" + targetCreature.getId());
                                     debugPath.reset();
                                     debugPath.sendTo((Player) targetCreature);
                                 }

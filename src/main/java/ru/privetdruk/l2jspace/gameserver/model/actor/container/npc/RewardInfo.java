@@ -39,6 +39,6 @@ public final class RewardInfo {
 
     @Override
     public final int hashCode() {
-        return _attacker.getObjectId();
+        return _attacker.getId();
     }
 }

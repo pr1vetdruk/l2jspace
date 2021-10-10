@@ -7,7 +7,7 @@ public class TitleUpdate extends L2GameServerPacket {
     private final int _objectId;
 
     public TitleUpdate(Creature cha) {
-        _objectId = cha.getObjectId();
+        _objectId = cha.getId();
         _title = cha.getTitle();
     }
 

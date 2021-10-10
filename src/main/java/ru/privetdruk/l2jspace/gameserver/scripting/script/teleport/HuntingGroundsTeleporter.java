@@ -59,7 +59,7 @@ public class HuntingGroundsTeleporter extends Quest {
 
     @Override
     public String onTalk(Npc npc, Player player) {
-        final CabalType playerCabal = SevenSignsManager.getInstance().getPlayerCabal(player.getObjectId());
+        final CabalType playerCabal = SevenSignsManager.getInstance().getPlayerCabal(player.getId());
         if (playerCabal == CabalType.NORMAL)
             return ArraysUtil.contains(DAWN_NPCS, npc.getNpcId()) ? "dawn_tele-no.htm" : "dusk_tele-no.htm";
 

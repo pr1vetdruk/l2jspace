@@ -584,8 +584,8 @@ public class FeedableBeasts extends AttackableAIScript {
             nextNpcId = GROWTH_CAPABLE_MOBS.get(npcId).getRandomMob(food);
 
         // Remove the feedinfo of the mob that got despawned, if any
-        if (FEED_INFO.getOrDefault(npc.getObjectId(), 0) == player.getObjectId())
-            FEED_INFO.remove(npc.getObjectId());
+        if (FEED_INFO.getOrDefault(npc.getId(), 0) == player.getId())
+            FEED_INFO.remove(npc.getId());
 
         // Despawn the old mob
         npc.deleteMe();
@@ -621,7 +621,7 @@ public class FeedableBeasts extends AttackableAIScript {
                 startQuestTimer("polymorph Mad Cow", newNpc, player, 10000);
 
             // Register the player in the feedinfo for the mob that just spawned
-            FEED_INFO.put(newNpc.getObjectId(), player.getObjectId());
+            FEED_INFO.put(newNpc.getId(), player.getId());
 
             newNpc.forceAttack(player, 200);
         }
@@ -632,15 +632,15 @@ public class FeedableBeasts extends AttackableAIScript {
         if (name.equalsIgnoreCase("polymorph Mad Cow")) {
             if (MAD_COW_POLYMORPH.containsKey(npc.getNpcId())) {
                 // remove the feed info from the previous mob
-                if (FEED_INFO.getOrDefault(npc.getObjectId(), 0) == player.getObjectId())
-                    FEED_INFO.remove(npc.getObjectId());
+                if (FEED_INFO.getOrDefault(npc.getId(), 0) == player.getId())
+                    FEED_INFO.remove(npc.getId());
 
                 // spawn the new mob
                 final Npc newNpc = addSpawn(MAD_COW_POLYMORPH.get(npc.getNpcId()), npc, false, 0, false);
                 newNpc.forceAttack(player, 200);
 
                 // register the player in the feedinfo for the mob that just spawned
-                FEED_INFO.put(newNpc.getObjectId(), player.getObjectId());
+                FEED_INFO.put(newNpc.getId(), player.getId());
 
                 // despawn the mad cow
                 npc.deleteMe();
@@ -664,7 +664,7 @@ public class FeedableBeasts extends AttackableAIScript {
             return super.onSkillSee(npc, caster, skill, targets, isPet);
 
         // First gather some values on local variables
-        int objectId = npc.getObjectId();
+        int objectId = npc.getId();
         int growthLevel = 3; // if a mob is in FEEDABLE_BEASTS but not in GROWTH_CAPABLE_MOBS, then it's at max growth (3)
 
         if (GROWTH_CAPABLE_MOBS.containsKey(npcId))
@@ -675,7 +675,7 @@ public class FeedableBeasts extends AttackableAIScript {
         if (growthLevel == 0 && FEED_INFO.containsKey(objectId))
             return super.onSkillSee(npc, caster, skill, targets, isPet);
 
-        FEED_INFO.put(objectId, caster.getObjectId());
+        FEED_INFO.put(objectId, caster.getId());
 
         int food = 0;
         if (skillId == SKILL_GOLDEN_SPICE)
@@ -696,7 +696,7 @@ public class FeedableBeasts extends AttackableAIScript {
             if (Rnd.get(20) == 0)
                 npc.broadcastNpcSay(Rnd.get(TEXT[growthLevel]));
 
-            if (growthLevel > 0 && FEED_INFO.getOrDefault(objectId, 0) != caster.getObjectId()) {
+            if (growthLevel > 0 && FEED_INFO.getOrDefault(objectId, 0) != caster.getId()) {
                 // check if this is the same player as the one who raised it from growth 0.
                 // if no, then do not allow a chance to raise the pet (food gets consumed but has no effect).
                 return super.onSkillSee(npc, caster, skill, targets, isPet);
@@ -713,7 +713,7 @@ public class FeedableBeasts extends AttackableAIScript {
     @Override
     public String onKill(Npc npc, Creature killer) {
         // Remove the feedinfo of the mob that got killed, if any
-        FEED_INFO.remove(npc.getObjectId());
+        FEED_INFO.remove(npc.getId());
 
         return super.onKill(npc, killer);
     }

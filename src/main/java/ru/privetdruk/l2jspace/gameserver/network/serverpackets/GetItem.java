@@ -18,7 +18,7 @@ public class GetItem extends L2GameServerPacket {
     protected final void writeImpl() {
         writeC(0x0d);
         writeD(_playerId);
-        writeD(_item.getObjectId());
+        writeD(_item.getId());
 
         writeD(_item.getX());
         writeD(_item.getY());

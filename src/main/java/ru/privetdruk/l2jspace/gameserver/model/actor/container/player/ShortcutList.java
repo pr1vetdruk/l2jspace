@@ -95,7 +95,7 @@ public class ShortcutList extends ConcurrentSkipListMap<Integer, Shortcut> {
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(INSERT_SHORTCUT)) {
-            ps.setInt(1, _owner.getObjectId());
+            ps.setInt(1, _owner.getId());
             ps.setInt(2, shortcut.getSlot());
             ps.setInt(3, shortcut.getPage());
             ps.setString(4, shortcut.getType().toString());
@@ -140,7 +140,7 @@ public class ShortcutList extends ConcurrentSkipListMap<Integer, Shortcut> {
     private void deleteShortCutFromDb(Shortcut shortcut) {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(DELETE_SHORTCUT)) {
-            ps.setInt(1, _owner.getObjectId());
+            ps.setInt(1, _owner.getId());
             ps.setInt(2, shortcut.getSlot());
             ps.setInt(3, shortcut.getPage());
             ps.setInt(4, _owner.getClassIndex());
@@ -158,7 +158,7 @@ public class ShortcutList extends ConcurrentSkipListMap<Integer, Shortcut> {
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(LOAD_SHORTCUTS)) {
-            ps.setInt(1, _owner.getObjectId());
+            ps.setInt(1, _owner.getId());
             ps.setInt(2, _owner.getClassIndex());
 
             try (ResultSet rs = ps.executeQuery()) {

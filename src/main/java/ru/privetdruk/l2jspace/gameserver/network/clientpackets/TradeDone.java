@@ -39,7 +39,7 @@ public final class TradeDone extends L2GameClientPacket {
 
         // Trade partner not found, cancel trade
         final Player partner = trade.getPartner();
-        if (partner == null || World.getInstance().getPlayer(partner.getObjectId()) == null) {
+        if (partner == null || World.getInstance().getPlayer(partner.getId()) == null) {
             player.sendPacket(SystemMessageId.TARGET_IS_NOT_FOUND_IN_THE_GAME);
             player.cancelActiveTrade();
             return;

@@ -37,6 +37,8 @@ import java.io.InputStream;
 import java.net.InetAddress;
 import java.util.logging.LogManager;
 
+import static ru.privetdruk.l2jspace.common.lang.StringUtil.printSection;
+
 public class GameServer {
     private static final CLogger LOGGER = new CLogger(GameServer.class.getName());
 
@@ -64,31 +66,31 @@ public class GameServer {
             LogManager.getLogManager().readConfiguration(is);
         }
 
-        StringUtil.printSection("Config");
+        printSection("Config");
         Config.loadGameServer();
 
-        StringUtil.printSection("Poolers");
+        printSection("Poolers");
         ConnectionPool.init();
         ThreadPool.init();
 
-        StringUtil.printSection("IdFactory");
+        printSection("IdFactory");
         IdFactory.getInstance();
 
-        StringUtil.printSection("Cache");
+        printSection("Cache");
         HtmCache.getInstance();
         CrestCache.getInstance();
 
-        StringUtil.printSection("World");
+        printSection("World");
         World.getInstance();
         MapRegionData.getInstance();
         AnnouncementData.getInstance();
         ServerMemoTable.getInstance();
 
-        StringUtil.printSection("Skills");
+        printSection("Skills");
         SkillTable.getInstance();
         SkillTreeData.getInstance();
 
-        StringUtil.printSection("Items");
+        printSection("Items");
         ItemData.getInstance();
         SummonItemData.getInstance();
         HennaData.getInstance();
@@ -102,35 +104,35 @@ public class GameServer {
         AugmentationData.getInstance();
         CursedWeaponManager.getInstance();
 
-        StringUtil.printSection("Admins");
+        printSection("Admins");
         AdminData.getInstance();
         BookmarkTable.getInstance();
         PetitionManager.getInstance();
 
-        StringUtil.printSection("Characters");
+        printSection("Characters");
         PlayerData.getInstance();
         PlayerInfoTable.getInstance();
         PlayerLevelData.getInstance();
         PartyMatchRoomManager.getInstance();
         RaidPointManager.getInstance();
 
-        StringUtil.printSection("Community server");
+        printSection("Community server");
         CommunityBoard.getInstance();
 
-        StringUtil.printSection("Clans");
+        printSection("Clans");
         ClanTable.getInstance();
 
-        StringUtil.printSection("Geodata & Pathfinding");
+        printSection("Geodata & Pathfinding");
         GeoEngine.getInstance();
 
-        StringUtil.printSection("Zones");
+        printSection("Zones");
         ZoneManager.getInstance();
 
-        StringUtil.printSection("Castles & Clan Halls");
+        printSection("Castles & Clan Halls");
         CastleManager.getInstance();
         ClanHallManager.getInstance();
 
-        StringUtil.printSection("Task Managers");
+        printSection("Task Managers");
         AttackStanceTaskManager.getInstance();
         DecayTaskManager.getInstance();
         GameTimeTaskManager.getInstance();
@@ -141,17 +143,17 @@ public class GameServer {
         WaterTaskManager.getInstance();
         DelayedItemsManager.getInstance();
 
-        StringUtil.printSection("Auto Spawns");
+        printSection("Auto Spawns");
         AutoSpawnTable.getInstance();
 
-        StringUtil.printSection("Seven Signs");
+        printSection("Seven Signs");
         SevenSignsManager.getInstance().spawnSevenSignsNPC();
         FestivalOfDarknessManager.getInstance();
 
-        StringUtil.printSection("Manor Manager");
+        printSection("Manor Manager");
         CastleManorManager.getInstance();
 
-        StringUtil.printSection("NPCs");
+        printSection("NPCs");
         SchemeBufferService.getInstance();
         HerbDropData.getInstance();
         NpcData.getInstance();
@@ -168,15 +170,15 @@ public class GameServer {
         InstantTeleportData.getInstance();
         TeleportData.getInstance();
 
-        StringUtil.printSection("Olympiads & Heroes");
+        printSection("Olympiads & Heroes");
         OlympiadGameManager.getInstance();
         Olympiad.getInstance();
         HeroManager.getInstance();
 
-        StringUtil.printSection("Four Sepulchers");
+        printSection("Four Sepulchers");
         FourSepulchersManager.getInstance();
 
-        StringUtil.printSection("Quests & Scripts");
+        printSection("Quests & Scripts");
         ScriptData.getInstance();
 
         if (Config.ALLOW_BOAT) {
@@ -188,7 +190,7 @@ public class GameServer {
             BoatTalkingGludin.load();
         }
 
-        StringUtil.printSection("Events");
+        printSection("Events");
         EventService.getInstance().load();;
         DerbyTrackManager.getInstance();
         LotteryManager.getInstance();
@@ -202,7 +204,7 @@ public class GameServer {
         if ((Config.OFFLINE_TRADE_ENABLE || Config.OFFLINE_CRAFT_ENABLE) && Config.RESTORE_OFFLINERS)
             OfflineTradersTable.restoreOfflineTraders();
 
-        StringUtil.printSection("Handlers");
+        printSection("Handlers");
         LOGGER.info("Loaded {} admin command handlers.", AdminCommandHandler.getInstance().size());
         LOGGER.info("Loaded {} chat handlers.", ChatHandler.getInstance().size());
         LOGGER.info("Loaded {} item handlers.", ItemHandler.getInstance().size());
@@ -211,7 +213,7 @@ public class GameServer {
         LOGGER.info("Loaded {} user command handlers.", UserCommandHandler.getInstance().size());
         LOGGER.info("Loaded {} voiced command handlers.", VoicedCommandHandler.getInstance().size());
 
-        StringUtil.printSection("System");
+        printSection("System");
         Runtime.getRuntime().addShutdownHook(Shutdown.getInstance());
 
         if (Config.DEADLOCK_DETECTOR) {
@@ -227,7 +229,7 @@ public class GameServer {
         LOGGER.info("Maximum allowed players: {}.", Config.MAXIMUM_ONLINE_USERS);
         LOGGER.info("Server loaded in " + (System.currentTimeMillis() - serverLoadStart) / 1000 + " seconds");
 
-        StringUtil.printSection("Login");
+        printSection("Login");
         LoginServerThread.getInstance().start();
 
         final SelectorConfig sc = new SelectorConfig();

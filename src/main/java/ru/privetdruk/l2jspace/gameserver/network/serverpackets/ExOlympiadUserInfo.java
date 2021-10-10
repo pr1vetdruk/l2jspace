@@ -14,7 +14,7 @@ public class ExOlympiadUserInfo extends L2GameServerPacket {
 
     public ExOlympiadUserInfo(Player player) {
         _side = player.getOlympiadSide();
-        _objectId = player.getObjectId();
+        _objectId = player.getId();
         _name = player.getName();
         _classId = player.getClassId().getId();
         _curHp = (int) player.getStatus().getHp();

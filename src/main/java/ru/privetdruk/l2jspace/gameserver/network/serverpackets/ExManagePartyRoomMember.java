@@ -21,7 +21,7 @@ public class ExManagePartyRoomMember extends L2GameServerPacket {
         writeH(0x10);
 
         writeD(_mode);
-        writeD(_player.getObjectId());
+        writeD(_player.getId());
         writeS(_player.getName());
         writeD(_player.getActiveClass());
         writeD(_player.getStatus().getLevel());

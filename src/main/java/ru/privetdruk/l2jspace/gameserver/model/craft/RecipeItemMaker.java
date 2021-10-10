@@ -118,7 +118,7 @@ public class RecipeItemMaker implements Runnable {
 
         // First take adena for manufacture ; customer must pay for services.
         if (_target != _player && _price > 0) {
-            final ItemInstance adenaTransfer = _target.transferItem("PayManufacture", _target.getInventory().getAdenaInstance().getObjectId(), _price, _player.getInventory(), _player);
+            final ItemInstance adenaTransfer = _target.transferItem("PayManufacture", _target.getInventory().getAdenaInstance().getId(), _price, _player.getInventory(), _player);
             if (adenaTransfer == null) {
                 _target.sendPacket(SystemMessageId.YOU_NOT_ENOUGH_ADENA);
                 abort();

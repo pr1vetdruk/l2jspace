@@ -1239,9 +1239,9 @@ public class Frintezza extends AttackableAIScript {
             stopPcActions();
             startQuestTimer("camera_2", dummy, null, 1000);
         } else if (event.equalsIgnoreCase("camera_2")) {
-            ZONE.broadcastPacket(new SpecialCamera(npc.getObjectId(), 0, 75, -89, 0, 100, 0, 0, 1, 0));
-            ZONE.broadcastPacket(new SpecialCamera(npc.getObjectId(), 0, 75, -89, 0, 100, 0, 0, 1, 0));
-            ZONE.broadcastPacket(new SpecialCamera(npc.getObjectId(), 300, 90, -10, 6500, 7000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(npc.getId(), 0, 75, -89, 0, 100, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(npc.getId(), 0, 75, -89, 0, 100, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(npc.getId(), 300, 90, -10, 6500, 7000, 0, 0, 1, 0));
 
             _frintezza = (GrandBoss) addSpawn(FRINTEZZA, 174240, -89805, -5022, 16048, false, 0, false);
             _frintezza.setIsImmobilized(true);
@@ -1264,14 +1264,14 @@ public class Frintezza extends AttackableAIScript {
             dummy.setInvul(true);
             dummy.setIsImmobilized(true);
 
-            ZONE.broadcastPacket(new SpecialCamera(dummy.getObjectId(), 1800, 90, 8, 6500, 7000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(dummy.getId(), 1800, 90, 8, 6500, 7000, 0, 0, 1, 0));
             startQuestTimer("camera_5", dummy, null, 900);
         } else if (event.equalsIgnoreCase("camera_5")) {
-            ZONE.broadcastPacket(new SpecialCamera(npc.getObjectId(), 140, 90, 10, 2500, 4500, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(npc.getId(), 140, 90, 10, 2500, 4500, 0, 0, 1, 0));
             startQuestTimer("camera_5b", npc, null, 4000);
         } else if (event.equalsIgnoreCase("camera_5b")) {
-            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getObjectId(), 40, 75, -10, 0, 1000, 0, 0, 1, 0));
-            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getObjectId(), 40, 75, -10, 0, 12000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getId(), 40, 75, -10, 0, 1000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getId(), 40, 75, -10, 0, 12000, 0, 0, 1, 0));
             startQuestTimer("camera_7", npc, null, 1350);
         } else if (event.equalsIgnoreCase("camera_7")) {
             ZONE.broadcastPacket(new SocialAction(_frintezza, 2));
@@ -1301,15 +1301,15 @@ public class Frintezza extends AttackableAIScript {
 
             for (Creature pc : ZONE.getKnownTypeInside(Player.class)) {
                 if (pc.getX() < 174232)
-                    pc.broadcastPacket(new SpecialCamera(dummy1.getObjectId(), 1000, 118, 0, 0, 1000, 0, 0, 1, 0));
+                    pc.broadcastPacket(new SpecialCamera(dummy1.getId(), 1000, 118, 0, 0, 1000, 0, 0, 1, 0));
                 else
-                    pc.broadcastPacket(new SpecialCamera(dummy2.getObjectId(), 1000, 62, 0, 0, 1000, 0, 0, 1, 0));
+                    pc.broadcastPacket(new SpecialCamera(dummy2.getId(), 1000, 62, 0, 0, 1000, 0, 0, 1, 0));
             }
             for (Creature pc : ZONE.getKnownTypeInside(Player.class)) {
                 if (pc.getX() < 174232)
-                    pc.broadcastPacket(new SpecialCamera(dummy1.getObjectId(), 1000, 118, 0, 0, 10000, 0, 0, 1, 0));
+                    pc.broadcastPacket(new SpecialCamera(dummy1.getId(), 1000, 118, 0, 0, 10000, 0, 0, 1, 0));
                 else
-                    pc.broadcastPacket(new SpecialCamera(dummy2.getObjectId(), 1000, 62, 0, 0, 10000, 0, 0, 1, 0));
+                    pc.broadcastPacket(new SpecialCamera(dummy2.getId(), 1000, 62, 0, 0, 10000, 0, 0, 1, 0));
             }
 
             dummy1.deleteMe();
@@ -1317,24 +1317,24 @@ public class Frintezza extends AttackableAIScript {
 
             startQuestTimer("camera_10", null, null, 2000);
         } else if (event.equalsIgnoreCase("camera_10")) {
-            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getObjectId(), 240, 90, 0, 0, 1000, 0, 0, 1, 0));
-            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getObjectId(), 240, 90, 25, 5500, 10000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getId(), 240, 90, 0, 0, 1000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getId(), 240, 90, 25, 5500, 10000, 0, 0, 1, 0));
             ZONE.broadcastPacket(new SocialAction(_frintezza, 3));
             startQuestTimer("camera_12", null, null, 4500);
         } else if (event.equalsIgnoreCase("camera_12")) {
-            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getObjectId(), 100, 195, 35, 0, 10000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getId(), 100, 195, 35, 0, 10000, 0, 0, 1, 0));
             startQuestTimer("camera_13", null, null, 700);
         } else if (event.equalsIgnoreCase("camera_13")) {
-            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getObjectId(), 100, 195, 35, 0, 10000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getId(), 100, 195, 35, 0, 10000, 0, 0, 1, 0));
             startQuestTimer("camera_14", null, null, 1300);
         } else if (event.equalsIgnoreCase("camera_14")) {
-            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getObjectId(), 120, 180, 45, 1500, 10000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getId(), 120, 180, 45, 1500, 10000, 0, 0, 1, 0));
             startQuestTimer("camera_16", null, null, 1500);
         } else if (event.equalsIgnoreCase("camera_16")) {
-            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getObjectId(), 520, 135, 45, 8000, 10000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getId(), 520, 135, 45, 8000, 10000, 0, 0, 1, 0));
             startQuestTimer("camera_17", null, null, 7500);
         } else if (event.equalsIgnoreCase("camera_17")) {
-            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getObjectId(), 1500, 110, 25, 10000, 13000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getId(), 1500, 110, 25, 10000, 13000, 0, 0, 1, 0));
             startQuestTimer("camera_18", null, null, 9500);
         } else if (event.equalsIgnoreCase("camera_18")) {
             Npc dummy = addSpawn(29052, 174232, -88020, -5111, 49151, false, 0, false);
@@ -1361,15 +1361,15 @@ public class Frintezza extends AttackableAIScript {
             startQuestTimer("camera_19", npc, null, 5500);
             startQuestTimer("camera_19b", npc, null, 5400);
         } else if (event.equalsIgnoreCase("camera_19")) {
-            ZONE.broadcastPacket(new SpecialCamera(npc.getObjectId(), 800, 160, 5, 1000, 10000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(npc.getId(), 800, 160, 5, 1000, 10000, 0, 0, 1, 0));
             startQuestTimer("camera_20", npc, null, 2100);
         } else if (event.equalsIgnoreCase("camera_19b"))
             ZONE.broadcastPacket(new SocialAction(npc, 3));
         else if (event.equalsIgnoreCase("camera_20")) {
-            ZONE.broadcastPacket(new SpecialCamera(npc.getObjectId(), 300, 60, 8, 0, 10000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(npc.getId(), 300, 60, 8, 0, 10000, 0, 0, 1, 0));
             startQuestTimer("camera_21", npc, null, 2000);
         } else if (event.equalsIgnoreCase("camera_21")) {
-            ZONE.broadcastPacket(new SpecialCamera(npc.getObjectId(), 500, 90, 10, 3000, 5000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(npc.getId(), 500, 90, 10, 3000, 5000, 0, 0, 1, 0));
             startQuestTimer("camera_22", npc, null, 3000);
         } else if (event.equalsIgnoreCase("camera_22")) {
             for (int[] portrait : PORTRAITS) {
@@ -1558,7 +1558,7 @@ public class Frintezza extends AttackableAIScript {
             else
                 angle = Math.abs(540 - (int) (npc.getHeading() / 182.044444444));
 
-            ZONE.broadcastPacket(new SpecialCamera(npc.getObjectId(), 250, angle, 12, 2000, 15000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(npc.getId(), 250, angle, 12, 2000, 15000, 0, 0, 1, 0));
             startQuestTimer("morph_02", npc, null, 3000);
         } else if (event.equalsIgnoreCase("morph_02")) {
             ZONE.broadcastPacket(new SocialAction(npc, 1));
@@ -1571,15 +1571,15 @@ public class Frintezza extends AttackableAIScript {
             ZONE.broadcastPacket(new SocialAction(_frintezza, 4));
             startQuestTimer("morph_05", npc, null, 100);
         } else if (event.equalsIgnoreCase("morph_05")) {
-            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getObjectId(), 250, 120, 15, 0, 1000, 0, 0, 1, 0));
-            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getObjectId(), 250, 120, 15, 0, 10000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getId(), 250, 120, 15, 0, 1000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getId(), 250, 120, 15, 0, 10000, 0, 0, 1, 0));
             startQuestTimer("morph_07", npc, null, 7000);
         } else if (event.equalsIgnoreCase("morph_07")) {
             ZONE.broadcastPacket(new MagicSkillUse(_frintezza, _frintezza, 5006, 1, 34000, 0));
-            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getObjectId(), 500, 70, 15, 3000, 10000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getId(), 500, 70, 15, 3000, 10000, 0, 0, 1, 0));
             startQuestTimer("morph_08", npc, null, 3000);
         } else if (event.equalsIgnoreCase("morph_08")) {
-            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getObjectId(), 2500, 90, 12, 6000, 10000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getId(), 2500, 90, 12, 6000, 10000, 0, 0, 1, 0));
             startQuestTimer("morph_09", npc, null, 3000);
         } else if (event.equalsIgnoreCase("morph_09")) {
             int angle;
@@ -1588,8 +1588,8 @@ public class Frintezza extends AttackableAIScript {
             else
                 angle = Math.abs(540 - (int) (npc.getHeading() / 182.044444444));
 
-            ZONE.broadcastPacket(new SpecialCamera(npc.getObjectId(), 250, angle, 12, 0, 1000, 0, 0, 1, 0));
-            ZONE.broadcastPacket(new SpecialCamera(npc.getObjectId(), 250, angle, 12, 0, 10000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(npc.getId(), 250, angle, 12, 0, 1000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(npc.getId(), 250, angle, 12, 0, 10000, 0, 0, 1, 0));
             startQuestTimer("morph_11", npc, null, 500);
         } else if (event.equalsIgnoreCase("morph_11")) {
             int angle;
@@ -1599,7 +1599,7 @@ public class Frintezza extends AttackableAIScript {
                 angle = Math.abs(540 - (int) (npc.getHeading() / 182.044444444));
 
             npc.doDie(npc);
-            ZONE.broadcastPacket(new SpecialCamera(npc.getObjectId(), 450, angle, 14, 8000, 8000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(npc.getId(), 450, angle, 14, 8000, 8000, 0, 0, 1, 0));
             startQuestTimer("morph_12", npc, null, 6250);
         } else if (event.equalsIgnoreCase("morph_12")) {
             npc.deleteMe();
@@ -1614,7 +1614,7 @@ public class Frintezza extends AttackableAIScript {
             npc = addSpawn(SCARLET2, npc.getX(), npc.getY(), npc.getZ(), 28193, false, 0, false);
             stopNpcActions();
 
-            ZONE.broadcastPacket(new SpecialCamera(npc.getObjectId(), 450, angle, 12, 500, 14000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(npc.getId(), 450, angle, 12, 500, 14000, 0, 0, 1, 0));
             startQuestTimer("morph_15", npc, null, 8100);
         } else if (event.equalsIgnoreCase("morph_15")) {
             ZONE.broadcastPacket(new SocialAction(npc, 2));
@@ -1627,11 +1627,11 @@ public class Frintezza extends AttackableAIScript {
             _frintezza.doDie(_frintezza);
             startQuestTimer("morph_18", npc, null, 100);
         } else if (event.equalsIgnoreCase("morph_18")) {
-            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getObjectId(), 100, 120, 5, 0, 7000, 0, 0, 1, 0));
-            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getObjectId(), 100, 90, 5, 5000, 15000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getId(), 100, 120, 5, 0, 7000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getId(), 100, 90, 5, 5000, 15000, 0, 0, 1, 0));
             startQuestTimer("morph_20", npc, null, 7000);
         } else if (event.equalsIgnoreCase("morph_20")) {
-            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getObjectId(), 900, 90, 25, 7000, 10000, 0, 0, 1, 0));
+            ZONE.broadcastPacket(new SpecialCamera(_frintezza.getId(), 900, 90, 25, 7000, 10000, 0, 0, 1, 0));
 
             closeDoors();
             deleteAllMobs();
@@ -1651,7 +1651,7 @@ public class Frintezza extends AttackableAIScript {
             player.teleportTo(x, y, -2976, 0);
 
             if (!_playersInside.isEmpty())
-                _playersInside.removeIf(p -> p.getObjectId() == player.getObjectId());
+                _playersInside.removeIf(p -> p.getId() == player.getId());
 
             return null;
         }
@@ -1813,12 +1813,12 @@ public class Frintezza extends AttackableAIScript {
 
                     if (_frintezza != null && targets[0] == npc && npc.getNpcId() == FRINTEZZA && _soulBreakArrowUse == 0) {
                         if (Rnd.get(100) < 100) {
-                            ZONE.broadcastPacket(new MagicSkillCanceled(_frintezza.getObjectId()));
+                            ZONE.broadcastPacket(new MagicSkillCanceled(_frintezza.getId()));
                             cancelQuestTimers("songs_play");
                             cancelQuestTimers("songs_effect");
                             startQuestTimer("stop_effect", _frintezza, null, 0);
                             npc.getCast().stop();
-                            ZONE.broadcastPacket(new MagicSkillCanceled(_frintezza.getObjectId()));
+                            ZONE.broadcastPacket(new MagicSkillCanceled(_frintezza.getId()));
 
                             for (Creature pc : ZONE.getKnownTypeInside(Player.class))
                                 pc.stopSkillEffects(5008);
@@ -1894,8 +1894,8 @@ public class Frintezza extends AttackableAIScript {
                 else
                     angle = Math.abs(540 - (int) (npc.getHeading() / 182.044444444));
 
-                ZONE.broadcastPacket(new SpecialCamera(npc.getObjectId(), 300, angle - 180, 5, 0, 7000, 0, 0, 1, 0));
-                ZONE.broadcastPacket(new SpecialCamera(npc.getObjectId(), 200, angle, 85, 4000, 10000, 0, 0, 1, 0));
+                ZONE.broadcastPacket(new SpecialCamera(npc.getId(), 300, angle - 180, 5, 0, 7000, 0, 0, 1, 0));
+                ZONE.broadcastPacket(new SpecialCamera(npc.getId(), 200, angle, 85, 4000, 10000, 0, 0, 1, 0));
                 startQuestTimer("morph_17b", npc, null, 7400);
 
                 GrandBossManager.getInstance().setBossStatus(FRINTEZZA, DEAD);
@@ -1919,7 +1919,7 @@ public class Frintezza extends AttackableAIScript {
                     for (int i = 25150051; i <= 25150058; i++)
                         openDoor(i);
                 } else if (alarmsRemaining == 0) {
-                    ZONE.broadcastPacket(new CreatureSay(npc.getObjectId(), SayType.SHOUT, npc.getName(), "De-activate the alarm."));
+                    ZONE.broadcastPacket(new CreatureSay(npc.getId(), SayType.SHOUT, npc.getName(), "De-activate the alarm."));
                     deleteAllMobs();
                     Spawn(1);
                 }
@@ -2009,7 +2009,7 @@ public class Frintezza extends AttackableAIScript {
         cancelQuestTimers("songs_effect");
 
         if (_frintezza != null)
-            ZONE.broadcastPacket(new MagicSkillCanceled(_frintezza.getObjectId()));
+            ZONE.broadcastPacket(new MagicSkillCanceled(_frintezza.getId()));
     }
 
     private static void stopNpcActions() {

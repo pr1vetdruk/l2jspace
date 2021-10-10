@@ -460,10 +460,10 @@ public class PlayerAI extends PlayableAI {
         final WorldObject target = _currentIntention.getTarget();
         final boolean isThrone = target instanceof StaticObject && ((StaticObject) target).getType() == 1;
         if (isThrone && !((StaticObject) target).isBusy() && getActor().isIn3DRadius(target, Npc.INTERACTION_DISTANCE)) {
-            getActor().setThroneId(target.getObjectId());
+            getActor().setThroneId(target.getId());
 
             ((StaticObject) target).setBusy(true);
-            getActor().broadcastPacket(new ChairSit(getActor().getObjectId(), ((StaticObject) target).getStaticObjectId()));
+            getActor().broadcastPacket(new ChairSit(getActor().getId(), ((StaticObject) target).getStaticObjectId()));
         }
     }
 
@@ -520,9 +520,9 @@ public class PlayerAI extends PlayableAI {
         if (!AttackStanceTaskManager.getInstance().isInAttackStance(getActor())) {
             final Summon summon = getActor().getSummon();
             if (summon != null)
-                summon.broadcastPacket(new AutoAttackStart(summon.getObjectId()));
+                summon.broadcastPacket(new AutoAttackStart(summon.getId()));
 
-            getActor().broadcastPacket(new AutoAttackStart(getActor().getObjectId()));
+            getActor().broadcastPacket(new AutoAttackStart(getActor().getId()));
         }
 
         AttackStanceTaskManager.getInstance().add(getActor());

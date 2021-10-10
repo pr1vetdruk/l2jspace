@@ -173,7 +173,7 @@ public final class ItemsOnGroundTaskManager implements Runnable {
                 if (CursedWeaponManager.getInstance().isCursed(item.getItemId()))
                     continue;
 
-                st.setInt(1, item.getObjectId());
+                st.setInt(1, item.getId());
                 st.setInt(2, item.getItemId());
                 st.setInt(3, item.getCount());
                 st.setInt(4, item.getEnchantLevel());

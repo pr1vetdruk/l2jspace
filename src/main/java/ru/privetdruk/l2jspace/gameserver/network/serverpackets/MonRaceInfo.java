@@ -31,7 +31,7 @@ public class MonRaceInfo extends L2GameServerPacket {
         for (int i = 0; i < 8; i++) {
             final Npc npc = _monsters.get(i);
 
-            writeD(npc.getObjectId());
+            writeD(npc.getId());
             writeD(npc.getTemplate().getNpcId() + 1000000);
             writeD(14107); // origin X
             writeD(181875 + (58 * (7 - i))); // origin Y

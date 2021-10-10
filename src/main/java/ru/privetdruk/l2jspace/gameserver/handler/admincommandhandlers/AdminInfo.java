@@ -131,7 +131,7 @@ public class AdminInfo implements IAdminCommandHandler {
                 html.replace("%x%", targetStaticObject.getX());
                 html.replace("%y%", targetStaticObject.getY());
                 html.replace("%z%", targetStaticObject.getZ());
-                html.replace("%objid%", targetStaticObject.getObjectId());
+                html.replace("%objid%", targetStaticObject.getId());
                 html.replace("%staticid%", targetStaticObject.getStaticObjectId());
                 html.replace("%class%", targetStaticObject.getClass().getSimpleName());
             }
@@ -146,7 +146,7 @@ public class AdminInfo implements IAdminCommandHandler {
     public static void showDoorInfo(final Door targetDoor, final NpcHtmlMessage html) {
         html.setFile("data/html/admin/doorinfo.htm");
         html.replace("%name%", targetDoor.getName());
-        html.replace("%objid%", targetDoor.getObjectId());
+        html.replace("%objid%", targetDoor.getId());
         html.replace("%doorid%", targetDoor.getTemplate().getId());
         html.replace("%doortype%", targetDoor.getTemplate().getType().toString());
         html.replace("%doorlvl%", targetDoor.getTemplate().getLevel());
@@ -335,7 +335,7 @@ public class AdminInfo implements IAdminCommandHandler {
     public static void sendGeneralInfos(Npc npc, NpcHtmlMessage html) {
         html.setFile("data/html/admin/npcinfo/general.htm");
 
-        html.replace("%objid%", npc.getObjectId());
+        html.replace("%objid%", npc.getId());
         html.replace("%lvl%", npc.getTemplate().getLevel());
         html.replace("%id%", npc.getTemplate().getNpcId());
         html.replace("%tmplid%", npc.getTemplate().getIdTemplate());

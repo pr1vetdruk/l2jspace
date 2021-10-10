@@ -24,7 +24,7 @@ public class ClanHallDoorman extends Doorman {
         if (getClanHall() == null)
             return;
 
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
         final Clan owner = ClanTable.getInstance().getClan(getClanHall().getOwnerId());
         if (isOwnerClan(player)) {
@@ -40,7 +40,7 @@ public class ClanHallDoorman extends Doorman {
                 html.replace("%hallname%", getClanHall().getName());
             }
         }
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         player.sendPacket(html);
     }
 
@@ -53,9 +53,9 @@ public class ClanHallDoorman extends Doorman {
     protected final void openDoors(Player player, String command) {
         getClanHall().openCloseDoors(true);
 
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
         html.setFile("data/html/clanHallDoormen/doormen-opened.htm");
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         player.sendPacket(html);
     }
 
@@ -63,9 +63,9 @@ public class ClanHallDoorman extends Doorman {
     protected final void closeDoors(Player player, String command) {
         getClanHall().openCloseDoors(false);
 
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
         html.setFile("data/html/clanHallDoormen/doormen-closed.htm");
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         player.sendPacket(html);
     }
 

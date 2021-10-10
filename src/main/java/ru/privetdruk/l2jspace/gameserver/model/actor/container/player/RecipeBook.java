@@ -98,7 +98,7 @@ public class RecipeBook {
         if (saveOnDb) {
             try (Connection con = ConnectionPool.getConnection();
                  PreparedStatement ps = con.prepareStatement(INSERT_RECIPE)) {
-                ps.setInt(1, _owner.getObjectId());
+                ps.setInt(1, _owner.getId());
                 ps.setInt(2, recipe.getId());
                 ps.execute();
             } catch (final Exception e) {
@@ -128,7 +128,7 @@ public class RecipeBook {
         // Db call.
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(DELETE_RECIPE)) {
-            ps.setInt(1, _owner.getObjectId());
+            ps.setInt(1, _owner.getId());
             ps.setInt(2, recipeId);
             ps.execute();
         } catch (final Exception e) {
@@ -142,7 +142,7 @@ public class RecipeBook {
     public void restore() {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(LOAD_RECIPE_BOOK)) {
-            ps.setInt(1, _owner.getObjectId());
+            ps.setInt(1, _owner.getId());
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {

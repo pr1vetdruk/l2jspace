@@ -181,7 +181,7 @@ public class Q350_EnhanceYourWeapon extends Quest {
                 // Leveling requires soul crystal being used?
                 if (npcInfo.isSkillRequired()) {
                     // Absorb list contains killer and his AbsorbInfo is registered.
-                    final AbsorbInfo ai = monster.getAbsorbInfo(player.getObjectId());
+                    final AbsorbInfo ai = monster.getAbsorbInfo(player.getId());
                     if (ai != null && ai.isRegistered())
                         player.sendPacket(SystemMessageId.SOUL_CRYSTAL_ABSORBING_FAILED_RESONATION);
                 } else
@@ -201,12 +201,12 @@ public class Q350_EnhanceYourWeapon extends Quest {
         // Leveling requires soul crystal being used?
         if (npcInfo.isSkillRequired()) {
             // Absorb list doesn't contain killer or his AbsorbInfo is not registered.
-            final AbsorbInfo ai = monster.getAbsorbInfo(player.getObjectId());
+            final AbsorbInfo ai = monster.getAbsorbInfo(player.getId());
             if (ai == null || !ai.isRegistered())
                 return;
 
             // Check if Absorb list contains valid crystal and whether it was used properly.
-            if (!ai.isValid(crystalItem.getObjectId())) {
+            if (!ai.isValid(crystalItem.getId())) {
                 player.sendPacket(SystemMessageId.SOUL_CRYSTAL_ABSORBING_REFUSED);
                 return;
             }

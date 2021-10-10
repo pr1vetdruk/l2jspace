@@ -10,7 +10,7 @@ public class MagicSkillLaunched extends L2GameServerPacket {
     private Creature[] _targets;
 
     public MagicSkillLaunched(Creature cha, L2Skill skill, Creature[] targets) {
-        _objectId = cha.getObjectId();
+        _objectId = cha.getId();
         _skillId = skill.getId();
         _skillLevel = skill.getLevel();
         _targets = targets;
@@ -29,7 +29,7 @@ public class MagicSkillLaunched extends L2GameServerPacket {
         } else {
             writeD(_targets.length);
             for (Creature target : _targets)
-                writeD(target.getObjectId());
+                writeD(target.getId());
         }
     }
 }

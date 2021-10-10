@@ -40,7 +40,7 @@ public class SpoilState extends ArrayList<IntIntHolder> {
      * @return true if the given {@link Player} set as parameter is the actual spoiler.
      */
     public boolean isActualSpoiler(Player player) {
-        return player != null && player.getObjectId() == _spoilerId;
+        return player != null && player.getId() == _spoilerId;
     }
 
     /**

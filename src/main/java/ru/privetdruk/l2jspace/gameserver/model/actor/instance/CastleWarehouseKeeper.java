@@ -20,7 +20,7 @@ public class CastleWarehouseKeeper extends WarehouseKeeper {
     public void showChatWindow(Player player, int val) {
         player.sendPacket(ActionFailed.STATIC_PACKET);
 
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
         final NpcTalkCond condition = getNpcTalkCond(player);
         if (condition == NpcTalkCond.NONE)
@@ -33,7 +33,7 @@ public class CastleWarehouseKeeper extends WarehouseKeeper {
             else
                 html.setFile("data/html/castlewarehouse/castlewarehouse-" + val + ".htm");
         }
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         html.replace("%npcname%", getName());
         player.sendPacket(html);
     }

@@ -36,24 +36,24 @@ public final class RequestAnswerFriendInvite extends L2GameClientPacket {
             // Player added to your friendlist
             requestor.sendPacket(FriendAddRequestResult.STATIC_ACCEPT);
             requestor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_ADDED_TO_FRIENDS).addCharName(player));
-            requestor.getFriendList().add(player.getObjectId());
+            requestor.getFriendList().add(player.getId());
             requestor.sendPacket(new L2Friend(player, 1));
 
             // has joined as friend.
             player.sendPacket(FriendAddRequestResult.STATIC_ACCEPT);
             player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_JOINED_AS_FRIEND).addCharName(requestor));
-            player.getFriendList().add(requestor.getObjectId());
+            player.getFriendList().add(requestor.getId());
             player.sendPacket(new L2Friend(requestor, 1));
 
             try (Connection con = ConnectionPool.getConnection();
                  PreparedStatement ps = con.prepareStatement(ADD_FRIEND)) {
-                ps.setInt(1, requestor.getObjectId());
-                ps.setInt(2, player.getObjectId());
-                ps.setInt(3, player.getObjectId());
-                ps.setInt(4, requestor.getObjectId());
+                ps.setInt(1, requestor.getId());
+                ps.setInt(2, player.getId());
+                ps.setInt(3, player.getId());
+                ps.setInt(4, requestor.getId());
                 ps.execute();
             } catch (Exception e) {
-                LOGGER.error("Couldn't add friendId {} for {}.", e, player.getObjectId(), requestor.toString());
+                LOGGER.error("Couldn't add friendId {} for {}.", e, player.getId(), requestor.toString());
             }
         } else
             requestor.sendPacket(FriendAddRequestResult.STATIC_FAIL);

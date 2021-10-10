@@ -43,13 +43,13 @@ public final class AttackStanceTaskManager implements Runnable {
             final Creature creature = entry.getKey();
 
             // Stop character attack stance animation.
-            creature.broadcastPacket(new AutoAttackStop(creature.getObjectId()));
+            creature.broadcastPacket(new AutoAttackStop(creature.getId()));
 
             if (creature instanceof Player) {
                 // Stop summon attack stance animation.
                 final Summon summon = ((Player) creature).getSummon();
                 if (summon != null)
-                    summon.broadcastPacket(new AutoAttackStop(summon.getObjectId()));
+                    summon.broadcastPacket(new AutoAttackStop(summon.getId()));
             }
 
             // Remove task.

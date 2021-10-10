@@ -10,7 +10,7 @@ public class Dice extends L2GameServerPacket {
     private final SpawnLocation _loc;
 
     public Dice(Player player, int itemId, int number) {
-        _objectId = player.getObjectId();
+        _objectId = player.getId();
         _itemId = itemId;
         _number = number;
 

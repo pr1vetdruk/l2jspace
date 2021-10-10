@@ -23,7 +23,7 @@ public final class RequestConfirmCancelItem extends L2GameClientPacket {
         if (item == null)
             return;
 
-        if (item.getOwnerId() != player.getObjectId())
+        if (item.getOwnerId() != player.getId())
             return;
 
         if (!item.isAugmented()) {

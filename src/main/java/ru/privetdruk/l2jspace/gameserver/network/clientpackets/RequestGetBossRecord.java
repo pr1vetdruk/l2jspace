@@ -21,8 +21,8 @@ public class RequestGetBossRecord extends L2GameClientPacket {
         if (player == null)
             return;
 
-        final int points = RaidPointManager.getInstance().getPointsByOwnerId(player.getObjectId());
-        final int ranking = RaidPointManager.getInstance().calculateRanking(player.getObjectId());
+        final int points = RaidPointManager.getInstance().getPointsByOwnerId(player.getId());
+        final int ranking = RaidPointManager.getInstance().calculateRanking(player.getId());
         final Map<Integer, Integer> list = RaidPointManager.getInstance().getList(player);
 
         player.sendPacket(new ExGetBossRecord(ranking, points, list));

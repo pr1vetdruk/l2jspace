@@ -38,7 +38,7 @@ public class EffectSpoil extends AbstractEffect {
         }
 
         if (Formula.calcMagicSuccess(getEffector(), target, getSkill())) {
-            target.getSpoilState().setSpoilerId(getEffector().getObjectId());
+            target.getSpoilState().setSpoilerId(getEffector().getId());
             getEffector().sendPacket(SystemMessage.getSystemMessage(SystemMessageId.SPOIL_SUCCESS));
         }
 

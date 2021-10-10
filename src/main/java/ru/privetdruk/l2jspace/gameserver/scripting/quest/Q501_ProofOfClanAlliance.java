@@ -156,7 +156,7 @@ public class Q501_ProofOfClanAlliance extends Quest {
 
                 // Mark player as sacrificed.
                 lst.set("sacrificed", lst.getInteger("sacrificed") + 1);
-                lst.set(String.valueOf(player.getObjectId()), true);
+                lst.set(String.valueOf(player.getId()), true);
             }
             // Player sacrificed and will die.
             else {
@@ -231,7 +231,7 @@ public class Q501_ProofOfClanAlliance extends Quest {
 
             // Mark player as sacrificed.
             lst.set("sacrificed", lst.getInteger("sacrificed") + 1);
-            lst.set(String.valueOf(player.getObjectId()), true);
+            lst.set(String.valueOf(player.getId()), true);
         }
 
         return null;
@@ -350,7 +350,7 @@ public class Q501_ProofOfClanAlliance extends Quest {
                             else if (player.getStatus().getLevel() < 40)
                                 htmltext = "30757-02.htm";
                                 // member has proven already
-                            else if (lst.getBool(String.valueOf(player.getObjectId())))
+                            else if (lst.getBool(String.valueOf(player.getId())))
                                 htmltext = "30757-01b.htm";
                                 // member has not proven yet
                             else

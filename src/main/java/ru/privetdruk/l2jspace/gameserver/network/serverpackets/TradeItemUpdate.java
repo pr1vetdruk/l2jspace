@@ -19,7 +19,7 @@ public class TradeItemUpdate extends L2GameServerPacket {
 
     private int getItemCount(int objectId) {
         for (ItemInstance item : _items)
-            if (item.getObjectId() == objectId)
+            if (item.getId() == objectId)
                 return item.getCount();
 
         return 0;

@@ -497,7 +497,7 @@ public class CursedWeapon {
 
         // Hold player data.
         _player = player;
-        _playerId = _player.getObjectId();
+        _playerId = _player.getId();
         _playerKarma = _player.getKarma();
         _playerPkKills = _player.getPkKills();
 

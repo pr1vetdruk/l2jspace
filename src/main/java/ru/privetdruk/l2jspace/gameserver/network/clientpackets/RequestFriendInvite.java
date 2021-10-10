@@ -44,7 +44,7 @@ public final class RequestFriendInvite extends L2GameClientPacket {
             return;
         }
 
-        if (player.getFriendList().contains(target.getObjectId())) {
+        if (player.getFriendList().contains(target.getId())) {
             player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_ALREADY_IN_FRIENDS_LIST).addString(_targetName));
             player.sendPacket(FriendAddRequestResult.STATIC_FAIL);
             return;

@@ -1519,7 +1519,7 @@ public class Clan {
             return false;
         }
 
-        if (player.getObjectId() == target.getObjectId()) {
+        if (player.getId() == target.getId()) {
             player.sendPacket(SystemMessageId.CANNOT_INVITE_YOURSELF);
             return false;
         }
@@ -1591,7 +1591,7 @@ public class Clan {
             return false;
         }
 
-        if (player.getObjectId() == target.getObjectId()) {
+        if (player.getId() == target.getId()) {
             player.sendPacket(SystemMessageId.CANNOT_INVITE_YOURSELF);
             return false;
         }

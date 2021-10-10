@@ -738,7 +738,7 @@ public class HeroManager {
      * @param message String to set
      */
     public void setHeroMessage(Player player, String message) {
-        _heroMessages.put(player.getObjectId(), message);
+        _heroMessages.put(player.getId(), message);
     }
 
     /**
@@ -793,7 +793,7 @@ public class HeroManager {
     }
 
     public void activateHero(Player player) {
-        final StatSet hero = _heroes.get(player.getObjectId());
+        final StatSet hero = _heroes.get(player.getId());
         if (hero == null)
             return;
 
@@ -810,11 +810,11 @@ public class HeroManager {
         }
 
         // Set Gained hero and reload data
-        setHeroGained(player.getObjectId());
-        loadFights(player.getObjectId());
-        loadDiary(player.getObjectId());
+        setHeroGained(player.getId());
+        loadFights(player.getId());
+        loadDiary(player.getId());
 
-        _heroMessages.put(player.getObjectId(), "");
+        _heroMessages.put(player.getId(), "");
 
         updateHeroes();
     }

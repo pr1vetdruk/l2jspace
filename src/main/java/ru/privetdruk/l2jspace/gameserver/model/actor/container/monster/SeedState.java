@@ -44,7 +44,7 @@ public class SeedState extends ArrayList<IntIntHolder> {
      * @return true if the given {@link Player} set as parameter is the actual seeder.
      */
     public boolean isActualSeeder(Player player) {
-        return player != null && player.getObjectId() == _seederId;
+        return player != null && player.getId() == _seederId;
     }
 
     /**

@@ -9,7 +9,7 @@ public class RecipeShopItemInfo extends L2GameServerPacket {
     private final int _maxMp;
 
     public RecipeShopItemInfo(Player player, int recipeId) {
-        _objectId = player.getObjectId();
+        _objectId = player.getId();
         _recipeId = recipeId;
         _mp = (int) player.getStatus().getMp();
         _maxMp = player.getStatus().getMaxMp();

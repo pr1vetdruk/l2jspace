@@ -81,13 +81,13 @@ public class SummonItems implements IItemHandler {
                 break;
 
             case 1: // summon pet through an item
-                player.getAI().tryToCast(player, SkillTable.getInstance().getInfo(2046, 1), false, false, item.getObjectId());
+                player.getAI().tryToCast(player, SkillTable.getInstance().getInfo(2046, 1), false, false, item.getId());
                 player.sendPacket(SystemMessageId.SUMMON_A_PET);
                 break;
 
             case 2: // wyvern
                 player.getMove().stop();
-                player.mount(sitem.getId(), item.getObjectId());
+                player.mount(sitem.getId(), item.getId());
                 break;
         }
     }

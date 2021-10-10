@@ -34,7 +34,7 @@ public class SchemeBuffer extends Folk {
         if (currentCommand.startsWith("menu")) {
             final NpcHtmlMessage html = new NpcHtmlMessage(0);
             html.setFile(getHtmlPath(getNpcId(), 0));
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             player.sendPacket(html);
         } else if (currentCommand.startsWith("cleanup")) {
             player.stopAllEffectsExceptThoseThatLastThroughDeath();
@@ -45,7 +45,7 @@ public class SchemeBuffer extends Folk {
 
             final NpcHtmlMessage html = new NpcHtmlMessage(0);
             html.setFile(getHtmlPath(getNpcId(), 0));
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             player.sendPacket(html);
         } else if (currentCommand.startsWith("heal")) {
             player.getStatus().setMaxCpHpMp();
@@ -56,7 +56,7 @@ public class SchemeBuffer extends Folk {
 
             final NpcHtmlMessage html = new NpcHtmlMessage(0);
             html.setFile(getHtmlPath(getNpcId(), 0));
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             player.sendPacket(html);
         } else if (currentCommand.startsWith("support"))
             showGiveBuffsWindow(player);
@@ -81,7 +81,7 @@ public class SchemeBuffer extends Folk {
             if (target == null)
                 player.sendMessage("You don't have a pet.");
             else if (cost == 0 || player.reduceAdena("NPC Buffer", cost, this, true))
-                SchemeBufferService.getInstance().applySchemeEffects(this, target, player.getObjectId(), schemeName);
+                SchemeBufferService.getInstance().applySchemeEffects(this, target, player.getId(), schemeName);
         } else if (currentCommand.startsWith("editschemes"))
             showEditSchemeWindow(player, st.nextToken(), st.nextToken(), Integer.parseInt(st.nextToken()));
         else if (currentCommand.startsWith("skill")) {
@@ -91,7 +91,7 @@ public class SchemeBuffer extends Folk {
             final int skillId = Integer.parseInt(st.nextToken());
             final int page = Integer.parseInt(st.nextToken());
 
-            final List<Integer> skills = SchemeBufferService.getInstance().getScheme(player.getObjectId(), schemeName);
+            final List<Integer> skills = SchemeBufferService.getInstance().getScheme(player.getId(), schemeName);
 
             if (currentCommand.startsWith("skillselect") && !schemeName.equalsIgnoreCase("none")) {
                 if (skills.size() < player.getMaxBuffCount())
@@ -110,7 +110,7 @@ public class SchemeBuffer extends Folk {
                     return;
                 }
 
-                final Map<String, ArrayList<Integer>> schemes = SchemeBufferService.getInstance().getPlayerSchemes(player.getObjectId());
+                final Map<String, ArrayList<Integer>> schemes = SchemeBufferService.getInstance().getPlayerSchemes(player.getId());
                 if (schemes != null) {
                     if (schemes.size() == Config.BUFFER_MAX_SCHEMES) {
                         player.sendMessage("Maximum schemes amount is already reached.");
@@ -123,7 +123,7 @@ public class SchemeBuffer extends Folk {
                     }
                 }
 
-                SchemeBufferService.getInstance().setScheme(player.getObjectId(), schemeName.trim(), new ArrayList<>());
+                SchemeBufferService.getInstance().setScheme(player.getId(), schemeName.trim(), new ArrayList<>());
                 showGiveBuffsWindow(player);
             } catch (Exception e) {
                 player.sendMessage("Scheme's name must contain up to 14 chars. Spaces are trimmed.");
@@ -131,7 +131,7 @@ public class SchemeBuffer extends Folk {
         } else if (currentCommand.startsWith("deletescheme")) {
             try {
                 final String schemeName = st.nextToken();
-                final Map<String, ArrayList<Integer>> schemes = SchemeBufferService.getInstance().getPlayerSchemes(player.getObjectId());
+                final Map<String, ArrayList<Integer>> schemes = SchemeBufferService.getInstance().getPlayerSchemes(player.getId());
 
                 if (schemes != null && schemes.containsKey(schemeName))
                     schemes.remove(schemeName);
@@ -173,7 +173,7 @@ public class SchemeBuffer extends Folk {
     private void showGiveBuffsWindow(Player player) {
         final StringBuilder sb = new StringBuilder(200);
 
-        final Map<String, ArrayList<Integer>> schemes = SchemeBufferService.getInstance().getPlayerSchemes(player.getObjectId());
+        final Map<String, ArrayList<Integer>> schemes = SchemeBufferService.getInstance().getPlayerSchemes(player.getId());
         if (schemes == null || schemes.isEmpty())
             sb.append("<font color=\"LEVEL\">You haven't defined any scheme.</font>");
         else {
@@ -191,7 +191,7 @@ public class SchemeBuffer extends Folk {
         html.setFile(getHtmlPath(getNpcId(), 1));
         html.replace("%schemes%", sb.toString());
         html.replace("%max_schemes%", Config.BUFFER_MAX_SCHEMES);
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         player.sendPacket(html);
     }
 
@@ -205,14 +205,14 @@ public class SchemeBuffer extends Folk {
      */
     private void showEditSchemeWindow(Player player, String groupType, String schemeName, int page) {
         final NpcHtmlMessage html = new NpcHtmlMessage(0);
-        final List<Integer> schemeSkills = SchemeBufferService.getInstance().getScheme(player.getObjectId(), schemeName);
+        final List<Integer> schemeSkills = SchemeBufferService.getInstance().getScheme(player.getId(), schemeName);
 
         html.setFile(getHtmlPath(getNpcId(), 2));
         html.replace("%schemename%", schemeName);
         html.replace("%count%", schemeSkills.size() + " / " + player.getMaxBuffCount());
         html.replace("%typesframe%", getTypesFrame(groupType, schemeName, false));
         html.replace("%skilllistframe%", getGroupSkillList(player, groupType, schemeName, false, page));
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         player.sendPacket(html);
     }
 
@@ -221,7 +221,7 @@ public class SchemeBuffer extends Folk {
         html.setFile(getHtmlPath(getNpcId(), 3));
         html.replace("%typesframe%", getTypesFrame(groupType, "", true));
         html.replace("%skilllistframe%", getGroupSkillList(player, groupType, "", true, page));
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         player.sendPacket(html);
     }
 
@@ -247,7 +247,7 @@ public class SchemeBuffer extends Folk {
         // Cut skills list up to page number.
         skills = skills.subList((page - 1) * PAGE_LIMIT, Math.min(page * PAGE_LIMIT, skills.size()));
 
-        final List<Integer> schemeSkills = SchemeBufferService.getInstance().getScheme(player.getObjectId(), schemeName);
+        final List<Integer> schemeSkills = SchemeBufferService.getInstance().getScheme(player.getId(), schemeName);
         final StringBuilder sb = new StringBuilder(skills.size() * 150);
 
         int row = 0;
@@ -257,7 +257,7 @@ public class SchemeBuffer extends Folk {
             sb.append(((row % 2) == 0 ? "<table width=\"280\" bgcolor=\"000000\"><tr>" : "<table width=\"280\"><tr>"));
 
             if (singleSelection)
-                StringUtil.append(sb, "<td height=40 width=40><button action=\"bypass npc_" + getObjectId() + "_getbuff ", skillId, "\" width=32 height=32 back=\"", icon, "\" fore=\"", icon, "\" /></td><td width=190>", SkillTable.getInstance().getInfo(skillId, 1).getName(), "<br1><font color=\"B09878\">", SchemeBufferService.getInstance().getAvailableBuff(skillId).getDescription(), "</font></td>");
+                StringUtil.append(sb, "<td height=40 width=40><button action=\"bypass npc_" + getId() + "_getbuff ", skillId, "\" width=32 height=32 back=\"", icon, "\" fore=\"", icon, "\" /></td><td width=190>", SkillTable.getInstance().getInfo(skillId, 1).getName(), "<br1><font color=\"B09878\">", SchemeBufferService.getInstance().getAvailableBuff(skillId).getDescription(), "</font></td>");
             else {
                 if (schemeSkills.contains(skillId))
                     StringUtil.append(sb, "<td height=40 width=40><img src=\"", icon, "\" width=32 height=32></td><td width=190>", SkillTable.getInstance().getInfo(skillId, 1).getName(), "<br1><font color=\"B09878\">", SchemeBufferService.getInstance().getAvailableBuff(skillId).getDescription(), "</font></td><td><button action=\"bypass npc_%objectId%_skillunselect ", groupType, " ", schemeName, " ", skillId, " ", page, "\" width=32 height=32 back=\"L2UI_CH3.mapbutton_zoomout2\" fore=\"L2UI_CH3.mapbutton_zoomout1\"></td>");
@@ -277,9 +277,9 @@ public class SchemeBuffer extends Folk {
 
         if (page > 1) {
             if (singleSelection)
-                StringUtil.append(sb, "<td align=left width=70><a action=\"bypass npc_" + getObjectId() + "_singlebuff ", groupType, " ", page - 1, "\">Previous</a></td>");
+                StringUtil.append(sb, "<td align=left width=70><a action=\"bypass npc_" + getId() + "_singlebuff ", groupType, " ", page - 1, "\">Previous</a></td>");
             else
-                StringUtil.append(sb, "<td align=left width=70><a action=\"bypass npc_" + getObjectId() + "_editschemes ", groupType, " ", schemeName, " ", page - 1, "\">Previous</a></td>");
+                StringUtil.append(sb, "<td align=left width=70><a action=\"bypass npc_" + getId() + "_editschemes ", groupType, " ", schemeName, " ", page - 1, "\">Previous</a></td>");
         } else
             StringUtil.append(sb, "<td align=left width=70>Previous</td>");
 
@@ -287,9 +287,9 @@ public class SchemeBuffer extends Folk {
 
         if (page < max) {
             if (singleSelection)
-                StringUtil.append(sb, "<td align=right width=70><a action=\"bypass npc_" + getObjectId() + "_singlebuff ", groupType, " ", page + 1, "\">Next</a></td>");
+                StringUtil.append(sb, "<td align=right width=70><a action=\"bypass npc_" + getId() + "_singlebuff ", groupType, " ", page + 1, "\">Next</a></td>");
             else
-                StringUtil.append(sb, "<td align=right width=70><a action=\"bypass npc_" + getObjectId() + "_editschemes ", groupType, " ", schemeName, " ", page + 1, "\">Next</a></td>");
+                StringUtil.append(sb, "<td align=right width=70><a action=\"bypass npc_" + getId() + "_editschemes ", groupType, " ", schemeName, " ", page + 1, "\">Next</a></td>");
         } else
             StringUtil.append(sb, "<td align=right width=70>Next</td>");
 

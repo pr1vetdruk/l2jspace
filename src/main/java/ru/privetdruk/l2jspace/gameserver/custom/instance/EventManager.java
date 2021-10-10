@@ -31,7 +31,7 @@ public class EventManager extends Npc {
             LOGGER.warning(String.format(
                     "Perhaps a cheater, nickname: %s, id: %d. Unknown bypass: %s.",
                     player.getName(),
-                    player.getObjectId(),
+                    player.getId(),
                     command
             ));
 
@@ -55,12 +55,12 @@ public class EventManager extends Npc {
             return;
         }
 
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
         html.setFile(filename);
         html.replace("%content%", event.configureMainPageContent(player));
         html.replace("%eventName%", event.getSettings().getEventName());
         html.replace("%eventDescription%", event.getSettings().getEventDescription());
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         player.sendPacket(html);
 
         player.sendPacket(ActionFailed.STATIC_PACKET);

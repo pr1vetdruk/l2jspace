@@ -115,7 +115,7 @@ public class SepulcherNpc extends Folk {
     }
 
     public void showHtmlFile(Player player, String file) {
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
         html.setFile("data/html/sepulchers/" + file);
         html.replace("%npcname%", getName());
         player.sendPacket(html);

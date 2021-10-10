@@ -10,7 +10,7 @@ public class TeleportToLocation extends L2GameServerPacket {
     private final boolean _isFastTeleport;
 
     public TeleportToLocation(WorldObject object, int x, int y, int z, boolean isFastTeleport) {
-        _objectId = object.getObjectId();
+        _objectId = object.getId();
         _x = x;
         _y = y;
         _z = z;

@@ -138,7 +138,7 @@ public abstract class Creature extends WorldObject {
 
     @Override
     public String toString() {
-        return "[Creature objId=" + getObjectId() + "]";
+        return "[Creature objId=" + getId() + "]";
     }
 
     /**
@@ -1243,7 +1243,7 @@ public abstract class Creature extends WorldObject {
      * @return the identifier of the WorldObject targeted or -1.
      */
     public final int getTargetId() {
-        return (_target != null) ? _target.getObjectId() : -1;
+        return (_target != null) ? _target.getId() : -1;
     }
 
     /**

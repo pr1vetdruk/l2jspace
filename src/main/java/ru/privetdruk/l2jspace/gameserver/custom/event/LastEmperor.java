@@ -338,7 +338,7 @@ public class LastEmperor extends EventEngine {
             return;
         }
 
-        players.put(player.getObjectId(), new LastEmperorPlayer(player, null));
+        players.put(player.getId(), new LastEmperorPlayer(player, null));
 
         sendPlayerMessage(player, "Вы успешно зарегистрировались на ивент.");
     }
@@ -359,7 +359,7 @@ public class LastEmperor extends EventEngine {
         int playerLevel = player.getStatus().getLevel();
 
         if (eventState == REGISTRATION && playerLevel >= settings.getMinLevel() && playerLevel <= settings.getMaxLevel()) {
-            EventPlayer eventPlayer = players.get(player.getObjectId());
+            EventPlayer eventPlayer = players.get(player.getId());
 
             if (eventPlayer != null) {
                 content.append("<center><font color=\"3366CC\">Вы уже принимаете участие!</font></center><br><br>");

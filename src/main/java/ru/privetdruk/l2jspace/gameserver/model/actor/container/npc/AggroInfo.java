@@ -30,7 +30,7 @@ public final class AggroInfo {
 
     @Override
     public final int hashCode() {
-        return _attacker.getObjectId();
+        return _attacker.getId();
     }
 
     @Override

@@ -23,7 +23,7 @@ public class Die extends L2GameServerPacket {
 
     public Die(Creature creature) {
         this.creature = creature;
-        objectId = creature.getObjectId();
+        objectId = creature.getId();
         fake = !creature.isDead();
 
         if (creature instanceof Player) {

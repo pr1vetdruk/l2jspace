@@ -366,14 +366,14 @@ public class Monster extends Attackable {
      */
     public void addAbsorber(Player player, ItemInstance crystal) {
         // If the Player isn't already in the _absorbersList, add it.
-        AbsorbInfo ai = _absorbersList.get(player.getObjectId());
+        AbsorbInfo ai = _absorbersList.get(player.getId());
         if (ai == null) {
             // Create absorb info.
-            _absorbersList.put(player.getObjectId(), new AbsorbInfo(crystal.getObjectId()));
+            _absorbersList.put(player.getId(), new AbsorbInfo(crystal.getId()));
         } else {
             // Add absorb info, unless already registered.
             if (!ai.isRegistered())
-                ai.setItemId(crystal.getObjectId());
+                ai.setItemId(crystal.getId());
         }
     }
 
@@ -384,7 +384,7 @@ public class Monster extends Attackable {
      */
     public void registerAbsorber(Player player) {
         // Get AbsorbInfo for user.
-        AbsorbInfo ai = _absorbersList.get(player.getObjectId());
+        AbsorbInfo ai = _absorbersList.get(player.getId());
         if (ai == null)
             return;
 
@@ -880,7 +880,7 @@ public class Monster extends Attackable {
         for (int i = 0; i < holder.getValue(); i++) {
             // Create the ItemInstance and add it in the world as a visible object.
             final ItemInstance item = ItemInstance.create(holder.getId(), holder.getValue(), player, this);
-            item.setDropProtection(player.getObjectId(), isRaidBoss());
+            item.setDropProtection(player.getId(), isRaidBoss());
             item.dropMe(this, 70);
 
             // If stackable, end loop as entire count is included in 1 instance of item.

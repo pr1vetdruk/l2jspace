@@ -288,7 +288,7 @@ public final class RainbowSpringsChateau extends ClanHallSiege {
                         html = "game_manager004.htm";
                     else if (!player.isInParty())
                         html = "game_manager005.htm";
-                    else if (party.getLeaderObjectId() != player.getObjectId())
+                    else if (party.getLeaderObjectId() != player.getId())
                         html = "game_manager006.htm";
                     else {
                         final int clanId = player.getClanId();

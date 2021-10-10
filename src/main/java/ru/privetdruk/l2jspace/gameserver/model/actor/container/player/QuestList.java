@@ -84,7 +84,7 @@ public final class QuestList extends ArrayList<QuestState> {
     public void restore() {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(LOAD_PLAYER_QUESTS)) {
-            ps.setInt(1, _player.getObjectId());
+            ps.setInt(1, _player.getId());
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {

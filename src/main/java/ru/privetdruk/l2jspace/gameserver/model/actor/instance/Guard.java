@@ -55,7 +55,7 @@ public final class Guard extends Attackable {
         if (hasRandomAnimation())
             onRandomAnimation(Rnd.get(8));
 
-        player.getQuestList().setLastQuestNpcObjectId(getObjectId());
+        player.getQuestList().setLastQuestNpcObjectId(getId());
 
         List<Quest> scripts = getTemplate().getEventQuests(ScriptEventType.ON_FIRST_TALK);
         if (scripts.size() == 1)

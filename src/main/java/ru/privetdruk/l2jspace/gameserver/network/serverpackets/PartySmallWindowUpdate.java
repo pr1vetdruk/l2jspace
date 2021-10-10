@@ -12,7 +12,7 @@ public class PartySmallWindowUpdate extends L2GameServerPacket {
     @Override
     protected final void writeImpl() {
         writeC(0x52);
-        writeD(_player.getObjectId());
+        writeD(_player.getId());
         writeS(_player.getName());
         writeD((int) _player.getStatus().getCp());
         writeD(_player.getStatus().getMaxCp());

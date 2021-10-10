@@ -92,7 +92,7 @@ public class Q421_LittleWingsBigAdventure extends Quest {
                         st.setState(QuestStatus.STARTED);
                         st.setCond(1);
                         st.set("iCond", 1);
-                        st.set("summonOid", item.getObjectId());
+                        st.set("summonOid", item.getId());
                         playSound(player, SOUND_ACCEPT);
                         return "30610-05.htm";
                     }
@@ -191,7 +191,7 @@ public class Q421_LittleWingsBigAdventure extends Quest {
 
                             for (int i = DRAGONFLUTE_OF_WIND; i <= DRAGONFLUTE_OF_TWILIGHT; i++) {
                                 final ItemInstance item = player.getInventory().getItemByItemId(i);
-                                if (item != null && item.getObjectId() == st.getInteger("summonOid")) {
+                                if (item != null && item.getId() == st.getInteger("summonOid")) {
                                     takeItems(player, i, 1);
                                     // TODO rebuild entirely pet system in order enchant is given a fuck. Supposed to give an item lvl XX for a flute level XX.
                                     giveItems(player, i + 922, 1, item.getEnchantLevel());

@@ -40,7 +40,7 @@ public final class RequestFriendDel extends L2GameClientPacket {
             player.sendPacket(new L2Friend(target, 3));
             player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_HAS_BEEN_DELETED_FROM_YOUR_FRIENDS_LIST).addString(_targetName));
 
-            target.getFriendList().remove(Integer.valueOf(player.getObjectId()));
+            target.getFriendList().remove(Integer.valueOf(player.getId()));
             target.sendPacket(new L2Friend(player, 3));
         } else {
             player.sendPacket(new L2Friend(_targetName, 3));
@@ -49,10 +49,10 @@ public final class RequestFriendDel extends L2GameClientPacket {
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(DELETE_FRIEND)) {
-            ps.setInt(1, player.getObjectId());
+            ps.setInt(1, player.getId());
             ps.setInt(2, targetId);
             ps.setInt(3, targetId);
-            ps.setInt(4, player.getObjectId());
+            ps.setInt(4, player.getId());
             ps.execute();
         } catch (Exception e) {
             LOGGER.error("Couldn't delete friendId {} for {}.", e, targetId, player.toString());

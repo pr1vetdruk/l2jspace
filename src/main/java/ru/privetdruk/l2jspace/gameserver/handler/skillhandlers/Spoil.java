@@ -39,7 +39,7 @@ public class Spoil implements ISkillHandler {
             }
 
             if (Formula.calcMagicSuccess(activeChar, (Creature) tgt, skill)) {
-                target.getSpoilState().setSpoilerId(activeChar.getObjectId());
+                target.getSpoilState().setSpoilerId(activeChar.getId());
                 activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.SPOIL_SUCCESS));
             } else
                 activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_RESISTED_YOUR_S2).addCharName(target).addSkillName(skill.getId()));

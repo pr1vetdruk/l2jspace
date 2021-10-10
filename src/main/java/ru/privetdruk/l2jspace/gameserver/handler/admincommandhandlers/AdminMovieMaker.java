@@ -97,7 +97,7 @@ public class AdminMovieMaker implements IAdminCommandHandler {
 
                             final Sequence sequence = _sequences.computeIfAbsent(sequenceId, s -> new Sequence());
                             sequence._sequenceId = sequenceId;
-                            sequence._objectId = targetWorldObject.getObjectId();
+                            sequence._objectId = targetWorldObject.getId();
                             sequence._dist = Integer.parseInt(st.nextToken());
                             sequence._yaw = Integer.parseInt(st.nextToken());
                             sequence._pitch = Integer.parseInt(st.nextToken());

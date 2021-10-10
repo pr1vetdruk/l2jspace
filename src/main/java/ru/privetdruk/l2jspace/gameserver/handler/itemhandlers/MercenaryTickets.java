@@ -82,7 +82,7 @@ public class MercenaryTickets implements IItemHandler {
             return;
         }
 
-        final ItemInstance droppedTicket = player.dropItem("Consume", item.getObjectId(), 1, player.getX(), player.getY(), player.getZ(), null, false);
+        final ItemInstance droppedTicket = player.dropItem("Consume", item.getId(), 1, player.getX(), player.getY(), player.getZ(), null, false);
         if (droppedTicket == null)
             return;
 

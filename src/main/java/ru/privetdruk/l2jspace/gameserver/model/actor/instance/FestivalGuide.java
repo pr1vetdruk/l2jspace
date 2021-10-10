@@ -230,13 +230,13 @@ public final class FestivalGuide extends Folk {
                     final List<Integer> prevParticipants = FestivalOfDarknessManager.getInstance().getPreviousParticipants(_festivalOracle, festivalIndex);
 
                     // Check if there are any past participants.
-                    if ((prevParticipants == null) || prevParticipants.isEmpty() || !prevParticipants.contains(player.getObjectId())) {
+                    if ((prevParticipants == null) || prevParticipants.isEmpty() || !prevParticipants.contains(player.getId())) {
                         showChatWindow(player, 3, "b", false);
                         return;
                     }
 
                     // Check if this player was the party leader in the festival.
-                    if (player.getObjectId() != prevParticipants.get(0)) {
+                    if (player.getId() != prevParticipants.get(0)) {
                         showChatWindow(player, 3, "b", false);
                         return;
                     }
@@ -296,9 +296,9 @@ public final class FestivalGuide extends Folk {
                     } else
                         sb.append("Consecutive top scores: No record exists. Score 0<br>");
 
-                    sb.append("<a action=\"bypass -h npc_" + getObjectId() + "_Chat 0\">Go back.</a></body></html>");
+                    sb.append("<a action=\"bypass -h npc_" + getId() + "_Chat 0\">Go back.</a></body></html>");
 
-                    final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                    final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                     html.setHtml(sb.toString());
                     player.sendPacket(html);
                     break;
@@ -391,9 +391,9 @@ public final class FestivalGuide extends Folk {
                 break;
         }
 
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
         html.setFile(filename);
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         html.replace("%festivalMins%", FestivalOfDarknessManager.getInstance().getTimeToNextFestivalStr());
         player.sendPacket(html);
 
@@ -402,9 +402,9 @@ public final class FestivalGuide extends Folk {
     }
 
     private void showChatWindow(Player player, int val, String suffix, boolean isDescription) {
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
         html.setFile(SevenSignsManager.SEVEN_SIGNS_HTML_PATH + "festival/" + ((isDescription) ? "desc_" : "festival_") + ((suffix != null) ? val + suffix : val) + ".htm");
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         html.replace("%festivalType%", _festivalType.getName());
         html.replace("%cycleMins%", FestivalOfDarknessManager.getInstance().getMinsToNextCycle());
         if (!isDescription && "2b".equals(val + suffix))

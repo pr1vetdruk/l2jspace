@@ -18,6 +18,6 @@ public final class FinishRotating extends L2GameClientPacket {
         if (player == null)
             return;
 
-        player.broadcastPacket(new StopRotation(player.getObjectId(), _degree, 0));
+        player.broadcastPacket(new StopRotation(player.getId(), _degree, 0));
     }
 }

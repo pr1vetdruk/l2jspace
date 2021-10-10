@@ -18,8 +18,8 @@ public class MagicSkillUse extends L2GameServerPacket {
     private final boolean _success;
 
     public MagicSkillUse(Creature cha, Creature target, int skillId, int skillLevel, int hitTime, int reuseDelay, boolean crit) {
-        _objectId = cha.getObjectId();
-        _targetId = target.getObjectId();
+        _objectId = cha.getId();
+        _targetId = target.getId();
         _skillId = skillId;
         _skillLevel = skillLevel;
         _hitTime = hitTime;

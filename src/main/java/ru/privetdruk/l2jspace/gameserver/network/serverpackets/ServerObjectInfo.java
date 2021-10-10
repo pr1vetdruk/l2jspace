@@ -39,7 +39,7 @@ public final class ServerObjectInfo extends L2GameServerPacket {
     @Override
     protected final void writeImpl() {
         writeC(0x8C);
-        writeD(_npc.getObjectId());
+        writeD(_npc.getId());
         writeD(_idTemplate + 1000000);
         writeS(_name);
         writeD(_isAttackable ? 1 : 0);

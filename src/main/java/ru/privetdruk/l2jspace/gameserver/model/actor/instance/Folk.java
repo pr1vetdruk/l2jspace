@@ -37,7 +37,7 @@ public class Folk extends Npc {
      */
     public void showSkillList(Player player) {
         if (!getTemplate().canTeach(player.getClassId())) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile("data/html/trainer/" + getTemplate().getNpcId() + "-noskills.htm");
             player.sendPacket(html);
             return;
@@ -65,14 +65,14 @@ public class Folk extends Npc {
      */
     public void showEnchantSkillList(Player player) {
         if (!getTemplate().canTeach(player.getClassId())) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile("data/html/trainer/" + getTemplate().getNpcId() + "-noskills.htm");
             player.sendPacket(html);
             return;
         }
 
         if (player.getClassId().getLevel() < 3) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setHtml("<html><body> You must have 3rd class change quest completed.</body></html>");
             player.sendPacket(html);
             return;

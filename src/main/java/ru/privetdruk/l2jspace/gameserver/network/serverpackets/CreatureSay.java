@@ -27,7 +27,7 @@ public class CreatureSay extends L2GameServerPacket {
      * @param content  : The {@link String} content to send.
      */
     public CreatureSay(Creature creature, SayType sayType, String content) {
-        this(creature.getObjectId(), sayType, creature.getName(), content);
+        this(creature.getId(), sayType, creature.getName(), content);
     }
 
     /**

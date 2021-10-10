@@ -81,7 +81,7 @@ public class Fence extends WorldObject implements IGeoObject {
 
     @Override
     public void sendInfo(Player player) {
-        player.sendPacket(new ExColosseumFenceInfo(getObjectId(), this));
+        player.sendPacket(new ExColosseumFenceInfo(getId(), this));
     }
 
     @Override
@@ -123,7 +123,7 @@ public class Fence extends WorldObject implements IGeoObject {
 
         @Override
         public void sendInfo(Player player) {
-            player.sendPacket(new ExColosseumFenceInfo(getObjectId(), _fence));
+            player.sendPacket(new ExColosseumFenceInfo(getId(), _fence));
         }
     }
 }

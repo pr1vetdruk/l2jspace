@@ -176,10 +176,10 @@ public class Q403_PathToARogue extends Quest {
             if (npc.getNpcId() == CATSEYE_BANDIT)
                 npc.broadcastNpcSay(NpcStringId.ID_40306);
 
-            npc.setScriptValue(player.getObjectId());
+            npc.setScriptValue(player.getId());
         } else {
             // Repeated valid attack. Mark invalid attack condition, if another player also attacks the monster.
-            if (condition != player.getObjectId())
+            if (condition != player.getId())
                 npc.setScriptValue(-1);
         }
 

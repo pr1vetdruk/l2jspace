@@ -6,17 +6,13 @@ import ru.privetdruk.l2jspace.gameserver.custom.builder.EventSettingBuilder;
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.custom.model.NpcInfoShort;
 import ru.privetdruk.l2jspace.gameserver.custom.model.Reward;
-import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventLoadingMode;
-import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventSetting;
-import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState;
-import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventType;
+import ru.privetdruk.l2jspace.gameserver.custom.model.entity.EventWinnerEntity;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.*;
+import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.location.SpawnLocation;
 
 import java.lang.reflect.InvocationTargetException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,9 +21,111 @@ import java.util.logging.Logger;
 public class EventService {
     private static final Logger LOGGER = Logger.getLogger(EventService.class.getName());
 
+    private static final String SELECT_ALL_FROM_EVENT_WINNER_BY_PLAYER_ID = "SELECT ew.* FROM event_winner ew WHERE ew.player_id = ?";
+    private static final String INSERT_INTO_EVENT_WINNER = "INSERT INTO event_winner (player_id, event_type, virtory_date) VALUES (?, ?, ?)";
+    private static final String SELECT_ALL_FROM_EVENT_BY_ID_AND_TYPE = "SELECT e.* FROM event e WHERE e.id = ? AND e.type = ?";
+    private static final String RESET_EVENT_WINNER = "UPDATE event_winner SET status = 'NOT_ACTIVE' WHERE event_type = ? AND status = 'ACTIVE'";
+
+    /**
+     * Поиск ивентов, в которых победил игрок
+     *
+     * @param playerId Идентификатор игрока
+     * @return Список ивентов
+     */
+    public List<EventWinnerEntity> findAllWonEvents(int playerId) {
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_FROM_EVENT_WINNER_BY_PLAYER_ID)) {
+            statement.setInt(1, playerId);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (!resultSet.next()) {
+                return null;
+            }
+
+            List<EventWinnerEntity> wonEvents = new ArrayList<>();
+
+            do {
+                wonEvents.add(new EventWinnerEntity(
+                        resultSet.getLong("id"),
+                        resultSet.getInt("player_id"),
+                        EventType.valueOf(resultSet.getString("event_type")),
+                        resultSet.getDate("victory_date").toLocalDate(),
+                        EventWinnerStatus.valueOf(resultSet.getString("status"))
+                ));
+            } while (resultSet.next());
+
+            resultSet.close();
+
+            return wonEvents;
+        } catch (Exception e) {
+            LOGGER.severe("Не удалось прочитать настройку event_winner при загрузке игрока. Будет установлено значение по умолчанию NONE. " + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Создать победителя ивента
+     *
+     * @param player    Победивший игрок
+     * @param eventType Ивент, в котором победил
+     * @return Объект победителя в ивенте
+     */
+    public EventWinnerEntity createEventWinner(Player player, EventType eventType) {
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(INSERT_INTO_EVENT_WINNER)) {
+            EventWinnerEntity eventWinner = new EventWinnerEntity();
+            eventWinner.setEventType(eventType);
+            eventWinner.setPlayerId(player.getId());
+
+            statement.setInt(1, eventWinner.getPlayerId());
+            statement.setString(2, eventWinner.getEventType().name());
+            statement.setDate(3, Date.valueOf(eventWinner.getVictoryDate()));
+
+            int affectedRows = statement.executeUpdate();
+
+            if (affectedRows == 0) {
+                LOGGER.severe("Произошла ошибка при сохранении победителя ивента: " + eventWinner);
+                return null;
+            }
+
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    eventWinner.setId(generatedKeys.getLong(1));
+
+                    player.getWonEvents().add(eventWinner);
+
+                    return eventWinner;
+                } else {
+                    LOGGER.severe("Произошла ошибка при сохранении победителя ивента. Не удалось определить идентификатор записи: " + eventWinner);
+                    return null;
+                }
+            }
+        } catch (Exception e) {
+            LOGGER.severe("Не удалось прочитать настройку event_winner при загрузке игрока: " + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Сбросить статус победителя в ивенте
+     *
+     * @param eventType Тип ивента
+     */
+    public void resetEventWinners(EventType eventType) {
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(RESET_EVENT_WINNER)) {
+            statement.setString(1, eventType.name());
+
+            statement.execute();
+        } catch (Exception e) {
+            LOGGER.severe("Не удалось сбросить статус победителя на NOT_ACTIVE: " + e.getMessage());
+        }
+    }
+
     public EventSetting findEventSetting(int id, EventType type) {
         try (Connection connection = ConnectionPool.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT e.* FROM event e WHERE e.id = ? AND e.type = ?");
+            PreparedStatement statement = connection.prepareStatement(SELECT_ALL_FROM_EVENT_BY_ID_AND_TYPE);
             statement.setInt(1, id);
             statement.setString(2, type.name());
 

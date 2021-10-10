@@ -16,7 +16,7 @@ public class EquipUpdate extends L2GameServerPacket {
     protected final void writeImpl() {
         writeC(0x4b);
         writeD(_change);
-        writeD(_item.getObjectId());
+        writeD(_item.getId());
 
         int bodypart = 0;
         switch (_item.getItem().getBodyPart()) {

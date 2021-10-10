@@ -28,7 +28,7 @@ public final class RequestRefineCancel extends L2GameClientPacket {
             return;
         }
 
-        if (item.getOwnerId() != player.getObjectId())
+        if (item.getOwnerId() != player.getId())
             return;
 
         // cannot remove augmentation from a not augmented item
@@ -98,7 +98,7 @@ public final class RequestRefineCancel extends L2GameClientPacket {
         player.sendPacket(iu);
 
         // Refresh shortcuts.
-        player.getShortcutList().refreshShortcuts(s -> item.getObjectId() == s.getId() && s.getType() == ShortcutType.ITEM);
+        player.getShortcutList().refreshShortcuts(s -> item.getId() == s.getId() && s.getType() == ShortcutType.ITEM);
 
         // send system message
         player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.AUGMENTATION_HAS_BEEN_SUCCESSFULLY_REMOVED_FROM_YOUR_S1).addItemName(item));

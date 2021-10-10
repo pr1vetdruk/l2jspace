@@ -58,7 +58,7 @@ public class DerbyTrackManagerNpc extends Folk {
             String search;
             String replace;
 
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
             if (val < 10) {
                 html.setFile(getHtmlPath(npcId, 2));
@@ -137,7 +137,7 @@ public class DerbyTrackManagerNpc extends Folk {
                 return;
             }
             html.replace("1race", DerbyTrackManager.getInstance().getRaceNumber());
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             player.sendPacket(html);
             player.sendPacket(ActionFailed.STATIC_PACKET);
         } else if (command.equals("ShowOdds")) {
@@ -147,7 +147,7 @@ public class DerbyTrackManagerNpc extends Folk {
                 return;
             }
 
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile(getHtmlPath(getTemplate().getNpcId(), 5));
             for (int i = 0; i < 8; i++) {
                 final int n = i + 1;
@@ -159,11 +159,11 @@ public class DerbyTrackManagerNpc extends Folk {
                 html.replace("Odd" + n, (odd > 0D) ? String.format(Locale.ENGLISH, "%.1f", odd) : "&$804;");
             }
             html.replace("1race", DerbyTrackManager.getInstance().getRaceNumber());
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             player.sendPacket(html);
             player.sendPacket(ActionFailed.STATIC_PACKET);
         } else if (command.equals("ShowInfo")) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile(getHtmlPath(getTemplate().getNpcId(), 6));
 
             for (int i = 0; i < 8; i++) {
@@ -171,7 +171,7 @@ public class DerbyTrackManagerNpc extends Folk {
                 String search = "Mob" + n;
                 html.replace(search, DerbyTrackManager.getInstance().getRunnerName(i));
             }
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             player.sendPacket(html);
             player.sendPacket(ActionFailed.STATIC_PACKET);
         } else if (command.equals("ShowTickets")) {
@@ -184,13 +184,13 @@ public class DerbyTrackManagerNpc extends Folk {
                 if (ticket.getEnchantLevel() == DerbyTrackManager.getInstance().getRaceNumber())
                     continue;
 
-                StringUtil.append(sb, "<tr><td><a action=\"bypass -h npc_%objectId%_ShowTicket ", ticket.getObjectId(), "\">", ticket.getEnchantLevel(), " Race Number</a></td><td align=right><font color=\"LEVEL\">", ticket.getCustomType1(), "</font> Number</td><td align=right><font color=\"LEVEL\">", ticket.getCustomType2() * 100, "</font> Adena</td></tr>");
+                StringUtil.append(sb, "<tr><td><a action=\"bypass -h npc_%objectId%_ShowTicket ", ticket.getId(), "\">", ticket.getEnchantLevel(), " Race Number</a></td><td align=right><font color=\"LEVEL\">", ticket.getCustomType1(), "</font> Number</td><td align=right><font color=\"LEVEL\">", ticket.getCustomType2() * 100, "</font> Adena</td></tr>");
             }
 
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile(getHtmlPath(getTemplate().getNpcId(), 7));
             html.replace("%tickets%", sb.toString());
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             player.sendPacket(html);
             player.sendPacket(ActionFailed.STATIC_PACKET);
         } else if (command.startsWith("ShowTicket")) {
@@ -219,14 +219,14 @@ public class DerbyTrackManagerNpc extends Folk {
                 return;
             }
 
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile(getHtmlPath(getTemplate().getNpcId(), 8));
             html.replace("%raceId%", raceId);
             html.replace("%lane%", lane);
             html.replace("%bet%", bet);
             html.replace("%firstLane%", info.getFirst() + 1);
             html.replace("%odd%", (lane == info.getFirst() + 1) ? String.format(Locale.ENGLISH, "%.2f", info.getOddRate()) : "0.01");
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             html.replace("%ticketObjectId%", val);
             player.sendPacket(html);
             player.sendPacket(ActionFailed.STATIC_PACKET);
@@ -272,10 +272,10 @@ public class DerbyTrackManagerNpc extends Folk {
             for (HistoryInfo info : DerbyTrackManager.getInstance().getLastHistoryEntries())
                 StringUtil.append(sb, "<tr><td><font color=\"LEVEL\">", info.getRaceId(), "</font> th</td><td><font color=\"LEVEL\">", (raceNumber == info.getRaceId()) ? 0 : info.getFirst() + 1, "</font> Lane </td><td><font color=\"LEVEL\">", (raceNumber == info.getRaceId()) ? 0 : info.getSecond() + 1, "</font> Lane</td><td align=right><font color=00ffff>", String.format(Locale.ENGLISH, "%.2f", info.getOddRate()), "</font> Times</td></tr>");
 
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile(getHtmlPath(getTemplate().getNpcId(), 9));
             html.replace("%infos%", sb.toString());
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             player.sendPacket(html);
             player.sendPacket(ActionFailed.STATIC_PACKET);
         } else

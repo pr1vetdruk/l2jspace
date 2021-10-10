@@ -22,7 +22,7 @@ public class RelationChanged extends L2GameServerPacket {
     private int _pvpFlag;
 
     public RelationChanged(Playable playable, int relation, boolean isAutoAttackable) {
-        _objectId = playable.getObjectId();
+        _objectId = playable.getId();
         _relation = relation;
         _autoAttackable = (isAutoAttackable) ? 1 : 0;
 

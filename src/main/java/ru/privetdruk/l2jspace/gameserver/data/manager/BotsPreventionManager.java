@@ -59,19 +59,19 @@ public class BotsPreventionManager {
         if (player instanceof Player && monster instanceof Monster && !player.isGM()) {
             Player killer = (Player) player;
 
-            if (_validation.get(killer.getObjectId()) != null)
+            if (_validation.get(killer.getId()) != null)
                 return;
 
             int count = 1;
-            if (_monsterscounter.get(killer.getObjectId()) != null)
-                count = _monsterscounter.get(killer.getObjectId()) + 1;
+            if (_monsterscounter.get(killer.getId()) != null)
+                count = _monsterscounter.get(killer.getId()) + 1;
 
             int next = _randomize.nextInt(Config.KILLS_COUNTER_RANDOMIZATION);
             if (Config.KILLS_COUNTER + next < count) {
                 validationTasks(killer);
-                _monsterscounter.remove(killer.getObjectId());
+                _monsterscounter.remove(killer.getId());
             } else
-                _monsterscounter.put(killer.getObjectId(), count);
+                _monsterscounter.put(killer.getId(), count);
         }
     }
 
@@ -115,7 +115,7 @@ public class BotsPreventionManager {
     }
 
     private static void validationWindow(Player player) {
-        PlayerData container = _validation.get(player.getObjectId());
+        PlayerData container = _validation.get(player.getId());
         NpcHtmlMessage html = new NpcHtmlMessage(1);
 
         StringBuilder tb = new StringBuilder();
@@ -125,7 +125,7 @@ public class BotsPreventionManager {
         StringUtil.append(tb, "<br><br><font color=\"a2a0a2\">in order to prove you are a human being<br1>you've to</font> <font color=\"b09979\">match colours within generated pattern:</font>");
 
         // generated main pattern.
-        StringUtil.append(tb, "<br><br><img src=\"Crest.crest_" + Config.SERVER_ID + "_" + (_validation.get(player.getObjectId()).patternid) + "\" width=\"32\" height=\"32\"></td></tr>");
+        StringUtil.append(tb, "<br><br><img src=\"Crest.crest_" + Config.SERVER_ID + "_" + (_validation.get(player.getId()).patternid) + "\" width=\"32\" height=\"32\"></td></tr>");
         StringUtil.append(tb, "<br><br><font color=b09979>click-on pattern of your choice beneath:</font>");
 
         // generate random colours.
@@ -167,11 +167,11 @@ public class BotsPreventionManager {
         PledgeCrest packet = new PledgeCrest(container.patternid, _images.get(container.options.get(container.mainpattern)));
         player.sendPacket(packet);
 
-        _validation.put(player.getObjectId(), container);
+        _validation.put(player.getId(), container);
 
         Future<?> newTask = ThreadPool.schedule(new reportCheckTask(player), VALIDATION_TIME);
         ThreadPool.schedule(new countdown(player, VALIDATION_TIME / 1000), 0);
-        _beginvalidation.put(player.getObjectId(), newTask);
+        _beginvalidation.put(player.getId(), newTask);
     }
 
     protected void randomizeImages(PlayerData container, Player player) {
@@ -195,9 +195,9 @@ public class BotsPreventionManager {
     }
 
     protected void banPunishment(Player player) {
-        _validation.remove(player.getObjectId());
-        _beginvalidation.get(player.getObjectId()).cancel(true);
-        _beginvalidation.remove(player.getObjectId());
+        _validation.remove(player.getId());
+        _beginvalidation.get(player.getId()).cancel(true);
+        _beginvalidation.remove(player.getId());
 
         switch (Config.PUNISHMENT) {
             // 0 = move character to the closest village.
@@ -229,7 +229,7 @@ public class BotsPreventionManager {
             try (Connection con = ConnectionPool.getConnection();
                  PreparedStatement statement = con.prepareStatement(ACCESS_LEVEL)) {
                 statement.setInt(1, lvl);
-                statement.setInt(2, targetPlayer.getObjectId());
+                statement.setInt(2, targetPlayer.getId());
                 statement.execute();
                 statement.close();
             } catch (SQLException se) {
@@ -239,14 +239,14 @@ public class BotsPreventionManager {
     }
 
     public void analyseBypass(String command, Player player) {
-        if (!_validation.containsKey(player.getObjectId()))
+        if (!_validation.containsKey(player.getId()))
             return;
 
         String params = command.substring(command.indexOf("_") + 1);
 
         if (params.startsWith("continue")) {
             validationWindow(player);
-            _validation.get(player.getObjectId()).firstWindow = false;
+            _validation.get(player.getId()).firstWindow = false;
             return;
         }
 
@@ -255,14 +255,14 @@ public class BotsPreventionManager {
             choosenoption = Integer.parseInt(params);
 
         if (choosenoption > -1) {
-            PlayerData playerData = _validation.get(player.getObjectId());
+            PlayerData playerData = _validation.get(player.getId());
             if (choosenoption != playerData.mainpattern) {
                 banPunishment(player);
             } else {
                 player.sendMessage("Congratulations, colours match!");
-                _validation.remove(player.getObjectId());
-                _beginvalidation.get(player.getObjectId()).cancel(true);
-                _beginvalidation.remove(player.getObjectId());
+                _validation.remove(player.getId());
+                _beginvalidation.get(player.getId()).cancel(true);
+                _beginvalidation.remove(player.getId());
             }
         }
     }
@@ -279,7 +279,7 @@ public class BotsPreventionManager {
         @Override
         public void run() {
             if (_player.isOnline()) {
-                if (_validation.containsKey(_player.getObjectId()) && _validation.get(_player.getObjectId()).firstWindow) {
+                if (_validation.containsKey(_player.getId()) && _validation.get(_player.getId()).firstWindow) {
                     if (_time % WINDOW_DELAY == 0) {
                         preValidationWindow(_player);
                     }
@@ -304,7 +304,7 @@ public class BotsPreventionManager {
                         break;
                 }
 
-                if (_time > 1 && _validation.containsKey(_player.getObjectId()))
+                if (_time > 1 && _validation.containsKey(_player.getId()))
                     ThreadPool.schedule(new countdown(_player, _time - 1), 1000);
             }
         }
@@ -320,12 +320,12 @@ public class BotsPreventionManager {
     }
 
     public void captchaSuccessfull(Player player) {
-        if (_validation.get(player.getObjectId()) != null)
-            _validation.remove(player.getObjectId());
+        if (_validation.get(player.getId()) != null)
+            _validation.remove(player.getId());
     }
 
     public Boolean isAlredyInReportMode(Player player) {
-        if (_validation.get(player.getObjectId()) != null)
+        if (_validation.get(player.getId()) != null)
             return true;
 
         return false;
@@ -340,7 +340,7 @@ public class BotsPreventionManager {
 
         @Override
         public void run() {
-            if (_validation.get(_player.getObjectId()) != null)
+            if (_validation.get(_player.getId()) != null)
                 banPunishment(_player);
         }
     }

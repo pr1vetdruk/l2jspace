@@ -13,7 +13,7 @@ public class StatusUpdate extends L2GameServerPacket {
 
     public StatusUpdate(WorldObject object) {
         _attributes = new ArrayList<>();
-        _objectId = object.getObjectId();
+        _objectId = object.getId();
     }
 
     public void addAttribute(StatusType type, int level) {

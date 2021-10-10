@@ -46,7 +46,7 @@ public class FavoriteBBSManager extends BaseBBSManager {
         if (command.equals("_bbsgetfav")) {
             String content = HtmCache.getInstance().getHtm(CB_PATH + "favorite/favorite-get.htm");
 
-            final Set<Favorite> favorites = _favorites.get(player.getObjectId());
+            final Set<Favorite> favorites = _favorites.get(player.getId());
             if (favorites == null)
                 content = content.replace("<?FAV_LIST?>", "");
             else {
@@ -84,7 +84,7 @@ public class FavoriteBBSManager extends BaseBBSManager {
             final String[] params = storedFav.split("&");
             if (params.length > 1) {
                 final int id = getNewFavoriteId();
-                final int playerId = player.getObjectId();
+                final int playerId = player.getId();
                 final String title = params[0];
                 final String bypass = params[1];
                 final Timestamp date = new Timestamp(System.currentTimeMillis());
@@ -116,7 +116,7 @@ public class FavoriteBBSManager extends BaseBBSManager {
             final int id = Integer.parseInt(st.nextToken());
 
             // Cleanup memory.
-            if (getFavorites(player.getObjectId()).removeIf(f -> f.getId() == id)) {
+            if (getFavorites(player.getId()).removeIf(f -> f.getId() == id)) {
                 // Cleanup database.
                 try (Connection con = ConnectionPool.getConnection();
                      PreparedStatement ps = con.prepareStatement(DELETE_FAVORITE)) {

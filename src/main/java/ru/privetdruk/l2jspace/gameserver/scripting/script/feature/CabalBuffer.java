@@ -150,7 +150,7 @@ public class CabalBuffer extends Quest {
                 return super.onCreatureSee(npc, creature);
 
             // Don't bother about Players who didn't participated.
-            final CabalType playerCabal = SevenSignsManager.getInstance().getPlayerCabal(player.getObjectId());
+            final CabalType playerCabal = SevenSignsManager.getInstance().getPlayerCabal(player.getId());
             if (playerCabal == CabalType.NORMAL)
                 return super.onCreatureSee(npc, creature);
 

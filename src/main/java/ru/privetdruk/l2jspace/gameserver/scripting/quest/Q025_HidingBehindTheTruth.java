@@ -168,14 +168,14 @@ public class Q025_HidingBehindTheTruth extends Quest {
                 if (triolPawn == null) {
                     triolPawn = (Attackable) addSpawn(TRIOL_PAWN, TRIOL_SPAWNS.get(npc.getNpcId()), false, 120000, true);
                     triolPawn.forceAttack(player, 20000);
-                    triolPawn.setScriptValue(player.getObjectId());
+                    triolPawn.setScriptValue(player.getId());
                     triolPawn.broadcastNpcSay(NpcStringId.ID_2550, player.getName());
 
                     _triolPawns.put(npc, triolPawn);
 
                     st.setCond(7);
                     playSound(player, SOUND_MIDDLE);
-                } else if (triolPawn.getScriptValue() == player.getObjectId())
+                } else if (triolPawn.getScriptValue() == player.getId())
                     htmltext = "3153x-08.htm";
                 else
                     htmltext = "3153x-09.htm";
@@ -415,7 +415,7 @@ public class Q025_HidingBehindTheTruth extends Quest {
         if (st == null)
             return null;
 
-        if (player.getObjectId() != npc.getScriptValue())
+        if (player.getId() != npc.getScriptValue())
             return null;
 
         if (dropItemsAlways(player, SUSPICIOUS_TOTEM_DOLL_3, 1, 1)) {

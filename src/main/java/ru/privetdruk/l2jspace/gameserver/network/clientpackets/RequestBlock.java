@@ -36,7 +36,7 @@ public final class RequestBlock extends L2GameClientPacket {
             case UNBLOCK:
                 // Can't block/unblock inexisting or self.
                 final int targetId = PlayerInfoTable.getInstance().getPlayerObjectId(_targetName);
-                if (targetId <= 0 || player.getObjectId() == targetId) {
+                if (targetId <= 0 || player.getId() == targetId) {
                     player.sendPacket(SystemMessageId.FAILED_TO_REGISTER_TO_IGNORE_LIST);
                     return;
                 }

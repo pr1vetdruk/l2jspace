@@ -168,9 +168,9 @@ public final class RequestBuyItem extends L2GameClientPacket {
             if (!htmlFolder.isEmpty()) {
                 final String content = HtmCache.getInstance().getHtm("data/html/" + htmlFolder + "/" + merchant.getNpcId() + "-bought.htm");
                 if (content != null) {
-                    final NpcHtmlMessage html = new NpcHtmlMessage(merchant.getObjectId());
+                    final NpcHtmlMessage html = new NpcHtmlMessage(merchant.getId());
                     html.setHtml(content);
-                    html.replace("%objectId%", merchant.getObjectId());
+                    html.replace("%objectId%", merchant.getId());
                     player.sendPacket(html);
                 }
             }

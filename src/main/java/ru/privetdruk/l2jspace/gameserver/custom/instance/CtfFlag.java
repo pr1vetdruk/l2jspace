@@ -19,11 +19,11 @@ public class CtfFlag extends Npc {
     public void onInteract(Player player) {
         CTF event = (CTF) EventEngine.findActive();
 
-        if (event == null || event.getEventState() != EventState.IN_PROGRESS || !event.getPlayers().containsKey(player.getObjectId())) {
+        if (event == null || event.getEventState() != EventState.IN_PROGRESS || !event.getPlayers().containsKey(player.getId())) {
             return;
         }
 
-        CtfPlayer eventPlayer = (CtfPlayer) event.getPlayers().get(player.getObjectId());
+        CtfPlayer eventPlayer = (CtfPlayer) event.getPlayers().get(player.getId());
 
         event.processInFlagRange(eventPlayer);
 

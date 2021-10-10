@@ -80,7 +80,7 @@ public class Teleport extends Location {
     public int getCalculatedPriceCount(Player player) {
         if (_priceId == PcInventory.ANCIENT_ADENA_ID) {
             final SevenSignsManager ss = SevenSignsManager.getInstance();
-            final boolean check = ss.isSealValidationPeriod() && ss.getPlayerCabal(player.getObjectId()) == ss.getSealOwner(SealType.GNOSIS) && ss.getPlayerSeal(player.getObjectId()) == SealType.GNOSIS;
+            final boolean check = ss.isSealValidationPeriod() && ss.getPlayerCabal(player.getId()) == ss.getSealOwner(SealType.GNOSIS) && ss.getPlayerSeal(player.getId()) == SealType.GNOSIS;
 
             return (check) ? _priceCount : (int) (_priceCount * 1.6);
         }

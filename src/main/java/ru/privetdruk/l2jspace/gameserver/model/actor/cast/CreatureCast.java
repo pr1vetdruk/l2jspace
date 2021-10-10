@@ -357,7 +357,7 @@ public class CreatureCast<T extends Creature> {
             _actor.enableAllSkills();
 
         if (isCastingNow())
-            _actor.broadcastPacket(new MagicSkillCanceled(_actor.getObjectId()));
+            _actor.broadcastPacket(new MagicSkillCanceled(_actor.getId()));
 
         if (_castTask != null) {
             _castTask.cancel(false);

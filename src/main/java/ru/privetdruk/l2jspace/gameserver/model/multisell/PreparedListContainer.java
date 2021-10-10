@@ -27,7 +27,7 @@ public class PreparedListContainer extends ListContainer {
 
         double taxRate = 0;
         if (npc != null) {
-            _npcObjectId = npc.getObjectId();
+            _npcObjectId = npc.getId();
             if (template.getApplyTaxes() && npc.getCastle() != null && npc.getCastle().getOwnerId() > 0) {
                 setApplyTaxes(true);
                 taxRate = npc.getCastle().getTaxRate();

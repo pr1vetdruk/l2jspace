@@ -92,7 +92,7 @@ public final class TradeRequest extends L2GameClientPacket {
         }
 
         player.onTransactionRequest(target);
-        target.sendPacket(new SendTradeRequest(player.getObjectId()));
+        target.sendPacket(new SendTradeRequest(player.getId()));
         player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.REQUEST_S1_FOR_TRADE).addCharName(target));
     }
 }

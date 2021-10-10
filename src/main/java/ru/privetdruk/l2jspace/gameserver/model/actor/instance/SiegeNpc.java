@@ -30,7 +30,7 @@ public class SiegeNpc extends Folk {
         }
 
         if (htmltext != null) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile("data/html/siege/" + htmltext + ".htm");
             player.sendPacket(html);
             player.sendPacket(ActionFailed.STATIC_PACKET);

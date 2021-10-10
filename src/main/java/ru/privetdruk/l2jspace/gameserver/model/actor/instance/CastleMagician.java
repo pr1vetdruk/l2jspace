@@ -19,7 +19,7 @@ public class CastleMagician extends Folk {
     public void showChatWindow(Player player, int val) {
         player.sendPacket(ActionFailed.STATIC_PACKET);
 
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
         final NpcTalkCond condition = getNpcTalkCond(player);
         if (condition == NpcTalkCond.NONE)
@@ -32,7 +32,7 @@ public class CastleMagician extends Folk {
             else
                 html.setFile("data/html/castlemagician/magician-" + val + ".htm");
         }
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         player.sendPacket(html);
     }
 
@@ -85,7 +85,7 @@ public class CastleMagician extends Folk {
         }
 
         if (player.isIn7sDungeon()) {
-            final CabalType targetCabal = SevenSignsManager.getInstance().getPlayerCabal(clanLeader.getObjectId());
+            final CabalType targetCabal = SevenSignsManager.getInstance().getPlayerCabal(clanLeader.getId());
             if (SevenSignsManager.getInstance().isSealValidationPeriod()) {
                 if (targetCabal != SevenSignsManager.getInstance().getWinningCabal()) {
                     player.sendMessage("Couldn't teleport to clan leader. The requirements was not meet.");

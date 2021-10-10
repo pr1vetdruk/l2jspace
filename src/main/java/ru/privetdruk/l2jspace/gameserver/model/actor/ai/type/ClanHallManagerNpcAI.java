@@ -25,7 +25,7 @@ public class ClanHallManagerNpcAI extends CreatureAI {
 
         final Player player = (Player) _currentIntention.getFinalTarget();
 
-        final NpcHtmlMessage html = new NpcHtmlMessage(getActor().getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getActor().getId());
         if (getActor().getStatus().getMp() < skill.getMpConsume() + skill.getMpInitialConsume())
             html.setFile("data/html/clanHallManager/support-no_mana.htm");
         else {
@@ -35,7 +35,7 @@ public class ClanHallManagerNpcAI extends CreatureAI {
         }
 
         html.replace("%mp%", (int) getActor().getStatus().getMp());
-        html.replace("%objectId%", getActor().getObjectId());
+        html.replace("%objectId%", getActor().getId());
         player.sendPacket(html);
     }
 }

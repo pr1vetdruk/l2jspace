@@ -667,7 +667,7 @@ abstract class AbstractAI {
     public void startAttackStance() {
         // Initial check ; if the actor wasn't yet registered into AttackStanceTaskManager, broadcast AutoAttackStart packet.
         if (!AttackStanceTaskManager.getInstance().isInAttackStance(_actor))
-            _actor.broadcastPacket(new AutoAttackStart(_actor.getObjectId()));
+            _actor.broadcastPacket(new AutoAttackStart(_actor.getId()));
 
         // Set out of the initial if check to be able to refresh the time.
         AttackStanceTaskManager.getInstance().add(_actor);
@@ -679,7 +679,7 @@ abstract class AbstractAI {
     public void stopAttackStance() {
         // If we successfully remove the actor from AttackStanceTaskManager, we also broadcast AutoAttackStop packet.
         if (AttackStanceTaskManager.getInstance().remove(_actor))
-            _actor.broadcastPacket(new AutoAttackStop(_actor.getObjectId()));
+            _actor.broadcastPacket(new AutoAttackStop(_actor.getId()));
     }
 
     /**
@@ -708,7 +708,7 @@ abstract class AbstractAI {
         if (target == null)
             return true;
 
-        if (World.getInstance().getObject(target.getObjectId()) == null)
+        if (World.getInstance().getObject(target.getId()) == null)
             return true;
 
         return !getActor().knows(target);
@@ -723,7 +723,7 @@ abstract class AbstractAI {
         if (target == null)
             return true;
 
-        if (World.getInstance().getObject(target.getObjectId()) == null)
+        if (World.getInstance().getObject(target.getId()) == null)
             return true;
 
         if (skill != null && skill.getSkillType() == SkillType.SUMMON_FRIEND)

@@ -1274,23 +1274,23 @@ public class Quest {
             return;
 
         if (result.endsWith(".htm") || result.endsWith(".html")) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(npc == null ? 0 : npc.getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(npc == null ? 0 : npc.getId());
             if (isRealQuest())
                 html.setFile("./data/html/script/quest/" + getName() + "/" + result);
             else
                 html.setFile("./data/html/script/" + getDescr() + "/" + getName() + "/" + result);
 
             if (npc != null)
-                html.replace("%objectId%", npc.getObjectId());
+                html.replace("%objectId%", npc.getId());
 
             player.sendPacket(html);
             player.sendPacket(ActionFailed.STATIC_PACKET);
         } else if (result.startsWith("<html>")) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(npc == null ? 0 : npc.getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(npc == null ? 0 : npc.getId());
             html.setHtml(result);
 
             if (npc != null)
-                html.replace("%objectId%", npc.getObjectId());
+                html.replace("%objectId%", npc.getId());
 
             player.sendPacket(html);
             player.sendPacket(ActionFailed.STATIC_PACKET);

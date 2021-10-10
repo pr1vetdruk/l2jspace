@@ -81,7 +81,7 @@ public final class QuestState extends MemoSet {
         // Set variable to database.
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(QUEST_SET_VAR)) {
-            ps.setInt(1, _player.getObjectId());
+            ps.setInt(1, _player.getId());
             ps.setString(2, _quest.getName());
             ps.setString(3, key);
             ps.setString(4, value);
@@ -96,7 +96,7 @@ public final class QuestState extends MemoSet {
         // Remove variable from database.
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(QUEST_DEL_VAR)) {
-            ps.setInt(1, _player.getObjectId());
+            ps.setInt(1, _player.getId());
             ps.setString(2, _quest.getName());
             ps.setString(3, key);
             ps.executeUpdate();
@@ -122,7 +122,7 @@ public final class QuestState extends MemoSet {
 
     @Override
     public int hashCode() {
-        return Objects.hash(_player.getObjectId(), _quest.getQuestId());
+        return Objects.hash(_player.getId(), _quest.getQuestId());
     }
 
     /**
@@ -334,7 +334,7 @@ public final class QuestState extends MemoSet {
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement((repeatable) ? QUEST_DELETE : QUEST_COMPLETE)) {
-            ps.setInt(1, _player.getObjectId());
+            ps.setInt(1, _player.getId());
             ps.setString(2, _quest.getName());
             ps.executeUpdate();
         } catch (Exception e) {

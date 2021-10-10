@@ -13,7 +13,7 @@ public class RecipeShopMsg extends L2GameServerPacket {
     protected final void writeImpl() {
         writeC(0xdb);
 
-        writeD(_player.getObjectId());
+        writeD(_player.getId());
         writeS(_player.getManufactureList().getStoreName());
     }
 }

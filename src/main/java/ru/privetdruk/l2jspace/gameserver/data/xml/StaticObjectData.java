@@ -37,7 +37,7 @@ public class StaticObjectData implements IXmlReader {
             obj.setType(set.getInteger("type"));
             obj.setMap(set.getString("texture"), set.getInteger("mapX"), set.getInteger("mapY"));
             obj.spawnMe(set.getInteger("x"), set.getInteger("y"), set.getInteger("z"));
-            _objects.put(obj.getObjectId(), obj);
+            _objects.put(obj.getId(), obj);
         }));
     }
 

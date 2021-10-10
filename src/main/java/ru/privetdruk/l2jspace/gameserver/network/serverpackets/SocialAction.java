@@ -7,7 +7,7 @@ public class SocialAction extends L2GameServerPacket {
     private final int _actionId;
 
     public SocialAction(Creature cha, int actionId) {
-        _charObjId = cha.getObjectId();
+        _charObjId = cha.getId();
         _actionId = actionId;
     }
 

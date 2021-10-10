@@ -43,12 +43,12 @@ public final class GrandBoss extends Monster {
                 for (Player member : party.getMembers()) {
                     RaidPointManager.getInstance().addPoints(member, getNpcId(), (getStatus().getLevel() / 2) + Rnd.get(-5, 5));
                     if (member.isNoble())
-                        HeroManager.getInstance().setRBkilled(member.getObjectId(), getNpcId());
+                        HeroManager.getInstance().setRBkilled(member.getId(), getNpcId());
                 }
             } else {
                 RaidPointManager.getInstance().addPoints(player, getNpcId(), (getStatus().getLevel() / 2) + Rnd.get(-5, 5));
                 if (player.isNoble())
-                    HeroManager.getInstance().setRBkilled(player.getObjectId(), getNpcId());
+                    HeroManager.getInstance().setRBkilled(player.getId(), getNpcId());
             }
         }
 

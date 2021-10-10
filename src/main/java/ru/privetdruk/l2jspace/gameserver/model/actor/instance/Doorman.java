@@ -46,9 +46,9 @@ public class Doorman extends Folk {
 
     @Override
     public void showChatWindow(Player player) {
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
         html.setFile("data/html/doormen/" + getTemplate().getNpcId() + ((!isOwnerClan(player)) ? "-no.htm" : ".htm"));
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         player.sendPacket(html);
 
         player.sendPacket(ActionFailed.STATIC_PACKET);
@@ -80,7 +80,7 @@ public class Doorman extends Folk {
         if (!HtmCache.getInstance().isLoadable(path))
             path = "data/html/doormen/busy.htm";
 
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
         html.setFile(path);
         player.sendPacket(html);
 

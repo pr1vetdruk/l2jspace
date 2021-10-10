@@ -16,7 +16,7 @@ public class PartySpelled extends L2GameServerPacket {
 
     public PartySpelled(Creature creature) {
         _type = creature instanceof Servitor ? 2 : creature instanceof Pet ? 1 : 0;
-        _objectId = creature.getObjectId();
+        _objectId = creature.getId();
     }
 
     @Override

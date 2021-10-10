@@ -79,7 +79,7 @@ public class Pet extends Summon {
         super(objectId, template, owner);
 
         _inventory = new PetInventory(this);
-        _controlItemId = control.getObjectId();
+        _controlItemId = control.getId();
         _isMountable = template.getNpcId() == 12526 || template.getNpcId() == 12527 || template.getNpcId() == 12528 || template.getNpcId() == 12621;
     }
 
@@ -125,7 +125,7 @@ public class Pet extends Summon {
     @Override
     public void onAction(Player player, boolean isCtrlPressed, boolean isShiftPressed) {
         // Refresh the Player owner reference if objectId is matching, but object isn't.
-        if (player.getObjectId() == getOwner().getObjectId() && player != getOwner())
+        if (player.getId() == getOwner().getId() && player != getOwner())
             setOwner(player);
 
         super.onAction(player, isCtrlPressed, isShiftPressed);
@@ -281,7 +281,7 @@ public class Pet extends Summon {
             ps.setInt(8, _controlItemId);
             ps.executeUpdate();
         } catch (Exception e) {
-            LOGGER.error("Couldn't store pet data for {}.", e, getObjectId());
+            LOGGER.error("Couldn't store pet data for {}.", e, getId());
         }
 
         final ItemInstance itemInst = getControlItem();
@@ -305,7 +305,7 @@ public class Pet extends Summon {
 
         // Drop pet from world's pet list.
         if (!isDead())
-            World.getInstance().removePet(owner.getObjectId());
+            World.getInstance().removePet(owner.getId());
     }
 
     @Override
@@ -457,7 +457,7 @@ public class Pet extends Summon {
      */
     public void destroyControlItem(Player owner) {
         // Remove the pet instance from world.
-        World.getInstance().removePet(owner.getObjectId());
+        World.getInstance().removePet(owner.getId());
 
         // Delete the item from owner inventory.
         owner.destroyItem("PetDestroy", _controlItemId, 1, getOwner(), false);
@@ -468,7 +468,7 @@ public class Pet extends Summon {
             ps.setInt(1, _controlItemId);
             ps.executeUpdate();
         } catch (Exception e) {
-            LOGGER.error("Couldn't delete pet data for {}.", e, getObjectId());
+            LOGGER.error("Couldn't delete pet data for {}.", e, getId());
         }
     }
 
@@ -481,7 +481,7 @@ public class Pet extends Summon {
 
         try (Connection con = ConnectionPool.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(LOAD_PET)) {
-                ps.setInt(1, control.getObjectId());
+                ps.setInt(1, control.getId());
 
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
@@ -641,7 +641,7 @@ public class Pet extends Summon {
     protected class FeedTask implements Runnable {
         @Override
         public void run() {
-            if (getOwner() == null || getOwner().getSummon() == null || getOwner().getSummon().getObjectId() != getObjectId()) {
+            if (getOwner() == null || getOwner().getSummon() == null || getOwner().getSummon().getId() != getId()) {
                 stopFeed();
                 return;
             }

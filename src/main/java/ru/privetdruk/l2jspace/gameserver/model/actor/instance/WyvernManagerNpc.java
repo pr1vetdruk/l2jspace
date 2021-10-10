@@ -28,7 +28,7 @@ public class WyvernManagerNpc extends CastleChamberlain {
 
     @Override
     public void onBypassFeedback(Player player, String command) {
-        if (player.getCurrentFolk() == null || player.getCurrentFolk().getObjectId() != getObjectId())
+        if (player.getCurrentFolk() == null || player.getCurrentFolk().getId() != getId())
             return;
 
         if (command.startsWith("RideWyvern")) {
@@ -100,9 +100,9 @@ public class WyvernManagerNpc extends CastleChamberlain {
     }
 
     private void sendHtm(Player player, String val) {
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
         html.setFile("data/html/wyvernmanager/wyvernmanager-" + val + ".htm");
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         html.replace("%npcname%", getName());
         html.replace("%wyvern_level%", Config.WYVERN_REQUIRED_LEVEL);
         html.replace("%needed_crystals%", Config.WYVERN_REQUIRED_CRYSTALS);

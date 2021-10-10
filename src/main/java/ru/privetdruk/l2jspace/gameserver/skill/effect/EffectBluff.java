@@ -25,8 +25,8 @@ public class EffectBluff extends AbstractEffect {
         if (getEffected() instanceof SiegeSummon || getEffected() instanceof Folk || getEffected().isRaidRelated() || (getEffected() instanceof Npc && ((Npc) getEffected()).getNpcId() == 35062))
             return false;
 
-        getEffected().broadcastPacket(new StartRotation(getEffected().getObjectId(), getEffected().getHeading(), 1, 65535));
-        getEffected().broadcastPacket(new StopRotation(getEffected().getObjectId(), getEffector().getHeading(), 65535));
+        getEffected().broadcastPacket(new StartRotation(getEffected().getId(), getEffected().getHeading(), 1, 65535));
+        getEffected().broadcastPacket(new StopRotation(getEffected().getId(), getEffector().getHeading(), 65535));
         getEffected().getPosition().setHeading(getEffector().getHeading());
         return true;
     }

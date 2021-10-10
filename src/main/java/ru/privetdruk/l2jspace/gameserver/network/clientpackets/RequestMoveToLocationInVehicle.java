@@ -42,7 +42,7 @@ public final class RequestMoveToLocationInVehicle extends L2GameClientPacket {
         final Boat boat;
         if (player.isInBoat()) {
             boat = player.getBoat();
-            if (boat.getObjectId() != _boatId) {
+            if (boat.getId() != _boatId) {
                 player.sendPacket(ActionFailed.STATIC_PACKET);
                 return;
             }

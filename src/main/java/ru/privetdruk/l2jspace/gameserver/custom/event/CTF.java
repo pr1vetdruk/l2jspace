@@ -321,7 +321,7 @@ public class CTF extends EventEngine {
         player.getInventory().equipItem(ItemInstance.create(flagItemId, 1, player, null));
         player.broadcastPacket(new SocialAction(player, SocialActionEnum.AMAZING_GLOW.getId()));
         player.broadcastUserInfo();
-        player.sendPacket(new CreatureSay(player.getObjectId(), SayType.PARTYROOM_COMMANDER, "Event Manager", "Отлично! Теперь отнеси флаг на свою базу!"));
+        player.sendPacket(new CreatureSay(player.getId(), SayType.PARTYROOM_COMMANDER, "Event Manager", "Отлично! Теперь отнеси флаг на свою базу!"));
     }
 
     private void unspawn(Spawn spawn) {
@@ -409,7 +409,7 @@ public class CTF extends EventEngine {
                 player.removeSkill(WYVERN_BREATH.getId(), true);
             }
 
-            player.broadcastPacket(new Ride(player.getObjectId(), Ride.ACTION_DISMOUNT, 0));
+            player.broadcastPacket(new Ride(player.getId(), Ride.ACTION_DISMOUNT, 0));
             player.dismount();
         }
 
@@ -608,12 +608,12 @@ public class CTF extends EventEngine {
     public void addDisconnectedPlayer(Player player) {
         switch (eventState) {
             case TELEPORTATION, PREPARE_FOR_START, IN_PROGRESS -> {
-                EventPlayer eventPlayer = allPlayers.get(player.getObjectId());
+                EventPlayer eventPlayer = allPlayers.get(player.getId());
 
                 if (eventPlayer != null) {
                     eventPlayer.setPlayer(player);
                     player.setEventPlayer(eventPlayer);
-                    players.put(player.getObjectId(), eventPlayer); // adding new objectId to vector
+                    players.put(player.getId(), eventPlayer); // adding new objectId to vector
 
                     updatePlayerEventDataCustom(eventPlayer);
                     teleport(eventPlayer);
@@ -639,7 +639,7 @@ public class CTF extends EventEngine {
             );
         }
 
-        player.sendPacket(new CreatureSay(player.getObjectId(), SayType.PARTYROOM_COMMANDER, settings.getEventName(), result.name()));
+        player.sendPacket(new CreatureSay(player.getId(), SayType.PARTYROOM_COMMANDER, settings.getEventName(), result.name()));
         player.sendPacket(ActionFailed.STATIC_PACKET);
     }
 
@@ -658,7 +658,7 @@ public class CTF extends EventEngine {
         } else {
             if (eventState == REGISTRATION
                     && playerLevel >= settings.getMinLevel() && playerLevel <= settings.getMaxLevel()) {
-                EventPlayer eventPlayer = players.get(player.getObjectId());
+                EventPlayer eventPlayer = players.get(player.getId());
 
                 if (eventPlayer != null) {
                     if (teamMode == NO || teamMode == BALANCE) {
@@ -738,7 +738,7 @@ public class CTF extends EventEngine {
             team.addPlayer();
         }
 
-        players.put(player.getObjectId(), new CtfPlayer(player, team));
+        players.put(player.getId(), new CtfPlayer(player, team));
 
         sendPlayerMessage(player, "Вы успешно зарегистрировались на ивент.");
     }

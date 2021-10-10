@@ -22,7 +22,7 @@ public class StaticObject extends WorldObject {
     @Override
     public void onInteract(Player player) {
         if (getType() == 2) {
-            NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile("data/html/signboard.htm");
             player.sendPacket(html);
         } else if (getType() == 0) {

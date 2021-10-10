@@ -214,7 +214,7 @@ public class CommandChannel extends AbstractGroup {
     public static boolean checkAuthority(Player player, boolean deleteItem) {
         // The Player isn't a level 5 clan leader.
         final Clan requestorClan = player.getClan();
-        if (requestorClan == null || requestorClan.getLeaderId() != player.getObjectId() || requestorClan.getLevel() < 5) {
+        if (requestorClan == null || requestorClan.getLeaderId() != player.getId() || requestorClan.getLevel() < 5) {
             player.sendPacket(SystemMessageId.COMMAND_CHANNEL_ONLY_BY_LEVEL_5_CLAN_LEADER_PARTY_LEADER);
             return false;
         }

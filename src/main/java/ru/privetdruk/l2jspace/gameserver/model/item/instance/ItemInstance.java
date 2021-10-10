@@ -541,7 +541,7 @@ public final class ItemInstance extends WorldObject implements Runnable, Compara
         return ((!isEquipped() || allowStoreBuy) // Not equipped
                 && (getItem().getType2() != Item.TYPE2_QUEST) // Not Quest Item
                 && (getItem().getType2() != Item.TYPE2_MONEY || getItem().getType1() != Item.TYPE1_SHIELD_ARMOR) // not money, not shield
-                && (player.getSummon() == null || getObjectId() != player.getSummon().getControlItemId()) // Not Control item of currently summoned pet
+                && (player.getSummon() == null || getId() != player.getSummon().getControlItemId()) // Not Control item of currently summoned pet
                 && (player.getActiveEnchantItem() != this) // Not momentarily used enchant scroll
                 && (allowAdena || getItemId() != 57) // Not adena
                 && (player.getCast().getCurrentSkill() == null || player.getCast().getCurrentSkill().getItemConsumeId() != getItemId()) && (allowNonTradable || isTradable()));
@@ -580,7 +580,7 @@ public final class ItemInstance extends WorldObject implements Runnable, Compara
             }
         }
 
-        player.getAI().tryToPickUp(getObjectId(), isShiftPressed);
+        player.getAI().tryToPickUp(getId(), isShiftPressed);
     }
 
     /**
@@ -644,7 +644,7 @@ public final class ItemInstance extends WorldObject implements Runnable, Compara
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(DELETE_AUGMENTATION)) {
-            ps.setInt(1, getObjectId());
+            ps.setInt(1, getId());
             ps.executeUpdate();
         } catch (Exception e) {
             LOGGER.error("Couldn't remove augmentation for {}.", e, toString());
@@ -654,7 +654,7 @@ public final class ItemInstance extends WorldObject implements Runnable, Compara
     private void restoreAttributes() {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(RESTORE_AUGMENTATION)) {
-            ps.setInt(1, getObjectId());
+            ps.setInt(1, getId());
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next())
@@ -668,7 +668,7 @@ public final class ItemInstance extends WorldObject implements Runnable, Compara
     private void updateItemAttributes() {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(UPDATE_AUGMENTATION)) {
-            ps.setInt(1, getObjectId());
+            ps.setInt(1, getId());
 
             if (_augmentation == null) {
                 ps.setInt(2, -1);
@@ -822,7 +822,7 @@ public final class ItemInstance extends WorldObject implements Runnable, Compara
         ThreadPool.execute(() ->
         {
             // Set the dropper OID for sendInfo show correct dropping animation.
-            setDropperObjectId(dropper.getObjectId());
+            setDropperObjectId(dropper.getId());
 
             // Drop current World registration, mostly for FREIGHT case.
             World.getInstance().removeObject(this);
@@ -850,7 +850,7 @@ public final class ItemInstance extends WorldObject implements Runnable, Compara
         ThreadPool.execute(() ->
         {
             // Set the dropper OID for sendInfo show correct dropping animation.
-            setDropperObjectId(dropper.getObjectId());
+            setDropperObjectId(dropper.getId());
 
             // Drop current World registration, mostly for FREIGHT case.
             World.getInstance().removeObject(this);
@@ -873,7 +873,7 @@ public final class ItemInstance extends WorldObject implements Runnable, Compara
      * @param player Player that pick up the item
      */
     public final void pickupMe(Creature player) {
-        player.broadcastPacket(new GetItem(this, player.getObjectId()));
+        player.broadcastPacket(new GetItem(this, player.getId()));
 
         // Unregister dropped ticket from castle, if that item is on a castle area and is a valid ticket.
         final Castle castle = CastleManager.getInstance().getCastle(player);
@@ -913,7 +913,7 @@ public final class ItemInstance extends WorldObject implements Runnable, Compara
             ps.setInt(7, getCustomType2());
             ps.setInt(8, _mana);
             ps.setLong(9, getTime());
-            ps.setInt(10, getObjectId());
+            ps.setInt(10, getId());
             ps.executeUpdate();
 
             _existsInDb = true;
@@ -927,7 +927,7 @@ public final class ItemInstance extends WorldObject implements Runnable, Compara
      * Insert the item in database
      */
     private void insertIntoDb() {
-        assert !_existsInDb && getObjectId() != 0;
+        assert !_existsInDb && getId() != 0;
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(INSERT_ITEM)) {
@@ -937,7 +937,7 @@ public final class ItemInstance extends WorldObject implements Runnable, Compara
             ps.setString(4, _loc.name());
             ps.setInt(5, _locData);
             ps.setInt(6, getEnchantLevel());
-            ps.setInt(7, getObjectId());
+            ps.setInt(7, getId());
             ps.setInt(8, _type1);
             ps.setInt(9, _type2);
             ps.setInt(10, _mana);
@@ -962,12 +962,12 @@ public final class ItemInstance extends WorldObject implements Runnable, Compara
 
         try (Connection con = ConnectionPool.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(DELETE_ITEM)) {
-                ps.setInt(1, getObjectId());
+                ps.setInt(1, getId());
                 ps.executeUpdate();
             }
 
             try (PreparedStatement ps = con.prepareStatement(DELETE_AUGMENTATION)) {
-                ps.setInt(1, getObjectId());
+                ps.setInt(1, getId());
                 ps.executeUpdate();
             }
 
@@ -983,7 +983,7 @@ public final class ItemInstance extends WorldObject implements Runnable, Compara
      */
     @Override
     public String toString() {
-        return "(" + getObjectId() + ") " + getName();
+        return "(" + getId() + ") " + getName();
     }
 
     public synchronized boolean hasDropProtection() {
@@ -1108,7 +1108,7 @@ public final class ItemInstance extends WorldObject implements Runnable, Compara
         setLastChange(ItemState.REMOVED);
 
         World.getInstance().removeObject(this);
-        IdFactory.getInstance().releaseId(getObjectId());
+        IdFactory.getInstance().releaseId(getId());
 
         if (Config.LOG_ITEMS) {
             final LogRecord record = new LogRecord(Level.INFO, "DELETE:" + process);
@@ -1126,7 +1126,7 @@ public final class ItemInstance extends WorldObject implements Runnable, Compara
         if (isSummonItem()) {
             try (Connection con = ConnectionPool.getConnection();
                  PreparedStatement ps = con.prepareStatement(DELETE_PET_ITEM)) {
-                ps.setInt(1, getObjectId());
+                ps.setInt(1, getId());
                 ps.execute();
             } catch (Exception e) {
                 LOGGER.error("Couldn't delete {}.", e, toString());
@@ -1173,6 +1173,6 @@ public final class ItemInstance extends WorldObject implements Runnable, Compara
         if (time != 0)
             return time;
 
-        return Integer.compare(item.getObjectId(), getObjectId());
+        return Integer.compare(item.getId(), getId());
     }
 }

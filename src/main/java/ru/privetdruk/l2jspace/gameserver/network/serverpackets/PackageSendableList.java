@@ -26,7 +26,7 @@ public class PackageSendableList extends L2GameServerPacket {
             Item item = temp.getItem();
 
             writeH(item.getType1());
-            writeD(temp.getObjectId());
+            writeD(temp.getId());
             writeD(temp.getItemId());
             writeD(temp.getCount());
             writeH(item.getType2());
@@ -35,7 +35,7 @@ public class PackageSendableList extends L2GameServerPacket {
             writeH(temp.getEnchantLevel());
             writeH(temp.getCustomType2());
             writeH(0x00);
-            writeD(temp.getObjectId());
+            writeD(temp.getId());
         }
     }
 }

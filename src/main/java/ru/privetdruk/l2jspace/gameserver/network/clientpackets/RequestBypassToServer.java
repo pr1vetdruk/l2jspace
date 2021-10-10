@@ -77,7 +77,7 @@ public final class RequestBypassToServer extends L2GameClientPacket {
             }
 
             if (Config.GM_AUDIT)
-                GMAUDIT_LOG.info(player.getName() + " [" + player.getObjectId() + "] used '" + _command + "' command on: " + ((player.getTarget() != null) ? player.getTarget().getName() : "none"));
+                GMAUDIT_LOG.info(player.getName() + " [" + player.getId() + "] used '" + _command + "' command on: " + ((player.getTarget() != null) ? player.getTarget().getName() : "none"));
 
             ach.useAdminCommand(_command, player);
         } else if (_command.startsWith("player_help ")) {
@@ -218,7 +218,7 @@ public final class RequestBypassToServer extends L2GameClientPacket {
     public static void showNpcStatsInfos(Npc npc, NpcHtmlMessage html) {
         html.setFile("data/html/mods/npcinfo/stat.htm");
 
-        html.replace("%objid%", npc.getObjectId());
+        html.replace("%objid%", npc.getId());
         html.replace("%hp%", (int) npc.getStatus().getHp());
         html.replace("%hpmax%", npc.getStatus().getMaxHp());
         html.replace("%mp%", (int) npc.getStatus().getMp());
@@ -277,7 +277,7 @@ public final class RequestBypassToServer extends L2GameClientPacket {
 
         // Load static Htm.
         html.setFile("data/html/mods/npcinfo/droplist.htm");
-        html.replace("%objid%", npc.getObjectId());
+        html.replace("%objid%", npc.getId());
 
         if (list.isEmpty()) {
             html.replace("%content%", "This NPC has no " + ((isDrop) ? "drops" : "spoils") + ".");
@@ -317,14 +317,14 @@ public final class RequestBypassToServer extends L2GameClientPacket {
         sb.append("<br><img src=\"L2UI.SquareGray\" width=277 height=1><table width=\"100%\" bgcolor=000000><tr>");
 
         if (page > 1)
-            StringUtil.append(sb, "<td align=left width=70><a action=\"bypass user_npc_info ", "" + npc.getObjectId(), " ", ((isDrop) ? "drop" : "spoil"), " ", page - 1, "\">Previous</a></td>");
+            StringUtil.append(sb, "<td align=left width=70><a action=\"bypass user_npc_info ", "" + npc.getId(), " ", ((isDrop) ? "drop" : "spoil"), " ", page - 1, "\">Previous</a></td>");
         else
             StringUtil.append(sb, "<td align=left width=70>Previous</td>");
 
         StringUtil.append(sb, "<td align=center width=100>Page ", page, "</td>");
 
         if (page < max)
-            StringUtil.append(sb, "<td align=right width=70><a action=\"bypass user_npc_info ", "" + npc.getObjectId(), " ", ((isDrop) ? "drop" : "spoil"), " ", page + 1, "\">Next</a></td>");
+            StringUtil.append(sb, "<td align=right width=70><a action=\"bypass user_npc_info ", "" + npc.getId(), " ", ((isDrop) ? "drop" : "spoil"), " ", page + 1, "\">Next</a></td>");
         else
             StringUtil.append(sb, "<td align=right width=70>Next</td>");
 

@@ -134,7 +134,7 @@ public final class RequestCharacterCreate extends L2GameClientPacket {
 
             // Tutorial book shortcut.
             if (holder.getId() == 5588)
-                player.getShortcutList().addShortcut(new Shortcut(11, 0, ShortcutType.ITEM, item.getObjectId(), -1, 1));
+                player.getShortcutList().addShortcut(new Shortcut(11, 0, ShortcutType.ITEM, item.getId(), -1, 1));
 
             if (item.isEquipable() && holder.isEquipped())
                 player.getInventory().equipItemAndRecord(item);

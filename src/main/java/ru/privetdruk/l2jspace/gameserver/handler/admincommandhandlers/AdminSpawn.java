@@ -229,7 +229,7 @@ public class AdminSpawn implements IAdminCommandHandler {
             }
             targetNpc.deleteMe();
 
-            player.sendMessage("Deleted " + targetNpc.getName() + " from " + targetNpc.getObjectId() + ".");
+            player.sendMessage("Deleted " + targetNpc.getName() + " from " + targetNpc.getId() + ".");
         }
     }
 
@@ -330,7 +330,7 @@ public class AdminSpawn implements IAdminCommandHandler {
 
         sb.append("<html><body>Total Fences: " + fences.size() + "<br><br>");
         for (Fence fence : fences)
-            sb.append("<a action=\"bypass -h admin_deletefence " + fence.getObjectId() + " 1\">Fence: " + fence.getObjectId() + " [" + fence.getX() + " " + fence.getY() + " " + fence.getZ() + "]</a><br>");
+            sb.append("<a action=\"bypass -h admin_deletefence " + fence.getId() + " 1\">Fence: " + fence.getId() + " [" + fence.getX() + " " + fence.getY() + " " + fence.getZ() + "]</a><br>");
         sb.append("</body></html>");
 
         final NpcHtmlMessage html = new NpcHtmlMessage(0);

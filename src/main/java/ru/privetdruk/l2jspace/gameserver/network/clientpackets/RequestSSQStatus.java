@@ -21,6 +21,6 @@ public final class RequestSSQStatus extends L2GameClientPacket {
         if ((SevenSignsManager.getInstance().isSealValidationPeriod() || SevenSignsManager.getInstance().isCompResultsPeriod()) && _page == 4)
             return;
 
-        player.sendPacket(new SSQStatus(player.getObjectId(), _page));
+        player.sendPacket(new SSQStatus(player.getId(), _page));
     }
 }

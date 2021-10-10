@@ -215,7 +215,7 @@ public abstract class Summon extends Playable {
 
     public void deleteMe(Player owner) {
         owner.setSummon(null);
-        owner.sendPacket(new PetDelete(getSummonType(), getObjectId()));
+        owner.sendPacket(new PetDelete(getSummonType(), getId()));
 
         decayMe();
         deleteMe();
@@ -239,7 +239,7 @@ public abstract class Summon extends Playable {
             store();
 
             owner.setSummon(null);
-            owner.sendPacket(new PetDelete(getSummonType(), getObjectId()));
+            owner.sendPacket(new PetDelete(getSummonType(), getId()));
 
             decayMe();
 
@@ -350,7 +350,7 @@ public abstract class Summon extends Playable {
             return;
 
         // Prevents the double spam of system messages, if the target is the owning player.
-        if (target.getObjectId() != getOwner().getObjectId()) {
+        if (target.getId() != getOwner().getId()) {
             if (pcrit || mcrit)
                 sendPacket(SystemMessageId.CRITICAL_HIT_BY_PET);
 

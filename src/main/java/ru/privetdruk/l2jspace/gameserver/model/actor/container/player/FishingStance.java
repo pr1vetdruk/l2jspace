@@ -589,7 +589,7 @@ public class FishingStance {
         _loc.clean();
 
         // Ends fishing
-        _fisher.broadcastPacket(new ExFishingEnd(win, _fisher.getObjectId()));
+        _fisher.broadcastPacket(new ExFishingEnd(win, _fisher.getId()));
         _fisher.sendPacket(SystemMessageId.REEL_LINE_AND_STOP_FISHING);
         _fisher.setIsImmobilized(false);
 

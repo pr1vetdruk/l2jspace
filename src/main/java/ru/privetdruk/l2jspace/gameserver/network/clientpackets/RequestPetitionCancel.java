@@ -25,10 +25,10 @@ public final class RequestPetitionCancel extends L2GameClientPacket {
         final Petition petition = PetitionManager.getInstance().getPetitionInProcess(player);
         if (petition != null) {
             // Regular Player can't end the Petition.
-            if (petition.getPetitionerObjectId() == player.getObjectId())
+            if (petition.getPetitionerObjectId() == player.getId())
                 player.sendPacket(SystemMessageId.PETITION_UNDER_PROCESS);
                 // Part of responders - leave conversation properly or end active petition.
-            else if (petition.getResponders().contains(player.getObjectId())) {
+            else if (petition.getResponders().contains(player.getId())) {
                 if (player.isGM())
                     petition.endConsultation(PetitionState.CLOSED);
                 else
@@ -45,6 +45,6 @@ public final class RequestPetitionCancel extends L2GameClientPacket {
         player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.PETITION_CANCELED_SUBMIT_S1_MORE_TODAY).addNumber(Config.MAX_PETITIONS_PER_PLAYER - PetitionManager.getInstance().getPetitionsCount(player)));
 
         // Notify all GMs that the player's pending petition has been cancelled.
-        AdminData.getInstance().broadcastToGMs(new CreatureSay(player.getObjectId(), SayType.HERO_VOICE, "Petition System", player.getName() + " has canceled a pending petition."));
+        AdminData.getInstance().broadcastToGMs(new CreatureSay(player.getId(), SayType.HERO_VOICE, "Petition System", player.getName() + " has canceled a pending petition."));
     }
 }

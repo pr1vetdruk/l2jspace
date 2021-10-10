@@ -66,7 +66,7 @@ public class Servitor extends Summon {
             return;
 
         // Prevents the double spam of system messages, if the target is the owning player.
-        if (target.getObjectId() != getOwner().getObjectId()) {
+        if (target.getId() != getOwner().getId()) {
             if (pcrit || mcrit)
                 sendPacket(SystemMessageId.CRITICAL_HIT_BY_SUMMONED_MOB);
 

@@ -50,7 +50,7 @@ public class Recipes implements IItemHandler {
                 player.sendPacket(SystemMessageId.CREATE_LVL_TOO_LOW_TO_REGISTER);
             else if (player.getRecipeBook().get(isDwarven).size() >= player.getStatus().getDwarfRecipeLimit())
                 player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.UP_TO_S1_RECIPES_CAN_REGISTER).addNumber(player.getStatus().getDwarfRecipeLimit()));
-            else if (player.destroyItem("Consume", item.getObjectId(), 1, null, false)) {
+            else if (player.destroyItem("Consume", item.getId(), 1, null, false)) {
                 player.getRecipeBook().putRecipe(recipe, isDwarven, true);
                 player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_ADDED).addItemName(item));
                 player.sendPacket(new RecipeBookItemList(player, isDwarven));
@@ -64,7 +64,7 @@ public class Recipes implements IItemHandler {
                 player.sendPacket(SystemMessageId.CREATE_LVL_TOO_LOW_TO_REGISTER);
             else if (player.getRecipeBook().get(isDwarven).size() >= player.getStatus().getCommonRecipeLimit())
                 player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.UP_TO_S1_RECIPES_CAN_REGISTER).addNumber(player.getStatus().getCommonRecipeLimit()));
-            else if (player.destroyItem("Consume", item.getObjectId(), 1, null, false)) {
+            else if (player.destroyItem("Consume", item.getId(), 1, null, false)) {
                 player.getRecipeBook().putRecipe(recipe, isDwarven, true);
                 player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_ADDED).addItemName(item));
                 player.sendPacket(new RecipeBookItemList(player, isDwarven));

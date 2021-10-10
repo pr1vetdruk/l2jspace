@@ -71,7 +71,7 @@ public class Q409_PathToAnElvenOracle extends Quest {
             st.setCond(2);
             playSound(player, SOUND_MIDDLE);
 
-            final int oid = player.getObjectId();
+            final int oid = player.getId();
             _spawns.put(addSpawn(LIZARDMAN_WARRIOR, npc, true, 0, false), oid);
             _spawns.put(addSpawn(LIZARDMAN_SCOUT, npc, true, 0, false), oid);
             _spawns.put(addSpawn(LIZARDMAN, npc, true, 0, false), oid);
@@ -79,7 +79,7 @@ public class Q409_PathToAnElvenOracle extends Quest {
         }
         // Perrin
         else if (event.equalsIgnoreCase("30428-06.htm")) {
-            _spawns.put(addSpawn(TAMIL, npc, true, 0, true), player.getObjectId());
+            _spawns.put(addSpawn(TAMIL, npc, true, 0, true), player.getId());
         }
 
         return htmltext;
@@ -130,7 +130,7 @@ public class Q409_PathToAnElvenOracle extends Quest {
 
                     case ALLANA:
                         if (cond == 1 || cond == 2) {
-                            if (_spawns.containsValue(player.getObjectId()))
+                            if (_spawns.containsValue(player.getId()))
                                 return null;
 
                             htmltext = "30424-01.htm";
@@ -155,7 +155,7 @@ public class Q409_PathToAnElvenOracle extends Quest {
 
                     case PERRIN:
                         if (cond == 4) {
-                            if (_spawns.containsValue(player.getObjectId()))
+                            if (_spawns.containsValue(player.getId()))
                                 htmltext = "30428-06.htm";
                             else
                                 htmltext = "30428-01.htm";
@@ -203,10 +203,10 @@ public class Q409_PathToAnElvenOracle extends Quest {
                     break;
             }
 
-            npc.setScriptValue(player.getObjectId());
+            npc.setScriptValue(player.getId());
         } else {
             // Repeated valid attack. Mark invalid attack condition, if another player also attacks the monster.
-            if (condition != player.getObjectId())
+            if (condition != player.getId())
                 npc.setScriptValue(-1);
         }
 

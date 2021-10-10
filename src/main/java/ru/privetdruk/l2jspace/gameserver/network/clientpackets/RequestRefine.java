@@ -109,7 +109,7 @@ public final class RequestRefine extends AbstractRefinePacket {
         player.sendPacket(iu);
 
         // Refresh shortcuts.
-        player.getShortcutList().refreshShortcuts(s -> targetItem.getObjectId() == s.getId() && s.getType() == ShortcutType.ITEM);
+        player.getShortcutList().refreshShortcuts(s -> targetItem.getId() == s.getId() && s.getType() == ShortcutType.ITEM);
 
         StatusUpdate su = new StatusUpdate(player);
         su.addAttribute(StatusType.CUR_LOAD, player.getCurrentWeight());

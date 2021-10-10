@@ -22,7 +22,7 @@ public class OlympiadStat implements IUserCommandHandler {
 
         final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.THE_CURRENT_RECORD_FOR_THIS_OLYMPIAD_SESSION_IS_S1_MATCHES_S2_WINS_S3_DEFEATS_YOU_HAVE_EARNED_S4_OLYMPIAD_POINTS);
 
-        final StatSet set = Olympiad.getInstance().getNobleStats(player.getObjectId());
+        final StatSet set = Olympiad.getInstance().getNobleStats(player.getId());
         if (set == null) {
             sm.addNumber(0);
             sm.addNumber(0);

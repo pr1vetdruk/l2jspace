@@ -228,7 +228,7 @@ public abstract class Inventory extends ItemContainer {
      */
     public int getItemObjectIdFrom(Paperdoll slot) {
         final ItemInstance item = getItemFrom(slot);
-        return (item == null) ? 0 : item.getObjectId();
+        return (item == null) ? 0 : item.getId();
     }
 
     /**

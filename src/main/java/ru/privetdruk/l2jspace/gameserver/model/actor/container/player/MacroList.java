@@ -123,7 +123,7 @@ public class MacroList extends LinkedHashMap<Integer, Macro> {
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(INSERT_MACRO)) {
-            ps.setInt(1, _owner.getObjectId());
+            ps.setInt(1, _owner.getId());
             ps.setInt(2, macro.id);
             ps.setInt(3, macro.icon);
             ps.setString(4, macro.name);
@@ -144,7 +144,7 @@ public class MacroList extends LinkedHashMap<Integer, Macro> {
     private void deleteMacroFromDb(Macro macro) {
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(DELETE_MACRO)) {
-            ps.setInt(1, _owner.getObjectId());
+            ps.setInt(1, _owner.getId());
             ps.setInt(2, macro.id);
             ps.execute();
         } catch (Exception e) {
@@ -160,7 +160,7 @@ public class MacroList extends LinkedHashMap<Integer, Macro> {
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(LOAD_MACROS)) {
-            ps.setInt(1, _owner.getObjectId());
+            ps.setInt(1, _owner.getId());
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {

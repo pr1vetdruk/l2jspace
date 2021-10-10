@@ -51,7 +51,7 @@ public class EnterWorld extends L2GameClientPacket {
 
         getClient().setState(GameClientState.IN_GAME);
 
-        final int objectId = player.getObjectId();
+        final int objectId = player.getId();
 
         if (player.isGM()) {
             SkillEnum.Admin superHaste = SkillEnum.Admin.SUPER_HASTE;
@@ -274,6 +274,9 @@ public class EnterWorld extends L2GameClientPacket {
         final QuestState qs = player.getQuestList().getQuestState("Tutorial");
         if (qs != null)
             qs.getQuest().notifyEvent("UC", null, player);
+
+//        player.broadcastRelationsChanges();
+//        player.sendPacket(new RelationChanged(player, player.getRelation(player), true));
 
         player.sendPacket(ActionFailed.STATIC_PACKET);
     }

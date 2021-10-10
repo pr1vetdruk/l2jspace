@@ -19,7 +19,7 @@ public class Attack extends L2GameServerPacket {
     private HitHolder[] _hits;
 
     public Attack(Creature attacker, boolean useShots, int ssGrade) {
-        _attackerId = attacker.getObjectId();
+        _attackerId = attacker.getId();
         soulshot = useShots;
         _ssGrade = ssGrade;
         _x = attacker.getX();

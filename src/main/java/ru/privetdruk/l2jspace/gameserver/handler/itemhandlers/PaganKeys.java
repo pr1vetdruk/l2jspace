@@ -35,7 +35,7 @@ public class PaganKeys implements IItemHandler {
             return;
         }
 
-        if (!playable.destroyItem("Consume", item.getObjectId(), 1, null, true))
+        if (!playable.destroyItem("Consume", item.getId(), 1, null, true))
             return;
 
         final int doorId = door.getDoorId();

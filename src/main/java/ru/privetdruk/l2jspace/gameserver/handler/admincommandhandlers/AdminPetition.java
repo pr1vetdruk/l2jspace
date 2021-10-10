@@ -110,12 +110,12 @@ public class AdminPetition implements IAdminCommandHandler {
                 return;
             }
 
-            if (petition.getPetitionerObjectId() == targetPlayer.getObjectId()) {
+            if (petition.getPetitionerObjectId() == targetPlayer.getId()) {
                 player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.PETITION_ADDING_S1_FAILED_ERROR_NUMBER_S2).addCharName(targetPlayer).addNumber(3));
                 return;
             }
 
-            if (petition.getResponders().contains(targetPlayer.getObjectId())) {
+            if (petition.getResponders().contains(targetPlayer.getId())) {
                 player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.PETITION_ADDING_S1_FAILED_ERROR_NUMBER_S2).addCharName(targetPlayer).addNumber(4));
                 return;
             }

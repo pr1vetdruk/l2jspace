@@ -13,7 +13,7 @@ public class PrivateStoreManageListBuy extends L2GameServerPacket {
     private final List<TradeItem> _buyList;
 
     public PrivateStoreManageListBuy(Player player) {
-        _objId = player.getObjectId();
+        _objId = player.getId();
         _playerAdena = player.getAdena();
         _itemList = player.getInventory().getUniqueItems(false, true, true);
         _buyList = player.getBuyList();

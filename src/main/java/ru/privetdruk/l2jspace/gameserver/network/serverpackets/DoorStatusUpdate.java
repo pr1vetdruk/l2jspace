@@ -14,7 +14,7 @@ public class DoorStatusUpdate extends L2GameServerPacket {
     @Override
     protected final void writeImpl() {
         writeC(0x4d);
-        writeD(_door.getObjectId());
+        writeD(_door.getId());
         writeD(_door.isOpened() ? 0 : 1);
         writeD(_door.getDamage());
         writeD((_showHp) ? 1 : 0);

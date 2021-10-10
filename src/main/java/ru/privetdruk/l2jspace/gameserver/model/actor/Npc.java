@@ -158,7 +158,7 @@ public class Npc extends Creature {
         if (hasRandomAnimation())
             onRandomAnimation(Rnd.get(8));
 
-        player.getQuestList().setLastQuestNpcObjectId(getObjectId());
+        player.getQuestList().setLastQuestNpcObjectId(getId());
 
         List<Quest> scripts = getTemplate().getEventQuests(ScriptEventType.ON_FIRST_TALK);
         if (scripts.size() == 1)
@@ -361,7 +361,7 @@ public class Npc extends Creature {
 
     @Override
     public String toString() {
-        return getName() + " [npcId=" + getNpcId() + " objId=" + getObjectId() + "]";
+        return getName() + " [npcId=" + getNpcId() + " objId=" + getId() + "]";
     }
 
     @Override
@@ -616,7 +616,7 @@ public class Npc extends Creature {
      */
     public void onBypassFeedback(Player player, String command) {
         if (command.equalsIgnoreCase("TerritoryStatus")) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
             if (getCastle().getOwnerId() > 0) {
                 html.setFile("data/html/territorystatus.htm");
@@ -628,7 +628,7 @@ public class Npc extends Creature {
 
             html.replace("%castlename%", getCastle().getName());
             html.replace("%taxpercent%", getCastle().getTaxPercent());
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
 
             if (getCastle().getCastleId() > 6)
                 html.replace("%territory%", "The Kingdom of Elmore");
@@ -661,9 +661,9 @@ public class Npc extends Creature {
             if (path.indexOf("..") != -1)
                 return;
 
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setFile("data/html/" + path);
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             player.sendPacket(html);
         } else if (command.startsWith("Loto")) {
             int val = 0;
@@ -852,7 +852,7 @@ public class Npc extends Creature {
      */
     private static void showQuestWindowSingle(Player player, Npc npc, Quest quest) {
         if (quest == null) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(npc.getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(npc.getId());
             html.setHtml(Quest.getNoQuestMsg());
             player.sendPacket(html);
 
@@ -871,7 +871,7 @@ public class Npc extends Creature {
             if (player.getQuestList().getQuestState(quest.getName()) == null) {
                 // Check available quest slot.
                 if (player.getQuestList().getAllQuests(false).size() >= 25) {
-                    final NpcHtmlMessage html = new NpcHtmlMessage(npc.getObjectId());
+                    final NpcHtmlMessage html = new NpcHtmlMessage(npc.getId());
                     html.setHtml(Quest.getTooMuchQuestsMsg());
                     player.sendPacket(html);
 
@@ -885,7 +885,7 @@ public class Npc extends Creature {
             }
         }
 
-        player.getQuestList().setLastQuestNpcObjectId(npc.getObjectId());
+        player.getQuestList().setLastQuestNpcObjectId(npc.getId());
         quest.notifyTalk(npc, player);
     }
 
@@ -913,9 +913,9 @@ public class Npc extends Creature {
 
         sb.append("</body></html>");
 
-        final NpcHtmlMessage html = new NpcHtmlMessage(npc.getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(npc.getId());
         html.setHtml(sb.toString());
-        html.replace("%objectId%", npc.getObjectId());
+        html.replace("%objectId%", npc.getId());
         player.sendPacket(html);
 
         player.sendPacket(ActionFailed.STATIC_PACKET);
@@ -1054,7 +1054,7 @@ public class Npc extends Creature {
     public void showLotoWindow(Player player, int val) {
         final int npcId = getTemplate().getNpcId();
 
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
         if (val == 0) // 0 - first buy lottery ticket window
             html.setFile(getHtmlPath(npcId, 1));
@@ -1172,7 +1172,7 @@ public class Npc extends Creature {
                     continue;
 
                 if (item.getItemId() == 4442 && item.getCustomType1() < lotoNumber) {
-                    StringUtil.append(sb, "<a action=\"bypass -h npc_%objectId%_Loto ", item.getObjectId(), "\">", item.getCustomType1(), " Event Number ");
+                    StringUtil.append(sb, "<a action=\"bypass -h npc_%objectId%_Loto ", item.getId(), "\">", item.getCustomType1(), " Event Number ");
 
                     final int[] numbers = LotteryManager.decodeNumbers(item.getEnchantLevel(), item.getCustomType2());
                     for (int i = 0; i < 5; i++)
@@ -1225,7 +1225,7 @@ public class Npc extends Creature {
             }
             return;
         }
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         html.replace("%race%", LotteryManager.getInstance().getId());
         html.replace("%adena%", LotteryManager.getInstance().getPrize());
         html.replace("%ticket_price%", Config.LOTTERY_TICKET_PRICE);
@@ -1247,7 +1247,7 @@ public class Npc extends Creature {
     protected boolean showPkDenyChatWindow(Player player, String type) {
         final String content = HtmCache.getInstance().getHtm("data/html/" + type + "/" + getNpcId() + "-pk.htm");
         if (content != null) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             html.setHtml(content);
             player.sendPacket(html);
 
@@ -1286,9 +1286,9 @@ public class Npc extends Creature {
      * @param filename : The filename that contains the text to send.
      */
     public void showChatWindow(Player player, String filename) {
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
         html.setFile(filename);
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         player.sendPacket(html);
 
         player.sendPacket(ActionFailed.STATIC_PACKET);

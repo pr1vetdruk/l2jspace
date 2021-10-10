@@ -198,7 +198,7 @@ public class VillageMaster extends Folk {
                 return;
             }
 
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             if (clan.getNewLeaderId() == 0) {
                 clan.setNewLeaderId(member.getObjectId(), true);
                 html.setFile("data/html/script/feature/Clan/9000-07-success.htm");
@@ -213,7 +213,7 @@ public class VillageMaster extends Folk {
             }
 
             final Clan clan = player.getClan();
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
             if (clan.getNewLeaderId() != 0) {
                 clan.setNewLeaderId(0, true);
                 html.setFile("data/html/script/feature/Clan/9000-08-success.htm");
@@ -252,7 +252,7 @@ public class VillageMaster extends Folk {
             if (OlympiadManager.getInstance().isRegisteredInComp(player))
                 OlympiadManager.getInstance().unRegisterNoble(player);
 
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
             int cmdChoice = 0;
             int paramOne = 0;
@@ -490,7 +490,7 @@ public class VillageMaster extends Folk {
                     break;
             }
 
-            html.replace("%objectId%", getObjectId());
+            html.replace("%objectId%", getId());
             player.sendPacket(html);
         } else {
             // this class dont know any other commands, let forward the command to the parent class

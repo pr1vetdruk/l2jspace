@@ -10,7 +10,7 @@ public class L2FriendStatus extends L2GameServerPacket {
     public L2FriendStatus(Player player, boolean isOnline) {
         _isOnline = isOnline ? 1 : 0;
         _name = player.getName();
-        _objectId = player.getObjectId();
+        _objectId = player.getId();
     }
 
     @Override

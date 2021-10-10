@@ -18,7 +18,6 @@ import ru.privetdruk.l2jspace.gameserver.model.group.Party;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.AbstractNpcInfo.NpcInfo;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.NpcHtmlMessage;
-import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SkillCoolTime;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -474,7 +473,7 @@ public class AdminEditChar implements IAdminCommandHandler {
 
         html.setFile("data/html/admin/charinfo.htm");
         html.replace("%name%", targetPlayer.getName());
-        html.replace("%objid%", targetPlayer.getObjectId());
+        html.replace("%objid%", targetPlayer.getId());
         html.replace("%clan%", (targetPlayer.getClan() != null) ? "<a action=\"bypass -h admin_pledge info " + targetPlayer.getClan().getName() + "\">" + targetPlayer.getClan().getName() + "</a>" : "N/A");
         html.replace("%party%", (targetPlayer.getParty() != null) ? "<a action=\"bypass -h admin_party_info " + targetPlayer.getName() + "\">" + targetPlayer.getParty().getMembers().size() + " members</a>" : "N/A");
         html.replace("%baseclass%", PlayerData.getInstance().getClassNameById(targetPlayer.getBaseClass()));

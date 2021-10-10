@@ -16,8 +16,8 @@ public class MoveToPawn extends L2GameServerPacket {
     private final int _z;
 
     public MoveToPawn(Creature creature, WorldObject target, int distance) {
-        _objectId = creature.getObjectId();
-        _targetId = target.getObjectId();
+        _objectId = creature.getId();
+        _targetId = target.getId();
         _distance = distance;
         _x = creature.getX();
         _y = creature.getY();

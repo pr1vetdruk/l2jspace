@@ -20,7 +20,7 @@ public class ChatTrade implements IChatHandler {
         if (!player.getClient().performAction(FloodProtector.TRADE_CHAT))
             return;
 
-        CreatureSay cs = new CreatureSay(player.getObjectId(), type, player.getName(), text);
+        CreatureSay cs = new CreatureSay(player.getId(), type, player.getName(), text);
 
         if (Config.TRADE_CHAT.equalsIgnoreCase("global") || (Config.TRADE_CHAT.equalsIgnoreCase("gm") && player.isGM())) {
             for (Player worldPlayer : World.getInstance().getPlayers()) {

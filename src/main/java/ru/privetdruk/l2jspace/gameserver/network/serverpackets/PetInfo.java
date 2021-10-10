@@ -33,7 +33,7 @@ public class PetInfo extends L2GameServerPacket {
     protected final void writeImpl() {
         writeC(0xb1);
         writeD(_summon.getSummonType());
-        writeD(_summon.getObjectId());
+        writeD(_summon.getId());
         writeD(_summon.getTemplate().getIdTemplate() + 1000000);
         writeD(0); // 1=attackable
 

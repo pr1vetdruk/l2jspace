@@ -12,7 +12,7 @@ public class TradeItem {
     private int _price;
 
     public TradeItem(ItemInstance item, int count, int price) {
-        _objectId = item.getObjectId();
+        _objectId = item.getId();
         _item = item.getItem();
         _enchant = item.getEnchantLevel();
         _count = count;

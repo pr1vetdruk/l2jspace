@@ -115,7 +115,7 @@ public class HennaList {
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement("SELECT slot, symbol_id FROM character_hennas WHERE char_obj_id = ? AND class_index = ?")) {
-            ps.setInt(1, _owner.getObjectId());
+            ps.setInt(1, _owner.getId());
             ps.setInt(2, _owner.getClassIndex());
 
             try (ResultSet rs = ps.executeQuery()) {
@@ -225,7 +225,7 @@ public class HennaList {
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement("INSERT INTO character_hennas (char_obj_id,symbol_id,slot,class_index) VALUES (?,?,?,?)")) {
-            ps.setInt(1, _owner.getObjectId());
+            ps.setInt(1, _owner.getId());
             ps.setInt(2, henna.getSymbolId());
             ps.setInt(3, slot + HENNA_FIRST_SLOT_ID);
             ps.setInt(4, _owner.getClassIndex());
@@ -251,7 +251,7 @@ public class HennaList {
 
         try (Connection con = ConnectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement("DELETE FROM character_hennas WHERE char_obj_id=? AND slot=? AND class_index=?")) {
-            ps.setInt(1, _owner.getObjectId());
+            ps.setInt(1, _owner.getId());
             ps.setInt(2, slot + HENNA_FIRST_SLOT_ID);
             ps.setInt(3, _owner.getClassIndex());
             ps.execute();

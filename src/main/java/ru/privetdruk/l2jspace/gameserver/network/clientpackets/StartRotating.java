@@ -19,6 +19,6 @@ public final class StartRotating extends L2GameClientPacket {
         if (player == null)
             return;
 
-        player.broadcastPacket(new StartRotation(player.getObjectId(), _degree, _side, 0));
+        player.broadcastPacket(new StartRotation(player.getId(), _degree, _side, 0));
     }
 }

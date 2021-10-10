@@ -117,7 +117,7 @@ public abstract class AbstractRefinePacket extends L2GameClientPacket {
             return false;
 
         // GemStones must belong to owner
-        if (gemStones.getOwnerId() != player.getObjectId())
+        if (gemStones.getOwnerId() != player.getId())
             return false;
         // .. and located in inventory
         if (gemStones.getLocation() != ItemLocation.INVENTORY)
@@ -149,7 +149,7 @@ public abstract class AbstractRefinePacket extends L2GameClientPacket {
             return false;
 
         // Item must belong to owner
-        if (refinerItem.getOwnerId() != player.getObjectId())
+        if (refinerItem.getOwnerId() != player.getId())
             return false;
 
         // Lifestone must be located in inventory
@@ -175,7 +175,7 @@ public abstract class AbstractRefinePacket extends L2GameClientPacket {
             return false;
 
         // Item must belong to owner
-        if (item.getOwnerId() != player.getObjectId())
+        if (item.getOwnerId() != player.getId())
             return false;
         if (item.isAugmented())
             return false;

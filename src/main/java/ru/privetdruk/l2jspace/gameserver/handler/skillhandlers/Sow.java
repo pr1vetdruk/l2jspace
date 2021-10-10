@@ -46,7 +46,7 @@ public class Sow implements ISkillHandler {
         SystemMessageId smId;
         if (calcSuccess(activeChar, target, seed)) {
             player.sendPacket(new PlaySound(Quest.SOUND_ITEMGET));
-            target.getSeedState().calculateHarvestItems(activeChar.getObjectId());
+            target.getSeedState().calculateHarvestItems(activeChar.getId());
             smId = SystemMessageId.THE_SEED_WAS_SUCCESSFULLY_SOWN;
         } else
             smId = SystemMessageId.THE_SEED_WAS_NOT_SOWN;

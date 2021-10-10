@@ -29,7 +29,7 @@ public class GatekeeperSpirit extends Quest {
 
     @Override
     public String onFirstTalk(Npc npc, Player player) {
-        final CabalType playerCabal = SevenSignsManager.getInstance().getPlayerCabal(player.getObjectId());
+        final CabalType playerCabal = SevenSignsManager.getInstance().getPlayerCabal(player.getId());
         final CabalType sealAvariceOwner = SevenSignsManager.getInstance().getSealOwner(SealType.AVARICE);
         final CabalType winningCabal = SevenSignsManager.getInstance().getWinningCabal();
 

@@ -14,7 +14,7 @@ public class ExDuelUpdateUserInfo extends L2GameServerPacket {
         writeC(0xfe);
         writeH(0x4f);
         writeS(_player.getName());
-        writeD(_player.getObjectId());
+        writeD(_player.getId());
         writeD(_player.getClassId().getId());
         writeD(_player.getStatus().getLevel());
         writeD((int) _player.getStatus().getHp());

@@ -21,7 +21,7 @@ public class ExPartyRoomMember extends L2GameServerPacket {
         writeD(_room.getMembersCount());
 
         for (Player member : _room.getMembers()) {
-            writeD(member.getObjectId());
+            writeD(member.getId());
             writeS(member.getName());
             writeD(member.getActiveClass());
             writeD(member.getStatus().getLevel());

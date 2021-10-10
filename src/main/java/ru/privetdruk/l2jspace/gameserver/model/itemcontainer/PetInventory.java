@@ -22,7 +22,7 @@ public class PetInventory extends Inventory {
     public int getOwnerId() {
         int id;
         try {
-            id = _owner.getOwner().getObjectId();
+            id = _owner.getOwner().getId();
         } catch (NullPointerException e) {
             return 0;
         }
@@ -79,9 +79,9 @@ public class PetInventory extends Inventory {
         if (petOwner != null) {
             for (ItemInstance item : _items) {
                 if (petOwner.getInventory().validateCapacity(1))
-                    getOwner().transferItem("return", item.getObjectId(), item.getCount(), petOwner.getInventory(), petOwner, getOwner());
+                    getOwner().transferItem("return", item.getId(), item.getCount(), petOwner.getInventory(), petOwner, getOwner());
                 else {
-                    final ItemInstance droppedItem = dropItem("drop", item.getObjectId(), item.getCount(), petOwner, getOwner());
+                    final ItemInstance droppedItem = dropItem("drop", item.getId(), item.getCount(), petOwner, getOwner());
                     droppedItem.dropMe(getOwner(), 70);
                 }
             }

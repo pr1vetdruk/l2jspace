@@ -50,7 +50,7 @@ public class Seeds implements IItemHandler {
             return;
         }
 
-        monster.getSeedState().setSeeded(seed, playable.getObjectId());
+        monster.getSeedState().setSeeded(seed, playable.getId());
 
         IntIntHolder[] skills = item.getEtcItem().getSkills();
         if (skills != null) {

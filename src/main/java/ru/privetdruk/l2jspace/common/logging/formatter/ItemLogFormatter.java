@@ -25,7 +25,7 @@ public class ItemLogFormatter extends MasterFormatter {
                 if (item.getEnchantLevel() > 0)
                     StringUtil.append(sb, "+", item.getEnchantLevel(), " ");
 
-                StringUtil.append(sb, item.getItem().getName(), SPACE, item.getObjectId());
+                StringUtil.append(sb, item.getItem().getName(), SPACE, item.getId());
             } else
                 sb.append(p.toString());
 

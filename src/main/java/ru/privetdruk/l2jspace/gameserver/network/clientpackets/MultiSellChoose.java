@@ -195,7 +195,7 @@ public class MultiSellChoose extends L2GameClientPacket {
                 if (Config.BLACKSMITH_USE_RECIPES || !e.getMaintainIngredient()) {
                     // if it's a stackable item, just reduce the amount from the first (only) instance that is found in the inventory
                     if (itemToTake.isStackable()) {
-                        if (!player.destroyItem("Multisell", itemToTake.getObjectId(), (e.getItemCount() * _amount), player.getTarget(), true)) {
+                        if (!player.destroyItem("Multisell", itemToTake.getId(), (e.getItemCount() * _amount), player.getTarget(), true)) {
                             player.setMultiSell(null);
                             return;
                         }
@@ -212,7 +212,7 @@ public class MultiSellChoose extends L2GameClientPacket {
                                 if (inventoryContents[i].isAugmented())
                                     augmentation.add(inventoryContents[i].getAugmentation());
 
-                                if (!player.destroyItem("Multisell", inventoryContents[i].getObjectId(), 1, player.getTarget(), true)) {
+                                if (!player.destroyItem("Multisell", inventoryContents[i].getId(), 1, player.getTarget(), true)) {
                                     player.setMultiSell(null);
                                     return;
                                 }
@@ -237,7 +237,7 @@ public class MultiSellChoose extends L2GameClientPacket {
                                     }
                                 }
 
-                                if (!player.destroyItem("Multisell", itemToTake.getObjectId(), 1, player.getTarget(), true)) {
+                                if (!player.destroyItem("Multisell", itemToTake.getId(), 1, player.getTarget(), true)) {
                                     player.setMultiSell(null);
                                     return;
                                 }

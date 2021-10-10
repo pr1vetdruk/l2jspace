@@ -22,7 +22,7 @@ public class SellList extends L2GameServerPacket {
 
         for (ItemInstance item : _items) {
             writeH(item.getItem().getType1());
-            writeD(item.getObjectId());
+            writeD(item.getId());
             writeD(item.getItemId());
             writeD(item.getCount());
             writeH(item.getItem().getType2());

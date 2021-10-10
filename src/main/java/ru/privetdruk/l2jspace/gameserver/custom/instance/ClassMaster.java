@@ -42,9 +42,9 @@ public final class ClassMaster extends Folk {
         if (Config.ALLOW_CLASS_MASTERS)
             filename = "data/html/classmaster/" + getNpcId() + ".htm";
 
-        final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+        final NpcHtmlMessage html = new NpcHtmlMessage(getId());
         html.setFile(filename);
-        html.replace("%objectId%", getObjectId());
+        html.replace("%objectId%", getId());
         player.sendPacket(html);
     }
 
@@ -54,22 +54,22 @@ public final class ClassMaster extends Folk {
             return;
 
         if (command.startsWith("1stClass"))
-            showHtmlMenu(player, getObjectId(), 1);
+            showHtmlMenu(player, getId(), 1);
         else if (command.startsWith("2ndClass"))
-            showHtmlMenu(player, getObjectId(), 2);
+            showHtmlMenu(player, getId(), 2);
         else if (command.startsWith("3rdClass"))
-            showHtmlMenu(player, getObjectId(), 3);
+            showHtmlMenu(player, getId(), 3);
         else if (command.startsWith("change_class")) {
             int val = Integer.parseInt(command.substring(13));
 
             if (checkAndChangeClass(player, val)) {
-                final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+                final NpcHtmlMessage html = new NpcHtmlMessage(getId());
                 html.setFile("data/html/classmaster/ok.htm");
                 html.replace("%name%", PlayerData.getInstance().getClassNameById(val));
                 player.sendPacket(html);
             }
         } else if (command.startsWith("become_noble")) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+            final NpcHtmlMessage html = new NpcHtmlMessage(getId());
 
             if (!player.isNoble()) {
                 player.setNoble(true, true);

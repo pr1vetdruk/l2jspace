@@ -86,7 +86,7 @@ public class PlayerCast extends PlayableCast<Player> {
 
     @Override
     public void doInstantCast(L2Skill skill, ItemInstance item) {
-        if (!item.isHerb() && !_actor.destroyItem("Consume", item.getObjectId(), (skill.getItemConsumeId() == 0 && skill.getItemConsume() > 0) ? skill.getItemConsume() : 1, null, false)) {
+        if (!item.isHerb() && !_actor.destroyItem("Consume", item.getId(), (skill.getItemConsumeId() == 0 && skill.getItemConsume() > 0) ? skill.getItemConsume() : 1, null, false)) {
             _actor.sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
             return;
         }
@@ -221,7 +221,7 @@ public class PlayerCast extends PlayableCast<Player> {
                 return false;
             }
 
-            if (SevenSignsManager.getInstance().isSealValidationPeriod() && SevenSignsManager.getInstance().getSealOwner(SealType.STRIFE) == CabalType.DAWN && SevenSignsManager.getInstance().getPlayerCabal(_actor.getObjectId()) == CabalType.DUSK) {
+            if (SevenSignsManager.getInstance().isSealValidationPeriod() && SevenSignsManager.getInstance().getSealOwner(SealType.STRIFE) == CabalType.DAWN && SevenSignsManager.getInstance().getPlayerCabal(_actor.getId()) == CabalType.DUSK) {
                 _actor.sendPacket(SystemMessageId.SEAL_OF_STRIFE_FORBIDS_SUMMONING);
                 return false;
             }

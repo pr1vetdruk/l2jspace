@@ -34,7 +34,7 @@ public final class NpcSay extends L2GameServerPacket {
      * @param text : The message.
      */
     public NpcSay(Npc npc, SayType type, String text) {
-        _objectId = npc.getObjectId();
+        _objectId = npc.getId();
         _type = type;
         _npcId = 1000000 + npc.getNpcId();
         _text = text;
@@ -49,7 +49,7 @@ public final class NpcSay extends L2GameServerPacket {
      * @param text   : The message.
      */
     public NpcSay(Summon summon, SayType type, String text) {
-        _objectId = summon.getObjectId();
+        _objectId = summon.getId();
         _type = type;
         _npcId = 1000000 + summon.getNpcId();
         _text = text;

@@ -19,7 +19,7 @@ public final class Participant {
     private Player _player;
 
     public Participant(Player player, int side) {
-        _objectId = player.getObjectId();
+        _objectId = player.getId();
         _player = player;
         _name = player.getName();
         _side = side;

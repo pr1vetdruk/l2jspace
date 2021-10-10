@@ -47,8 +47,8 @@ public class FriendsBBSManager extends BaseBBSManager {
             } else if (action.equals("delall")) {
                 try (Connection con = ConnectionPool.getConnection();
                      PreparedStatement ps = con.prepareStatement(DELETE_ALL_FRIENDS)) {
-                    ps.setInt(1, player.getObjectId());
-                    ps.setInt(2, player.getObjectId());
+                    ps.setInt(1, player.getId());
+                    ps.setInt(2, player.getId());
                     ps.execute();
                 } catch (Exception e) {
                     LOGGER.error("Couldn't delete friends.", e);
@@ -58,8 +58,8 @@ public class FriendsBBSManager extends BaseBBSManager {
                     // Update friend's friendlist.
                     final Player friend = World.getInstance().getPlayer(friendId);
                     if (friend != null) {
-                        friend.getFriendList().remove(Integer.valueOf(player.getObjectId()));
-                        friend.getSelectedFriendList().remove(Integer.valueOf(player.getObjectId()));
+                        friend.getFriendList().remove(Integer.valueOf(player.getId()));
+                        friend.getSelectedFriendList().remove(Integer.valueOf(player.getId()));
 
                         friend.sendPacket(new FriendList(friend));
                     }
@@ -76,8 +76,8 @@ public class FriendsBBSManager extends BaseBBSManager {
             else if (action.equals("del")) {
                 try (Connection con = ConnectionPool.getConnection();
                      PreparedStatement ps = con.prepareStatement(DELETE_FRIEND)) {
-                    ps.setInt(1, player.getObjectId());
-                    ps.setInt(4, player.getObjectId());
+                    ps.setInt(1, player.getId());
+                    ps.setInt(4, player.getId());
 
                     for (int friendId : player.getSelectedFriendList()) {
                         ps.setInt(2, friendId);
@@ -87,7 +87,7 @@ public class FriendsBBSManager extends BaseBBSManager {
                         // Update friend's friendlist.
                         final Player friend = World.getInstance().getPlayer(friendId);
                         if (friend != null) {
-                            friend.getFriendList().remove(Integer.valueOf(player.getObjectId()));
+                            friend.getFriendList().remove(Integer.valueOf(player.getId()));
                             friend.sendPacket(new FriendList(friend));
                         }
 

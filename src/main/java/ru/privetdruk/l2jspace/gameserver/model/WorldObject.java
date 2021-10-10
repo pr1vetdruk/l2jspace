@@ -46,7 +46,7 @@ public abstract class WorldObject {
 
     @Override
     public String toString() {
-        return (getClass().getSimpleName() + ":" + getName() + "[" + getObjectId() + "]");
+        return (getClass().getSimpleName() + ":" + getName() + "[" + getId() + "]");
     }
 
     public void onAction(Player player, boolean isCtrlPressed, boolean isShiftPressed) {
@@ -67,7 +67,7 @@ public abstract class WorldObject {
 
     public void refreshID() {
         World.getInstance().removeObject(this);
-        IdFactory.getInstance().releaseId(getObjectId());
+        IdFactory.getInstance().releaseId(getId());
         _objectId = IdFactory.getInstance().getNextId();
     }
 
@@ -161,7 +161,7 @@ public abstract class WorldObject {
         _name = value;
     }
 
-    public final int getObjectId() {
+    public final int getId() {
         return _objectId;
     }
 

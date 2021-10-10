@@ -193,23 +193,23 @@ public class Valakas extends AttackableAIScript {
         }
         // Spawn cinematic, regen_task and choose of skill.
         else if (name.equalsIgnoreCase("spawn_1"))
-            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 1800, 180, -1, 1500, 10000, 0, 0, 1, 0));
+            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 1800, 180, -1, 1500, 10000, 0, 0, 1, 0));
         else if (name.equalsIgnoreCase("spawn_2"))
-            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 1300, 180, -5, 3000, 10000, 0, -5, 1, 0));
+            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 1300, 180, -5, 3000, 10000, 0, -5, 1, 0));
         else if (name.equalsIgnoreCase("spawn_3"))
-            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 500, 180, -8, 600, 10000, 0, 60, 1, 0));
+            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 500, 180, -8, 600, 10000, 0, 60, 1, 0));
         else if (name.equalsIgnoreCase("spawn_4"))
-            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 800, 180, -8, 2700, 10000, 0, 30, 1, 0));
+            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 800, 180, -8, 2700, 10000, 0, 30, 1, 0));
         else if (name.equalsIgnoreCase("spawn_5"))
-            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 200, 250, 70, 0, 10000, 30, 80, 1, 0));
+            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 200, 250, 70, 0, 10000, 30, 80, 1, 0));
         else if (name.equalsIgnoreCase("spawn_6"))
-            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 1100, 250, 70, 2500, 10000, 30, 80, 1, 0));
+            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 1100, 250, 70, 2500, 10000, 30, 80, 1, 0));
         else if (name.equalsIgnoreCase("spawn_7"))
-            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 700, 150, 30, 0, 10000, -10, 60, 1, 0));
+            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 700, 150, 30, 0, 10000, -10, 60, 1, 0));
         else if (name.equalsIgnoreCase("spawn_8"))
-            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 1200, 150, 20, 2900, 10000, -10, 30, 1, 0));
+            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 1200, 150, 20, 2900, 10000, -10, 30, 1, 0));
         else if (name.equalsIgnoreCase("spawn_9"))
-            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 750, 170, -10, 3400, 4000, 10, -15, 1, 0));
+            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 750, 170, -10, 3400, 4000, 10, -15, 1, 0));
         else if (name.equalsIgnoreCase("spawn_10")) {
             GrandBossManager.getInstance().setBossStatus(VALAKAS, FIGHTING);
             npc.setInvul(false);
@@ -219,21 +219,21 @@ public class Valakas extends AttackableAIScript {
         }
         // Death cinematic, spawn of Teleport Cubes.
         else if (name.equalsIgnoreCase("die_1"))
-            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 2000, 130, -1, 0, 10000, 0, 0, 1, 1));
+            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 2000, 130, -1, 0, 10000, 0, 0, 1, 1));
         else if (name.equalsIgnoreCase("die_2"))
-            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 1100, 210, -5, 3000, 10000, -13, 0, 1, 1));
+            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 1100, 210, -5, 3000, 10000, -13, 0, 1, 1));
         else if (name.equalsIgnoreCase("die_3"))
-            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 1300, 200, -8, 3000, 10000, 0, 15, 1, 1));
+            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 1300, 200, -8, 3000, 10000, 0, 15, 1, 1));
         else if (name.equalsIgnoreCase("die_4"))
-            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 1000, 190, 0, 500, 10000, 0, 10, 1, 1));
+            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 1000, 190, 0, 500, 10000, 0, 10, 1, 1));
         else if (name.equalsIgnoreCase("die_5"))
-            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 1700, 120, 0, 2500, 10000, 12, 40, 1, 1));
+            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 1700, 120, 0, 2500, 10000, 12, 40, 1, 1));
         else if (name.equalsIgnoreCase("die_6"))
-            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 1700, 20, 0, 700, 10000, 10, 10, 1, 1));
+            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 1700, 20, 0, 700, 10000, 10, 10, 1, 1));
         else if (name.equalsIgnoreCase("die_7"))
-            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 1700, 10, 0, 1000, 10000, 20, 70, 1, 1));
+            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 1700, 10, 0, 1000, 10000, 20, 70, 1, 1));
         else if (name.equalsIgnoreCase("die_8")) {
-            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 1700, 10, 0, 300, 250, 20, -20, 1, 1));
+            VALAKAS_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 1700, 10, 0, 300, 250, 20, -20, 1, 1));
 
             for (SpawnLocation loc : CUBE_LOC)
                 addSpawn(31759, loc, false, 900000, false);

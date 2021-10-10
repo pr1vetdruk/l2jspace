@@ -170,7 +170,7 @@ public class CursedWeaponManager implements IXmlReader {
             return;
 
         for (CursedWeapon cw : _cursedWeapons.values()) {
-            if (cw.isActivated() && player.getObjectId() == cw.getPlayerId()) {
+            if (cw.isActivated() && player.getId() == cw.getPlayerId()) {
                 cw.setPlayer(player);
                 cw.setItem(player.getInventory().getItemByItemId(cw.getItemId()));
                 cw.giveDemonicSkills();

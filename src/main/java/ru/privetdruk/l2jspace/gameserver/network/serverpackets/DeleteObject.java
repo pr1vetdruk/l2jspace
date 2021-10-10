@@ -7,12 +7,12 @@ public class DeleteObject extends L2GameServerPacket {
     private final boolean _isSeated;
 
     public DeleteObject(WorldObject obj) {
-        _objectId = obj.getObjectId();
+        _objectId = obj.getId();
         _isSeated = false;
     }
 
     public DeleteObject(WorldObject obj, boolean sit) {
-        _objectId = obj.getObjectId();
+        _objectId = obj.getId();
         _isSeated = sit;
     }
 

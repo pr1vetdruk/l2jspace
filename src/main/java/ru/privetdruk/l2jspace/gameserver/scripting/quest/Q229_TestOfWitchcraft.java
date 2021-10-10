@@ -457,7 +457,7 @@ public class Q229_TestOfWitchcraft extends SecondClassQuest {
                     startQuestTimer("zeruel_despawn", npc, null, 1000);
                 } else if (npc == _drevanulPrinceZeruel_Evert && st.getCond() == 9 && npc.isScriptValue(0)) {
                     if (player.getInventory().getItemIdFrom(Paperdoll.RHAND) == SWORD_OF_BINDING) {
-                        npc.setScriptValue(player.getObjectId());
+                        npc.setScriptValue(player.getId());
                         npc.broadcastNpcSay(NpcStringId.ID_22935);
                     }
                 }
@@ -556,7 +556,7 @@ public class Q229_TestOfWitchcraft extends SecondClassQuest {
                 break;
 
             case DREVANUL_PRINCE_ZERUEL:
-                if (npc == _drevanulPrinceZeruel_Evert && st.getCond() == 9 && npc.getScriptValue() == player.getObjectId()) {
+                if (npc == _drevanulPrinceZeruel_Evert && st.getCond() == 9 && npc.getScriptValue() == player.getId()) {
                     st.setCond(10);
                     playSound(player, SOUND_ITEMGET);
                     takeItems(player, BRIMSTONE_2, 1);

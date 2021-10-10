@@ -107,7 +107,7 @@ public class Sailren extends AttackableAIScript {
             startQuestTimerAtFixedRate("skill", temp, null, 2500);
 
             // Cinematic, meanwhile.
-            SAILREN_LAIR.broadcastPacket(new SpecialCamera(temp.getObjectId(), 60, 110, 30, 4000, 4000, 0, 65, 1, 0)); // 4sec
+            SAILREN_LAIR.broadcastPacket(new SpecialCamera(temp.getId(), 60, 110, 30, 4000, 4000, 0, 65, 1, 0)); // 4sec
 
             startQuestTimer("camera_0", temp, null, 3900); // 3sec
             startQuestTimer("camera_1", temp, null, 6800); // 3sec
@@ -118,15 +118,15 @@ public class Sailren extends AttackableAIScript {
         } else if (name.equalsIgnoreCase("skill"))
             SAILREN_LAIR.broadcastPacket(new MagicSkillUse(npc, npc, 5090, 1, 2500, 0));
         else if (name.equalsIgnoreCase("camera_0"))
-            SAILREN_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 100, 180, 30, 3000, 3000, 0, 50, 1, 0));
+            SAILREN_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 100, 180, 30, 3000, 3000, 0, 50, 1, 0));
         else if (name.equalsIgnoreCase("camera_1"))
-            SAILREN_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 150, 270, 25, 3000, 3000, 0, 30, 1, 0));
+            SAILREN_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 150, 270, 25, 3000, 3000, 0, 30, 1, 0));
         else if (name.equalsIgnoreCase("camera_2"))
-            SAILREN_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 160, 360, 20, 3000, 3000, 10, 15, 1, 0));
+            SAILREN_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 160, 360, 20, 3000, 3000, 10, 15, 1, 0));
         else if (name.equalsIgnoreCase("camera_3"))
-            SAILREN_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 160, 450, 10, 3000, 3000, 0, 10, 1, 0));
+            SAILREN_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 160, 450, 10, 3000, 3000, 0, 10, 1, 0));
         else if (name.equalsIgnoreCase("camera_4")) {
-            SAILREN_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 160, 560, 0, 3000, 3000, 0, 10, 1, 0));
+            SAILREN_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 160, 560, 0, 3000, 3000, 0, 10, 1, 0));
 
             final Npc temp = addSpawn(SAILREN, SAILREN_LOC, false, 0, false);
             GrandBossManager.getInstance().addBoss((GrandBoss) temp);
@@ -138,7 +138,7 @@ public class Sailren extends AttackableAIScript {
 
             temp.broadcastPacket(new SocialAction(temp, 2));
         } else if (name.equalsIgnoreCase("camera_5"))
-            SAILREN_LAIR.broadcastPacket(new SpecialCamera(npc.getObjectId(), 70, 560, 0, 500, 7000, -15, 10, 1, 0));
+            SAILREN_LAIR.broadcastPacket(new SpecialCamera(npc.getId(), 70, 560, 0, 500, 7000, -15, 10, 1, 0));
         else if (name.equalsIgnoreCase("unlock"))
             GrandBossManager.getInstance().setBossStatus(SAILREN, DORMANT);
         else if (name.equalsIgnoreCase("inactivity")) {
@@ -170,7 +170,7 @@ public class Sailren extends AttackableAIScript {
     public String onKill(Npc npc, Creature killer) {
         if (killer instanceof Playable) {
             final Player player = killer.getActingPlayer();
-            if (player == null || !_minions.contains(npc) || !SAILREN_LAIR.getAllowedPlayers().contains(player.getObjectId()))
+            if (player == null || !_minions.contains(npc) || !SAILREN_LAIR.getAllowedPlayers().contains(player.getId()))
                 return null;
         }
 
@@ -233,7 +233,7 @@ public class Sailren extends AttackableAIScript {
     public String onAttack(Npc npc, Creature attacker, int damage, L2Skill skill) {
         if (attacker instanceof Playable) {
             final Player player = attacker.getActingPlayer();
-            if (player == null || !_minions.contains(npc) || !SAILREN_LAIR.getAllowedPlayers().contains(player.getObjectId()))
+            if (player == null || !_minions.contains(npc) || !SAILREN_LAIR.getAllowedPlayers().contains(player.getId()))
                 return null;
 
             // Curses

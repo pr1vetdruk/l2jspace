@@ -872,7 +872,7 @@ public class SevenSignsManager {
             if (player.isGM() || !player.isIn7sDungeon())
                 continue;
 
-            final StatSet set = _playersData.get(player.getObjectId());
+            final StatSet set = _playersData.get(player.getId());
             if (set != null) {
                 final CabalType playerCabal = set.getEnum("cabal", CabalType.class);
                 if (isSealValidationPeriod() || isCompResultsPeriod()) {
@@ -1010,7 +1010,7 @@ public class SevenSignsManager {
      */
     public void giveSosEffect(CabalType strifeOwner) {
         for (Player player : World.getInstance().getPlayers()) {
-            final CabalType cabal = getPlayerCabal(player.getObjectId());
+            final CabalType cabal = getPlayerCabal(player.getId());
             if (cabal != CabalType.NORMAL) {
                 if (cabal == strifeOwner)
                     player.addSkill(SkillTable.FrequentSkill.THE_VICTOR_OF_WAR.getSkill(), false);

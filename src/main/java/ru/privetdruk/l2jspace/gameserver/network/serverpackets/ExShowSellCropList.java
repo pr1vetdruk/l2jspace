@@ -42,7 +42,7 @@ public class ExShowSellCropList extends L2GameServerPacket {
         for (ItemInstance item : _cropsItems.values()) {
             final Seed seed = CastleManorManager.getInstance().getSeedByCrop(item.getItemId());
 
-            writeD(item.getObjectId());
+            writeD(item.getId());
             writeD(item.getItemId());
             writeD(seed.getLevel());
             writeC(1);
