@@ -17,10 +17,11 @@ public class ChatTrade implements IChatHandler {
 
     @Override
     public void handleChat(SayType type, Player player, String target, String text) {
-        if (!player.getClient().performAction(FloodProtector.TRADE_CHAT))
+        if (!player.getClient().performAction(FloodProtector.TRADE_CHAT)) {
             return;
+        }
 
-        CreatureSay cs = new CreatureSay(player.getId(), type, player.getName(), text);
+        CreatureSay cs = new CreatureSay(player.getId(), type,  player.getChatName(), text);
 
         if (Config.TRADE_CHAT.equalsIgnoreCase("global") || (Config.TRADE_CHAT.equalsIgnoreCase("gm") && player.isGM())) {
             for (Player worldPlayer : World.getInstance().getPlayers()) {

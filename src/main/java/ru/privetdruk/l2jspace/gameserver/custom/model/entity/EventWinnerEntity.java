@@ -4,6 +4,7 @@ import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventType;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventWinnerStatus;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class EventWinnerEntity {
     private long id;
@@ -21,6 +22,19 @@ public class EventWinnerEntity {
         this.eventType = eventType;
         this.victoryDate = victoryDate;
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EventWinnerEntity that = (EventWinnerEntity) o;
+        return id == that.id && playerId == that.playerId && eventType == that.eventType && Objects.equals(victoryDate, that.victoryDate) && status == that.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, playerId, eventType, victoryDate, status);
     }
 
     @Override

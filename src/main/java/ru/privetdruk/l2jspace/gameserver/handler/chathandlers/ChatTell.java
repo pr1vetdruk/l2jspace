@@ -43,7 +43,7 @@ public class ChatTell implements IChatHandler {
         }
 
         targetPlayer.sendPacket(new CreatureSay(player, type, text));
-        player.sendPacket(new CreatureSay(player.getId(), type, "->" + targetPlayer.getName(), text));
+        player.sendPacket(new CreatureSay(player.getId(), type, "->" + targetPlayer.getChatName(), text));
     }
 
     @Override

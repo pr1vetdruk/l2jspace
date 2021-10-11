@@ -8,9 +8,7 @@ version '0.0.1-SNAPSHOT'
 compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'
 
-ext {
-    serverBaseDirectory = 'l2jspace'
-}
+def serverBaseDirectory = 'l2jspace'
 
 jar {
     archiveName 'l2jspace.jar'
@@ -22,6 +20,7 @@ jar {
 
 dependencies {
     implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.7.4'
+    compileOnly 'org.projectlombok:lombok:1.18.22'
 }
 
 repositories {

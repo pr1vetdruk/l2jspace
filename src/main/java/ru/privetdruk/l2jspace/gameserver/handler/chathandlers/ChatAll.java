@@ -43,12 +43,13 @@ public class ChatAll implements IChatHandler {
         }
 
         if (!useHandler) {
-            CreatureSay cs = new CreatureSay(player.getId(), type, player.getName(), text);
+            CreatureSay cs = new CreatureSay(player.getId(), type, player.getChatName(), text);
 
             for (Player knownPlayer : player.getKnownTypeInRadius(Player.class, 1250)) {
                 if (!knownPlayer.getBlockList().isBlockingAll())
                     knownPlayer.sendPacket(cs);
             }
+
             player.sendPacket(cs);
         }
     }

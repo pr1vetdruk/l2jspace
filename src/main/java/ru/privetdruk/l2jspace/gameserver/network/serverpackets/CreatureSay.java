@@ -1,6 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
 import ru.privetdruk.l2jspace.gameserver.enums.SayType;
+import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Creature;
 import ru.privetdruk.l2jspace.gameserver.network.SystemMessageId;
 
@@ -27,7 +28,7 @@ public class CreatureSay extends L2GameServerPacket {
      * @param content  : The {@link String} content to send.
      */
     public CreatureSay(Creature creature, SayType sayType, String content) {
-        this(creature.getId(), sayType, creature.getName(), content);
+        this(creature.getId(), sayType, creature.getChatName(), content);
     }
 
     /**

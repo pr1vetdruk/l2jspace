@@ -43,7 +43,7 @@ public class EnterWorld extends L2GameClientPacket {
 
     @Override
     protected void runImpl() {
-        final Player player = getClient().getPlayer();
+        Player player = getClient().getPlayer();
         if (player == null) {
             getClient().closeNow();
             return;
@@ -51,7 +51,7 @@ public class EnterWorld extends L2GameClientPacket {
 
         getClient().setState(GameClientState.IN_GAME);
 
-        final int objectId = player.getId();
+        int playerId = player.getId();
 
         if (player.isGM()) {
             SkillEnum.Admin superHaste = SkillEnum.Admin.SUPER_HASTE;
@@ -60,11 +60,13 @@ public class EnterWorld extends L2GameClientPacket {
                     .getInfo(superHaste.getId(), superHaste.getMaxLevel())
                     .getEffects(player, player);
 
-            if (Config.GM_STARTUP_INVULNERABLE && AdminData.getInstance().hasAccess("admin_invul", player.getAccessLevel())) {
+            AdminData adminData = AdminData.getInstance();
+
+            if (Config.GM_STARTUP_INVULNERABLE && adminData.hasAccess("admin_invul", player.getAccessLevel())) {
                 player.setInvul(true);
             }
 
-            if (Config.GM_STARTUP_INVISIBLE && AdminData.getInstance().hasAccess("admin_hide", player.getAccessLevel())) {
+            if (Config.GM_STARTUP_INVISIBLE && adminData.hasAccess("admin_hide", player.getAccessLevel())) {
                 player.getAppearance().setVisible(false);
             }
 
@@ -72,16 +74,17 @@ public class EnterWorld extends L2GameClientPacket {
                 player.getBlockList().setInBlockingAll(true);
             }
 
-            if (Config.GM_STARTUP_AUTO_LIST && AdminData.getInstance().hasAccess("admin_gmlist", player.getAccessLevel())) {
-                AdminData.getInstance().addGm(player, false);
+            if (Config.GM_STARTUP_AUTO_LIST && adminData.hasAccess("admin_gmlist", player.getAccessLevel())) {
+                adminData.addGm(player, false);
             } else {
-                AdminData.getInstance().addGm(player, true);
+                adminData.addGm(player, true);
             }
         }
 
         // Set dead status if applies
-        if (player.getStatus().getHp() < 0.5 && player.isMortal())
+        if (player.getStatus().getHp() < 0.5 && player.isMortal()) {
             player.setIsDead(true);
+        }
 
         if (player.getNameColor() != 0) {
             player.getAppearance().setNameColor(player.getNameColor());
@@ -104,20 +107,21 @@ public class EnterWorld extends L2GameClientPacket {
         }
 
         // Clan checks.
-        final Clan clan = player.getClan();
+        Clan clan = player.getClan();
         if (clan != null) {
             player.sendPacket(new PledgeSkillList(clan));
 
             // Refresh player instance.
-            clan.getClanMember(objectId).setPlayerInstance(player);
+            clan.getClanMember(playerId).setPlayerInstance(player);
 
-            final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.CLAN_MEMBER_S1_LOGGED_IN).addCharName(player);
-            final PledgeShowMemberListUpdate psmlu = new PledgeShowMemberListUpdate(player);
+            SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.CLAN_MEMBER_S1_LOGGED_IN).addCharName(player);
+            PledgeShowMemberListUpdate psmlu = new PledgeShowMemberListUpdate(player);
 
             // Send packets to others members.
             for (Player member : clan.getOnlineMembers()) {
-                if (member == player)
+                if (member == player) {
                     continue;
+                }
 
                 member.sendPacket(sm);
                 member.sendPacket(psmlu);
@@ -125,30 +129,35 @@ public class EnterWorld extends L2GameClientPacket {
 
             // Send a login notification to sponsor or apprentice, if logged.
             if (player.getSponsor() != 0) {
-                final Player sponsor = World.getInstance().getPlayer(player.getSponsor());
-                if (sponsor != null)
+                Player sponsor = World.getInstance().getPlayer(player.getSponsor());
+                if (sponsor != null) {
                     sponsor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOUR_APPRENTICE_S1_HAS_LOGGED_IN).addCharName(player));
+                }
             } else if (player.getApprentice() != 0) {
-                final Player apprentice = World.getInstance().getPlayer(player.getApprentice());
-                if (apprentice != null)
+                Player apprentice = World.getInstance().getPlayer(player.getApprentice());
+                if (apprentice != null) {
                     apprentice.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOUR_SPONSOR_S1_HAS_LOGGED_IN).addCharName(player));
+                }
             }
 
             // Add message at connexion if clanHall not paid.
-            final ClanHall ch = ClanHallManager.getInstance().getClanHallByOwner(clan);
-            if (ch != null && !ch.getPaid())
+            ClanHall ch = ClanHallManager.getInstance().getClanHallByOwner(clan);
+            if (ch != null && !ch.getPaid()) {
                 player.sendPacket(SystemMessageId.PAYMENT_FOR_YOUR_CLAN_HALL_HAS_NOT_BEEN_MADE_PLEASE_MAKE_PAYMENT_TO_YOUR_CLAN_WAREHOUSE_BY_S1_TOMORROW);
+            }
 
             for (Castle castle : CastleManager.getInstance().getCastles()) {
-                final Siege siege = castle.getSiege();
-                if (!siege.isInProgress())
+                Siege siege = castle.getSiege();
+                if (!siege.isInProgress()) {
                     continue;
+                }
 
-                final SiegeSide type = siege.getSide(clan);
-                if (type == SiegeSide.ATTACKER)
+                SiegeSide type = siege.getSide(clan);
+                if (type == SiegeSide.ATTACKER) {
                     player.setSiegeState((byte) 1);
-                else if (type == SiegeSide.DEFENDER || type == SiegeSide.OWNER)
+                } else if (type == SiegeSide.DEFENDER || type == SiegeSide.OWNER) {
                     player.setSiegeState((byte) 2);
+                }
             }
 
             for (SiegableHall hall : ClanHallManager.getInstance().getSiegableHalls()) {
@@ -160,28 +169,32 @@ public class EnterWorld extends L2GameClientPacket {
             player.sendPacket(new PledgeShowMemberListUpdate(player));
             player.sendPacket(new PledgeShowMemberListAll(clan, 0));
 
-            for (SubPledge sp : clan.getAllSubPledges())
+            for (SubPledge sp : clan.getAllSubPledges()) {
                 player.sendPacket(new PledgeShowMemberListAll(clan, sp.getId()));
+            }
 
             player.sendPacket(new UserInfo(player));
         }
 
         // Updating Seal of Strife Buff/Debuff
-        if (SevenSignsManager.getInstance().isSealValidationPeriod() && SevenSignsManager.getInstance().getSealOwner(SealType.STRIFE) != CabalType.NORMAL) {
-            CabalType cabal = SevenSignsManager.getInstance().getPlayerCabal(objectId);
+        SevenSignsManager sevenSignsManager = SevenSignsManager.getInstance();
+        if (sevenSignsManager.isSealValidationPeriod() && sevenSignsManager.getSealOwner(SealType.STRIFE) != CabalType.NORMAL) {
+            CabalType cabal = sevenSignsManager.getPlayerCabal(playerId);
             if (cabal != CabalType.NORMAL) {
-                if (cabal == SevenSignsManager.getInstance().getSealOwner(SealType.STRIFE))
+                if (cabal == sevenSignsManager.getSealOwner(SealType.STRIFE)) {
                     player.addSkill(FrequentSkill.THE_VICTOR_OF_WAR.getSkill(), false);
-                else
+                } else {
                     player.addSkill(FrequentSkill.THE_VANQUISHED_OF_WAR.getSkill(), false);
+                }
             }
         } else {
             player.removeSkill(FrequentSkill.THE_VICTOR_OF_WAR.getSkill().getId(), false);
             player.removeSkill(FrequentSkill.THE_VANQUISHED_OF_WAR.getSkill().getId(), false);
         }
 
-        if (Config.PLAYER_SPAWN_PROTECTION > 0)
+        if (Config.PLAYER_SPAWN_PROTECTION > 0) {
             player.setSpawnProtection(true);
+        }
 
         player.spawnMe();
 
@@ -191,8 +204,8 @@ public class EnterWorld extends L2GameClientPacket {
         // Engage and notify partner.
         if (Config.ALLOW_WEDDING) {
             for (Entry<Integer, IntIntHolder> coupleEntry : WeddingService.getInstance().getCouples().entrySet()) {
-                final IntIntHolder couple = coupleEntry.getValue();
-                if (couple.getId() == objectId || couple.getValue() == objectId) {
+                IntIntHolder couple = coupleEntry.getValue();
+                if (couple.getId() == playerId || couple.getValue() == playerId) {
                     player.setCoupleId(coupleEntry.getKey());
                     break;
                 }
@@ -201,7 +214,7 @@ public class EnterWorld extends L2GameClientPacket {
 
         // Announcements, welcome & Seven signs period messages.
         player.sendPacket(SystemMessageId.WELCOME_TO_LINEAGE);
-        player.sendPacket(SevenSignsManager.getInstance().getCurrentPeriod().getMessageId());
+        player.sendPacket(sevenSignsManager.getCurrentPeriod().getMessageId());
         AnnouncementData.getInstance().showAnnouncements(player, false);
 
         // Means that it's not ok multiBox situation, so logout
@@ -211,8 +224,9 @@ public class EnterWorld extends L2GameClientPacket {
         }
 
         // If the Player is a Dark Elf, check for Shadow Sense at night.
-        if (player.getRace() == ClassRace.DARK_ELF && player.hasSkill(L2Skill.SKILL_SHADOW_SENSE))
+        if (player.getRace() == ClassRace.DARK_ELF && player.hasSkill(L2Skill.SKILL_SHADOW_SENSE)) {
             player.sendPacket(SystemMessage.getSystemMessage((GameTimeTaskManager.getInstance().isNight()) ? SystemMessageId.NIGHT_S1_EFFECT_APPLIES : SystemMessageId.DAY_S1_EFFECT_DISAPPEARS).addSkillName(L2Skill.SKILL_SHADOW_SENSE));
+        }
 
         // Notify quest for enterworld event, if quest allows it.
         player.getQuestList().getQuests(Quest::isTriggeredOnEnterWorld).forEach(q -> q.notifyEnterWorld(player));
@@ -227,8 +241,9 @@ public class EnterWorld extends L2GameClientPacket {
         player.checkCondition(player.getStatus().getMaxHp(), player.getStatus().getHp());
 
         // No broadcast needed since the player will already spawn dead to others.
-        if (player.isAlikeDead())
+        if (player.isAlikeDead()) {
             player.sendPacket(new Die(player));
+        }
 
         // Unread mails make a popup appears.
         if (Config.ENABLE_COMMUNITY_BOARD && MailBBSManager.getInstance().checkIfUnreadMail(player)) {
@@ -239,13 +254,13 @@ public class EnterWorld extends L2GameClientPacket {
 
         // Clan notice, if active.
         if (Config.ENABLE_COMMUNITY_BOARD && clan != null && clan.isNoticeEnabled()) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(0);
+            NpcHtmlMessage html = new NpcHtmlMessage(0);
             html.setFile("data/html/clan_notice.htm");
             html.replace("%clan_name%", clan.getName());
             html.replace("%notice_text%", clan.getNotice().replaceAll("\r\n", "<br>").replaceAll("action", "").replaceAll("bypass", ""));
             sendPacket(html);
         } else if (Config.SERVER_NEWS) {
-            final NpcHtmlMessage html = new NpcHtmlMessage(0);
+            NpcHtmlMessage html = new NpcHtmlMessage(0);
             html.setFile("data/html/servnews.htm");
             sendPacket(html);
         }
@@ -257,26 +272,29 @@ public class EnterWorld extends L2GameClientPacket {
         sendPacket(new SkillCoolTime(player));
 
         // If player logs back in a stadium, port him in nearest town.
-        if (Olympiad.getInstance().playerInStadia(player))
+        if (Olympiad.getInstance().playerInStadia(player)) {
             player.teleportTo(TeleportType.TOWN);
+        }
 
-        if (DimensionalRiftManager.getInstance().checkIfInRiftZone(player.getX(), player.getY(), player.getZ(), false))
+        if (DimensionalRiftManager.getInstance().checkIfInRiftZone(player.getX(), player.getY(), player.getZ(), false)) {
             DimensionalRiftManager.getInstance().teleportToWaitingRoom(player);
+        }
 
-        if (player.getClanJoinExpiryTime() > System.currentTimeMillis())
+        if (player.getClanJoinExpiryTime() > System.currentTimeMillis()) {
             player.sendPacket(SystemMessageId.CLAN_MEMBERSHIP_TERMINATED);
+        }
 
         // Attacker or spectator logging into a siege zone will be ported at town.
-        if (player.isInsideZone(ZoneId.SIEGE) && player.getSiegeState() < 2)
+        if (player.isInsideZone(ZoneId.SIEGE) && player.getSiegeState() < 2) {
             player.teleportTo(TeleportType.TOWN);
+        }
 
         // Tutorial
-        final QuestState qs = player.getQuestList().getQuestState("Tutorial");
-        if (qs != null)
-            qs.getQuest().notifyEvent("UC", null, player);
+        QuestState questState = player.getQuestList().getQuestState("Tutorial");
+        if (questState != null) {
+            questState.getQuest().notifyEvent("UC", null, player);
+        }
 
-//        player.broadcastRelationsChanges();
-//        player.sendPacket(new RelationChanged(player, player.getRelation(player), true));
 
         player.sendPacket(ActionFailed.STATIC_PACKET);
     }

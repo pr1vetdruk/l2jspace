@@ -6,6 +6,7 @@ import ru.privetdruk.l2jspace.common.util.StringUtil;
 import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.custom.engine.EventEngine;
 import ru.privetdruk.l2jspace.gameserver.custom.model.Reward;
+import ru.privetdruk.l2jspace.gameserver.custom.model.entity.EventWinnerEntity;
 import ru.privetdruk.l2jspace.gameserver.custom.model.enums.SocialActionEnum;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.*;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.lastemperor.LastEmperorPlayer;
@@ -14,6 +15,8 @@ import ru.privetdruk.l2jspace.gameserver.custom.service.EventService;
 import ru.privetdruk.l2jspace.gameserver.custom.util.Chronos;
 import ru.privetdruk.l2jspace.gameserver.data.xml.ItemData;
 import ru.privetdruk.l2jspace.gameserver.enums.TeamAura;
+import ru.privetdruk.l2jspace.gameserver.model.World;
+import ru.privetdruk.l2jspace.gameserver.model.WorldObject;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
@@ -26,6 +29,7 @@ import java.sql.ResultSet;
 import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -329,6 +333,30 @@ public class LastEmperor extends EventEngine {
                 true
         );
 
+        player.setTopRank(true);
+        player.setTitle("[TOP RANK 1x1]");
+        player.setTitleColor(Integer.decode("0x00D7FF"));
+        player.store();
+
+        EventService eventService = EventService.getInstance();
+
+        List<EventWinnerEntity> allWinnersInEvent = eventService.findAllWinnersInEvent(EventType.LAST_EMPEROR, EventWinnerStatus.ACTIVE);
+        eventService.resetEventWinners(EventType.LAST_EMPEROR);
+
+        if (allWinnersInEvent != null && allWinnersInEvent.size() > 1) {
+            allWinnersInEvent.forEach(event -> {
+                Player winnerPlayer = World.getInstance().getPlayer(event.getPlayerId());
+                if (winnerPlayer != null && winnerPlayer.isOnline()) {
+                    winnerPlayer.setTopRank(false);
+                    winnerPlayer.setWonEvents(eventService.findAllWonEvents(winnerPlayer.getId()));
+                    winnerPlayer.broadcastUserInfo();
+                }
+            });
+        }
+
+        eventService.createEventWinner(player, EventType.LAST_EMPEROR);
+
+        player.broadcastUserInfo();
         player.sendPacket(ActionFailed.STATIC_PACKET);
     }
 

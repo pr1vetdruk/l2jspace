@@ -1,5 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.custom.service;
 
+import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.custom.builder.EventSettingBuilder;
@@ -16,13 +17,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class EventService {
-    private static final Logger LOGGER = Logger.getLogger(EventService.class.getName());
+    protected static final CLogger LOGGER = new CLogger(EventService.class.getName());
 
     private static final String SELECT_ALL_FROM_EVENT_WINNER_BY_PLAYER_ID = "SELECT ew.* FROM event_winner ew WHERE ew.player_id = ?";
-    private static final String INSERT_INTO_EVENT_WINNER = "INSERT INTO event_winner (player_id, event_type, virtory_date) VALUES (?, ?, ?)";
+    private static final String SELECT_ALL_FROM_EVENT_WINNER_BY_EVENT_TYPE = "SELECT ew.* FROM event_winner ew WHERE ew.event_type = ? AND ew.status = ?";
+    private static final String INSERT_INTO_EVENT_WINNER = "INSERT INTO event_winner (player_id, event_type, victory_date, status) VALUES (?, ?, ?, ?)";
     private static final String SELECT_ALL_FROM_EVENT_BY_ID_AND_TYPE = "SELECT e.* FROM event e WHERE e.id = ? AND e.type = ?";
     private static final String RESET_EVENT_WINNER = "UPDATE event_winner SET status = 'NOT_ACTIVE' WHERE event_type = ? AND status = 'ACTIVE'";
 
@@ -59,7 +60,47 @@ public class EventService {
 
             return wonEvents;
         } catch (Exception e) {
-            LOGGER.severe("Не удалось прочитать настройку event_winner при загрузке игрока. Будет установлено значение по умолчанию NONE. " + e.getMessage());
+            LOGGER.error("An error occured while searching for events in which the player won", e);
+            return null;
+        }
+    }
+
+    /**
+     * Найти всех победителей в ивенте
+     *
+     * @param eventType Тип ивента
+     * @param status    Статус победы
+     * @return Список победителей
+     */
+    public List<EventWinnerEntity> findAllWinnersInEvent(EventType eventType, EventWinnerStatus status) {
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_FROM_EVENT_WINNER_BY_EVENT_TYPE)) {
+            statement.setString(1, eventType.name());
+            statement.setString(2, status.name());
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (!resultSet.next()) {
+                return null;
+            }
+
+            List<EventWinnerEntity> wonEvents = new ArrayList<>();
+
+            do {
+                wonEvents.add(new EventWinnerEntity(
+                        resultSet.getLong("id"),
+                        resultSet.getInt("player_id"),
+                        EventType.valueOf(resultSet.getString("event_type")),
+                        resultSet.getDate("victory_date").toLocalDate(),
+                        EventWinnerStatus.valueOf(resultSet.getString("status"))
+                ));
+            } while (resultSet.next());
+
+            resultSet.close();
+
+            return wonEvents;
+        } catch (Exception e) {
+            LOGGER.error("An error occurred while searching for winners in the event", e);
             return null;
         }
     }
@@ -69,11 +110,10 @@ public class EventService {
      *
      * @param player    Победивший игрок
      * @param eventType Ивент, в котором победил
-     * @return Объект победителя в ивенте
      */
-    public EventWinnerEntity createEventWinner(Player player, EventType eventType) {
+    public void createEventWinner(Player player, EventType eventType) {
         try (Connection connection = ConnectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_INTO_EVENT_WINNER)) {
+             PreparedStatement statement = connection.prepareStatement(INSERT_INTO_EVENT_WINNER, Statement.RETURN_GENERATED_KEYS)) {
             EventWinnerEntity eventWinner = new EventWinnerEntity();
             eventWinner.setEventType(eventType);
             eventWinner.setPlayerId(player.getId());
@@ -81,29 +121,31 @@ public class EventService {
             statement.setInt(1, eventWinner.getPlayerId());
             statement.setString(2, eventWinner.getEventType().name());
             statement.setDate(3, Date.valueOf(eventWinner.getVictoryDate()));
+            statement.setString(4, eventWinner.getStatus().name());
 
             int affectedRows = statement.executeUpdate();
 
             if (affectedRows == 0) {
-                LOGGER.severe("Произошла ошибка при сохранении победителя ивента: " + eventWinner);
-                return null;
+                LOGGER.error("An error occured while saving the event winner: " + eventWinner);
+                return;
             }
 
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     eventWinner.setId(generatedKeys.getLong(1));
 
-                    player.getWonEvents().add(eventWinner);
+                    List<EventWinnerEntity> wonEvents = player.getWonEvents();
+                    if (wonEvents == null) {
+                        wonEvents = new ArrayList<>();
+                    }
+                    wonEvents.add(eventWinner);
 
-                    return eventWinner;
                 } else {
-                    LOGGER.severe("Произошла ошибка при сохранении победителя ивента. Не удалось определить идентификатор записи: " + eventWinner);
-                    return null;
+                    LOGGER.error("An error occurred while saving the event winner. Could not determine record ID: " + eventWinner);
                 }
             }
         } catch (Exception e) {
-            LOGGER.severe("Не удалось прочитать настройку event_winner при загрузке игрока: " + e.getMessage());
-            return null;
+            LOGGER.error("Could not read event_winner setting when loading player", e);
         }
     }
 
@@ -119,7 +161,7 @@ public class EventService {
 
             statement.execute();
         } catch (Exception e) {
-            LOGGER.severe("Не удалось сбросить статус победителя на NOT_ACTIVE: " + e.getMessage());
+            LOGGER.error("Failed to reset winner status to NOT_ACTIVE", e);
         }
     }
 
@@ -132,7 +174,7 @@ public class EventService {
             ResultSet resultSet = statement.executeQuery();
 
             if (!resultSet.next()) {
-                LOGGER.warning("Не удалось найти настройки для " + type.name());
+                LOGGER.warn("Couldn't find settings for " + type.name());
                 return null;
             }
 
@@ -204,7 +246,7 @@ public class EventService {
                 statement.setString(1, eventType.name());
                 resultSet = statement.executeQuery();
                 if (!resultSet.next()) {
-                    LOGGER.warning(eventType.name() + ": Settings not found!");
+                    LOGGER.warn(eventType.name() + ": Settings not found!");
                     return;
                 }
 
@@ -212,14 +254,14 @@ public class EventService {
                     eventIdList.add(resultSet.getInt("id"));
                 } while (resultSet.next());
             } catch (Exception e) {
-                LOGGER.severe("An error occurred while reading event data!");
+                LOGGER.error("An error occurred while reading event data!", e);
                 return;
             } finally {
                 if (resultSet != null) {
                     try {
                         resultSet.close();
                     } catch (SQLException e) {
-                        LOGGER.warning(e.getMessage());
+                        LOGGER.error(e.getMessage(), e);
                     }
                 }
             }
@@ -245,7 +287,7 @@ public class EventService {
                 }
             }
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            LOGGER.severe("Failed to load " + eventType);
+            LOGGER.error("Failed to load " + eventType, e);
         }
     }
 

@@ -371,6 +371,8 @@ public final class Player extends Playable {
      */
     private List<EventWinnerEntity> wonEvents = null;
 
+    private boolean topRank = false;
+
     /**
      * Constructor of Player (use Creature constructor).
      * <ul>
@@ -4009,6 +4011,10 @@ public final class Player extends Playable {
 
                     player.setWonEvents(EventService.getInstance().findAllWonEvents(player.getId()));
 
+                    if (player.isWinnerInEvent(EventType.LAST_EMPEROR)) {
+                        player.setTopRank(true);
+                    }
+
                     // Set Hero status if it applies
                     if (HeroManager.getInstance().isActiveHero(objectId)) {
                         player.setHero(true);
@@ -7074,5 +7080,17 @@ public final class Player extends Playable {
         return wonEvents != null && wonEvents.stream()
                 .anyMatch(event -> event.getEventType() == eventType
                         && event.getStatus() == EventWinnerStatus.ACTIVE);
+    }
+
+    public String getChatName() {
+        return (isTopRank() ? "[Rank 1] " : "") + getName();
+    }
+
+    public boolean isTopRank() {
+        return topRank;
+    }
+
+    public void setTopRank(boolean topRank) {
+        this.topRank = topRank;
     }
 }

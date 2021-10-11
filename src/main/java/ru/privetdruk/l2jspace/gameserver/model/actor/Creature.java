@@ -1792,4 +1792,8 @@ public abstract class Creature extends WorldObject {
     public void performSkillAnimation(int skillId) {
         broadcastPacket(new MagicSkillUse(this, this, skillId, 1, 5500, 1));
     }
+
+    public String getChatName() {
+        return getName();
+    }
 }
