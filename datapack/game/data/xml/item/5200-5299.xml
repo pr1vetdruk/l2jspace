@@ -136,7 +136,7 @@
 		<set name="icon" val="icon.etc_pet_armor_i02" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="PET" />
-		<set name="bodypart" val="wolf" />
+		<set name="SLOT" val="WOLF" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="160" />
 		<set name="price" val="938705" />
@@ -149,7 +149,7 @@
 		<set name="icon" val="icon.etc_pet_arms_i02" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="PET" />
-		<set name="bodypart" val="wolf" />
+		<set name="SLOT" val="WOLF" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -312,7 +312,7 @@
 		<set name="icon" val="icon.weapon_dual_sword_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="DUAL" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;44;120" />
@@ -878,7 +878,7 @@
 		<set name="icon" val="icon.weapon_zweihander_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGSWORD" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;44;120" />
@@ -898,7 +898,7 @@
 		<set name="icon" val="icon.weapon_heavy_sword_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGSWORD" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;44;120" />
@@ -922,7 +922,7 @@
 		<set name="icon" val="icon.weapon_berserker_blade_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGSWORD" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;44;120" />
@@ -946,7 +946,7 @@
 		<set name="icon" val="icon.armor_t74_u_i02" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="HEAVY" />
-		<set name="bodypart" val="chest" />
+		<set name="SLOT" val="CHEST" />
 		<set name="crystal_type" val="A" />
 		<set name="crystal_count" val="370" />
 		<set name="material" val="CRYSTAL" />
@@ -961,7 +961,7 @@
 		<set name="icon" val="icon.armor_t74_l_i02" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="HEAVY" />
-		<set name="bodypart" val="legs" />
+		<set name="SLOT" val="LEGS" />
 		<set name="crystal_type" val="A" />
 		<set name="crystal_count" val="231" />
 		<set name="material" val="CRYSTAL" />
@@ -975,7 +975,7 @@
 	<item id="5289" type="Armor" name="Sealed Dark Crystal Helmet">
 		<set name="icon" val="icon.armor_helmet_i02" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="head" />
+		<set name="SLOT" val="HEAD" />
 		<set name="crystal_type" val="A" />
 		<set name="crystal_count" val="139" />
 		<set name="material" val="CRYSTAL" />
@@ -989,7 +989,7 @@
 	<item id="5290" type="Armor" name="Sealed Dark Crystal Gloves">
 		<set name="icon" val="icon.armor_t74_g_i02" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="crystal_type" val="A" />
 		<set name="crystal_count" val="92" />
 		<set name="material" val="LEATHER" />
@@ -1003,7 +1003,7 @@
 	<item id="5291" type="Armor" name="Sealed Dark Crystal Boots">
 		<set name="icon" val="icon.armor_t74_b_i02" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="feet" />
+		<set name="SLOT" val="FEET" />
 		<set name="crystal_type" val="A" />
 		<set name="crystal_count" val="92" />
 		<set name="material" val="CRYSTAL" />
@@ -1017,7 +1017,7 @@
 	<item id="5292" type="Armor" name="Sealed Dark Crystal Shield">
 		<set name="icon" val="icon.shield_dark_crystal_shield_i02" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="crystal_type" val="A" />
 		<set name="crystal_count" val="97" />
 		<set name="material" val="CRYSTAL" />
@@ -1034,7 +1034,7 @@
 		<set name="icon" val="icon.armor_t77_ul_i02" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="HEAVY" />
-		<set name="bodypart" val="fullarmor" />
+		<set name="SLOT" val="FULL_ARMOR" />
 		<set name="crystal_type" val="A" />
 		<set name="crystal_count" val="541" />
 		<set name="material" val="LEATHER" />
@@ -1048,7 +1048,7 @@
 	<item id="5294" type="Armor" name="Sealed Tallum Helmet">
 		<set name="icon" val="icon.armor_helmet_i02" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="head" />
+		<set name="SLOT" val="HEAD" />
 		<set name="crystal_type" val="A" />
 		<set name="crystal_count" val="139" />
 		<set name="material" val="CLOTH" />
@@ -1062,7 +1062,7 @@
 	<item id="5295" type="Armor" name="Sealed Tallum Gloves">
 		<set name="icon" val="icon.armor_t77_g_i02" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="crystal_type" val="A" />
 		<set name="crystal_count" val="92" />
 		<set name="material" val="LEATHER" />
@@ -1076,7 +1076,7 @@
 	<item id="5296" type="Armor" name="Sealed Tallum Boots">
 		<set name="icon" val="icon.armor_t77_b_i02" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="feet" />
+		<set name="SLOT" val="FEET" />
 		<set name="crystal_type" val="A" />
 		<set name="crystal_count" val="92" />
 		<set name="material" val="BLOOD_STEEL" />
@@ -1091,7 +1091,7 @@
 		<set name="icon" val="icon.armor_t75_u_i02" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="LIGHT" />
-		<set name="bodypart" val="chest" />
+		<set name="SLOT" val="CHEST" />
 		<set name="crystal_type" val="A" />
 		<set name="crystal_count" val="277" />
 		<set name="material" val="LEATHER" />
@@ -1106,7 +1106,7 @@
 		<set name="icon" val="icon.armor_t75_l_i02" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="LIGHT" />
-		<set name="bodypart" val="legs" />
+		<set name="SLOT" val="LEGS" />
 		<set name="crystal_type" val="A" />
 		<set name="crystal_count" val="173" />
 		<set name="material" val="LEATHER" />
@@ -1120,7 +1120,7 @@
 	<item id="5299" type="Armor" name="Sealed Gloves of The Underworld">
 		<set name="icon" val="icon.armor_t40_g_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="crystal_type" val="A" />
 		<set name="crystal_count" val="92" />
 		<set name="material" val="LEATHER" />

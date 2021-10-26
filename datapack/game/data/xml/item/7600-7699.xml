@@ -100,7 +100,7 @@
 		<set name="icon" val="icon.etc_broken_crystal_silver_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="PAPER" />
 		<set name="weight" val="1" />
 		<set name="is_stackable" val="true" />
@@ -109,7 +109,7 @@
 		<set name="icon" val="icon.etc_broken_crystal_blue_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="PAPER" />
 		<set name="weight" val="1" />
 		<set name="is_stackable" val="true" />
@@ -118,7 +118,7 @@
 		<set name="icon" val="icon.etc_broken_crystal_gold_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="PAPER" />
 		<set name="weight" val="1" />
 		<set name="is_stackable" val="true" />
@@ -127,7 +127,7 @@
 		<set name="icon" val="icon.etc_broken_crystal_red_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="PAPER" />
 		<set name="weight" val="1" />
 		<set name="is_stackable" val="true" />
@@ -627,7 +627,7 @@
 	<item id="7680" type="Armor" name="Raccoon Ears">
 		<set name="icon" val="icon.accessory_racoon_ear_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hair" />
+		<set name="SLOT" val="HAIR" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="price" val="500000" />
@@ -635,7 +635,7 @@
 	<item id="7681" type="Armor" name="Outlaw's Eyepatch">
 		<set name="icon" val="icon.accessory_outlaw_eyepatch_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="face" />
+		<set name="SLOT" val="FACE" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="price" val="500000" />
@@ -643,7 +643,7 @@
 	<item id="7682" type="Armor" name="Maiden's Hairpin">
 		<set name="icon" val="icon.accessory_maidens_hairpin_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hair" />
+		<set name="SLOT" val="HAIR" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="price" val="500000" />
@@ -654,7 +654,7 @@
 	<item id="7683" type="Armor" name="Rabbit Ears">
 		<set name="icon" val="icon.accessory_rabbit_ear_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hair" />
+		<set name="SLOT" val="HAIR" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="price" val="500000" />
@@ -752,7 +752,7 @@
 	<item id="7694" type="Armor" name="Noblesse Tiara">
 		<set name="icon" val="icon.accessory_noblesse_tiara_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="face" />
+		<set name="SLOT" val="FACE" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="is_tradable" val="false" />
@@ -763,7 +763,7 @@
 	<item id="7695" type="Armor" name="Forget-me-not Hairpin">
 		<set name="icon" val="icon.accessory_forget_me_not_hairpin_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hair" />
+		<set name="SLOT" val="HAIR" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="price" val="500000" />
@@ -774,7 +774,7 @@
 	<item id="7696" type="Armor" name="Daisy Hairpin">
 		<set name="icon" val="icon.accessory_daisy_hairpin_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hair" />
+		<set name="SLOT" val="HAIR" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="price" val="500000" />

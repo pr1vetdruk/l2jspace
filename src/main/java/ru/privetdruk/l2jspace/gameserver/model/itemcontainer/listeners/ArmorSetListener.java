@@ -25,7 +25,7 @@ public class ArmorSetListener implements OnEquipListener {
         final Player player = (Player) actor;
 
         // Formal Wear skills refresh. Don't bother going farther.
-        if (item.getItem().getBodyPart() == Item.SLOT_ALLDRESS) {
+        if (item.getItem().getSlot() == Item.Slot.ALL_DRESS) {
             player.sendSkillList();
             return;
         }
@@ -87,7 +87,7 @@ public class ArmorSetListener implements OnEquipListener {
         final Player player = (Player) actor;
 
         // Formal Wear skills refresh. Don't bother going farther.
-        if (item.getItem().getBodyPart() == Item.SLOT_ALLDRESS) {
+        if (item.getItem().getSlot() == Item.Slot.ALL_DRESS) {
             player.sendSkillList();
             return;
         }

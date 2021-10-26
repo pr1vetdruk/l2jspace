@@ -1052,7 +1052,7 @@ public final class Player extends Playable {
                 if (item.isWeapon())
                     weaponPenalty = true;
                 else
-                    armorPenalty += (item.getItem().getBodyPart() == Item.SLOT_FULL_ARMOR) ? 2 : 1;
+                    armorPenalty += (item.getItem().getSlot() == Item.Slot.FULL_ARMOR) ? 2 : 1;
             }
         }
 
@@ -1114,13 +1114,15 @@ public final class Player extends Playable {
             items = getInventory().equipItemAndRecord(item);
 
             if (item.isEquipped()) {
-                if (item.getEnchantLevel() > 0)
+                if (item.getEnchantLevel() > 0) {
                     sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_S2_EQUIPPED).addNumber(item.getEnchantLevel()).addItemName(item));
-                else
+                } else {
                     sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_EQUIPPED).addItemName(item));
+                }
 
-                if ((item.getItem().getBodyPart() & Item.SLOT_ALLWEAPON) != 0)
+                if ((item.getItem().getSlot().getId() & Item.Slot.ALL_WEAPON.getId()) != 0) {
                     rechargeShots(true, true);
+                }
             } else
                 sendPacket(SystemMessageId.CANNOT_EQUIP_ITEM_DUE_TO_BAD_CONDITION);
         }
@@ -3408,7 +3410,7 @@ public final class Player extends Playable {
         InventoryUpdate iu = null;
 
         // Unequip the weapon.
-        ItemInstance[] unequipped = getInventory().unequipItemInBodySlotAndRecord(Item.SLOT_R_HAND);
+        ItemInstance[] unequipped = getInventory().unequipItemInBodySlotAndRecord(Item.Slot.RIGHT_HAND);
         if (!ArraysUtil.isEmpty(unequipped)) {
             iu = new InventoryUpdate();
             for (final ItemInstance itm : unequipped)
@@ -3425,7 +3427,7 @@ public final class Player extends Playable {
 
         // Unequip the shield.
         if (leftHandIncluded) {
-            unequipped = getInventory().unequipItemInBodySlotAndRecord(Item.SLOT_L_HAND);
+            unequipped = getInventory().unequipItemInBodySlotAndRecord(Item.Slot.LEFT_HAND);
             if (!ArraysUtil.isEmpty(unequipped)) {
                 if (iu == null)
                     iu = new InventoryUpdate();
@@ -6704,7 +6706,7 @@ public final class Player extends Playable {
      */
     public boolean isWearingFormalWear() {
         final ItemInstance formal = getInventory().getItemFrom(Paperdoll.CHEST);
-        return formal != null && formal.getItem().getBodyPart() == Item.SLOT_ALLDRESS;
+        return formal != null && formal.getItem().getSlot() == Item.Slot.ALL_DRESS;
     }
 
     public void startFakeDeath() {

@@ -22,7 +22,7 @@ public class TradeOwnAdd extends L2GameServerPacket {
         writeH(_item.getItem().getType2());
         writeH(0x00); // ?
 
-        writeD(_item.getItem().getBodyPart());
+        writeD(_item.getItem().getSlot().getId());
         writeH(_item.getEnchant());
         writeH(0x00); // ?
         writeH(0x00);

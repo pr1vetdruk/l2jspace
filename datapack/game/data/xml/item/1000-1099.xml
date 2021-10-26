@@ -3,7 +3,7 @@
 	<item id="1000" type="Armor" name="Book of Aklantoth - Part 3">
 		<set name="icon" val="icon.item_normal07" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="material" val="CLOTH" />
 		<set name="weight" val="60" />
 		<set name="price" val="37" />

@@ -124,7 +124,7 @@
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BOW" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="500" />
 		<set name="damage_range" val="0;0;10;0" />
@@ -148,7 +148,7 @@
 		<set name="is_magical" val="true" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGBLUNT" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;46;120" />
@@ -169,7 +169,7 @@
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="SWORD" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -189,7 +189,7 @@
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGBLUNT" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;44;120" />
@@ -211,7 +211,7 @@
 		<set name="is_magical" val="true" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGBLUNT" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;46;120" />
@@ -236,7 +236,7 @@
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BOW" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="500" />
 		<set name="damage_range" val="0;0;10;0" />
@@ -258,7 +258,7 @@
 	<item id="6721" type="Armor" name="Monster Only(Shield of Imperial Warlord Zombie)">
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="1430" />
 		<set name="price" val="39" />
@@ -272,7 +272,7 @@
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="DUAL" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;44;120" />
@@ -297,7 +297,7 @@
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGSWORD" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;44;120" />
@@ -320,7 +320,7 @@
 	<item id="6724" type="Armor" name="Sealed Tateossian Earring">
 		<set name="icon" val="icon.accessory_tateossian_earring_i02" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="rear;lear" />
+		<set name="SLOT" val="LEFT_RIGHT_EAR" />
 		<set name="crystal_type" val="S" />
 		<set name="crystal_count" val="185" />
 		<set name="material" val="SILVER" />
@@ -334,7 +334,7 @@
 	<item id="6725" type="Armor" name="Sealed Tateossian Ring">
 		<set name="icon" val="icon.accessory_tateossian_ring_i02" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="rfinger;lfinger" />
+		<set name="SLOT" val="LEFT_RIGHT_FINGER" />
 		<set name="crystal_type" val="S" />
 		<set name="crystal_count" val="123" />
 		<set name="material" val="GOLD" />
@@ -348,7 +348,7 @@
 	<item id="6726" type="Armor" name="Sealed Tateossian Necklace">
 		<set name="icon" val="icon.accessory_tateossian_necklace_i02" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="S" />
 		<set name="crystal_count" val="247" />
 		<set name="material" val="SILVER" />

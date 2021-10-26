@@ -3,7 +3,7 @@
 	<item id="9100" type="Armor" name="Shadow Item: Majestic Boots">
 		<set name="icon" val="icon.armor_t84_b_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="feet" />
+		<set name="SLOT" val="FEET" />
 		<set name="crystal_type" val="A" />
 		<set name="material" val="BLOOD_STEEL" />
 		<set name="weight" val="370" />
@@ -19,7 +19,7 @@
 		<set name="icon" val="icon.armor_t85_ul_i00" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="MAGIC" />
-		<set name="bodypart" val="fullarmor" />
+		<set name="SLOT" val="FULL_ARMOR" />
 		<set name="crystal_type" val="A" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="777" />
@@ -35,7 +35,7 @@
 	<item id="9102" type="Armor" name="Shadow Item: Majestic Gauntlet">
 		<set name="icon" val="icon.armor_t85_g_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="crystal_type" val="A" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="180" />
@@ -50,7 +50,7 @@
 	<item id="9103" type="Armor" name="Shadow Item: Majestic Boots">
 		<set name="icon" val="icon.armor_t85_b_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="feet" />
+		<set name="SLOT" val="FEET" />
 		<set name="crystal_type" val="A" />
 		<set name="material" val="BLOOD_STEEL" />
 		<set name="weight" val="370" />
@@ -281,7 +281,7 @@
 	<item id="9128" type="Armor" name="Shadow Item: Mithril Gauntlet">
 		<set name="icon" val="icon.armor_t61_g_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="crystal_type" val="C" />
 		<set name="material" val="MITHRIL" />
 		<set name="weight" val="200" />
@@ -296,7 +296,7 @@
 	<item id="9129" type="Armor" name="Shadow Item: Shield of Nightmare">
 		<set name="icon" val="icon.shield_shield_of_nightmare_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="crystal_type" val="A" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="400" />
@@ -368,7 +368,7 @@
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="SWORD" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -388,7 +388,7 @@
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGSWORD" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;44;120" />
@@ -407,7 +407,7 @@
 	<item id="9138" type="Armor" name="Santa's Hat">
 		<set name="icon" val="icon.accessory_santas_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 	</item>
@@ -420,7 +420,7 @@
 		<set name="icon" val="icon.weapon_krono_bow_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BOW" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="1" />
 		<set name="attack_range" val="500" />
 		<set name="damage_range" val="0;0;10;0" />
@@ -443,7 +443,7 @@
 		<set name="icon" val="icon.weapon_krono_bow_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BOW" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="1" />
 		<set name="attack_range" val="500" />
 		<set name="damage_range" val="0;0;10;0" />
@@ -489,7 +489,7 @@
 	<item id="9145" type="Armor" name="Little Angel Wings (Event)">
 		<set name="icon" val="icon.accessory_hair_ring_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hair" />
+		<set name="SLOT" val="HAIR" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="is_tradable" val="false" />
@@ -641,21 +641,21 @@
 	<item id="9158" type="Armor" name="Golden Circlet of Redemption">
 		<set name="icon" val="icon.Accessary_gold_circlet_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="STEEL" />
 		<set name="weight" val="10" />
 	</item>
 	<item id="9159" type="Armor" name="Silver Circlet of Salvation">
 		<set name="icon" val="icon.Accessary_gold_circlet_i01" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="STEEL" />
 		<set name="weight" val="10" />
 	</item>
 	<item id="9160" type="Armor" name="Pig Wrangler's Cap">
 		<set name="icon" val="icon.Accessary_middle_ages_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="STEEL" />
 		<set name="weight" val="10" />
 	</item>
@@ -796,7 +796,7 @@
 	<item id="9177" type="Armor" name="Teddy Bear Hat - Blessed Resurrection Effect">
 		<set name="icon" val="icon.accessory_bear_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -809,7 +809,7 @@
 	<item id="9178" type="Armor" name="Piggy Hat - Blessed Resurrection Effect">
 		<set name="icon" val="icon.accessory_pig_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -822,7 +822,7 @@
 	<item id="9179" type="Armor" name="Jester Hat - Blessed Resurrection Effect">
 		<set name="icon" val="icon.accessory_jester_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -835,7 +835,7 @@
 	<item id="9180" type="Armor" name="Wizard Hat - Blessed Resurrection Effect">
 		<set name="icon" val="icon.accessory_magic_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -848,7 +848,7 @@
 	<item id="9181" type="Armor" name="Dapper Cap - Blessed Resurrection Effect">
 		<set name="icon" val="icon.accessory_dandy_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -861,7 +861,7 @@
 	<item id="9182" type="Armor" name="Romantic Chapeau - Blessed Resurrection Effect">
 		<set name="icon" val="icon.accessory_romantic_chaperon_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -874,7 +874,7 @@
 	<item id="9183" type="Armor" name="Iron Circlet - Blessed Resurrection Effect">
 		<set name="icon" val="icon.accessory_iron_circlet_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -887,7 +887,7 @@
 	<item id="9184" type="Armor" name="Teddy Bear Hat - Blessed Escape Effect">
 		<set name="icon" val="icon.accessory_bear_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -900,7 +900,7 @@
 	<item id="9185" type="Armor" name="Piggy Hat - Blessed Escape Effect">
 		<set name="icon" val="icon.accessory_pig_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -913,7 +913,7 @@
 	<item id="9186" type="Armor" name="Jester Hat - Blessed Escape Effect">
 		<set name="icon" val="icon.accessory_jester_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -926,7 +926,7 @@
 	<item id="9187" type="Armor" name="Wizard Hat - Blessed Escape Effect">
 		<set name="icon" val="icon.accessory_magic_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -939,7 +939,7 @@
 	<item id="9188" type="Armor" name="Dapper Cap - Blessed Escape Effect">
 		<set name="icon" val="icon.accessory_dandy_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -952,7 +952,7 @@
 	<item id="9189" type="Armor" name="Romantic Chapeau - Blessed Escape Effect">
 		<set name="icon" val="icon.accessory_romantic_chaperon_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -965,7 +965,7 @@
 	<item id="9190" type="Armor" name="Iron Circlet - Blessed Escape Effect">
 		<set name="icon" val="icon.accessory_iron_circlet_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -978,7 +978,7 @@
 	<item id="9191" type="Armor" name="Teddy Bear Hat - Big Head">
 		<set name="icon" val="icon.accessory_bear_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -991,7 +991,7 @@
 	<item id="9192" type="Armor" name="Piggy Hat - Big Head">
 		<set name="icon" val="icon.accessory_pig_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -1004,7 +1004,7 @@
 	<item id="9193" type="Armor" name="Jester Hat - Big Head">
 		<set name="icon" val="icon.accessory_jester_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -1017,7 +1017,7 @@
 	<item id="9194" type="Armor" name="Wizard Hat - Big Head">
 		<set name="icon" val="icon.accessory_magic_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -1030,7 +1030,7 @@
 	<item id="9195" type="Armor" name="Dapper Hat - Big Head">
 		<set name="icon" val="icon.accessory_dandy_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -1043,7 +1043,7 @@
 	<item id="9196" type="Armor" name="Romantic Chapeau - Big Head">
 		<set name="icon" val="icon.accessory_romantic_chaperon_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -1056,7 +1056,7 @@
 	<item id="9197" type="Armor" name="Iron Circlet - Big Head">
 		<set name="icon" val="icon.accessory_iron_circlet_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -1069,7 +1069,7 @@
 	<item id="9198" type="Armor" name="Teddy Bear Hat - Firework">
 		<set name="icon" val="icon.accessory_bear_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -1082,7 +1082,7 @@
 	<item id="9199" type="Armor" name="Piggy Hat - Firework">
 		<set name="icon" val="icon.accessory_pig_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />

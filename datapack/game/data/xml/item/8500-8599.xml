@@ -4,7 +4,7 @@
 		<set name="icon" val="icon.etc_gludio_fish_lure_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="4" />
 		<set name="is_stackable" val="true" />
@@ -13,7 +13,7 @@
 		<set name="icon" val="icon.etc_gludio_fish_lure_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="3" />
 		<set name="is_stackable" val="true" />
@@ -22,7 +22,7 @@
 		<set name="icon" val="icon.etc_gludio_fish_lure_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="5" />
 		<set name="is_stackable" val="true" />
@@ -31,7 +31,7 @@
 		<set name="icon" val="icon.etc_gludio_fish_lure_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="4" />
 		<set name="is_stackable" val="true" />
@@ -40,7 +40,7 @@
 		<set name="icon" val="icon.etc_gludio_fish_lure_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="3" />
 		<set name="is_stackable" val="true" />
@@ -49,7 +49,7 @@
 		<set name="icon" val="icon.etc_gludio_fish_lure_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="5" />
 		<set name="is_stackable" val="true" />
@@ -58,7 +58,7 @@
 		<set name="icon" val="icon.etc_bait_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="4" />
 		<set name="price" val="120" />
@@ -68,7 +68,7 @@
 		<set name="icon" val="icon.etc_gludio_fish_lure_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="3" />
 		<set name="is_stackable" val="true" />
@@ -77,7 +77,7 @@
 		<set name="icon" val="icon.etc_gludio_fish_lure_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="5" />
 		<set name="is_stackable" val="true" />
@@ -86,7 +86,7 @@
 		<set name="icon" val="icon.etc_bait_i01" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="4" />
 		<set name="price" val="180" />
@@ -96,7 +96,7 @@
 		<set name="icon" val="icon.etc_gludio_fish_lure_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="3" />
 		<set name="is_stackable" val="true" />
@@ -105,7 +105,7 @@
 		<set name="icon" val="icon.etc_gludio_fish_lure_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="5" />
 		<set name="is_stackable" val="true" />
@@ -114,7 +114,7 @@
 		<set name="icon" val="icon.etc_bait_i02" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="4" />
 		<set name="is_stackable" val="true" />
@@ -123,7 +123,7 @@
 		<set name="icon" val="icon.etc_gludio_fish_lure_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="3" />
 		<set name="is_stackable" val="true" />
@@ -279,7 +279,7 @@
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BOW" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="500" />
 		<set name="damage_range" val="0;0;10;0" />
@@ -303,7 +303,7 @@
 		<set name="is_magical" val="true" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BLUNT" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -324,7 +324,7 @@
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="DAGGER" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -344,7 +344,7 @@
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="SWORD" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -364,7 +364,7 @@
 		<set name="is_magical" val="true" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGBLUNT" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;46;120" />
@@ -385,7 +385,7 @@
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="SWORD" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -405,7 +405,7 @@
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="SWORD" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -488,7 +488,7 @@
 		<set name="icon" val="icon.etc_pet_armor_little_harness_i00" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="PET" />
-		<set name="bodypart" val="babypet" />
+		<set name="SLOT" val="BABY_PET" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="160" />
 		<for>
@@ -543,7 +543,7 @@
 		<set name="icon" val="icon.etc_bait_i02" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="3" />
 		<set name="price" val="200" />
@@ -571,7 +571,7 @@
 	<item id="8552" type="Armor" name="Mask of Spirits">
 		<set name="icon" val="icon.accessory_worldcup_mask_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="face" />
+		<set name="SLOT" val="FACE" />
 		<set name="material" val="PAPER" />
 		<set name="weight" val="10" />
 	</item>
@@ -611,21 +611,21 @@
 	<item id="8557" type="Armor" name="Blue Party Hat">
 		<set name="icon" val="icon.accessory_party_hat_blue_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 	</item>
 	<item id="8558" type="Armor" name="Eva's Mark">
 		<set name="icon" val="icon.accessory_soaring_bird_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="face" />
+		<set name="SLOT" val="FACE" />
 		<set name="material" val="STEEL" />
 		<set name="weight" val="10" />
 	</item>
 	<item id="8559" type="Armor" name="Diadem">
 		<set name="icon" val="icon.accessory_flower_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<cond msgId="1518">
@@ -635,49 +635,49 @@
 	<item id="8560" type="Armor" name="Teddy Bear Hat">
 		<set name="icon" val="icon.accessory_bear_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 	</item>
 	<item id="8561" type="Armor" name="Piggy Hat">
 		<set name="icon" val="icon.accessory_pig_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 	</item>
 	<item id="8562" type="Armor" name="Jester Hat">
 		<set name="icon" val="icon.accessory_jester_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 	</item>
 	<item id="8563" type="Armor" name="Wizard Hat">
 		<set name="icon" val="icon.accessory_magic_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 	</item>
 	<item id="8564" type="Armor" name="Dapper Cap">
 		<set name="icon" val="icon.accessory_dandy_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 	</item>
 	<item id="8565" type="Armor" name="Romantic Chapeau">
 		<set name="icon" val="icon.accessory_romantic_chaperon_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 	</item>
 	<item id="8566" type="Armor" name="Iron Circlet">
 		<set name="icon" val="icon.accessory_iron_circlet_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="face" />
+		<set name="SLOT" val="FACE" />
 		<set name="material" val="STEEL" />
 		<set name="weight" val="10" />
 		<set name="is_tradable" val="false" />
@@ -687,21 +687,21 @@
 	<item id="8567" type="Armor" name="Valakas Slayer Circlet">
 		<set name="icon" val="icon.accessory_valakas_circlet_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="face" />
+		<set name="SLOT" val="FACE" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 	</item>
 	<item id="8568" type="Armor" name="Antharas Slayer Circlet">
 		<set name="icon" val="icon.accessory_antaras_circlet_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="face" />
+		<set name="SLOT" val="FACE" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 	</item>
 	<item id="8569" type="Armor" name="Half Face Mask">
 		<set name="icon" val="icon.accessory_half_face_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="face" />
+		<set name="SLOT" val="FACE" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 	</item>
@@ -782,7 +782,7 @@
 		<set name="is_magical" val="true" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGBLUNT" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;46;120" />
@@ -806,7 +806,7 @@
 		<set name="icon" val="icon.weapon_club_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BLUNT" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -830,7 +830,7 @@
 		<set name="icon" val="icon.weapon_shining_knife_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="DAGGER" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -854,7 +854,7 @@
 		<set name="icon" val="icon.weapon_vipers_canine_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="DUALFIST" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;32;120" />
@@ -878,7 +878,7 @@
 		<set name="icon" val="icon.weapon_short_bow_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BOW" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="500" />
 		<set name="damage_range" val="0;0;10;0" />
@@ -904,7 +904,7 @@
 		<set name="icon" val="icon.weapon_long_sword_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="SWORD" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -928,7 +928,7 @@
 		<set name="is_magical" val="true" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BLUNT" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -953,7 +953,7 @@
 		<set name="icon" val="icon.weapon_dark_elven_bow_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BOW" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="500" />
 		<set name="damage_range" val="0;0;10;0" />
@@ -980,7 +980,7 @@
 		<set name="icon" val="icon.weapon_strengthening_bow_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BOW" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="500" />
 		<set name="damage_range" val="0;0;10;0" />
@@ -1008,7 +1008,7 @@
 		<set name="is_magical" val="true" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGBLUNT" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;46;120" />
@@ -1033,7 +1033,7 @@
 		<set name="icon" val="icon.weapon_bastard_sword_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="SWORD" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;42;120" />
@@ -1058,7 +1058,7 @@
 		<set name="is_magical" val="true" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="ETC" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -1082,7 +1082,7 @@
 		<set name="icon" val="icon.weapon_baghnakh_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="DUALFIST" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;32;120" />
@@ -1107,7 +1107,7 @@
 		<set name="icon" val="icon.weapon_tomahawk_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BLUNT" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -1132,7 +1132,7 @@
 		<set name="icon" val="icon.weapon_dirk_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="DAGGER" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -1157,7 +1157,7 @@
 		<set name="icon" val="icon.weapon_pike_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="POLE" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="80" />
 		<set name="damage_range" val="0;0;66;120" />

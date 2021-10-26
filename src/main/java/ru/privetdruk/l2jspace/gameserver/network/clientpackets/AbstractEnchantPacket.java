@@ -93,7 +93,7 @@ public abstract class AbstractEnchantPacket extends L2GameClientPacket {
             if (!isValid(enchantItem))
                 return -1;
 
-            boolean fullBody = enchantItem.getItem().getBodyPart() == Item.SLOT_FULL_ARMOR;
+            boolean fullBody = enchantItem.getItem().getSlot() == Item.Slot.FULL_ARMOR;
             if (enchantItem.getEnchantLevel() < Config.ENCHANT_SAFE_MAX || (fullBody && enchantItem.getEnchantLevel() < Config.ENCHANT_SAFE_MAX_FULL))
                 return 1;
 

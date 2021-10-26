@@ -798,7 +798,7 @@
 		<set name="icon" val="icon.etc_pet_armor_i00" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="PET" />
-		<set name="bodypart" val="wolf" />
+		<set name="SLOT" val="WOLF" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="160" />
 		<set name="price" val="18000" />
@@ -811,7 +811,7 @@
 		<set name="icon" val="icon.etc_pet_armor_i00" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="PET" />
-		<set name="bodypart" val="wolf" />
+		<set name="SLOT" val="WOLF" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="160" />
 		<set name="price" val="32000" />
@@ -824,7 +824,7 @@
 		<set name="icon" val="icon.etc_pet_armor_i01" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="PET" />
-		<set name="bodypart" val="wolf" />
+		<set name="SLOT" val="WOLF" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="160" />
 		<set name="price" val="55000" />
@@ -837,7 +837,7 @@
 		<set name="icon" val="icon.etc_pet_armor_i01" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="PET" />
-		<set name="bodypart" val="wolf" />
+		<set name="SLOT" val="WOLF" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="160" />
 		<set name="price" val="87000" />
@@ -850,7 +850,7 @@
 		<set name="icon" val="icon.etc_pet_armor_i01" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="PET" />
-		<set name="bodypart" val="wolf" />
+		<set name="SLOT" val="WOLF" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="160" />
 		<set name="price" val="130000" />
@@ -863,7 +863,7 @@
 		<set name="icon" val="icon.etc_pet_armor_i01" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="PET" />
-		<set name="bodypart" val="wolf" />
+		<set name="SLOT" val="WOLF" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="160" />
 		<set name="price" val="200000" />
@@ -876,7 +876,7 @@
 		<set name="icon" val="icon.etc_pet_armor_i01" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="PET" />
-		<set name="bodypart" val="wolf" />
+		<set name="SLOT" val="WOLF" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="160" />
 		<set name="price" val="260000" />
@@ -889,7 +889,7 @@
 		<set name="icon" val="icon.etc_pet_armor_i02" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="PET" />
-		<set name="bodypart" val="wolf" />
+		<set name="SLOT" val="WOLF" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="160" />
 		<set name="price" val="330000" />
@@ -902,7 +902,7 @@
 		<set name="icon" val="icon.etc_pet_armor_i02" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="PET" />
-		<set name="bodypart" val="wolf" />
+		<set name="SLOT" val="WOLF" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="160" />
 		<set name="price" val="420000" />

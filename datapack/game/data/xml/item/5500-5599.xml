@@ -596,7 +596,7 @@
 	<item id="5576" type="Armor" name="Sound Test Boots">
 		<set name="icon" val="icon.armor_t30_b_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="feet" />
+		<set name="SLOT" val="FEET" />
 		<set name="material" val="CLOTH" />
 		<set name="weight" val="50" />
 	</item>
@@ -738,7 +738,7 @@
 	<item id="5590" type="Armor" name="Squeaking Shoes">
 		<set name="icon" val="icon.armor_t02_b_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="feet" />
+		<set name="SLOT" val="FEET" />
 		<set name="material" val="CLOTH" />
 		<set name="weight" val="50" />
 		<set name="price" val="350000" />
@@ -810,7 +810,7 @@
 		<set name="is_magical" val="true" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGBLUNT" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;46;120" />
@@ -837,7 +837,7 @@
 		<set name="is_magical" val="true" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGBLUNT" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;46;120" />
@@ -864,7 +864,7 @@
 		<set name="is_magical" val="true" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGBLUNT" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;46;120" />
@@ -890,7 +890,7 @@
 		<set name="icon" val="icon.weapon_meteor_shower_i01" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BLUNT" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />

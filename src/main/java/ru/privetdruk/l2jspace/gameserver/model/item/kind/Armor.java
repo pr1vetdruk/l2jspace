@@ -14,11 +14,18 @@ public final class Armor extends Item {
 
         _type = set.getEnum("armor_type", ArmorType.class, ArmorType.NONE);
 
-        if (getBodyPart() == Item.SLOT_NECK || getBodyPart() == Item.SLOT_FACE || getBodyPart() == Item.SLOT_HAIR || getBodyPart() == Item.SLOT_HAIRALL || (getBodyPart() & Item.SLOT_L_EAR) != 0 || (getBodyPart() & Item.SLOT_L_FINGER) != 0 || (getBodyPart() & Item.SLOT_BACK) != 0) {
+        Slot slot = getSlot();
+        if (slot == Item.Slot.NECK
+                || slot == Item.Slot.FACE
+                || slot == Item.Slot.HAIR
+                || slot == Item.Slot.HAIR_ALL
+                || (slot.getId() & Item.Slot.LEFT_EAR.getId()) != 0
+                || (slot.getId() & Item.Slot.LEFT_FINGER.getId()) != 0
+                || (slot.getId() & Item.Slot.BACK.getId()) != 0) {
             _type1 = Item.TYPE1_WEAPON_RING_EARRING_NECKLACE;
             _type2 = Item.TYPE2_ACCESSORY;
         } else {
-            if (_type == ArmorType.NONE && getBodyPart() == Item.SLOT_L_HAND) // retail define shield as NONE
+            if (_type == ArmorType.NONE && slot == Item.Slot.LEFT_HAND) // retail define shield as NONE
                 _type = ArmorType.SHIELD;
 
             _type1 = Item.TYPE1_SHIELD_ARMOR;
@@ -32,7 +39,7 @@ public final class Armor extends Item {
     }
 
     @Override
-    public final int getItemMask() {
+    public int getItemMask() {
         return getItemType().mask();
     }
 }

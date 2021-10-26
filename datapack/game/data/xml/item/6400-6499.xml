@@ -68,7 +68,7 @@
 		<set name="icon" val="icon.armor_t2000_ul_i00" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="NONE" />
-		<set name="bodypart" val="alldress" />
+		<set name="SLOT" val="ALL_DRESS" />
 		<set name="material" val="CLOTH" />
 		<set name="weight" val="1000" />
 		<set name="price" val="5000000" />

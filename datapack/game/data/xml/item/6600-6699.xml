@@ -4,7 +4,7 @@
 		<set name="icon" val="icon.weapon_saint_spear_i01" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="POLE" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="80" />
 		<set name="damage_range" val="0;0;66;120" />
@@ -30,7 +30,7 @@
 		<set name="icon" val="icon.weapon_saint_spear_i01" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="POLE" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="80" />
 		<set name="damage_range" val="0;0;66;120" />
@@ -56,7 +56,7 @@
 		<set name="icon" val="icon.weapon_demon_splinter_i01" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="DUALFIST" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;32;120" />
@@ -82,7 +82,7 @@
 		<set name="icon" val="icon.weapon_demon_splinter_i01" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="DUALFIST" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;32;120" />
@@ -108,7 +108,7 @@
 		<set name="icon" val="icon.weapon_demon_splinter_i01" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="DUALFIST" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;32;120" />
@@ -136,7 +136,7 @@
 		<set name="icon" val="icon.weapon_heavens_divider_i01" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGSWORD" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;44;120" />
@@ -161,7 +161,7 @@
 		<set name="icon" val="icon.weapon_heavens_divider_i01" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGSWORD" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;44;120" />
@@ -186,7 +186,7 @@
 		<set name="icon" val="icon.weapon_heavens_divider_i01" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGSWORD" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;44;120" />
@@ -212,7 +212,7 @@
 		<set name="is_magical" val="true" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BLUNT" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -239,7 +239,7 @@
 		<set name="is_magical" val="true" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BLUNT" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -266,7 +266,7 @@
 		<set name="is_magical" val="true" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BLUNT" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -292,7 +292,7 @@
 		<set name="icon" val="icon.weapon_the_sword_of_hero_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="SWORD" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -326,7 +326,7 @@
 			val="icon.weapon_the_two_handed_sword_of_hero_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGSWORD" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;44;120" />
@@ -358,7 +358,7 @@
 		<set name="icon" val="icon.weapon_the_axe_of_hero_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BLUNT" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -393,7 +393,7 @@
 		<set name="is_magical" val="true" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BLUNT" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -428,7 +428,7 @@
 		<set name="icon" val="icon.weapon_the_hammer_of_hero_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGBLUNT" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;44;120" />
@@ -463,7 +463,7 @@
 		<set name="is_magical" val="true" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGBLUNT" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;44;120" />
@@ -498,7 +498,7 @@
 		<set name="icon" val="icon.weapon_the_dagger_of_hero_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="DAGGER" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -532,7 +532,7 @@
 		<set name="icon" val="icon.weapon_the_fist_of_hero_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="DUALFIST" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;32;120" />
@@ -566,7 +566,7 @@
 		<set name="icon" val="icon.weapon_the_bow_of_hero_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BOW" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="500" />
 		<set name="damage_range" val="0;0;10;0" />
@@ -603,7 +603,7 @@
 		<set name="icon" val="icon.weapon_the_dualsword_of_hero_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="DUAL" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;44;120" />
@@ -636,7 +636,7 @@
 		<set name="icon" val="icon.weapon_the_pole_of_hero_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="POLE" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="80" />
 		<set name="damage_range" val="0;0;66;120" />
@@ -960,7 +960,7 @@
 	<item id="6656" type="Armor" name="Earring of Antharas">
 		<set name="icon" val="icon.accessory_earring_of_antaras_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="rear;lear" />
+		<set name="SLOT" val="LEFT_RIGHT_EAR" />
 		<set name="crystal_type" val="S" />
 		<set name="crystal_count" val="185" />
 		<set name="material" val="GOLD" />
@@ -976,7 +976,7 @@
 	<item id="6657" type="Armor" name="Necklace of Valakas">
 		<set name="icon" val="icon.accessory_necklace_of_valakas_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="S" />
 		<set name="crystal_count" val="247" />
 		<set name="material" val="GOLD" />
@@ -992,7 +992,7 @@
 	<item id="6658" type="Armor" name="Ring of Baium">
 		<set name="icon" val="icon.accessory_ring_of_baium_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="rfinger;lfinger" />
+		<set name="SLOT" val="LEFT_RIGHT_FINGER" />
 		<set name="crystal_type" val="S" />
 		<set name="crystal_count" val="86" />
 		<set name="material" val="GOLD" />
@@ -1008,7 +1008,7 @@
 	<item id="6659" type="Armor" name="Zaken's Earring">
 		<set name="icon" val="icon.accessory_earring_of_zaken_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="rear;lear" />
+		<set name="SLOT" val="LEFT_RIGHT_EAR" />
 		<set name="crystal_type" val="S" />
 		<set name="crystal_count" val="129" />
 		<set name="material" val="GOLD" />
@@ -1024,7 +1024,7 @@
 	<item id="6660" type="Armor" name="Ring of Queen Ant">
 		<set name="icon" val="icon.accessory_ring_of_queen_ant_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="rfinger;lfinger" />
+		<set name="SLOT" val="LEFT_RIGHT_FINGER" />
 		<set name="crystal_type" val="B" />
 		<set name="crystal_count" val="82" />
 		<set name="material" val="GOLD" />
@@ -1040,7 +1040,7 @@
 	<item id="6661" type="Armor" name="Earring of Orfen">
 		<set name="icon" val="icon.accessory_earring_of_orfen_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="rear;lear" />
+		<set name="SLOT" val="LEFT_RIGHT_EAR" />
 		<set name="crystal_type" val="A" />
 		<set name="crystal_count" val="104" />
 		<set name="material" val="GOLD" />
@@ -1056,7 +1056,7 @@
 	<item id="6662" type="Armor" name="Ring of Core">
 		<set name="icon" val="icon.accessory_ring_of_core_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="rfinger;lfinger" />
+		<set name="SLOT" val="LEFT_RIGHT_FINGER" />
 		<set name="crystal_type" val="A" />
 		<set name="crystal_count" val="69" />
 		<set name="material" val="GOLD" />
@@ -1185,7 +1185,7 @@
 		<set name="icon" val="icon.armor_t88_u_i02" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="HEAVY" />
-		<set name="bodypart" val="chest" />
+		<set name="SLOT" val="CHEST" />
 		<set name="crystal_type" val="S" />
 		<set name="crystal_count" val="715" />
 		<set name="material" val="SCALE_OF_DRAGON" />
@@ -1200,7 +1200,7 @@
 		<set name="icon" val="icon.armor_t88_l_i02" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="HEAVY" />
-		<set name="bodypart" val="legs" />
+		<set name="SLOT" val="LEGS" />
 		<set name="crystal_type" val="S" />
 		<set name="crystal_count" val="448" />
 		<set name="material" val="SCALE_OF_DRAGON" />
@@ -1214,7 +1214,7 @@
 	<item id="6676" type="Armor" name="Sealed Imperial Crusader Gauntlet">
 		<set name="icon" val="icon.armor_t88_g_i02" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="crystal_type" val="S" />
 		<set name="crystal_count" val="179" />
 		<set name="material" val="LEATHER" />
@@ -1228,7 +1228,7 @@
 	<item id="6677" type="Armor" name="Sealed Imperial Crusader Boots">
 		<set name="icon" val="icon.armor_t88_b_i02" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="feet" />
+		<set name="SLOT" val="FEET" />
 		<set name="crystal_type" val="S" />
 		<set name="crystal_count" val="179" />
 		<set name="material" val="LEATHER" />
@@ -1242,7 +1242,7 @@
 	<item id="6678" type="Armor" name="Sealed Imperial Crusader Shield">
 		<set name="icon" val="icon.shield_imperial_crusader_shield_i02" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="crystal_type" val="S" />
 		<set name="crystal_count" val="188" />
 		<set name="material" val="BONE" />
@@ -1258,7 +1258,7 @@
 	<item id="6679" type="Armor" name="Sealed Imperial Crusader Helmet">
 		<set name="icon" val="icon.armor_helmet_i02" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="head" />
+		<set name="SLOT" val="HEAD" />
 		<set name="crystal_type" val="S" />
 		<set name="crystal_count" val="268" />
 		<set name="material" val="BONE" />
@@ -1273,7 +1273,7 @@
 		<set name="icon" val="icon.armor_t89_ul_i02" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="LIGHT" />
-		<set name="bodypart" val="fullarmor" />
+		<set name="SLOT" val="FULL_ARMOR" />
 		<set name="crystal_type" val="S" />
 		<set name="crystal_count" val="870" />
 		<set name="material" val="LEATHER" />
@@ -1287,7 +1287,7 @@
 	<item id="6681" type="Armor" name="Sealed Draconic Leather Glove">
 		<set name="icon" val="icon.armor_t89_g_i02" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="crystal_type" val="S" />
 		<set name="crystal_count" val="179" />
 		<set name="material" val="LEATHER" />
@@ -1301,7 +1301,7 @@
 	<item id="6682" type="Armor" name="Sealed Draconic Leather Boots">
 		<set name="icon" val="icon.armor_t89_b_i02" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="feet" />
+		<set name="SLOT" val="FEET" />
 		<set name="crystal_type" val="S" />
 		<set name="crystal_count" val="179" />
 		<set name="material" val="LEATHER" />
@@ -1315,7 +1315,7 @@
 	<item id="6683" type="Armor" name="Sealed Draconic Leather Helmet">
 		<set name="icon" val="icon.armor_leather_helmet_i02" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="head" />
+		<set name="SLOT" val="HEAD" />
 		<set name="crystal_type" val="S" />
 		<set name="crystal_count" val="268" />
 		<set name="material" val="BONE" />
@@ -1330,7 +1330,7 @@
 		<set name="icon" val="icon.armor_t90_ul_i02" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="MAGIC" />
-		<set name="bodypart" val="fullarmor" />
+		<set name="SLOT" val="FULL_ARMOR" />
 		<set name="crystal_type" val="S" />
 		<set name="crystal_count" val="870" />
 		<set name="material" val="CLOTH" />
@@ -1345,7 +1345,7 @@
 	<item id="6685" type="Armor" name="Sealed Major Arcana Glove">
 		<set name="icon" val="icon.armor_t90_g_i02" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="crystal_type" val="S" />
 		<set name="crystal_count" val="179" />
 		<set name="material" val="LEATHER" />
@@ -1359,7 +1359,7 @@
 	<item id="6686" type="Armor" name="Sealed Major Arcana Boots">
 		<set name="icon" val="icon.armor_t90_b_i02" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="feet" />
+		<set name="SLOT" val="FEET" />
 		<set name="crystal_type" val="S" />
 		<set name="crystal_count" val="179" />
 		<set name="material" val="LEATHER" />
@@ -1373,7 +1373,7 @@
 	<item id="6687" type="Armor" name="Sealed Major Arcana Circlet">
 		<set name="icon" val="icon.armor_circlet_i02" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="head" />
+		<set name="SLOT" val="HEAD" />
 		<set name="crystal_type" val="S" />
 		<set name="crystal_count" val="268" />
 		<set name="material" val="BONE" />

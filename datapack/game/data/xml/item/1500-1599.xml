@@ -45,7 +45,7 @@
 	<item id="1506" type="Armor" name="Necklace of Courage">
 		<set name="icon" val="icon.accessary_necklace_of_courage_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="material" val="SILVER" />
 		<set name="weight" val="150" />
 		<set name="price" val="66" />
@@ -56,7 +56,7 @@
 	<item id="1507" type="Armor" name="Necklace of Valor">
 		<set name="icon" val="icon.accessary_necklace_of_valor_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="material" val="SILVER" />
 		<set name="weight" val="150" />
 		<set name="price" val="4680" />
@@ -67,7 +67,7 @@
 	<item id="1508" type="Armor" name="Ring of Raccoon">
 		<set name="icon" val="icon.accessary_ring_of_raccoon_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="rfinger;lfinger" />
+		<set name="SLOT" val="LEFT_RIGHT_FINGER" />
 		<set name="material" val="GOLD" />
 		<set name="weight" val="150" />
 		<set name="price" val="2340" />
@@ -78,7 +78,7 @@
 	<item id="1509" type="Armor" name="Ring of Firefly">
 		<set name="icon" val="icon.accessary_ring_of_firefly_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="rfinger;lfinger" />
+		<set name="SLOT" val="LEFT_RIGHT_FINGER" />
 		<set name="material" val="GOLD" />
 		<set name="weight" val="150" />
 		<set name="price" val="2340" />
@@ -90,7 +90,7 @@
 		<set name="icon" val="icon.weapon_orcish_sword_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="SWORD" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -110,7 +110,7 @@
 		<set name="icon" val="icon.weapon_iron_hammer_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BLUNT" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />

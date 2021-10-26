@@ -765,7 +765,7 @@
 		<set name="icon" val="icon.etc_gludio_fish_lure_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="4" />
 		<set name="price" val="240" />
@@ -775,7 +775,7 @@
 		<set name="icon" val="icon.etc_gludio_fish_lure_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="4" />
 		<set name="price" val="240" />
@@ -785,7 +785,7 @@
 		<set name="icon" val="icon.etc_gludio_fish_lure_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="5" />
 		<set name="price" val="100" />
@@ -853,7 +853,7 @@
 		<set name="icon" val="icon.etc_gludio_fish_lure_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="5" />
 		<set name="is_stackable" val="true" />
@@ -862,7 +862,7 @@
 		<set name="icon" val="icon.etc_gludio_fish_lure_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="4" />
 		<set name="is_stackable" val="true" />
@@ -871,7 +871,7 @@
 		<set name="icon" val="icon.etc_gludio_fish_lure_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="3" />
 		<set name="is_stackable" val="true" />
@@ -880,7 +880,7 @@
 		<set name="icon" val="icon.etc_gludio_fish_lure_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="5" />
 		<set name="is_stackable" val="true" />

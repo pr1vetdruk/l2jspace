@@ -143,7 +143,7 @@
 	<item id="7014" type="Armor" name="Monster Only (Shield of Dark Dragon)">
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="DAMASCUS" />
 		<set name="weight" val="4800" />
 		<set name="price" val="845000" />
@@ -156,7 +156,7 @@
 	<item id="7015" type="Armor" name="Shield of Castle Pledge">
 		<set name="icon" val="icon.shield_pledge_shield_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="BONE" />
 		<set name="weight" val="1380" />
 		<set name="price" val="12900" />
@@ -636,7 +636,7 @@
 		<set name="icon" val="icon.weapon_chrono_darbuka_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGBLUNT" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;44;120" />
@@ -653,7 +653,7 @@
 	<item id="7059" type="Armor" name="Golden Festival Mask">
 		<set name="icon" val="icon.accessory_taiwan_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="face" />
+		<set name="SLOT" val="FACE" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="is_tradable" val="false" />
@@ -663,7 +663,7 @@
 	<item id="7060" type="Armor" name="Tateossian Hairband">
 		<set name="icon" val="icon.accessory_tateossian_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="face" />
+		<set name="SLOT" val="FACE" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="is_dropable" val="false" />
@@ -740,7 +740,7 @@
 		<set name="icon" val="icon.etc_ultra_bomb_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="PAPER" />
 		<set name="weight" val="1" />
 		<set name="is_stackable" val="true" />
@@ -749,7 +749,7 @@
 		<set name="icon" val="icon.etc_ultra_bomb_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="PAPER" />
 		<set name="weight" val="1" />
 		<set name="is_stackable" val="true" />
@@ -758,7 +758,7 @@
 		<set name="icon" val="icon.etc_ultra_bomb_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="PAPER" />
 		<set name="weight" val="1" />
 		<set name="is_stackable" val="true" />
@@ -767,7 +767,7 @@
 		<set name="icon" val="icon.etc_ultra_bomb_i00" />
 		<set name="default_action" val="equip" />
 		<set name="etcitem_type" val="LURE" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="PAPER" />
 		<set name="weight" val="1" />
 		<set name="is_stackable" val="true" />

@@ -3,7 +3,7 @@
 	<item id="900" type="Armor" name="Ring of Grace">
 		<set name="icon" val="icon.accessary_ring_of_grace_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="rfinger;lfinger" />
+		<set name="SLOT" val="LEFT_RIGHT_FINGER" />
 		<set name="crystal_type" val="B" />
 		<set name="crystal_count" val="53" />
 		<set name="material" val="GOLD" />
@@ -17,7 +17,7 @@
 	<item id="901" type="Armor" name="Ring of Holy Spirit">
 		<set name="icon" val="icon.accessary_ring_of_holy_spirit_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="rfinger;lfinger" />
+		<set name="SLOT" val="LEFT_RIGHT_FINGER" />
 		<set name="crystal_type" val="B" />
 		<set name="crystal_count" val="82" />
 		<set name="material" val="GOLD" />
@@ -31,7 +31,7 @@
 	<item id="902" type="Armor" name="Phoenix Ring">
 		<set name="icon" val="icon.accessary_phoenixs_ring_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="rfinger;lfinger" />
+		<set name="SLOT" val="LEFT_RIGHT_FINGER" />
 		<set name="crystal_type" val="A" />
 		<set name="crystal_count" val="104" />
 		<set name="material" val="GOLD" />
@@ -46,7 +46,7 @@
 	<item id="903" type="Armor" name="Cerberus Ring">
 		<set name="icon" val="icon.accessary_cerberuss_ring_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="rfinger;lfinger" />
+		<set name="SLOT" val="LEFT_RIGHT_FINGER" />
 		<set name="crystal_type" val="A" />
 		<set name="crystal_count" val="104" />
 		<set name="material" val="GOLD" />
@@ -60,7 +60,7 @@
 	<item id="904" type="Armor" name="Ring of Aid">
 		<set name="icon" val="icon.accessary_ring_of_assistance_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="rfinger;lfinger" />
+		<set name="SLOT" val="LEFT_RIGHT_FINGER" />
 		<set name="crystal_type" val="B" />
 		<set name="crystal_count" val="53" />
 		<set name="material" val="GOLD" />
@@ -74,7 +74,7 @@
 	<item id="905" type="Armor" name="Ring of Blessing">
 		<set name="icon" val="icon.accessary_ring_of_blessing_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="rfinger;lfinger" />
+		<set name="SLOT" val="LEFT_RIGHT_FINGER" />
 		<set name="crystal_type" val="B" />
 		<set name="crystal_count" val="53" />
 		<set name="material" val="GOLD" />
@@ -88,7 +88,7 @@
 	<item id="906" type="Armor" name="Necklace of Knowledge">
 		<set name="icon" val="icon.accessary_necklace_of_knowledge_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="material" val="SILVER" />
 		<set name="weight" val="150" />
 		<set name="price" val="1080" />
@@ -99,7 +99,7 @@
 	<item id="907" type="Armor" name="Necklace of Anguish">
 		<set name="icon" val="icon.accessary_necklace_of_anguish_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="material" val="SILVER" />
 		<set name="weight" val="150" />
 		<set name="price" val="4680" />
@@ -110,7 +110,7 @@
 	<item id="908" type="Armor" name="Necklace of Wisdom">
 		<set name="icon" val="icon.accessary_necklace_of_wisdom_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="material" val="SILVER" />
 		<set name="weight" val="150" />
 		<set name="price" val="11900" />
@@ -121,7 +121,7 @@
 	<item id="909" type="Armor" name="Blue Diamond Necklace">
 		<set name="icon" val="icon.accessary_blue_diamond_necklace_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="material" val="SILVER" />
 		<set name="weight" val="150" />
 		<set name="price" val="21300" />
@@ -132,7 +132,7 @@
 	<item id="910" type="Armor" name="Necklace of Devotion">
 		<set name="icon" val="icon.accessary_necklace_of_devotion_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="D" />
 		<set name="crystal_count" val="65" />
 		<set name="material" val="SILVER" />
@@ -146,7 +146,7 @@
 	<item id="911" type="Armor" name="Enchanted Necklace">
 		<set name="icon" val="icon.accessary_enchanted_necklace_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="D" />
 		<set name="crystal_count" val="103" />
 		<set name="material" val="SILVER" />
@@ -160,7 +160,7 @@
 	<item id="912" type="Armor" name="Near Forest Necklace">
 		<set name="icon" val="icon.accessary_near_forest_necklace_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="D" />
 		<set name="crystal_count" val="155" />
 		<set name="material" val="SILVER" />
@@ -174,7 +174,7 @@
 	<item id="913" type="Armor" name="Elven Necklace">
 		<set name="icon" val="icon.accessary_elven_necklace_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="D" />
 		<set name="crystal_count" val="227" />
 		<set name="material" val="SILVER" />
@@ -188,7 +188,7 @@
 	<item id="914" type="Armor" name="Necklace of Darkness">
 		<set name="icon" val="icon.accessary_necklace_of_darkness_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="D" />
 		<set name="crystal_count" val="294" />
 		<set name="material" val="SILVER" />
@@ -202,7 +202,7 @@
 	<item id="915" type="Armor" name="Aquastone Necklace">
 		<set name="icon" val="icon.accessary_aquastone_necklace_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="C" />
 		<set name="crystal_count" val="82" />
 		<set name="material" val="SILVER" />
@@ -216,7 +216,7 @@
 	<item id="916" type="Armor" name="Necklace of Protection">
 		<set name="icon" val="icon.accessary_necklace_of_protection_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="C" />
 		<set name="crystal_count" val="104" />
 		<set name="material" val="SILVER" />
@@ -230,7 +230,7 @@
 	<item id="917" type="Armor" name="Necklace of Mermaid">
 		<set name="icon" val="icon.accessary_necklace_of_mermaid_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="C" />
 		<set name="crystal_count" val="157" />
 		<set name="material" val="SILVER" />
@@ -244,7 +244,7 @@
 	<item id="918" type="Armor" name="Adamantite Necklace">
 		<set name="icon" val="icon.accessary_adamantite_necklace_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="B" />
 		<set name="crystal_count" val="107" />
 		<set name="material" val="SILVER" />
@@ -258,7 +258,7 @@
 	<item id="919" type="Armor" name="Blessed Necklace">
 		<set name="icon" val="icon.accessary_blessed_necklace_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="C" />
 		<set name="crystal_count" val="226" />
 		<set name="material" val="SILVER" />
@@ -272,7 +272,7 @@
 	<item id="920" type="Armor" name="Tateossian Necklace">
 		<set name="icon" val="icon.accessory_tateossian_necklace_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="S" />
 		<set name="crystal_count" val="296" />
 		<set name="material" val="SILVER" />
@@ -287,7 +287,7 @@
 	<item id="921" type="Armor" name="Necklace of Mana">
 		<set name="icon" val="icon.accessary_necklace_of_mana_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="B" />
 		<set name="crystal_count" val="107" />
 		<set name="material" val="SILVER" />
@@ -301,7 +301,7 @@
 	<item id="922" type="Armor" name="Sage's Necklace">
 		<set name="icon" val="icon.accessary_sages_necklace_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="B" />
 		<set name="crystal_count" val="164" />
 		<set name="material" val="SILVER" />
@@ -315,7 +315,7 @@
 	<item id="923" type="Armor" name="Paradia Necklace">
 		<set name="icon" val="icon.accessary_paradia_necklace_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="B" />
 		<set name="crystal_count" val="164" />
 		<set name="material" val="SILVER" />
@@ -329,7 +329,7 @@
 	<item id="924" type="Armor" name="Majestic Necklace">
 		<set name="icon" val="icon.accessary_inferno_necklace_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="A" />
 		<set name="crystal_count" val="276" />
 		<set name="material" val="SILVER" />
@@ -344,7 +344,7 @@
 	<item id="925" type="Armor" name="Necklace of Solar Eclipse">
 		<set name="icon" val="icon.accessary_necklace_of_sola_eclipse_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="B" />
 		<set name="crystal_count" val="107" />
 		<set name="material" val="SILVER" />
@@ -358,7 +358,7 @@
 	<item id="926" type="Armor" name="Necklace of Black Ore">
 		<set name="icon" val="icon.accessary_necklace_of_black_ore_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="B" />
 		<set name="crystal_count" val="164" />
 		<set name="material" val="SILVER" />
@@ -372,7 +372,7 @@
 	<item id="927" type="Armor" name="Necklace of Summoning">
 		<set name="icon" val="icon.accessary_necklace_of_summons_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="B" />
 		<set name="crystal_count" val="107" />
 		<set name="material" val="SILVER" />
@@ -386,7 +386,7 @@
 	<item id="928" type="Armor" name="Otherworldly Necklace">
 		<set name="icon" val="icon.accessary_another_worlds_necklace_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="B" />
 		<set name="crystal_count" val="164" />
 		<set name="material" val="SILVER" />
@@ -400,7 +400,7 @@
 	<item id="929" type="Armor" name="Elemental Necklace">
 		<set name="icon" val="icon.accessary_elemental_necklace_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="B" />
 		<set name="crystal_count" val="164" />
 		<set name="material" val="SILVER" />
@@ -414,7 +414,7 @@
 	<item id="930" type="Armor" name="Necklace of Phantom">
 		<set name="icon" val="icon.accessary_necklace_of_phantom_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="A" />
 		<set name="crystal_count" val="208" />
 		<set name="material" val="SILVER" />
@@ -428,7 +428,7 @@
 	<item id="931" type="Armor" name="Necklace of Grace">
 		<set name="icon" val="icon.accessary_necklace_of_grace_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="B" />
 		<set name="crystal_count" val="107" />
 		<set name="material" val="SILVER" />
@@ -442,7 +442,7 @@
 	<item id="932" type="Armor" name="Necklace of Holy Spirit">
 		<set name="icon" val="icon.accessary_necklace_of_holy_spirit_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="B" />
 		<set name="crystal_count" val="164" />
 		<set name="material" val="SILVER" />
@@ -456,7 +456,7 @@
 	<item id="933" type="Armor" name="Phoenix Necklace">
 		<set name="icon" val="icon.accessary_phoenixs_necklace_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="A" />
 		<set name="crystal_count" val="208" />
 		<set name="material" val="SILVER" />
@@ -471,7 +471,7 @@
 	<item id="934" type="Armor" name="Cerberus Necklace">
 		<set name="icon" val="icon.accessary_cerberuss_necklace_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="A" />
 		<set name="crystal_count" val="208" />
 		<set name="material" val="SILVER" />
@@ -485,7 +485,7 @@
 	<item id="935" type="Armor" name="Necklace of Aid">
 		<set name="icon" val="icon.accessary_necklace_of_assistance_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="B" />
 		<set name="crystal_count" val="107" />
 		<set name="material" val="SILVER" />
@@ -499,7 +499,7 @@
 	<item id="936" type="Armor" name="Necklace of Blessing">
 		<set name="icon" val="icon.accessary_necklace_of_blessing_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="neck" />
+		<set name="SLOT" val="NECK" />
 		<set name="crystal_type" val="B" />
 		<set name="crystal_count" val="107" />
 		<set name="material" val="SILVER" />
@@ -589,7 +589,7 @@
 	<item id="945" type="Armor" name="Skeleton Buckler">
 		<set name="icon" val="icon.shield_skeleton_buckler_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="1400" />
 		<set name="price" val="3440" />
@@ -604,7 +604,7 @@
 		<set name="icon" val="icon.weapon_dagger_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="DAGGER" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -905,7 +905,7 @@
 		<set name="icon" val="icon.weapon_broad_sword_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="SWORD" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -975,7 +975,7 @@
 		<set name="icon" val="icon.weapon_brandish_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGSWORD" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -1065,7 +1065,7 @@
 		<set name="icon" val="icon.weapon_knife_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="DAGGER" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -1085,7 +1085,7 @@
 	<item id="990" type="Armor" name="Mandragora Essence">
 		<set name="icon" val="icon.item_canuse27" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="material" val="CLOTH" />
 		<set name="weight" val="60" />
 		<set name="price" val="37" />
@@ -1096,7 +1096,7 @@
 	<item id="991" type="Armor" name="Royen's Key">
 		<set name="icon" val="icon.item_normal26" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="material" val="CLOTH" />
 		<set name="weight" val="60" />
 		<set name="price" val="37" />
@@ -1107,7 +1107,7 @@
 	<item id="992" type="Armor" name="Shilen's 1st Mark">
 		<set name="icon" val="icon.armor_head15" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="material" val="CLOTH" />
 		<set name="weight" val="60" />
 		<set name="price" val="37" />
@@ -1118,7 +1118,7 @@
 	<item id="993" type="Armor" name="Shilen's 2nd Mark">
 		<set name="icon" val="icon.armor_head15" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="material" val="CLOTH" />
 		<set name="weight" val="60" />
 		<set name="price" val="37" />
@@ -1129,7 +1129,7 @@
 	<item id="994" type="Armor" name="Eye of Abyss">
 		<set name="icon" val="icon.item_normal46" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="material" val="CLOTH" />
 		<set name="weight" val="60" />
 		<set name="price" val="37" />
@@ -1140,7 +1140,7 @@
 	<item id="995" type="Armor" name="Wanted Poster">
 		<set name="icon" val="icon.item_normal20" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="material" val="CLOTH" />
 		<set name="weight" val="60" />
 		<set name="price" val="37" />
@@ -1151,7 +1151,7 @@
 	<item id="996" type="Armor" name="Alex's Dagger">
 		<set name="icon" val="icon.weapon_ss08" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="material" val="CLOTH" />
 		<set name="weight" val="60" />
 		<set name="price" val="37" />
@@ -1162,7 +1162,7 @@
 	<item id="997" type="Armor" name="Pinter's Bill">
 		<set name="icon" val="icon.item_normal50" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="material" val="CLOTH" />
 		<set name="weight" val="60" />
 		<set name="price" val="37" />
@@ -1173,7 +1173,7 @@
 	<item id="998" type="Armor" name="Book of Aklantoth - Part 1">
 		<set name="icon" val="icon.item_normal07" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="material" val="CLOTH" />
 		<set name="weight" val="60" />
 		<set name="price" val="37" />
@@ -1184,7 +1184,7 @@
 	<item id="999" type="Armor" name="Book of Aklantoth - Part 2">
 		<set name="icon" val="icon.item_normal07" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="material" val="CLOTH" />
 		<set name="weight" val="60" />
 		<set name="price" val="37" />

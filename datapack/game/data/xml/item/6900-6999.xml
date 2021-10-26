@@ -23,7 +23,7 @@
 	<item id="6902" type="Armor" name="Pledge Shield">
 		<set name="icon" val="icon.shield_pledge_shield_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="BONE" />
 		<set name="weight" val="1380" />
 		<set name="price" val="12900" />
@@ -155,7 +155,7 @@
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="FIST" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="6" />
 		<set name="price" val="2" />
@@ -167,7 +167,7 @@
 	<item id="6918" type="Armor" name="Monster Only (Shield of Silenos)">
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="material" val="BONE" />
 		<set name="weight" val="1380" />
 		<set name="price" val="12900" />
@@ -180,7 +180,7 @@
 	<item id="6919" type="Armor" name="Monster Only (Shield of Ketra Orc)">
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="lhand" />
+		<set name="SLOT" val="LEFT_HAND" />
 		<set name="crystal_count" val="142" />
 		<set name="material" val="FINE_STEEL" />
 		<set name="weight" val="1320" />

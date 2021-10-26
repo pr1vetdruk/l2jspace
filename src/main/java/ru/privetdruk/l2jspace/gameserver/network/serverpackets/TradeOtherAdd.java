@@ -19,7 +19,7 @@ public class TradeOtherAdd extends L2GameServerPacket {
         writeD(_item.getCount());
         writeH(_item.getItem().getType2());
         writeH(0x00); // ?
-        writeD(_item.getItem().getBodyPart());
+        writeD(_item.getItem().getSlot().getId());
         writeH(_item.getEnchant());
         writeH(0x00); // ?
         writeH(0x00); // ?

@@ -40,7 +40,7 @@ public final class RequestPetUseItem extends L2GameClientPacket {
         // Check if item is pet armor or pet weapon
         if (item.isPetItem()) {
             // Verify if the pet can wear that item
-            if (!pet.canWear(item.getItem())) {
+            if (pet.canWear(item.getItem())) {
                 player.sendPacket(SystemMessageId.PET_CANNOT_USE_ITEM);
                 return;
             }

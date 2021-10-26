@@ -615,19 +615,10 @@ public class Pet extends Summon {
     public boolean canWear(Item item) {
         final int npcId = getTemplate().getNpcId();
 
-        if (npcId > 12310 && npcId < 12314 && item.getBodyPart() == Item.SLOT_HATCHLING)
-            return true;
-
-        if (npcId == 12077 && item.getBodyPart() == Item.SLOT_WOLF)
-            return true;
-
-        if (npcId > 12525 && npcId < 12529 && item.getBodyPart() == Item.SLOT_STRIDER)
-            return true;
-
-        if (npcId > 12779 && npcId < 12783 && item.getBodyPart() == Item.SLOT_BABYPET)
-            return true;
-
-        return false;
+        return (npcId > 12310 && npcId < 12314 && item.getSlot() == Item.Slot.HATCHLING)
+                || (npcId == 12077 && item.getSlot() == Item.Slot.WOLF)
+                || (npcId > 12525 && npcId < 12529 && item.getSlot() == Item.Slot.STRIDER)
+                || (npcId > 12779 && npcId < 12783 && item.getSlot() == Item.Slot.BABY_PET);
     }
 
     /**

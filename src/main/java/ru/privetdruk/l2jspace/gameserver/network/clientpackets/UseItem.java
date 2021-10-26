@@ -93,7 +93,7 @@ public final class UseItem extends L2GameClientPacket {
 
             final Pet pet = ((Pet) player.getSummon());
 
-            if (!pet.canWear(item.getItem())) {
+            if (pet.canWear(item.getItem())) {
                 player.sendPacket(SystemMessageId.PET_CANNOT_USE_ITEM);
                 return;
             }
@@ -141,31 +141,24 @@ public final class UseItem extends L2GameClientPacket {
             return;
 
         if (item.isEquipable()) {
-            switch (item.getItem().getBodyPart()) {
-                case Item.SLOT_LR_HAND:
-                case Item.SLOT_L_HAND:
-                case Item.SLOT_R_HAND:
+            switch (item.getItem().getSlot()) {
+                case LEFT_RIGHT_HAND, LEFT_HAND, RIGHT_HAND -> {
                     if (player.isMounted()) {
                         player.sendPacket(SystemMessageId.CANNOT_EQUIP_ITEM_DUE_TO_BAD_CONDITION);
                         return;
                     }
-
                     if (player.isCursedWeaponEquipped())
                         return;
-
                     player.getAI().tryToUseItem(_objectId);
-                    break;
-
-                default:
+                }
+                default -> {
                     if (player.isCursedWeaponEquipped() && item.getItemId() == 6408) // Don't allow to put formal wear
                         return;
-
                     final ItemInstance itemToTest = player.getInventory().getItemByObjectId(_objectId);
                     if (itemToTest == null)
                         return;
-
                     player.useEquippableItem(itemToTest, false);
-                    break;
+                }
             }
         } else {
             if (player.getAttackType() == WeaponType.FISHINGROD && item.getItem().getItemType() == EtcItemType.LURE) {

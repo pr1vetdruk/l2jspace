@@ -92,7 +92,7 @@ public final class RequestPreviewItem extends L2GameClientPacket {
             if (template == null)
                 continue;
 
-            final Paperdoll slot = Inventory.getPaperdollIndex(template.getBodyPart());
+            final Paperdoll slot = Inventory.getPaperdollIndex(template.getSlot());
             if (slot == Paperdoll.NULL)
                 continue;
 

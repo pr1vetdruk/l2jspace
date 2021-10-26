@@ -232,7 +232,7 @@ public class CursedWeapon {
                 removeDemonicSkills();
 
                 // Remove
-                _player.getInventory().unequipItemInBodySlot(Item.SLOT_LR_HAND);
+                _player.getInventory().unequipItemInBodySlot(Item.Slot.LEFT_RIGHT_HAND);
                 _player.store();
 
                 // Destroy

@@ -294,7 +294,7 @@ public final class ItemInstance extends WorldObject implements Runnable, Compara
      * @return boolean
      */
     public boolean isEquipable() {
-        return !(_item.getBodyPart() == 0 || _item.getItemType() == EtcItemType.ARROW || _item.getItemType() == EtcItemType.LURE);
+        return !(_item.getSlot() == Item.Slot.NONE || _item.getItemType() == EtcItemType.ARROW || _item.getItemType() == EtcItemType.LURE);
     }
 
     /**

@@ -48,7 +48,7 @@ public final class WarehouseDepositList extends L2GameServerPacket {
             writeD(temp.getCount());
             writeH(item.getType2());
             writeH(temp.getCustomType1());
-            writeD(item.getBodyPart());
+            writeD(item.getSlot().getId());
             writeH(temp.getEnchantLevel());
             writeH(temp.getCustomType2());
             writeH(0x00);

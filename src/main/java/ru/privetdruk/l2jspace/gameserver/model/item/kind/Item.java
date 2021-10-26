@@ -21,35 +21,6 @@ import java.util.*;
  * This container contains all informations concerning an item (weapon, armor, etc).
  */
 public abstract class Item {
-    private static final Map<String, Integer> SLOTS = new HashMap<>();
-
-    {
-        SLOTS.put("chest", SLOT_CHEST);
-        SLOTS.put("fullarmor", SLOT_FULL_ARMOR);
-        SLOTS.put("alldress", SLOT_ALLDRESS);
-        SLOTS.put("head", SLOT_HEAD);
-        SLOTS.put("hair", SLOT_HAIR);
-        SLOTS.put("face", SLOT_FACE);
-        SLOTS.put("hairall", SLOT_HAIRALL);
-        SLOTS.put("underwear", SLOT_UNDERWEAR);
-        SLOTS.put("back", SLOT_BACK);
-        SLOTS.put("neck", SLOT_NECK);
-        SLOTS.put("legs", SLOT_LEGS);
-        SLOTS.put("feet", SLOT_FEET);
-        SLOTS.put("gloves", SLOT_GLOVES);
-        SLOTS.put("chest,legs", SLOT_CHEST | SLOT_LEGS);
-        SLOTS.put("rhand", SLOT_R_HAND);
-        SLOTS.put("lhand", SLOT_L_HAND);
-        SLOTS.put("lrhand", SLOT_LR_HAND);
-        SLOTS.put("rear;lear", SLOT_R_EAR | SLOT_L_EAR);
-        SLOTS.put("rfinger;lfinger", SLOT_R_FINGER | SLOT_L_FINGER);
-        SLOTS.put("none", SLOT_NONE);
-        SLOTS.put("wolf", SLOT_WOLF); // for wolf
-        SLOTS.put("hatchling", SLOT_HATCHLING); // for hatchling
-        SLOTS.put("strider", SLOT_STRIDER); // for strider
-        SLOTS.put("babypet", SLOT_BABYPET); // for babypet
-    }
-
     public static final int TYPE1_WEAPON_RING_EARRING_NECKLACE = 0;
     public static final int TYPE1_SHIELD_ARMOR = 1;
     public static final int TYPE1_ITEM_QUESTITEM_ADENA = 4;
@@ -61,36 +32,58 @@ public abstract class Item {
     public static final int TYPE2_MONEY = 4;
     public static final int TYPE2_OTHER = 5;
 
-    public static final int SLOT_NONE = 0x0000;
-    public static final int SLOT_UNDERWEAR = 0x0001;
-    public static final int SLOT_R_EAR = 0x0002;
-    public static final int SLOT_L_EAR = 0x0004;
-    public static final int SLOT_LR_EAR = 0x00006;
-    public static final int SLOT_NECK = 0x0008;
-    public static final int SLOT_R_FINGER = 0x0010;
-    public static final int SLOT_L_FINGER = 0x0020;
-    public static final int SLOT_LR_FINGER = 0x0030;
-    public static final int SLOT_HEAD = 0x0040;
-    public static final int SLOT_R_HAND = 0x0080;
-    public static final int SLOT_L_HAND = 0x0100;
-    public static final int SLOT_GLOVES = 0x0200;
-    public static final int SLOT_CHEST = 0x0400;
-    public static final int SLOT_LEGS = 0x0800;
-    public static final int SLOT_FEET = 0x1000;
-    public static final int SLOT_BACK = 0x2000;
-    public static final int SLOT_LR_HAND = 0x4000;
-    public static final int SLOT_FULL_ARMOR = 0x8000;
-    public static final int SLOT_FACE = 0x010000;
-    public static final int SLOT_ALLDRESS = 0x020000;
-    public static final int SLOT_HAIR = 0x040000;
-    public static final int SLOT_HAIRALL = 0x080000;
+    public enum Slot {
+        NONE(0x0000),
+        UNDERWEAR(0x0001),
+        COSTUME(0x0001),
+        RIGHT_EAR(0x0002),
+        LEFT_EAR(0x0004),
+        LEFT_RIGHT_EAR(0x00006),
+        NECK(0x0008),
+        RIGHT_FINGER(0x0010),
+        LEFT_FINGER(0x0020),
+        LEFT_RIGHT_FINGER(0x0030),
+        HEAD(0x0040),
+        RIGHT_HAND(0x0080),
+        LEFT_HAND(0x0100),
+        GLOVES(0x0200),
+        CHEST(0x0400),
+        LEGS(0x0800),
+        FEET(0x1000),
+        BACK(0x2000),
+        LEFT_RIGHT_HAND(0x4000),
+        FULL_ARMOR(0x8000),
+        FACE(0x010000),
+        ALL_DRESS(0x020000),
+        HAIR(0x040000),
+        HAIR_ALL(0x080000),
+        UNDEFINED(-1),
+        WOLF(-100),
+        HATCHLING(-101),
+        STRIDER(-102),
+        BABY_PET(-103),
+        ALL_WEAPON(LEFT_RIGHT_HAND.id | RIGHT_HAND.id);
 
-    public static final int SLOT_WOLF = -100;
-    public static final int SLOT_HATCHLING = -101;
-    public static final int SLOT_STRIDER = -102;
-    public static final int SLOT_BABYPET = -103;
+        private final int id;
 
-    public static final int SLOT_ALLWEAPON = SLOT_LR_HAND | SLOT_R_HAND;
+        Slot(int id) {
+            this.id = id;
+        }
+
+        public static Slot fromId(int slotId) {
+            for (Slot slot : Slot.values()) {
+                if (slot.getId() == slotId) {
+                    return slot;
+                }
+            }
+
+            return NONE;
+        }
+
+        public int getId() {
+            return id;
+        }
+    }
 
     private final int _itemId;
     private final String _name;
@@ -101,7 +94,7 @@ public abstract class Item {
     private final MaterialType _materialType;
     private final CrystalType _crystalType;
     private final int _duration;
-    private final int _bodyPart;
+    private final Slot slot;
     private final int _referencePrice;
     private final int _crystalCount;
 
@@ -133,7 +126,7 @@ public abstract class Item {
         _weight = set.getInteger("weight", 0);
         _materialType = set.getEnum("material", MaterialType.class, MaterialType.STEEL);
         _duration = set.getInteger("duration", -1);
-        _bodyPart = SLOTS.get(set.getString("bodypart", "none"));
+        slot = set.getEnum("SLOT", Slot.class, Slot.NONE);
         _referencePrice = set.getInteger("price", 0);
         _crystalType = set.getEnum("crystal_type", CrystalType.class, CrystalType.NONE);
         _crystalCount = set.getInteger("crystal_count", 0);
@@ -266,8 +259,8 @@ public abstract class Item {
     /**
      * @return int the part of the body used with the item.
      */
-    public final int getBodyPart() {
-        return _bodyPart;
+    public final Slot getSlot() {
+        return slot;
     }
 
     /**
@@ -292,7 +285,7 @@ public abstract class Item {
     }
 
     public boolean isEquipable() {
-        return getBodyPart() != 0 && !(getItemType() instanceof EtcItemType);
+        return slot != Slot.NONE && !(getItemType() instanceof EtcItemType);
     }
 
     /**

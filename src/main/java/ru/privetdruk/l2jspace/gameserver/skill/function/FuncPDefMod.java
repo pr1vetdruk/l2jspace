@@ -31,7 +31,7 @@ public class FuncPDefMod extends Func {
             if (chestItem != null)
                 value -= (player.isMageClass()) ? 15 : 31;
 
-            final boolean isFullBody = chestItem != null && chestItem.getItem().getBodyPart() == Item.SLOT_FULL_ARMOR;
+            final boolean isFullBody = chestItem != null && chestItem.getItem().getSlot() == Item.Slot.FULL_ARMOR;
             if (isFullBody || player.getInventory().hasItemIn(Paperdoll.LEGS))
                 value -= (player.isMageClass()) ? 8 : 18;
 

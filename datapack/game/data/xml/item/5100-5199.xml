@@ -196,7 +196,7 @@
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="DAGGER" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -221,7 +221,7 @@
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="DAGGER" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;300;120" />
@@ -246,7 +246,7 @@
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="DUAL" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;44;120" />
@@ -270,7 +270,7 @@
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="DAGGER" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;300;120" />
@@ -295,7 +295,7 @@
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="DAGGER" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;300;120" />
@@ -320,7 +320,7 @@
 		<set name="icon" val="icon.weapon_monster_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="DAGGER" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;300;120" />
@@ -345,7 +345,7 @@
 		<set name="icon" val="icon.weapon_chrono_tambourine_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="DUALFIST" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="5" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -704,7 +704,7 @@
 		<set name="icon" val="icon.etc_pet_armor_i08" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="PET" />
-		<set name="bodypart" val="strider" />
+		<set name="SLOT" val="STRIDER" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="160" />
 		<set name="price" val="1600000" />
@@ -717,7 +717,7 @@
 		<set name="icon" val="icon.etc_pet_armor_i09" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="PET" />
-		<set name="bodypart" val="strider" />
+		<set name="SLOT" val="STRIDER" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="160" />
 		<set name="price" val="2300000" />
@@ -730,7 +730,7 @@
 		<set name="icon" val="icon.etc_pet_armor_i09" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="PET" />
-		<set name="bodypart" val="strider" />
+		<set name="SLOT" val="STRIDER" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="160" />
 		<set name="price" val="3400000" />
@@ -743,7 +743,7 @@
 		<set name="icon" val="icon.etc_pet_armor_i10" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="PET" />
-		<set name="bodypart" val="strider" />
+		<set name="SLOT" val="STRIDER" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="160" />
 		<set name="price" val="4900000" />
@@ -756,7 +756,7 @@
 		<set name="icon" val="icon.etc_pet_armor_i10" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="PET" />
-		<set name="bodypart" val="strider" />
+		<set name="SLOT" val="STRIDER" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="160" />
 		<set name="price" val="7300000" />
@@ -769,7 +769,7 @@
 		<set name="icon" val="icon.etc_pet_armor_i11" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="PET" />
-		<set name="bodypart" val="strider" />
+		<set name="SLOT" val="STRIDER" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="160" />
 		<set name="price" val="10000000" />
@@ -782,7 +782,7 @@
 		<set name="icon" val="icon.etc_pet_arms_i08" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="PET" />
-		<set name="bodypart" val="strider" />
+		<set name="SLOT" val="STRIDER" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -802,7 +802,7 @@
 		<set name="icon" val="icon.etc_pet_arms_i09" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="PET" />
-		<set name="bodypart" val="strider" />
+		<set name="SLOT" val="STRIDER" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -822,7 +822,7 @@
 		<set name="icon" val="icon.etc_pet_arms_i09" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="PET" />
-		<set name="bodypart" val="strider" />
+		<set name="SLOT" val="STRIDER" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -842,7 +842,7 @@
 		<set name="icon" val="icon.etc_pet_arms_i10" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="PET" />
-		<set name="bodypart" val="strider" />
+		<set name="SLOT" val="STRIDER" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -862,7 +862,7 @@
 		<set name="icon" val="icon.etc_pet_arms_i10" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="PET" />
-		<set name="bodypart" val="strider" />
+		<set name="SLOT" val="STRIDER" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -882,7 +882,7 @@
 		<set name="icon" val="icon.etc_pet_arms_i11" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="PET" />
-		<set name="bodypart" val="strider" />
+		<set name="SLOT" val="STRIDER" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -902,7 +902,7 @@
 		<set name="icon" val="icon.etc_pet_armor_i05" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="PET" />
-		<set name="bodypart" val="hatchling" />
+		<set name="SLOT" val="HATCHLING" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="160" />
 		<set name="price" val="2300000" />
@@ -915,7 +915,7 @@
 		<set name="icon" val="icon.etc_pet_armor_i05" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="PET" />
-		<set name="bodypart" val="hatchling" />
+		<set name="SLOT" val="HATCHLING" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="160" />
 		<set name="price" val="3400000" />
@@ -928,7 +928,7 @@
 		<set name="icon" val="icon.etc_pet_armor_i06" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="PET" />
-		<set name="bodypart" val="hatchling" />
+		<set name="SLOT" val="HATCHLING" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="160" />
 		<set name="price" val="4900000" />
@@ -941,7 +941,7 @@
 		<set name="icon" val="icon.etc_pet_armor_i06" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="PET" />
-		<set name="bodypart" val="hatchling" />
+		<set name="SLOT" val="HATCHLING" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="160" />
 		<set name="price" val="7300000" />
@@ -954,7 +954,7 @@
 		<set name="icon" val="icon.etc_pet_armor_i07" />
 		<set name="default_action" val="equip" />
 		<set name="armor_type" val="PET" />
-		<set name="bodypart" val="hatchling" />
+		<set name="SLOT" val="HATCHLING" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="160" />
 		<set name="price" val="10000000" />
@@ -967,7 +967,7 @@
 		<set name="icon" val="icon.etc_pet_arms_i05" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="PET" />
-		<set name="bodypart" val="hatchling" />
+		<set name="SLOT" val="HATCHLING" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -987,7 +987,7 @@
 		<set name="icon" val="icon.etc_pet_arms_i05" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="PET" />
-		<set name="bodypart" val="hatchling" />
+		<set name="SLOT" val="HATCHLING" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -1007,7 +1007,7 @@
 		<set name="icon" val="icon.etc_pet_arms_i06" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="PET" />
-		<set name="bodypart" val="hatchling" />
+		<set name="SLOT" val="HATCHLING" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -1027,7 +1027,7 @@
 		<set name="icon" val="icon.etc_pet_arms_i06" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="PET" />
-		<set name="bodypart" val="hatchling" />
+		<set name="SLOT" val="HATCHLING" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -1047,7 +1047,7 @@
 		<set name="icon" val="icon.etc_pet_arms_i07" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="PET" />
-		<set name="bodypart" val="hatchling" />
+		<set name="SLOT" val="HATCHLING" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />

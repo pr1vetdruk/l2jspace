@@ -43,7 +43,7 @@ public class GMViewWarehouseWithdrawList extends L2GameServerPacket {
             writeH(temp.getCustomType1());
 
             if (item.isEquipable()) {
-                writeD(item.getBodyPart());
+                writeD(item.getSlot().getId());
                 writeH(temp.getEnchantLevel());
 
                 if (temp.isWeapon()) {

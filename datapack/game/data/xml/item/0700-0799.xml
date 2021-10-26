@@ -93,7 +93,7 @@
 	<item id="709" type="Armor" name="Leather Shirt">
 		<set name="icon" val="icon.armor_leather_shirt_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="chest" />
+		<set name="SLOT" val="CHEST" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="400" />
 		<set name="is_tradable" val="false" />
@@ -107,7 +107,7 @@
 	<item id="710" type="Armor" name="Hard Leather Shirt">
 		<set name="icon" val="icon.armor_leather_shirt_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="chest" />
+		<set name="SLOT" val="CHEST" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="400" />
 		<set name="is_tradable" val="false" />
@@ -121,7 +121,7 @@
 	<item id="711" type="Armor" name="Piece Bone Breastplate">
 		<set name="icon" val="icon.armor_mithril_banded_mail_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="chest" />
+		<set name="SLOT" val="CHEST" />
 		<set name="material" val="BONE" />
 		<set name="weight" val="800" />
 		<set name="is_tradable" val="false" />
@@ -135,7 +135,7 @@
 	<item id="712" type="Armor" name="Half Plate Armor">
 		<set name="icon" val="icon.armor_dwarven_scale_mail_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="chest" />
+		<set name="SLOT" val="CHEST" />
 		<set name="material" val="STEEL" />
 		<set name="weight" val="1200" />
 		<set name="is_tradable" val="false" />
@@ -149,7 +149,7 @@
 	<item id="713" type="Armor" name="Leather Pants">
 		<set name="icon" val="icon.armor_squires_pants_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="legs" />
+		<set name="SLOT" val="LEGS" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="250" />
 		<set name="is_tradable" val="false" />
@@ -163,7 +163,7 @@
 	<item id="714" type="Armor" name="Hard Leather Pants">
 		<set name="icon" val="icon.armor_leather_pants_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="legs" />
+		<set name="SLOT" val="LEGS" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="300" />
 		<set name="is_tradable" val="false" />
@@ -177,7 +177,7 @@
 	<item id="715" type="Armor" name="Piece Bone Gaiters">
 		<set name="icon" val="icon.armor_mithril_banded_gaiters_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="legs" />
+		<set name="SLOT" val="LEGS" />
 		<set name="material" val="BONE" />
 		<set name="weight" val="500" />
 		<set name="is_tradable" val="false" />
@@ -191,7 +191,7 @@
 	<item id="716" type="Armor" name="Plate Gaiters">
 		<set name="icon" val="icon.armor_dwarven_scale_mail_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="legs" />
+		<set name="SLOT" val="LEGS" />
 		<set name="material" val="STEEL" />
 		<set name="weight" val="800" />
 		<set name="is_tradable" val="false" />
@@ -205,7 +205,7 @@
 	<item id="717" type="Armor" name="Leather Gloves">
 		<set name="icon" val="icon.armor_gauntlet_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="100" />
 		<set name="is_tradable" val="false" />
@@ -219,7 +219,7 @@
 	<item id="718" type="Armor" name="Hard Leather Gloves">
 		<set name="icon" val="icon.armor_gauntlet_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="150" />
 		<set name="is_tradable" val="false" />
@@ -233,7 +233,7 @@
 	<item id="719" type="Armor" name="Crafted Leather Gloves">
 		<set name="icon" val="icon.armor_gauntlet_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="150" />
 		<set name="is_tradable" val="false" />
@@ -247,7 +247,7 @@
 	<item id="720" type="Armor" name="Reinforced Gloves">
 		<set name="icon" val="icon.armor_gauntlet_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="gloves" />
+		<set name="SLOT" val="GLOVES" />
 		<set name="material" val="STEEL" />
 		<set name="weight" val="200" />
 		<set name="is_tradable" val="false" />
@@ -261,7 +261,7 @@
 	<item id="721" type="Armor" name="Leather Boots">
 		<set name="icon" val="icon.armor_iron_boots_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="feet" />
+		<set name="SLOT" val="FEET" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="150" />
 		<set name="is_tradable" val="false" />
@@ -275,7 +275,7 @@
 	<item id="722" type="Armor" name="Hard Leather Boots">
 		<set name="icon" val="icon.armor_iron_boots_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="feet" />
+		<set name="SLOT" val="FEET" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="150" />
 		<set name="is_tradable" val="false" />
@@ -289,7 +289,7 @@
 	<item id="723" type="Armor" name="Crafted Leather Boots">
 		<set name="icon" val="icon.armor_feet99" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="feet" />
+		<set name="SLOT" val="FEET" />
 		<set name="material" val="LEATHER" />
 		<set name="weight" val="200" />
 		<set name="is_tradable" val="false" />
@@ -303,7 +303,7 @@
 	<item id="724" type="Armor" name="Reinforced Boots">
 		<set name="icon" val="icon.armor_iron_boots_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="feet" />
+		<set name="SLOT" val="FEET" />
 		<set name="material" val="STEEL" />
 		<set name="weight" val="250" />
 		<set name="is_tradable" val="false" />
@@ -472,7 +472,7 @@
 		<set name="icon" val="icon.weapon_long_sword_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="SWORD" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -532,7 +532,7 @@
 		<set name="icon" val="icon.weapon_broad_sword_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="SWORD" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="10" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -553,7 +553,7 @@
 		<set name="is_magical" val="true" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGBLUNT" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;46;120" />
@@ -595,7 +595,7 @@
 		<set name="is_magical" val="true" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BLUNT" />
-		<set name="bodypart" val="rhand" />
+		<set name="SLOT" val="RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;40;120" />
@@ -617,7 +617,7 @@
 		<set name="is_magical" val="true" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BLUNT" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;46;120" />
@@ -640,7 +640,7 @@
 		<set name="icon" val="icon.weapon_apprentices_staff_i00" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGBLUNT" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;46;120" />
@@ -705,7 +705,7 @@
 		<set name="is_magical" val="true" />
 		<set name="default_action" val="equip" />
 		<set name="weapon_type" val="BIGBLUNT" />
-		<set name="bodypart" val="lrhand" />
+		<set name="SLOT" val="LEFT_RIGHT_HAND" />
 		<set name="random_damage" val="20" />
 		<set name="attack_range" val="40" />
 		<set name="damage_range" val="0;0;46;120" />

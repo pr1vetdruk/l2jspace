@@ -8,11 +8,11 @@ import ru.privetdruk.l2jspace.gameserver.network.serverpackets.InventoryUpdate;
 import ru.privetdruk.l2jspace.gameserver.network.serverpackets.SystemMessage;
 
 public class RequestUnEquipItem extends L2GameClientPacket {
-    private int _slot;
+    private Item.Slot slot;
 
     @Override
     protected void readImpl() {
-        _slot = readD();
+        slot = Item.Slot.fromId(readD());
     }
 
     @Override
@@ -22,10 +22,10 @@ public class RequestUnEquipItem extends L2GameClientPacket {
             return;
 
         // Prevent of unequiping a cursed weapon
-        if (_slot == Item.SLOT_LR_HAND && player.isCursedWeaponEquipped())
+        if (slot == Item.Slot.LEFT_RIGHT_HAND && player.isCursedWeaponEquipped())
             return;
 
-        final ItemInstance item = player.getInventory().getItemFrom(_slot);
+        final ItemInstance item = player.getInventory().getItemFrom(slot);
         if (item == null)
             return;
 
@@ -37,7 +37,7 @@ public class RequestUnEquipItem extends L2GameClientPacket {
             return;
         }
 
-        final ItemInstance[] unequipped = player.getInventory().unequipItemInBodySlotAndRecord(_slot);
+        final ItemInstance[] unequipped = player.getInventory().unequipItemInBodySlotAndRecord(slot);
 
         // show the update in the inventory
         final InventoryUpdate iu = new InventoryUpdate();

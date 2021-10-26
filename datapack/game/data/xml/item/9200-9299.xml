@@ -3,7 +3,7 @@
 	<item id="9200" type="Armor" name="Jester Hat - Firework">
 		<set name="icon" val="icon.accessory_jester_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -16,7 +16,7 @@
 	<item id="9201" type="Armor" name="Wizard Hat - Firework">
 		<set name="icon" val="icon.accessory_magic_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -29,7 +29,7 @@
 	<item id="9202" type="Armor" name="Dapper Hat - Firework">
 		<set name="icon" val="icon.accessory_dandy_cap_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -42,7 +42,7 @@
 	<item id="9203" type="Armor" name="Romantic Chapeau - Firework">
 		<set name="icon" val="icon.accessory_romantic_chaperon_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -55,7 +55,7 @@
 	<item id="9204" type="Armor" name="Iron Circlet - Firework">
 		<set name="icon" val="icon.accessory_iron_circlet_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="equip_reuse_delay" val="30" />
@@ -104,7 +104,7 @@
 	<item id="9208" type="Armor" name="Phantom Mask (Event)">
 		<set name="icon" val="icon.accessary_mask_of_chaotic_i00" />
 		<set name="default_action" val="equip" />
-		<set name="bodypart" val="hairall" />
+		<set name="SLOT" val="HAIR_ALL" />
 		<set name="material" val="WOOD" />
 		<set name="weight" val="10" />
 		<set name="is_tradable" val="false" />

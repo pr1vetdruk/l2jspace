@@ -69,17 +69,18 @@ public class PcInventory extends Inventory {
 
         // Check if player wears formal wear.
         if (getOwner().isWearingFormalWear()) {
-            switch (item.getItem().getBodyPart()) {
-                case Item.SLOT_LR_HAND:
-                case Item.SLOT_L_HAND:
-                case Item.SLOT_R_HAND:
-                    unequipItemInBodySlotAndRecord(Item.SLOT_ALLDRESS);
-                    break;
+            Item.Slot bodyPart = item.getItem().getSlot();
 
-                case Item.SLOT_LEGS:
-                case Item.SLOT_FEET:
-                case Item.SLOT_GLOVES:
-                case Item.SLOT_HEAD:
+            switch (bodyPart) {
+                case LEFT_RIGHT_HAND:
+                case LEFT_HAND:
+                case RIGHT_HAND:
+                    unequipItemInBodySlotAndRecord(Item.Slot.ALL_DRESS);
+                    break;
+                case LEGS:
+                case FEET:
+                case GLOVES:
+                case HEAD:
                     return;
             }
         }
@@ -629,7 +630,7 @@ public class PcInventory extends Inventory {
     }
 
     @Override
-    public ItemInstance unequipItemInBodySlot(int slot) {
+    public ItemInstance unequipItemInBodySlot(Item.Slot slot) {
         final ItemInstance old = super.unequipItemInBodySlot(slot);
         if (old != null)
             getOwner().refreshExpertisePenalty();

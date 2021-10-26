@@ -43,7 +43,7 @@ public class ShopPreviewList extends L2GameServerPacket {
                 writeH(product.getItem().getType2()); // item type2
 
                 if (product.getItem().getType1() != Item.TYPE1_ITEM_QUESTITEM_ADENA)
-                    writeH(product.getItem().getBodyPart()); // slot
+                    writeH(product.getItem().getSlot().getId());
                 else
                     writeH(0x00); // slot
 
