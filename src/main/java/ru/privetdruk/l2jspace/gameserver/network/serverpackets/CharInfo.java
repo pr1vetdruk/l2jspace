@@ -1,7 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.network.serverpackets;
 
 import ru.privetdruk.l2jspace.config.Config;
-import ru.privetdruk.l2jspace.gameserver.custom.model.event.EventType;
 import ru.privetdruk.l2jspace.gameserver.data.manager.CursedWeaponManager;
 import ru.privetdruk.l2jspace.gameserver.enums.TeamAura;
 import ru.privetdruk.l2jspace.gameserver.enums.Paperdoll;
@@ -9,6 +8,10 @@ import ru.privetdruk.l2jspace.gameserver.enums.skills.AbnormalEffect;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Summon;
 import ru.privetdruk.l2jspace.gameserver.model.actor.instance.Cubic;
+import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
+import ru.privetdruk.l2jspace.gameserver.model.item.kind.ArmorSet;
+import ru.privetdruk.l2jspace.gameserver.model.item.kind.Costume;
+import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
 
 public class CharInfo extends L2GameServerPacket {
     private final Player player;
@@ -40,14 +43,25 @@ public class CharInfo extends L2GameServerPacket {
         writeD(player.getAppearance().getSex().ordinal());
         writeD((player.getClassIndex() == 0) ? player.getClassId().getId() : player.getBaseClass());
 
+        ArmorSet armorSet = null;
+
+        ItemInstance costumeItem = player.getInventory().getItemFrom(Paperdoll.UNDER);
+        if (costumeItem != null
+                && costumeItem.getItem().getSlot() == Item.Slot.COSTUME
+                && costumeItem.getItem().getCostume() != Costume.NONE) {
+            armorSet = costumeItem.getItem().getCostume().getSet();
+        }
+
+        boolean isCostume = armorSet != null;
+
         writeD(player.getInventory().getItemIdFrom(Paperdoll.HAIRALL));
         writeD(player.getInventory().getItemIdFrom(Paperdoll.HEAD));
         writeD(player.getInventory().getItemIdFrom(Paperdoll.RHAND));
         writeD(player.getInventory().getItemIdFrom(Paperdoll.LHAND));
-        writeD(player.getInventory().getItemIdFrom(Paperdoll.GLOVES));
-        writeD(player.getInventory().getItemIdFrom(Paperdoll.CHEST));
-        writeD(player.getInventory().getItemIdFrom(Paperdoll.LEGS));
-        writeD(player.getInventory().getItemIdFrom(Paperdoll.FEET));
+        writeD(isCostume ? armorSet.getGlovesId() : player.getInventory().getItemIdFrom(Paperdoll.GLOVES));
+        writeD(isCostume ? armorSet.getChestId() : player.getInventory().getItemIdFrom(Paperdoll.CHEST));
+        writeD(isCostume ? armorSet.getLegsId() : player.getInventory().getItemIdFrom(Paperdoll.LEGS));
+        writeD(isCostume ? armorSet.getBootsId() : player.getInventory().getItemIdFrom(Paperdoll.FEET));
         writeD(player.getInventory().getItemIdFrom(Paperdoll.CLOAK));
         writeD(player.getInventory().getItemIdFrom(Paperdoll.RHAND));
         writeD(player.getInventory().getItemIdFrom(Paperdoll.HAIR));
@@ -148,7 +162,7 @@ public class CharInfo extends L2GameServerPacket {
         writeC((player.isNoble()) ? 1 : 0);
         writeC(player.isHero()
                 || (player.isGM() && Config.GM_HERO_AURA)
-                || player.isWinnerInEvent(EventType.LAST_EMPEROR) ? 1 : 0);
+                || player.isTopRank() ? 1 : 0);
         writeC((player.isFishing()) ? 1 : 0);
         writeLoc(player.getFishingStance().getLoc());
         writeD(player.getAppearance().getNameColor());

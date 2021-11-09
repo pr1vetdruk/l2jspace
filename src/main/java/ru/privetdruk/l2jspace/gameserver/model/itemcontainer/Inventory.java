@@ -493,7 +493,7 @@ public abstract class Inventory extends ItemContainer {
                 setPaperdollItem(Paperdoll.HAIR, item);
                 break;
 
-            case UNDERWEAR:
+            case UNDERWEAR, COSTUME:
                 setPaperdollItem(Paperdoll.UNDER, item);
                 break;
 

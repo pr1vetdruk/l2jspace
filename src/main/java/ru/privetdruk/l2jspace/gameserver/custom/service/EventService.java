@@ -9,6 +9,7 @@ import ru.privetdruk.l2jspace.gameserver.custom.model.NpcInfoShort;
 import ru.privetdruk.l2jspace.gameserver.custom.model.Reward;
 import ru.privetdruk.l2jspace.gameserver.custom.model.entity.EventWinnerEntity;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.*;
+import ru.privetdruk.l2jspace.gameserver.model.World;
 import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.location.SpawnLocation;
 
@@ -150,11 +151,13 @@ public class EventService {
     }
 
     /**
-     * Сбросить статус победителя в ивенте
+     * Сбросить статус победителей в ивенте
      *
      * @param eventType Тип ивента
      */
     public void resetEventWinners(EventType eventType) {
+        List<EventWinnerEntity> allWinnersInEvent = findAllWinnersInEvent(EventType.LAST_EMPEROR, EventWinnerStatus.ACTIVE);
+
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(RESET_EVENT_WINNER)) {
             statement.setString(1, eventType.name());
@@ -162,6 +165,17 @@ public class EventService {
             statement.execute();
         } catch (Exception e) {
             LOGGER.error("Failed to reset winner status to NOT_ACTIVE", e);
+        }
+
+        if (allWinnersInEvent != null && allWinnersInEvent.size() > 1) {
+            allWinnersInEvent.forEach(event -> {
+                Player winnerPlayer = World.getInstance().getPlayer(event.getPlayerId());
+                if (winnerPlayer != null && winnerPlayer.isOnline()) {
+                    winnerPlayer.setTopRank(false);
+                    winnerPlayer.setWonEvents(findAllWonEvents(winnerPlayer.getId()));
+                    winnerPlayer.broadcastUserInfo();
+                }
+            });
         }
     }
 

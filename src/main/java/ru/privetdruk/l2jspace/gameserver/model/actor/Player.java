@@ -355,11 +355,11 @@ public final class Player extends Playable {
 
     private Door _requestedGate;
 
-    private CachedData cachedData = new CachedData(getId());
-    private CachedDataValueInt nameColor = cachedData.newInt("nameColor");
-    private CachedDataValueInt titleColor = cachedData.newInt("titleColor");
-    private CachedDataValueBoolean stopExp = cachedData.newBoolean("stopexp");
-    private CachedDataValueBoolean tradeRefusal = cachedData.newBoolean("traderefusal");
+    private final CachedData cachedData = new CachedData(getId());
+    private final CachedDataValueInt nameColor = cachedData.newInt("nameColor");
+    private final CachedDataValueInt titleColor = cachedData.newInt("titleColor");
+    private final CachedDataValueBoolean stopExp = cachedData.newBoolean("stopexp");
+    private final CachedDataValueBoolean tradeRefusal = cachedData.newBoolean("traderefusal");
 
     private int activeBoxes = -1;
     private List<String> activeBoxesCharacters = new ArrayList<>();
@@ -1132,6 +1132,7 @@ public final class Player extends Playable {
         final InventoryUpdate iu = new InventoryUpdate();
         iu.addItems(Arrays.asList(items));
         sendPacket(iu);
+
 
         if (abortAttack)
             getAttack().stop();
@@ -6914,9 +6915,8 @@ public final class Player extends Playable {
         return nameColor.get();
     }
 
-    public int setNameColor(int value) {
+    public void setNameColor(int value) {
         nameColor.set(value);
-        return value;
     }
 
     public int getTitleColor() {

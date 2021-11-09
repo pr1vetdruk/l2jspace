@@ -30,7 +30,7 @@ public class RequestGiveNickName extends L2GameClientPacket {
         }
 
         // Noblesse can bestow a title to themselves
-        if (player.isNoble() && _name.matches(player.getName())) {
+        if (player.isNoble() && _name.matches(player.getName()) && !player.isTopRank()) {
             player.setTitle(_title);
             player.sendPacket(SystemMessageId.TITLE_CHANGED);
             player.broadcastTitleInfo();
@@ -46,21 +46,24 @@ public class RequestGiveNickName extends L2GameClientPacket {
                 return;
             }
 
-            final ClanMember member = player.getClan().getClanMember(_name);
+            ClanMember member = player.getClan().getClanMember(_name);
             if (member != null) {
-                final Player playerMember = member.getPlayerInstance();
-                if (playerMember != null) {
+                Player playerMember = member.getPlayerInstance();
+                if (playerMember != null && !playerMember.isTopRank()) {
                     playerMember.setTitle(_title);
 
                     playerMember.sendPacket(SystemMessageId.TITLE_CHANGED);
-                    if (player != playerMember)
+                    if (player != playerMember) {
                         player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CLAN_MEMBER_S1_TITLE_CHANGED_TO_S2).addCharName(playerMember).addString(_title));
+                    }
 
                     playerMember.broadcastTitleInfo();
-                } else
+                } else {
                     player.sendPacket(SystemMessageId.TARGET_IS_NOT_FOUND_IN_THE_GAME);
-            } else
+                }
+            } else {
                 player.sendPacket(SystemMessageId.TARGET_MUST_BE_IN_CLAN);
+            }
         }
     }
 }

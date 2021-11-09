@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+    <item id="10000" type="Armor" name="Blue Wolf Robe Set">
+        <set name="icon" val="icon.armor_t70_u_i00"/>
+        <set name="default_action" val="equip"/>
+        <set name="armor_type" val="NONE"/>
+        <set name="SLOT" val="COSTUME"/>
+        <set name="COSTUME" val="BLUE_WOLF_ROBE"/>
+        <set name="crystal_type" val="B"/>
+        <set name="crystal_count" val="777"/>
+        <set name="material" val="DYESTUFF"/>
+        <set name="weight" val="800"/>
+        <set name="price" val="777"/>
+    </item>
+</list>

@@ -24,6 +24,7 @@ import ru.privetdruk.l2jspace.gameserver.model.actor.Player;
 import ru.privetdruk.l2jspace.gameserver.model.actor.container.player.RadarOnPlayer;
 import ru.privetdruk.l2jspace.gameserver.model.actor.template.NpcTemplate;
 import ru.privetdruk.l2jspace.gameserver.model.item.instance.ItemInstance;
+import ru.privetdruk.l2jspace.gameserver.model.item.kind.Item;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 import ru.privetdruk.l2jspace.gameserver.model.location.SpawnLocation;
 import ru.privetdruk.l2jspace.gameserver.model.spawn.Spawn;
@@ -49,7 +50,6 @@ import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBypass.L
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.*;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.*;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.ResultPlayerEvent.*;
-import static ru.privetdruk.l2jspace.gameserver.model.item.kind.Item.SLOT_LR_HAND;
 
 public class CTF extends EventEngine {
     private EventBorder eventBorder;
@@ -313,7 +313,7 @@ public class CTF extends EventEngine {
         ItemInstance activeWeapon = player.getActiveWeaponInstance();
 
         if (activeWeapon != null) {
-            player.getInventory().unequipItemInBodySlotAndRecord(SLOT_LR_HAND);
+            player.getInventory().unequipItemInBodySlotAndRecord(Item.Slot.LEFT_RIGHT_HAND);
         }
 
         // Add the flag in his hands

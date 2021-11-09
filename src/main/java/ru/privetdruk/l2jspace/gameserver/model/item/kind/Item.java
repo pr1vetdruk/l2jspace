@@ -95,6 +95,7 @@ public abstract class Item {
     private final CrystalType _crystalType;
     private final int _duration;
     private final Slot slot;
+    private final Costume costume;
     private final int _referencePrice;
     private final int _crystalCount;
 
@@ -127,6 +128,8 @@ public abstract class Item {
         _materialType = set.getEnum("material", MaterialType.class, MaterialType.STEEL);
         _duration = set.getInteger("duration", -1);
         slot = set.getEnum("SLOT", Slot.class, Slot.NONE);
+        costume = set.getEnum("COSTUME", Costume.class, Costume.NONE);
+
         _referencePrice = set.getInteger("price", 0);
         _crystalType = set.getEnum("crystal_type", CrystalType.class, CrystalType.NONE);
         _crystalCount = set.getInteger("crystal_count", 0);
@@ -146,6 +149,10 @@ public abstract class Item {
 
         if (set.containsKey("item_skill"))
             _skillHolder = set.getIntIntHolderArray("item_skill");
+    }
+
+    public Costume getCostume() {
+        return costume;
     }
 
     /**
@@ -224,27 +231,17 @@ public abstract class Item {
      */
     public final int getCrystalCount(int enchantLevel) {
         if (enchantLevel > 3) {
-            switch (_type2) {
-                case TYPE2_SHIELD_ARMOR:
-                case TYPE2_ACCESSORY:
-                    return _crystalCount + getCrystalType().getCrystalEnchantBonusArmor() * (3 * enchantLevel - 6);
-
-                case TYPE2_WEAPON:
-                    return _crystalCount + getCrystalType().getCrystalEnchantBonusWeapon() * (2 * enchantLevel - 3);
-
-                default:
-                    return _crystalCount;
-            }
+            return switch (_type2) {
+                case TYPE2_SHIELD_ARMOR, TYPE2_ACCESSORY -> _crystalCount + getCrystalType().getCrystalEnchantBonusArmor() * (3 * enchantLevel - 6);
+                case TYPE2_WEAPON -> _crystalCount + getCrystalType().getCrystalEnchantBonusWeapon() * (2 * enchantLevel - 3);
+                default -> _crystalCount;
+            };
         } else if (enchantLevel > 0) {
-            switch (_type2) {
-                case TYPE2_SHIELD_ARMOR:
-                case TYPE2_ACCESSORY:
-                    return _crystalCount + getCrystalType().getCrystalEnchantBonusArmor() * enchantLevel;
-                case TYPE2_WEAPON:
-                    return _crystalCount + getCrystalType().getCrystalEnchantBonusWeapon() * enchantLevel;
-                default:
-                    return _crystalCount;
-            }
+            return switch (_type2) {
+                case TYPE2_SHIELD_ARMOR, TYPE2_ACCESSORY -> _crystalCount + getCrystalType().getCrystalEnchantBonusArmor() * enchantLevel;
+                case TYPE2_WEAPON -> _crystalCount + getCrystalType().getCrystalEnchantBonusWeapon() * enchantLevel;
+                default -> _crystalCount;
+            };
         } else
             return _crystalCount;
     }

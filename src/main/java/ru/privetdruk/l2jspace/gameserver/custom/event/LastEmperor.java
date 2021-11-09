@@ -340,20 +340,7 @@ public class LastEmperor extends EventEngine {
 
         EventService eventService = EventService.getInstance();
 
-        List<EventWinnerEntity> allWinnersInEvent = eventService.findAllWinnersInEvent(EventType.LAST_EMPEROR, EventWinnerStatus.ACTIVE);
         eventService.resetEventWinners(EventType.LAST_EMPEROR);
-
-        if (allWinnersInEvent != null && allWinnersInEvent.size() > 1) {
-            allWinnersInEvent.forEach(event -> {
-                Player winnerPlayer = World.getInstance().getPlayer(event.getPlayerId());
-                if (winnerPlayer != null && winnerPlayer.isOnline()) {
-                    winnerPlayer.setTopRank(false);
-                    winnerPlayer.setWonEvents(eventService.findAllWonEvents(winnerPlayer.getId()));
-                    winnerPlayer.broadcastUserInfo();
-                }
-            });
-        }
-
         eventService.createEventWinner(player, EventType.LAST_EMPEROR);
 
         player.broadcastUserInfo();
