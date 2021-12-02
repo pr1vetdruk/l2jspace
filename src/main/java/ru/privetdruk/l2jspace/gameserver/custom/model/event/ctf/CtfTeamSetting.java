@@ -4,20 +4,15 @@ import ru.privetdruk.l2jspace.gameserver.custom.model.event.TeamSetting;
 import ru.privetdruk.l2jspace.gameserver.model.location.Location;
 
 public class CtfTeamSetting extends TeamSetting {
-    protected int id;
     protected Flag flag;
     protected Throne throne;
 
     public CtfTeamSetting(int id, String name, String nameColor, int offset, Location spawnLocation, Flag flag, Throne throne) {
-        super(name, nameColor, offset, spawnLocation);
+        super(id, name, nameColor, offset, spawnLocation);
 
         this.id = id;
         this.flag = flag;
         this.throne = throne;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public Flag getFlag() {

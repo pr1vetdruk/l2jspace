@@ -1,5 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.custom.service;
 
+import ru.privetdruk.l2jspace.common.cached.CachedData;
 import ru.privetdruk.l2jspace.common.logging.CLogger;
 import ru.privetdruk.l2jspace.common.pool.ConnectionPool;
 import ru.privetdruk.l2jspace.config.custom.EventConfig;
@@ -172,7 +173,12 @@ public class EventService {
                 Player winnerPlayer = World.getInstance().getPlayer(event.getPlayerId());
                 if (winnerPlayer != null && winnerPlayer.isOnline()) {
                     winnerPlayer.setTopRank(false);
+                    if (winnerPlayer.getSavedTitleColor() != CachedData.INT_DEFAULT) {
+                        winnerPlayer.setTitleColor(winnerPlayer.getSavedTitleColor());
+                        winnerPlayer.setSavedTitleColor(CachedData.INT_DEFAULT);
+                    }
                     winnerPlayer.setWonEvents(findAllWonEvents(winnerPlayer.getId()));
+                    winnerPlayer.store();
                     winnerPlayer.broadcastUserInfo();
                 }
             });

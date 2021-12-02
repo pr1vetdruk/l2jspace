@@ -5,6 +5,7 @@ import ru.privetdruk.l2jspace.config.custom.EventConfig;
 import ru.privetdruk.l2jspace.gameserver.custom.model.NpcInfoShort;
 import ru.privetdruk.l2jspace.gameserver.custom.model.SkillEnum;
 import ru.privetdruk.l2jspace.gameserver.custom.model.event.*;
+import ru.privetdruk.l2jspace.gameserver.custom.model.event.ctf.CtfTeamSetting;
 import ru.privetdruk.l2jspace.gameserver.custom.service.AnnouncementService;
 import ru.privetdruk.l2jspace.gameserver.custom.task.EventTask;
 import ru.privetdruk.l2jspace.gameserver.custom.util.Chronos;

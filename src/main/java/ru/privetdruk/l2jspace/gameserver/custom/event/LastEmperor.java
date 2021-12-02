@@ -68,7 +68,6 @@ public class LastEmperor extends EventEngine {
             new EventNpc(LARGE_FIREWORK.getId(), LARGE_FIREWORK.getId(), 0, eventType, 35469, "Trojan Horse", "Event Manager", new SpawnLocation(ARENA_CENTER_X, 46936, -3408, HEADING))
     );
 
-
     public LastEmperor() {
         super(
                 EventType.LAST_EMPEROR,
@@ -236,6 +235,7 @@ public class LastEmperor extends EventEngine {
             while (resultSet.next()) {
                 teamSettings.add(
                         new TeamSetting(
+                                resultSet.getInt("id"),
                                 null,
                                 null,
                                 0,
@@ -335,6 +335,7 @@ public class LastEmperor extends EventEngine {
 
         player.setTopRank(true);
         player.setTitle("[TOP RANK 1x1]");
+        player.setSavedTitleColor(player.getTitleColor());
         player.setTitleColor(Integer.decode("0x00D7FF"));
         player.store();
 
@@ -516,7 +517,7 @@ public class LastEmperor extends EventEngine {
         public void preparePlayersBeforeNextRound() {
             setCanAttack(false);
             setAllowedToWalk(false);
-            
+
             eventPlayer1.setRival(null);
             eventPlayer2.setRival(null);
 

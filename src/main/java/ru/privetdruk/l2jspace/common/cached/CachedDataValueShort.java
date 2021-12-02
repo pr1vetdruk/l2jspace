@@ -3,8 +3,8 @@ package ru.privetdruk.l2jspace.common.cached;
 public class CachedDataValueShort extends CachedDataValue {
     private volatile short value;
 
-    CachedDataValueShort(String name, short defaultValue, int charId) {
-        super(name, Short.toString(defaultValue), charId);
+    CachedDataValueShort(CachedDataKey key, short defaultValue, int charId) {
+        super(key, Short.toString(defaultValue), charId);
         value = defaultValue;
     }
 

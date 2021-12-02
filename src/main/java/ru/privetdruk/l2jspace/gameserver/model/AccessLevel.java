@@ -1,5 +1,6 @@
 package ru.privetdruk.l2jspace.gameserver.model;
 
+import ru.privetdruk.l2jspace.common.cached.CachedDataKey;
 import ru.privetdruk.l2jspace.common.data.StatSet;
 import ru.privetdruk.l2jspace.gameserver.data.xml.AdminData;
 
@@ -26,8 +27,8 @@ public class AccessLevel {
     public AccessLevel(StatSet set) {
         _accessLevel = set.getInteger("level");
         _name = set.getString("name");
-        _nameColor = Integer.decode("0x" + set.getString("nameColor", "FFFFFF"));
-        _titleColor = Integer.decode("0x" + set.getString("titleColor", "FFFF77"));
+        _nameColor = Integer.decode("0x" + set.getString(CachedDataKey.NAME_COLOR, "FFFFFF"));
+        _titleColor = Integer.decode("0x" + set.getString(CachedDataKey.TITLE_COLOR, "FFFF77"));
         _childLevel = set.getInteger("childLevel", 0);
         _isGm = set.getBool("isGM", false);
         _allowFixedRes = set.getBool("allowFixedRes", false);

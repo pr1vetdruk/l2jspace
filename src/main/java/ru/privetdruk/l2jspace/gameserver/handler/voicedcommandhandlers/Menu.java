@@ -26,10 +26,10 @@ public class Menu implements IVoicedCommandHandler {
                 if (addcmd.startsWith("exp")) {
                     int flag = Integer.parseInt(addcmd.substring(3).trim());
                     if (flag == 0) {
-                        player.setStopExp(true);
+                        player.setStopExperience(true);
                         player.sendMessage("Вы можете получить опыт, убивая мобов.");
                     } else {
-                        player.setStopExp(false);
+                        player.setStopExperience(false);
                         player.sendMessage("Вы не можете получить опыт, убивая мобов.");
                     }
 
@@ -59,7 +59,7 @@ public class Menu implements IVoicedCommandHandler {
         NpcHtmlMessage htm = new NpcHtmlMessage(0);
         htm.setFile("./data/html/mods/menu/menu.htm");
 
-        htm.replace("%gainexp%", player.isStopExp() ? ACTIVED : DESAСTIVED);
+        htm.replace("%gainexp%", player.isStopExperience() ? ACTIVED : DESAСTIVED);
         htm.replace("%trade%", player.isTradeRefusal() ? ACTIVED : DESAСTIVED);
 
         player.sendPacket(htm);

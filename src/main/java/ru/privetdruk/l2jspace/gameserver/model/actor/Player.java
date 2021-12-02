@@ -1,6 +1,7 @@
 package ru.privetdruk.l2jspace.gameserver.model.actor;
 
 import ru.privetdruk.l2jspace.common.cached.CachedData;
+import ru.privetdruk.l2jspace.common.cached.CachedDataKey;
 import ru.privetdruk.l2jspace.common.cached.CachedDataValueBoolean;
 import ru.privetdruk.l2jspace.common.cached.CachedDataValueInt;
 import ru.privetdruk.l2jspace.common.math.MathUtil;
@@ -356,10 +357,12 @@ public final class Player extends Playable {
     private Door _requestedGate;
 
     private final CachedData cachedData = new CachedData(getId());
-    private final CachedDataValueInt nameColor = cachedData.newInt("nameColor");
-    private final CachedDataValueInt titleColor = cachedData.newInt("titleColor");
-    private final CachedDataValueBoolean stopExp = cachedData.newBoolean("stopexp");
-    private final CachedDataValueBoolean tradeRefusal = cachedData.newBoolean("traderefusal");
+    private final CachedDataValueInt nameColor = cachedData.newInt(CachedDataKey.NAME_COLOR);
+    private final CachedDataValueInt savedNameColor = cachedData.newInt(CachedDataKey.SAVED_NAME_COLOR);
+    private final CachedDataValueInt titleColor = cachedData.newInt(CachedDataKey.TITLE_COLOR);
+    private final CachedDataValueInt savedTitleColor = cachedData.newInt(CachedDataKey.SAVED_TITLE_COLOR);
+    private final CachedDataValueBoolean stopExperience = cachedData.newBoolean(CachedDataKey.STOP_EXPERIENCE);
+    private final CachedDataValueBoolean tradeRefusal = cachedData.newBoolean(CachedDataKey.TRADE_REFUSAL);
 
     private int activeBoxes = -1;
     private List<String> activeBoxesCharacters = new ArrayList<>();
@@ -6928,12 +6931,12 @@ public final class Player extends Playable {
         return value;
     }
 
-    public void setStopExp(boolean value) {
-        stopExp.set(value);
+    public void setStopExperience(boolean value) {
+        stopExperience.set(value);
     }
 
-    public boolean isStopExp() {
-        return stopExp.get();
+    public boolean isStopExperience() {
+        return stopExperience.get();
     }
 
     public void setTradeRefusal(boolean value) {
@@ -6942,6 +6945,22 @@ public final class Player extends Playable {
 
     public boolean isTradeRefusal() {
         return tradeRefusal.get();
+    }
+
+    public void setSavedNameColor(int value) {
+        savedNameColor.set(value);
+    }
+
+    public void setSavedTitleColor(int value) {
+        savedTitleColor.set(value);
+    }
+
+    public int getSavedNameColor() {
+        return savedNameColor.get();
+    }
+
+    public int getSavedTitleColor() {
+        return savedTitleColor.get();
     }
 
     public boolean checkMultiBox() {

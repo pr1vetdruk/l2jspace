@@ -485,7 +485,7 @@ public class PlayerStatus extends PlayableStatus<Player> {
      * @return
      */
     public boolean addExpAndSp(long addToExp, int addToSp, Map<Creature, RewardInfo> rewards) {
-        if (!_actor.isStopExp()) {
+        if (!_actor.isStopExperience()) {
             return true;
         }
 

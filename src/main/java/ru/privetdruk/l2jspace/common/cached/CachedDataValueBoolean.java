@@ -3,8 +3,8 @@ package ru.privetdruk.l2jspace.common.cached;
 public class CachedDataValueBoolean extends CachedDataValue {
     private volatile boolean value;
 
-    CachedDataValueBoolean(String name, boolean defaultValue, int charId) {
-        super(name, Boolean.toString(defaultValue), charId);
+    CachedDataValueBoolean(CachedDataKey key, boolean defaultValue, int charId) {
+        super(key, Boolean.toString(defaultValue), charId);
         value = defaultValue;
     }
 

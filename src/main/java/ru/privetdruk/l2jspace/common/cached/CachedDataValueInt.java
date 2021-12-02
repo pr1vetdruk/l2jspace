@@ -3,8 +3,8 @@ package ru.privetdruk.l2jspace.common.cached;
 public class CachedDataValueInt extends CachedDataValue {
     private volatile int value;
 
-    CachedDataValueInt(String name, int defaultValue, int charId) {
-        super(name, Integer.toString(defaultValue), charId);
+    CachedDataValueInt(CachedDataKey key, int defaultValue, int charId) {
+        super(key, Integer.toString(defaultValue), charId);
         value = defaultValue;
     }
 

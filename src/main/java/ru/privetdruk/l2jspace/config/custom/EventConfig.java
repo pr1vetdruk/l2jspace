@@ -46,4 +46,20 @@ public class EventConfig {
         public static boolean JOIN_CURSED_WEAPON;
         public static boolean REMOVE_BUFFS_ON_DIE;
     }
+
+    public static class TVT {
+        public static final String PROPERTIES = "./config/custom/event/tvt.properties";
+        public static boolean ENABLED;
+        public static boolean AURA;
+        public static String[] LAUNCH_TIMES;
+        public static EventLoadingMode LOADING_MODE;
+        public static EventTeamType TEAM_MODE;
+        public static boolean UNSUMMON_PET;
+        public static boolean REMOVE_ALL_EFFECTS;
+        public static boolean JOIN_CURSED_WEAPON;
+        public static boolean ALLOW_POTIONS;
+        public static boolean REMOVE_BUFFS_ON_DIE;
+        public static int DELAY_BEFORE_REVIVE;
+        public static boolean ANNOUNCE_TEAM_STATS;
+    }
 }

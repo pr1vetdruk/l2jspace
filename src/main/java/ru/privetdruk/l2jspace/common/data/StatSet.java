@@ -1,5 +1,6 @@
 package ru.privetdruk.l2jspace.common.data;
 
+import ru.privetdruk.l2jspace.common.cached.CachedDataKey;
 import ru.privetdruk.l2jspace.gameserver.model.holder.IntIntHolder;
 
 import java.util.*;
@@ -310,6 +311,12 @@ public class StatSet extends HashMap<String, Object> {
             return String.valueOf(val);
 
         return defaultValue;
+    }
+
+    public String getString(CachedDataKey key, String defaultValue) {
+        return Optional.ofNullable(get(key.name()))
+                .map(String::valueOf)
+                .orElse(defaultValue);
     }
 
     public String[] getStringArray(final String key) {

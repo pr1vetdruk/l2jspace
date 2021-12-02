@@ -14,7 +14,11 @@ public class AdminCached implements IAdminCommandHandler {
     @Override
     public void useAdminCommand(String command, Player player) {
         if (command.startsWith("admin_show_cached")) {
-            var target = Optional.of(player.getTarget()).filter(Player.class::isInstance).map(Player.class::cast).orElse(player);
+            var target = Optional.of(player.getTarget())
+                    .filter(Player.class::isInstance)
+                    .map(Player.class::cast)
+                    .orElse(player);
+
             target.getCachedData().showHTML(player);
         }
     }

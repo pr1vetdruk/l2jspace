@@ -16,13 +16,15 @@ public class CachedData {
     }
 
     public void load() {
-        for (var value : cachedDataValueList)
+        for (var value : cachedDataValueList) {
             value.load();
+        }
     }
 
     public void store() {
-        for (var value : cachedDataValueList)
+        for (var value : cachedDataValueList) {
             value.update();
+        }
     }
 
     public void showHTML(Player player) {
@@ -37,97 +39,90 @@ public class CachedData {
     }
 
     public static final boolean BOOLEAN_DEFAULT = true;
-
     public static final byte BYTE_DEFAULT = (byte) 0;
-
     public static final short SHORT_DEFAULT = (short) 0;
-
     public static final int INT_DEFAULT = 0;
-
     public static final long LONG_DEFAULT = 0;
-
     public static final float FLOAT_DEFAULT = 0.0f;
-
     public static final double DOUBLE_DEFAULT = 0.0d;
-
     public static final String STRING_DEFAULT = "";
 
-    public CachedDataValueBoolean newBoolean(String name) {
-        return newBoolean(name, BOOLEAN_DEFAULT);
+    public CachedDataValueBoolean newBoolean(CachedDataKey key) {
+        return newBoolean(key, BOOLEAN_DEFAULT);
     }
 
-    public CachedDataValueBoolean newBoolean(String name, boolean defaultValue) {
-        var value = new CachedDataValueBoolean(name, defaultValue, charId);
+    public CachedDataValueBoolean newBoolean(CachedDataKey key, boolean defaultValue) {
+        var value = new CachedDataValueBoolean(key, defaultValue, charId);
         cachedDataValueList.add(value);
         return value;
     }
 
-    public CachedDataValueByte newByte(String name) {
-        return newByte(name, BYTE_DEFAULT);
+    public CachedDataValueByte newByte(CachedDataKey key) {
+        return newByte(key, BYTE_DEFAULT);
     }
 
-    public CachedDataValueByte newByte(String name, byte defaultValue) {
-        var value = new CachedDataValueByte(name, defaultValue, charId);
+    public CachedDataValueByte newByte(CachedDataKey key, byte defaultValue) {
+        var value = new CachedDataValueByte(key, defaultValue, charId);
         cachedDataValueList.add(value);
         return value;
     }
 
-    public CachedDataValueShort newShort(String name) {
-        return newShort(name, SHORT_DEFAULT);
+    public CachedDataValueShort newShort(CachedDataKey key) {
+        return newShort(key, SHORT_DEFAULT);
     }
 
-    public CachedDataValueShort newShort(String name, short defaultValue) {
-        var value = new CachedDataValueShort(name, defaultValue, charId);
+    public CachedDataValueShort newShort(CachedDataKey key, short defaultValue) {
+        var value = new CachedDataValueShort(key, defaultValue, charId);
         cachedDataValueList.add(value);
         return value;
     }
 
-    public CachedDataValueInt newInt(String name) {
-        return newInt(name, INT_DEFAULT);
+    public CachedDataValueInt newInt(CachedDataKey key) {
+        return newInt(key, INT_DEFAULT);
     }
 
-    public CachedDataValueInt newInt(String name, int defaultValue) {
-        var value = new CachedDataValueInt(name, defaultValue, charId);
+    public CachedDataValueInt newInt(CachedDataKey key, int defaultValue) {
+        var value = new CachedDataValueInt(key, defaultValue, charId);
         cachedDataValueList.add(value);
         return value;
     }
 
-    public CachedDataValueLong newLong(String name) {
-        return newLong(name, LONG_DEFAULT);
+    public CachedDataValueLong newLong(CachedDataKey key) {
+        return newLong(key, LONG_DEFAULT);
     }
 
-    public CachedDataValueLong newLong(String name, long defaultValue) {
-        var value = new CachedDataValueLong(name, defaultValue, charId);
+    public CachedDataValueLong newLong(CachedDataKey key, long defaultValue) {
+        var value = new CachedDataValueLong(key, defaultValue, charId);
         cachedDataValueList.add(value);
         return value;
     }
 
-    public CachedDataValueFloat newFloat(String name) {
-        return newFloat(name, FLOAT_DEFAULT);
+    public CachedDataValueFloat newFloat(CachedDataKey key) {
+        return newFloat(key, FLOAT_DEFAULT);
     }
 
-    public CachedDataValueFloat newFloat(String name, float defaultValue) {
-        var value = new CachedDataValueFloat(name, defaultValue, charId);
+    public CachedDataValueFloat newFloat(CachedDataKey key, float defaultValue) {
+        var value = new CachedDataValueFloat(key, defaultValue, charId);
         cachedDataValueList.add(value);
         return value;
     }
 
-    public CachedDataValueDouble newDouble(String name) {
-        return newDouble(name, DOUBLE_DEFAULT);
+    public CachedDataValueDouble newDouble(CachedDataKey key) {
+        return newDouble(key, DOUBLE_DEFAULT);
     }
 
-    public CachedDataValueDouble newDouble(String name, double defaultValue) {
-        var value = new CachedDataValueDouble(name, defaultValue, charId);
+    public CachedDataValueDouble newDouble(CachedDataKey key, double defaultValue) {
+        var value = new CachedDataValueDouble(key, defaultValue, charId);
         cachedDataValueList.add(value);
         return value;
     }
 
-    public CachedDataValueString newString(String name) {
-        return newString(name, STRING_DEFAULT);
+    public CachedDataValueString newString(CachedDataKey key) {
+        return newString(key, STRING_DEFAULT);
     }
 
-    public CachedDataValueString newString(String name, String defaultValue) {
-        var value = new CachedDataValueString(name, defaultValue, charId);
+    public CachedDataValueString newString(CachedDataKey key, String defaultValue) {
+        var value = new CachedDataValueString(key, defaultValue, charId);
         cachedDataValueList.add(value);
         return value;
     }
