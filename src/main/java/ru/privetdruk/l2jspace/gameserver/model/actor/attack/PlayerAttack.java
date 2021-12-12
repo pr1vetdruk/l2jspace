@@ -18,10 +18,10 @@ public class PlayerAttack extends PlayableAttack<Player> {
         final boolean isHit = super.doAttack(target);
         if (isHit) {
             // If hit by a CW or by an hero while holding a CW, CP are reduced to 0.
-            if (target instanceof Player && !target.isInvul()) {
-                final Player targetPlayer = (Player) target;
-                if (_actor.isCursedWeaponEquipped() || (_actor.isHero() && targetPlayer.isCursedWeaponEquipped()))
+            if (target instanceof Player targetPlayer && !target.isInvul()) {
+                if (_actor.isCursedWeaponEquipped() || (_actor.isHero() && targetPlayer.isCursedWeaponEquipped())) {
                     targetPlayer.getStatus().setCp(0);
+                }
             }
         }
 
@@ -31,28 +31,31 @@ public class PlayerAttack extends PlayableAttack<Player> {
 
     @Override
     public boolean canDoAttack(Creature target) {
-        if (!super.canDoAttack(target))
+        if (!super.canDoAttack(target)) {
             return false;
+        }
 
-        final Weapon weaponItem = _actor.getActiveWeaponItem();
+        Weapon weaponItem = _actor.getActiveWeaponItem();
 
         switch (weaponItem.getItemType()) {
-            case FISHINGROD:
+            case FISHINGROD -> {
                 _actor.sendPacket(SystemMessageId.CANNOT_ATTACK_WITH_FISHING_POLE);
                 return false;
-
-            case BOW:
+            }
+            case BOW -> {
                 if (!_actor.checkAndEquipArrows()) {
                     _actor.sendPacket(SystemMessageId.NOT_ENOUGH_ARROWS);
                     return false;
                 }
 
-                final int mpConsume = weaponItem.getMpConsume();
+                int mpConsume = weaponItem.getMpConsume();
                 if (mpConsume > 0 && mpConsume > _actor.getStatus().getMp()) {
                     _actor.sendPacket(SystemMessageId.NOT_ENOUGH_MP);
                     return false;
                 }
+            }
         }
+
         return true;
     }
 }

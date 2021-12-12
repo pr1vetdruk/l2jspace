@@ -81,6 +81,12 @@ public class LastEmperor extends EventEngine {
         eventTaskList.add(this);
     }
 
+
+    @Override
+    public boolean allowPotions() {
+        return EventConfig.LastEmperor.ALLOW_POTIONS;
+    }
+
     @Override
     protected void startEventCustom() {
         while (players.size() > 1) {

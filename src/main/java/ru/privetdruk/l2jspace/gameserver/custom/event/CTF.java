@@ -49,7 +49,7 @@ import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBypass.J
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventBypass.LEAVE;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventState.*;
 import static ru.privetdruk.l2jspace.gameserver.custom.model.event.EventTeamType.*;
-import static ru.privetdruk.l2jspace.gameserver.custom.model.event.ResultPlayerEvent.*;
+import static ru.privetdruk.l2jspace.gameserver.custom.model.event.ResultEvent.*;
 
 public class CTF extends EventEngine {
     private EventBorder eventBorder;
@@ -66,6 +66,12 @@ public class CTF extends EventEngine {
         );
 
         eventTaskList.add(this);
+    }
+
+
+    @Override
+    public boolean allowPotions() {
+        return EventConfig.CTF.ALLOW_POTIONS;
     }
 
     @Override
@@ -622,7 +628,7 @@ public class CTF extends EventEngine {
         }
     }
 
-    private void giveReward(Player player, ResultPlayerEvent result) {
+    private void giveReward(Player player, ResultEvent result) {
         if (player == null || !player.isOnline() || !player.isEventPlayer()) {
             return;
         }
@@ -637,10 +643,10 @@ public class CTF extends EventEngine {
                             true
                     )
             );
-        }
 
-        player.sendPacket(new CreatureSay(player.getId(), SayType.PARTYROOM_COMMANDER, settings.getEventName(), result.name()));
-        player.sendPacket(ActionFailed.STATIC_PACKET);
+            player.sendPacket(new CreatureSay(player.getId(), SayType.PARTYROOM_COMMANDER, settings.getEventName(), result.name()));
+            player.sendPacket(ActionFailed.STATIC_PACKET);
+        }
     }
 
     @Override

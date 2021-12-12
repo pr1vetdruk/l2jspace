@@ -21,7 +21,7 @@ public class EventPlayer {
     /**
      * Может атаковать
      */
-    private boolean canAttack = false;
+    private boolean canAttack = true;
 
     /**
      * Нанесенный урон
@@ -47,6 +47,8 @@ public class EventPlayer {
      * Значение титула до старта ивента
      */
     private final String originalTitle;
+
+    private int kills = 0;
 
     public EventPlayer(Player player, TeamSetting teamSettings) {
         this.player = player;
@@ -118,5 +120,13 @@ public class EventPlayer {
 
     public void setCanAttack(boolean canAttack) {
         this.canAttack = canAttack;
+    }
+
+    public void addMurder() {
+        kills++;
+    }
+
+    public int getKills() {
+        return kills;
     }
 }

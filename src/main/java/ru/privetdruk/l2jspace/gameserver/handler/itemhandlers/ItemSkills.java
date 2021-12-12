@@ -40,9 +40,7 @@ public class ItemSkills implements IItemHandler {
         if (player.isEventPlayer() && item.isPotion()) {
             EventEngine event = EventEngine.findActive();
 
-            boolean allowPotions = event.getEventType() == EventType.CTF && EventConfig.CTF.ALLOW_POTIONS;
-
-            if (event.getEventState() == EventState.IN_PROGRESS && !allowPotions) {
+            if (event.getEventState() == EventState.IN_PROGRESS && !event.allowPotions()) {
                 player.sendPacket(ActionFailed.STATIC_PACKET);
                 return;
             }

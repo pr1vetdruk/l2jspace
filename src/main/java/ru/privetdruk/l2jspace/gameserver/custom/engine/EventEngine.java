@@ -321,6 +321,10 @@ public abstract class EventEngine implements EventTask {
         }
     }
 
+    public boolean allowPotions() {
+        return false;
+    }
+
     private void preLaunchChecks() {
         if (eventState != INACTIVE
                 || settings.getTimeRegistration() <= 0

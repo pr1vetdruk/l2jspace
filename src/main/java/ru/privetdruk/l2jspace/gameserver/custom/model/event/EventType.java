@@ -6,7 +6,7 @@ public enum EventType {
     NONE(null, false, null),
     CTF("Capture the Flag", true, ru.privetdruk.l2jspace.gameserver.custom.event.CTF.class),
     LAST_EMPEROR("Last Emperor", false, ru.privetdruk.l2jspace.gameserver.custom.event.LastEmperor.class),
-    TVT("Team vs Team",true, null),
+    TVT("Team vs Team",true, ru.privetdruk.l2jspace.gameserver.custom.event.TVT.class),
     DM("Death Match",false, null);
 
     private final String name;

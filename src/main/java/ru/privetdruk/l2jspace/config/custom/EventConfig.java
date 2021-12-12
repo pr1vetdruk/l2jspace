@@ -45,6 +45,7 @@ public class EventConfig {
         public static boolean REMOVE_ALL_EFFECTS;
         public static boolean JOIN_CURSED_WEAPON;
         public static boolean REMOVE_BUFFS_ON_DIE;
+        public static boolean ALLOW_POTIONS;
     }
 
     public static class TVT {

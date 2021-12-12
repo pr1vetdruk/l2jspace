@@ -177,6 +177,7 @@ public class EventService {
                         winnerPlayer.setTitleColor(winnerPlayer.getSavedTitleColor());
                         winnerPlayer.setSavedTitleColor(CachedData.INT_DEFAULT);
                     }
+                    winnerPlayer.setTitle("");
                     winnerPlayer.setWonEvents(findAllWonEvents(winnerPlayer.getId()));
                     winnerPlayer.store();
                     winnerPlayer.broadcastUserInfo();
@@ -252,6 +253,10 @@ public class EventService {
         if (EventConfig.LastEmperor.ENABLED) {
             load(EventType.LAST_EMPEROR, EventConfig.LastEmperor.LAUNCH_TIMES);
         }
+
+        if (EventConfig.TVT.ENABLED) {
+            load(EventType.TVT, EventConfig.TVT.LAUNCH_TIMES);
+        }
     }
 
     private void load(EventType eventType, String[] times) {
@@ -286,7 +291,8 @@ public class EventService {
                 }
             }
 
-            if (eventType == EventType.CTF && EventConfig.CTF.LOADING_MODE == EventLoadingMode.RANDOMLY) {
+            if ((eventType == EventType.CTF || eventType == EventType.TVT)
+                    && EventConfig.CTF.LOADING_MODE == EventLoadingMode.RANDOMLY) {
                 Collections.shuffle(eventIdList);
             }
 

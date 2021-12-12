@@ -1456,6 +1456,22 @@ public final class Config {
         EventConfig.LastEmperor.REMOVE_ALL_EFFECTS = lastEmperor.getProperty("RemoveAllEffects", false);
         EventConfig.LastEmperor.JOIN_CURSED_WEAPON = lastEmperor.getProperty("JoinCursedWeapon", false);
         EventConfig.LastEmperor.REMOVE_BUFFS_ON_DIE = lastEmperor.getProperty("RemoveBuffsOnDie", false);
+        EventConfig.LastEmperor.ALLOW_POTIONS = lastEmperor.getProperty("AllowPotions", false);
+
+        ExProperties tvt = initProperties(EventConfig.TVT.PROPERTIES);
+
+        EventConfig.TVT.ENABLED = tvt.getProperty("Enabled", false);
+        EventConfig.TVT.AURA = tvt.getProperty("Aura", true);
+        EventConfig.TVT.LAUNCH_TIMES = tvt.getProperty("LaunchTimes", "").split(";");
+        EventConfig.TVT.LOADING_MODE = EventLoadingMode.valueOf(tvt.getProperty("LoadingMode", EventLoadingMode.RANDOMLY.name()));
+        EventConfig.TVT.TEAM_MODE = EventTeamType.valueOf(tvt.getProperty("TeamMode", EventTeamType.SHUFFLE.name()));
+        EventConfig.TVT.UNSUMMON_PET = tvt.getProperty("UnsummonPet", true);
+        EventConfig.TVT.REMOVE_ALL_EFFECTS = tvt.getProperty("RemoveAllEffects", false);
+        EventConfig.TVT.JOIN_CURSED_WEAPON = tvt.getProperty("JoinCursedWeapon", false);
+        EventConfig.TVT.ALLOW_POTIONS = tvt.getProperty("AllowPotions", false);
+        EventConfig.TVT.REMOVE_BUFFS_ON_DIE = tvt.getProperty("RemoveBuffsOnDie", false);
+        EventConfig.TVT.DELAY_BEFORE_REVIVE = tvt.getProperty("DelayBeforeRevive", 20);
+        EventConfig.TVT.ANNOUNCE_TEAM_STATS = tvt.getProperty("AnnounceTeamStats", true);
     }
 
     private static void loadAddon() {
